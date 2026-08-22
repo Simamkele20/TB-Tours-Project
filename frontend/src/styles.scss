@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Manrope:wght@400;500;700&display=swap');
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+:root {
+  --brand-gold: #f6b41a;
+  --brand-night: #0b0d12;
+  --brand-ink: #121212;
+  --brand-soft: #f5f6f7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Manrope', sans-serif;
+  color: var(--brand-ink);
+  background: transparent;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+.brand,
+.main-nav a,
+.btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.container {
+  width: min(1140px, 92vw);
+  margin-inline: auto;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  text-decoration: none;
+  border: 0;
+  border-radius: 12px;
+  padding: 0.68rem 1.15rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.btn .bi {
+  font-size: 0.95em;
+  line-height: 1;
+}
+
+.btn-primary {
+  background: var(--brand-gold);
+  color: #121212;
+}
+
+.btn-primary:hover {
+  background: #ffca4a;
+}
+
+.btn-dark {
+  background: #101217;
+  color: #fdfdfd;
+}
+
+.btn-dark:hover {
+  background: #181b22;
+}
