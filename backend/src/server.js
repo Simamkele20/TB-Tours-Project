@@ -21,15 +21,24 @@ const bookings = [];
 const contactMessages = [];
 const confirmedPaymentSessions = new Set();
 
+const normalizeOrigin = (value) => String(value || "").trim().replace(/\/+$/, "").toLowerCase();
+const allowedOrigins = new Set(env.clientUrls.map(normalizeOrigin).filter(Boolean));
+
 app.use(helmet());
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || env.clientUrls.includes(origin)) {
+      if (!origin) {
         return callback(null, true);
       }
 
-      return callback(new Error("CORS blocked for this origin"));
+      const requestOrigin = normalizeOrigin(origin);
+      if (allowedOrigins.has(requestOrigin)) {
+        return callback(null, true);
+      }
+
+      console.warn(`[CORS] Blocked origin: ${origin}. Allowed: ${Array.from(allowedOrigins).join(", ")}`);
+      return callback(null, false);
     }
   })
 );
