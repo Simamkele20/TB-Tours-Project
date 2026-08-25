@@ -1,35 +1,5 @@
 services:
   - type: web
-    name: tb-tours-api-dev
-    runtime: node
-    rootDir: backend
-    plan: free
-    branch: develop
-    buildCommand: npm install
-    startCommand: npm start
-    envVars:
-      - key: NODE_ENV
-        value: development
-      - key: CLIENT_URLS
-        sync: false
-      - key: STRIPE_SECRET_KEY
-        sync: false
-      - key: STRIPE_CURRENCY
-        value: zar
-      - key: SMTP_HOST
-        sync: false
-      - key: SMTP_PORT
-        value: "587"
-      - key: SMTP_SECURE
-        value: "false"
-      - key: SMTP_USER
-        sync: false
-      - key: SMTP_PASS
-        sync: false
-      - key: CONTACT_TO_EMAIL
-        sync: false
-
-  - type: web
     name: tb-tours-api-prod
     runtime: node
     rootDir: backend
