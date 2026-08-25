@@ -1,7 +1,13 @@
 [build]
   base = "frontend"
-  command = "npm run build"
+  command = "npm run build:prod"
   publish = "dist/frontend/browser"
+
+[context.deploy-preview]
+  command = "npm run build:staging"
+
+[context.branch-deploy]
+  command = "npm run build:staging"
 
 [[redirects]]
   from = "/api/*"
