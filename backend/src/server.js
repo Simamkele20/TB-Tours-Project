@@ -23,6 +23,15 @@ const confirmedPaymentSessions = new Set();
 
 const normalizeOrigin = (value) => String(value || "").trim().replace(/\/+$/, "").toLowerCase();
 const allowedOrigins = new Set(env.clientUrls.map(normalizeOrigin).filter(Boolean));
+const productionFallbackOrigins = new Set([
+  "https://tb-tours.co.za",
+  "https://www.tb-tours.co.za"
+]);
+
+const isAllowedOrigin = (origin) => {
+  const requestOrigin = normalizeOrigin(origin);
+  return allowedOrigins.has(requestOrigin) || productionFallbackOrigins.has(requestOrigin);
+};
 
 app.use(helmet());
 app.use(
@@ -32,12 +41,12 @@ app.use(
         return callback(null, true);
       }
 
-      const requestOrigin = normalizeOrigin(origin);
-      if (allowedOrigins.has(requestOrigin)) {
+      if (isAllowedOrigin(origin)) {
         return callback(null, true);
       }
 
-      console.warn(`[CORS] Blocked origin: ${origin}. Allowed: ${Array.from(allowedOrigins).join(", ")}`);
+      const effectiveAllowList = Array.from(new Set([...allowedOrigins, ...productionFallbackOrigins]));
+      console.warn(`[CORS] Blocked origin: ${origin}. Allowed: ${effectiveAllowList.join(", ")}`);
       return callback(null, false);
     }
   })
