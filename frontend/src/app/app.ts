@@ -28,4 +28,8 @@ export class App {
   isStatePage(): boolean {
     return this.router.url.startsWith('/booking-success') || this.router.url.startsWith('/booking-cancelled');
   }
+
+  isAboutPage(): boolean {
+    return this.router.url === '/about';
+  }
 }

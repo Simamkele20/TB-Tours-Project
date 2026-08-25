@@ -8,8 +8,8 @@ import { SITE_CONTENT } from "../../data/site-content";
   standalone: true,
   imports: [CommonModule, HeroSectionComponent],
   template: `
-    <app-hero-section 
-      [config]="heroConfig()" 
+    <app-hero-section
+      [config]="heroConfig()"
       [showPhone]="() => false">
     </app-hero-section>
 
@@ -30,7 +30,7 @@ import { SITE_CONTENT } from "../../data/site-content";
           ensure every trip is smooth, safe and on time.
         </p>
         <p class="about-signature">Thabang Sekhobo</p>
-        <p class="about-role">Founder & owner</p>
+        <p class="about-role">Founders & owner</p>
       </article>
 
       <figure class="about-image-wrap">
@@ -89,5 +89,8 @@ import { SITE_CONTENT } from "../../data/site-content";
   styleUrl: "./about.component.scss"
 })
 export class AboutPageComponent {
-  readonly heroConfig = computed(() => SITE_CONTENT["about"].hero);
+  readonly heroConfig = computed(() => ({
+    ...SITE_CONTENT["about"].hero,
+    hideButton: true
+  }));
 }
