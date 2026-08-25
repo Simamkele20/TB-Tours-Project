@@ -99,29 +99,19 @@ Example:
 CLIENT_URLS=https://tb-tours.co.za,https://www.tb-tours.co.za
 ```
 
-## Frontend on Netlify
+## Frontend on Vercel
 
-This repo includes `netlify.toml` configured for Angular SPA:
+This repo is configured for Vercel deployment.
 
-- Base directory: `frontend`
-- Build command: `npm run build`
-- Publish directory: `dist/frontend/browser`
-- SPA redirect is included.
+- Production branch: `main`
+- Development/testing branch: `develop`
+- Production build command: `npm run build:prod`
+- Preview/develop build command: `npm run build:staging`
+- Output directory: `frontend/dist/frontend/browser`
 
-Create your Netlify production site from branch `main`.
+`vercel.json` handles SPA rewrites and environment-based build selection.
 
 After Render deploys, update `environment.prod.ts` with your production backend URL.
-
-## Frontend on Vercel (alternative)
-
-If you use Vercel instead of Netlify:
-
-- Set Root Directory to `frontend`
-- Framework Preset: Angular
-- Build command: `npm run build`
-- Output directory: `dist/frontend/browser`
-
-`frontend/vercel.json` includes SPA rewrites.
 
 ## API endpoints
 
