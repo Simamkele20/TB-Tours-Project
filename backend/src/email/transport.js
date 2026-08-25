@@ -1,4 +1,7 @@
 const nodemailer = require("nodemailer");
+const dns = require("node:dns");
+
+dns.setDefaultResultOrder("ipv4first");
 
 const createMailTransporter = ({ smtpHost, smtpPort, smtpUser, smtpPass, smtpSecure }) => {
   if (!smtpHost || !smtpUser || !smtpPass) {
@@ -9,6 +12,9 @@ const createMailTransporter = ({ smtpHost, smtpPort, smtpUser, smtpPass, smtpSec
     host: smtpHost,
     port: smtpPort,
     secure: smtpSecure,
+    connectionTimeout: 15000,
+    greetingTimeout: 10000,
+    socketTimeout: 20000,
     auth: {
       user: smtpUser,
       pass: smtpPass
