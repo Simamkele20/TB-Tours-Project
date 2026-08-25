@@ -1,4 +1,5 @@
 {
+  "buildCommand": "if [ \"$VERCEL_ENV\" = \"production\" ]; then npm run build:prod; else npm run build:staging; fi",
   "outputDirectory": "dist/frontend/browser",
   "rewrites": [
     {
