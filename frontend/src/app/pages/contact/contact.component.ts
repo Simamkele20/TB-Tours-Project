@@ -5,6 +5,7 @@ import { HeroSectionComponent } from "../../shared/components/hero-section.compo
 import { ContactFormComponent } from "../shared/contact-form.component";
 import { SITE_CONTENT } from "../../data/site-content";
 import { BookingApiService } from "../../booking/booking-api.service";
+import { finalize } from "rxjs";
 
 @Component({
   selector: "app-contact-page",
@@ -56,7 +57,7 @@ import { BookingApiService } from "../../booking/booking-api.service";
             <p>Fill out the form below and we'll get back to you as soon as possible.</p>
           </div>
 
-          <app-contact-form (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
+          <app-contact-form [isSending]="isSending()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
 
           <div *ngIf="toastMessage()" [class]="'toast toast-' + toastType()">
             <p>{{ toastMessage() }}</p>
@@ -112,18 +113,27 @@ export class ContactPageComponent {
 
   toastMessage = signal("");
   toastType = signal<"success" | "error">("success");
+  isSending = signal(false);
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
 
   onContactFormSubmit(formData: any): void {
-    this.bookingApi.sendContactMessage(formData).subscribe({
-      next: () => {
-        this.showToast("Message sent successfully! We'll contact you soon.", "success");
-      },
-      error: (err) => {
-        console.error("Contact form error:", err);
-        this.showToast("Failed to send message. Please try again or call us directly.", "error");
-      }
-    });
+    if (this.isSending()) {
+      return;
+    }
+
+    this.isSending.set(true);
+    this.bookingApi
+      .sendContactMessage(formData)
+      .pipe(finalize(() => this.isSending.set(false)))
+      .subscribe({
+        next: () => {
+          this.showToast("Message sent successfully! We'll contact you soon.", "success");
+        },
+        error: (err) => {
+          console.error("Contact form error:", err);
+          this.showToast("Failed to send message right now. Please call us on 073 448 3958.", "error");
+        }
+      });
   }
 
   private showToast(message: string, type: "success" | "error"): void {
