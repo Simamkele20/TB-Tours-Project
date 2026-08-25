@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: "/api"
+  apiBaseUrl: "https://tb-tours-api-prod.onrender.com/api"
 };
