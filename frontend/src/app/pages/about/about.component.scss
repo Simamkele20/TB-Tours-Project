@@ -36,6 +36,7 @@
 }
 
 .about-image-wrap {
+  display: none;
   margin: 0;
   border-radius: 14px;
   overflow: hidden;
@@ -47,6 +48,33 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+@media (min-width: 1001px) {
+  .about-image-wrap {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1000px) {
+  .about-overview {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .about-story {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .about-story h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .about-story p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
 }
 
 .about-pillars {
