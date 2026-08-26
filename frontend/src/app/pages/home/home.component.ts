@@ -73,17 +73,6 @@ import { SITE_CONTENT } from "../../data/site-content";
       <a routerLink="/destinations" class="btn btn-dark">Explore All Destinations</a>
     </section>
 
-    <section class="section container reviews">
-      <p class="kicker">Guest Reviews</p>
-      <h2>What our guests say</h2>
-      <div class="review-grid">
-        <article class="review-card" *ngFor="let review of reviews">
-          <h3>Google Review</h3>
-          <p>{{ review }}</p>
-        </article>
-      </div>
-    </section>
-
     <section class="section home-cta">
       <div class="container home-cta-inner">
         <p class="kicker">Book Your Journey</p>
@@ -132,6 +121,4 @@ export class HomePageComponent {
       image: "https://tbtourscapetown.lovable.app/assets/winelands-CbN4j39m.jpg"
     }
   ];
-
-  readonly reviews = ["Guest review to be added", "Guest review to be added", "Guest review to be added"];
 }
