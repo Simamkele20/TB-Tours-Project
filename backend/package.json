@@ -1,7 +1,7 @@
 {
   "name": "tb-tours-api",
   "version": "1.0.0",
-  "description": "Backend API for TB Tours booking and payments",
+  "description": "Backend API for TB Tours quote and contact workflow",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -10,8 +10,8 @@
   },
   "keywords": [
     "express",
-    "stripe",
-    "booking"
+    "contact",
+    "quotes"
   ],
   "author": "",
   "license": "ISC",
@@ -24,7 +24,6 @@
     "morgan": "^1.11.0",
     "nodemailer": "^9.0.5",
     "pdfkit": "^0.19.1",
-    "stripe": "^22.5.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

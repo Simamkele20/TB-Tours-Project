@@ -31,196 +31,163 @@ export interface PageContent {
 export const SITE_CONTENT: Record<string, PageContent> = {
   home: {
     hero: {
-      eyebrow: "Travel in comfort. Arrive in style.",
-      title: "Your Journey",
-      accent: "Our Priority",
+      eyebrow: "Cape Town · South Africa",
+      title: "Your journey.",
+      accent: "Our priority.",
       description:
-        "TB Tours offers professional transport and tour services across South Africa.",
-      image: "images/home-hero-mercedes-road.jpg"
+        "Private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands.",
+      image: "https://tbtourscapetown.lovable.app/__l5e/assets-v1/3dca2ca0-73a5-4c8b-afe5-e45085fb7cfe/hero-drive-poster.jpg"
     },
-    sectionTitle: "Our Tours",
-    sectionSubtitle: "Unforgettable destinations. Exceptional experiences.",
+    sectionTitle: "Travel your way.",
+    sectionSubtitle: "From airport arrivals to private days exploring the Cape, TB Tours makes every journey comfortable, personal and effortless.",
     cards: [
       {
-        title: "Cape Peninsula Tour",
-        description: "Experience breathtaking views, charming coastal towns and iconic landmarks.",
-        image: "images/card-cape-point.jpg",
-        duration: "Full Day",
-        passengers: "1 - 7 People",
-        ctaLabel: "View details"
+        title: "Airport Transfers",
+        description: "Punctual, private arrivals and departures with a calm, professional welcome.",
+        image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg",
+        ctaLabel: "Learn more"
       },
       {
-        title: "Wine Tours",
-        description: "Visit the Cape Winelands and enjoy wine tasting at top award-winning estates.",
-        image: "images/card-wine-service.jpg",
-        duration: "Full Day",
-        passengers: "1 - 7 People",
-        ctaLabel: "View details"
+        title: "Cape Peninsula Tours",
+        description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.",
+        image: "https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg",
+        ctaLabel: "Learn more"
       },
       {
-        title: "Whale Watching Tour",
-        description: "Witness these magnificent creatures in their natural habitat (seasonal).",
-        image: "images/card-cablecar-aerial.jpg",
-        duration: "Half Day",
-        passengers: "1 - 7 People",
-        ctaLabel: "View details"
+        title: "Cape Town City Tours",
+        description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.",
+        image: "https://tbtourscapetown.lovable.app/assets/waterfront-CWKEfh8G.jpg",
+        ctaLabel: "Learn more"
       },
       {
-        title: "Garden Route Tour",
-        description: "Scenic drives, lush forests, lagoons, beaches and unforgettable stops.",
-        image: "images/card-tsitsikamma-bridge.jpg",
-        duration: "Multi-Day",
-        passengers: "1 - 7 People",
-        ctaLabel: "View details"
+        title: "Winelands Tours",
+        description: "Stellenbosch and Franschhoek estates at an unhurried pace.",
+        image: "https://tbtourscapetown.lovable.app/assets/winelands-CbN4j39m.jpg",
+        ctaLabel: "Learn more"
       },
       {
-        title: "Cape Town City Tour",
-        description: "Explore the history, culture and vibrant life of Cape Town's top attractions.",
-        image: "images/card-harbour.jpg",
-        duration: "Half Day",
-        passengers: "1 - 7 People",
-        ctaLabel: "View details"
+        title: "Private Chauffeur Services",
+        description: "A discreet driver at your disposal, by the hour or by the day.",
+        image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg",
+        ctaLabel: "Learn more"
       },
       {
-        title: "Boulders Beach Tour",
-        description: "Visit the famous penguin colony and enjoy a scenic coastal experience.",
-        image: "images/card-penguins.jpg",
-        duration: "Half Day",
-        passengers: "1 - 7 People",
-        ctaLabel: "View details"
-      },
-      {
-        title: "Cultural and Heritage Tour",
-        description: "Discover South Africa's rich culture, heritage sites and local traditions.",
-        image: "images/card-cultural-entry.jpg",
-        duration: "Full Day",
-        passengers: "1 - 7 People",
-        ctaLabel: "View details"
-      },
-      {
-        title: "Private and Group Tours",
-        description: "Tailored tours for families, friends, corporates and special occasions.",
-        image: "images/card-white-sedan.jpg",
-        duration: "Custom",
-        passengers: "1 - 14 People",
-        ctaLabel: "View details"
+        title: "Custom Day Tours",
+        description: "An itinerary shaped entirely around your interests and your time.",
+        image: "https://tbtourscapetown.lovable.app/assets/hero-table-mountain-DB7gbHqM.jpg",
+        ctaLabel: "Learn more"
       }
     ],
-    trustStrip: ["Safe and reliable", "Professional drivers", "Comfortable rides", "On time, every time"],
-    ctaTitle: "Ready to explore?",
-    ctaText: "Let's make your journey unforgettable."
+    trustStrip: ["Private", "Professional", "Personal", "Local insight"],
+    ctaTitle: "Your Cape Town journey starts here.",
+    ctaText: "Airport transfer, private tour or a day designed entirely around you - let's make it unforgettable."
   },
   about: {
     hero: {
-      eyebrow: "About us",
-      title: "Passionate About People.",
-      accent: "Driven by Excellence.",
+      eyebrow: "About",
+      title: "TB Tours",
+      accent: "(Pty) Ltd",
       description:
-        "TB Tours is a professional transport and tour company based in South Africa. We are committed to providing safe, reliable and comfortable transport and unforgettable travel experiences.",
-      image: "images/home-hero-mercedes-road.jpg"
+        "A Cape Town-based private tour, airport transfer and chauffeur company.",
+      image: "https://tbtourscapetown.lovable.app/assets/winelands-CbN4j39m.jpg"
     },
-    sectionTitle: "Who We Are",
-    sectionSubtitle: "A customer-first team focused on punctuality, safety and service quality.",
+    sectionTitle: "Personal, professional and local",
+    sectionSubtitle: "Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.",
     cards: [
-      { title: "Our Mission", description: "Deliver dependable transport and unforgettable tours.", image: "images/card-cultural-entry.jpg" },
-      { title: "Our Vision", description: "Become one of South Africa's most trusted transport companies.", image: "images/card-cape-good-hope.jpg" },
-      { title: "Safety", description: "Your safety is our highest priority on every trip.", image: "images/card-cape-point.jpg" },
-      { title: "Customer Care", description: "Clear communication and responsive support.", image: "images/card-estate-lake.jpg" }
+      { title: "From the Road to Building a Dream", description: "Thabang's story is the heart of TB Tours and how one journey became a business built on dignity and care.", image: "https://tbtourscapetown.lovable.app/assets/thabang-arrival-B7xuRbyw.jpg", ctaLabel: "Read the story" },
+      { title: "Built Around People", description: "Not a tour bus operation - personal service with local insight and flexibility.", image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg", ctaLabel: "Meet TB Tours" }
     ],
-    trustStrip: ["1000+ happy clients", "50+ vehicles", "50+ destinations", "5-star service"],
-    ctaTitle: "Meet our team",
-    ctaText: "Travel with a professional crew that values your time and comfort."
+    trustStrip: ["Faith", "Humility", "Integrity", "Perseverance"],
+    ctaTitle: "One journey at a time.",
+    ctaText: "When you travel with TB Tours, you're travelling with the person who built his business one journey at a time."
   },
   services: {
     hero: {
-      eyebrow: "Our Services",
-      title: "Premium Transport.",
-      accent: "Memorable Experiences.",
+      eyebrow: "Services",
+      title: "Travel arranged",
+      accent: "with care",
       description:
-        "We provide safe, reliable and comfortable transport and tour services tailored to your needs across South Africa.",
-      image: "images/services-hero.jpg"
+        "An outline of the services we offer across Cape Town and the Cape Winelands.",
+      image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg"
     },
-    sectionTitle: "Our Services",
-    sectionSubtitle: "Whether you're traveling for business or leisure, we've got you covered.",
+    sectionTitle: "Travel your way.",
+    sectionSubtitle: "An outline of the services we offer. Full details will be added as we build out the site.",
     cards: [
-      { title: "Airport Transfers", description: "On-time airport pick-ups and drop-offs for a stress-free journey.", image: "images/card-waterfront.jpg", icon: "bi-airplane-fill" },
-      { title: "Hotel Transfers", description: "Reliable transfers to and from your hotel in comfort and style.", image: "images/card-experience-dining.jpg", icon: "bi-building" },
-      { title: "Private Chauffeur Services", description: "Professional, discreet and personalized chauffeur services.", image: "images/card-cape-point.jpg", icon: "bi-person-fill" },
-      { title: "Day Tours & Excursions", description: "Explore the best attractions and hidden gems with us.", image: "images/card-table-cableway.jpg", icon: "bi-camera-fill" },
-      { title: "Wine Tours", description: "Experience the Cape Winelands with our exclusive wine tour packages.", image: "images/card-wine-glass.jpg", icon: "bi-cup-straw" },
-      { title: "Group & Event Transport", description: "Comfortable transport for groups, events, and special occasions.", image: "images/card-evening-dining.jpg", icon: "bi-people-fill" },
-      { title: "Corporate Transport", description: "Efficient and professional transport solutions for business travelers.", image: "images/card-executive-sedan.jpg", icon: "bi-briefcase-fill" },
-      { title: "Cape Peninsula Tours", description: "Discover breathtaking coastal views and iconic landmarks.", image: "images/card-cape-point.jpg", icon: "bi-geo-alt-fill" },
-      { title: "Whale Watching Tours", description: "Unforgettable whale watching experiences (seasonal).", image: "images/card-cablecar-aerial.jpg", icon: "bi-water" },
-      { title: "Garden Route Tours", description: "Scenic drives and unforgettable stops along the beautiful Garden Route.", image: "images/card-tsitsikamma-bridge.jpg", icon: "bi-signpost-2-fill" }
+      { title: "Airport Transfers", description: "Punctual, private arrivals and departures with a calm, professional welcome.", image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg", icon: "bi-airplane-fill", ctaLabel: "Request a quote" },
+      { title: "Cape Peninsula Tours", description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.", image: "https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg", icon: "bi-geo-alt-fill", ctaLabel: "Request a quote" },
+      { title: "Cape Town City Tours", description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.", image: "https://tbtourscapetown.lovable.app/assets/waterfront-CWKEfh8G.jpg", icon: "bi-buildings-fill", ctaLabel: "Request a quote" },
+      { title: "Winelands Tours", description: "Stellenbosch and Franschhoek estates at an unhurried pace.", image: "https://tbtourscapetown.lovable.app/assets/winelands-CbN4j39m.jpg", icon: "bi-cup-straw", ctaLabel: "Request a quote" },
+      { title: "Private Chauffeur Services", description: "A discreet driver at your disposal, by the hour or by the day.", image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg", icon: "bi-person-fill", ctaLabel: "Request a quote" },
+      { title: "Custom Day Tours", description: "An itinerary shaped entirely around your interests and your time.", image: "https://tbtourscapetown.lovable.app/assets/hero-table-mountain-DB7gbHqM.jpg", icon: "bi-stars", ctaLabel: "Request a quote" }
     ],
-    trustStrip: ["Safe & Reliable", "Professional Drivers", "Comfortable Rides", "On Time, Every Time"],
-    ctaTitle: "Need a custom route?",
-    ctaText: "We design transport plans for families, events and corporate teams."
+    trustStrip: ["Airport transfers", "Private touring", "Chauffeur days", "Custom itineraries"],
+    ctaTitle: "Need a custom day?",
+    ctaText: "Tell us your plan and we will shape a route around your interests and timing, then email your quote."
   },
   tours: {
     hero: {
-      eyebrow: "Our Tours",
-      title: "Explore. Experience.",
-      accent: "Remember.",
+      eyebrow: "Tours",
+      title: "Private tours,",
+      accent: "shaped around you",
       description:
-        "Discover the beauty of South Africa with our carefully curated tours. From scenic coastal drives to world-famous attractions, we create unforgettable memories.",
-      image: "images/tours-hero.jpg"
+        "A first outline of our tour offering. Detailed itineraries will follow.",
+      image: "https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg"
     },
-    sectionTitle: "Our Tours",
-    sectionSubtitle: "Unforgettable destinations. Exceptional experiences.",
+    sectionTitle: "The Cape, at its most memorable",
+    sectionSubtitle: "A first outline of our tour offering. Detailed itineraries will follow.",
     cards: [
-      { title: "Cape Peninsula Tour", description: "Experience breathtaking views, charming coastal towns and iconic landmarks.", duration: "Full Day", passengers: "1 - 7 People", ctaLabel: "View details", image: "images/card-tsitsikamma-bridge.jpg", icon: "bi-camera-fill" },
-      { title: "Wine Tours", description: "Visit the Cape Winelands and enjoy wine tasting at top award-winning estates.", duration: "Full Day", passengers: "1 - 7 People", ctaLabel: "View details", image: "images/card-wine-glass.jpg", icon: "bi-cup-straw" },
-      { title: "Whale Watching Tour", description: "Witness these magnificent creatures in their natural habitat (seasonal).", duration: "Half Day", passengers: "1 - 7 People", ctaLabel: "View details", image: "images/card-cablecar-aerial.jpg", icon: "bi-water" },
-      { title: "Garden Route Tour", description: "Scenic drives, lush forests, lagoon, beaches and unforgettable stops along the Garden Route.", duration: "Multi-Day", passengers: "1 - 7 People", ctaLabel: "View details", image: "images/card-tsitsikamma-bridge.jpg", icon: "bi-signpost-2-fill" },
-      { title: "Cape Town City Tour", description: "Explore the history, culture and vibrant life of Cape Town's top attractions.", duration: "Half Day", passengers: "1 - 7 People", ctaLabel: "View details", image: "images/card-harbour.jpg", icon: "bi-building" },
-      { title: "Boulders Beach Tour", description: "Visit the famous penguin colony and enjoy a scenic coastal experience.", duration: "Half Day", passengers: "1 - 7 People", ctaLabel: "View details", image: "images/card-penguins.jpg", icon: "bi-emoji-sunglasses-fill" },
-      { title: "Cultural & Heritage Tour", description: "Discover South Africa's rich culture, heritage sites and local traditions.", duration: "Full Day", passengers: "1 - 7 People", ctaLabel: "View details", image: "images/card-cultural-entry.jpg", icon: "bi-camera-fill" },
-      { title: "Private & Group Tours", description: "Tailored tours for families, friends, corporates and special occasions.", duration: "Custom", passengers: "1 - 14 People", ctaLabel: "View details", image: "images/card-evening-dining.jpg", icon: "bi-people-fill" }
+      { title: "Cape Peninsula Tours", description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.", duration: "Full Day", passengers: "Private", ctaLabel: "Enquire", image: "https://tbtourscapetown.lovable.app/assets/cape-point-C_z81lyn.jpg", icon: "bi-geo-alt-fill" },
+      { title: "Cape Town City Tours", description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.", duration: "Half Day / Full Day", passengers: "Private", ctaLabel: "Enquire", image: "https://tbtourscapetown.lovable.app/assets/waterfront-CWKEfh8G.jpg", icon: "bi-buildings-fill" },
+      { title: "Winelands Tours", description: "Stellenbosch and Franschhoek estates at an unhurried pace.", duration: "Full Day", passengers: "Private", ctaLabel: "Enquire", image: "https://tbtourscapetown.lovable.app/assets/winelands-CbN4j39m.jpg", icon: "bi-cup-straw" },
+      { title: "Custom Day Tours", description: "An itinerary shaped entirely around your interests and your time.", duration: "Flexible", passengers: "Private", ctaLabel: "Enquire", image: "https://tbtourscapetown.lovable.app/assets/hero-table-mountain-DB7gbHqM.jpg", icon: "bi-stars" }
     ],
-    trustStrip: ["Safe & Reliable", "Professional Drivers", "Comfortable Rides", "On Time, Every Time"],
-    ctaTitle: "Ready to explore?",
-    ctaText: "Let's make your journey unforgettable."
+    trustStrip: ["Personalized", "Unhurried", "Local insight", "Comfort-first"],
+    ctaTitle: "Enquire about a tour",
+    ctaText: "Share your dates and interests and we will tailor the best route for your day."
   },
-  fleet: {
+  destinations: {
     hero: {
-      eyebrow: "Our Fleet",
-      title: "Comfort. Safety.",
-      accent: "Reliability.",
+      eyebrow: "Destinations",
+      title: "Where we will",
+      accent: "take you",
       description:
-        "At TB Tours, we take pride in our modern, well-maintained fleet that guarantees comfort, safety and a premium travel experience every time.",
-      image: "images/fleet-hero.jpg"
+        "A first selection of the places our journeys are built around.",
+      image: "https://tbtourscapetown.lovable.app/assets/cape-point-C_z81lyn.jpg"
     },
-    sectionTitle: "Our Fleet Options",
-    sectionSubtitle: "Whether you're traveling solo, with family, or in a group, we have the perfect vehicle for your journey.",
+    sectionTitle: "The Cape, at its most memorable",
+    sectionSubtitle: "A first selection of the places our journeys are built around.",
     cards: [
-      { title: "Sedan", description: "Perfect for solo travelers or couples.", passengers: "1 - 3 Passengers", bags: "2 Large Bags", image: "images/card-white-sedan.jpg" },
-      { title: "SUV", description: "Spacious and comfortable for small groups.", passengers: "1 - 4 Passengers", bags: "4 Large Bags", image: "images/card-red-sedan.jpg" }
+      { title: "Cape Point", description: "Cape Peninsula", image: "https://tbtourscapetown.lovable.app/assets/cape-point-C_z81lyn.jpg", ctaLabel: "Plan a stop" },
+      { title: "Chapman's Peak Drive", description: "Atlantic Coast", image: "https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg", ctaLabel: "Plan a stop" },
+      { title: "Boulders Beach", description: "Simon's Town", image: "https://tbtourscapetown.lovable.app/assets/boulders-CZnAwwfM.jpg", ctaLabel: "Plan a stop" },
+      { title: "Bo-Kaap", description: "Cape Town City", image: "https://tbtourscapetown.lovable.app/assets/bo-kaap-KgRFsEe_.jpg", ctaLabel: "Plan a stop" },
+      { title: "V&A Waterfront", description: "Cape Town City", image: "https://tbtourscapetown.lovable.app/assets/waterfront-CWKEfh8G.jpg", ctaLabel: "Plan a stop" },
+      { title: "Kirstenbosch", description: "Table Mountain", image: "https://tbtourscapetown.lovable.app/assets/kirstenbosch-Bi8CyJ4T.jpg", ctaLabel: "Plan a stop" },
+      { title: "Cape Winelands", description: "Stellenbosch & Franschhoek", image: "https://tbtourscapetown.lovable.app/assets/winelands-CbN4j39m.jpg", ctaLabel: "Plan a stop" }
     ],
-    trustStrip: ["Safety First", "Comfort Guaranteed", "On Time, Every Time", "Professional Drivers"],
-    ctaTitle: "Ready to ride?",
-    ctaText: "Book your ride with TB Tours today!"
+    trustStrip: ["Coastal routes", "City highlights", "Nature stops", "Winelands"],
+    ctaTitle: "Explore all destinations",
+    ctaText: "Tell us what you want to see and we will shape the day around your pace."
   },
   contact: {
     hero: {
-      eyebrow: "Contact us",
-      title: "We're Here To Help!",
-      accent: "Let's Connect.",
+      eyebrow: "Contact",
+      title: "Plan your",
+      accent: "journey",
       description:
-        "Get in touch for quotes, bookings and custom transport requirements.",
-      image: "images/contact-hero.jpg"
+        "Tell us your dates and what you would like to see - we will take care of the rest.",
+      image: "https://tbtourscapetown.lovable.app/assets/waterfront-CWKEfh8G.jpg"
     },
-    sectionTitle: "Get In Touch",
-    sectionSubtitle: "Call, email, or use the booking form for fast assistance.",
+    sectionTitle: "Send us a message",
+    sectionSubtitle: "Booking form to be connected. For now, please WhatsApp or email us directly.",
     cards: [
-      { title: "Call Us", description: "073 448 3958", meta: "Available 24/7", icon: "bi-telephone-fill", image: "images/card-waterfront.jpg" },
-      { title: "Email Us", description: "traveling.buddies@tb-tours.com", meta: "We reply within 24 hours", icon: "bi-envelope-fill", image: "images/card-harbour.jpg" },
-      { title: "Location", description: "Cape Town, Western Cape", meta: "South Africa", icon: "bi-geo-alt-fill", image: "images/card-table-cableway.jpg" },
-      { title: "WhatsApp", description: "073 448 3958", meta: "Quick responses", icon: "bi-whatsapp", image: "images/card-cape-good-hope.jpg" }
+      { title: "Contact Person", description: "Thabang", meta: "Founder", icon: "bi-person-badge-fill", image: "images/card-executive-sedan.jpg" },
+      { title: "Phone / WhatsApp", description: "073 448 3958", meta: "Available daily", icon: "bi-telephone-fill", image: "images/card-waterfront.jpg" },
+      { title: "Email", description: "info@tb-tours.co.za", meta: "Fast replies", icon: "bi-envelope-fill", image: "images/card-harbour.jpg" },
+      { title: "Location", description: "Cape Town, South Africa", meta: "Local pickup and drop-off", icon: "bi-geo-alt-fill", image: "images/card-table-cableway.jpg" }
     ],
-    trustStrip: ["Fast response", "Clear pricing", "Flexible service", "Local support"],
-    ctaTitle: "We're one call away",
-    ctaText: "Use secure booking and payment to confirm your ride instantly."
+    trustStrip: ["WhatsApp first", "Direct line", "Flexible timing", "Personal support"],
+    ctaTitle: "Your Cape Town journey starts here.",
+    ctaText: "Airport transfer, private tour or custom day out - let's plan it together by email."
   }
 };

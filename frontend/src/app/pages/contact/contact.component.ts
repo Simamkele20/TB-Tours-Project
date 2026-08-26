@@ -1,6 +1,5 @@
 import { Component, computed, inject, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { RouterLink } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { ContactFormComponent } from "../shared/contact-form.component";
 import { SITE_CONTENT } from "../../data/site-content";
@@ -10,7 +9,7 @@ import { finalize } from "rxjs";
 @Component({
   selector: "app-contact-page",
   standalone: true,
-  imports: [CommonModule, RouterLink, HeroSectionComponent, ContactFormComponent],
+  imports: [CommonModule, HeroSectionComponent, ContactFormComponent],
   template: `
     <app-hero-section
       [config]="heroConfig()"
@@ -19,42 +18,57 @@ import { finalize } from "rxjs";
 
     <section class="contact-shell section container">
       <header class="contact-header">
-        <h2>Get in touch</h2>
-        <p>We'd love to hear from you. Reach out to us using any of the options below.</p>
+        <h2>Plan your journey</h2>
+        <p>Tell us your dates and what you would like to see - we will take care of the rest.</p>
       </header>
 
       <section class="contact-cards" aria-label="Contact quick options">
         <article class="contact-card">
+          <span class="icon-wrap"><i class="bi bi-person-badge-fill" aria-hidden="true"></i></span>
+          <h3>Contact Person</h3>
+          <p>Thabang</p>
+        </article>
+        <article class="contact-card">
           <span class="icon-wrap"><i class="bi bi-telephone-fill" aria-hidden="true"></i></span>
-          <h3>Call us</h3>
+          <h3>Phone / WhatsApp</h3>
           <p>073 448 3958</p>
-          <small>Available 24/7</small>
         </article>
         <article class="contact-card">
           <span class="icon-wrap"><i class="bi bi-envelope-fill" aria-hidden="true"></i></span>
-          <h3>Email us</h3>
-          <p>traveling.buddies@tb-tours.com</p>
-          <small>We reply within 24 hours</small>
+          <h3>Email</h3>
+          <p>info@tb-tours.co.za</p>
         </article>
         <article class="contact-card">
           <span class="icon-wrap"><i class="bi bi-geo-alt-fill" aria-hidden="true"></i></span>
           <h3>Location</h3>
-          <p>Cape Town, Western Cape</p>
-          <small>South Africa</small>
-        </article>
-        <article class="contact-card">
-          <span class="icon-wrap"><i class="bi bi-whatsapp" aria-hidden="true"></i></span>
-          <h3>Whatsapp</h3>
-          <p>073 448 3958</p>
-          <small>Quick responses</small>
+          <p>Cape Town, South Africa</p>
         </article>
       </section>
 
       <section class="contact-section">
+        <aside class="contact-find-us">
+          <h3>Direct Contact</h3>
+          <p>Prefer a quick booking conversation? Reach out directly and we can plan your route immediately.</p>
+
+          <div class="direct-actions">
+            <a
+              class="btn btn-primary"
+              href="https://wa.me/27734483958?text=Hi%20TB%20Tours%2C%20I'd%20like%20to%20enquire%20about%20a%20tour%20or%20transfer."
+              target="_blank"
+              rel="noopener noreferrer">
+              <i class="bi bi-whatsapp" aria-hidden="true"></i>WhatsApp Us
+            </a>
+            <a class="btn btn-dark" href="tel:+27734483958">
+              <i class="bi bi-telephone-fill" aria-hidden="true"></i>Call Us
+            </a>
+          </div>
+
+        </aside>
+
         <div class="contact-content">
           <div class="contact-intro">
             <h3>Send us a message</h3>
-            <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+            <p>Booking form to be connected. For now, please WhatsApp or email us directly.</p>
           </div>
 
           <app-contact-form [isSending]="isSending()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
@@ -66,42 +80,7 @@ import { finalize } from "rxjs";
             </button>
           </div>
         </div>
-
-        <aside class="contact-find-us">
-          <h3>Find us</h3>
-          <p>We are located in the heart of Cape Town, ready to take you wherever you need to go.</p>
-          <div class="map-wrap">
-            <iframe
-              title="TB Tours map"
-              src="https://www.google.com/maps?q=Cape%20Town%2C%20Western%20Cape&output=embed"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-
-          <div class="hours">
-            <i class="bi bi-clock" aria-hidden="true"></i>
-            <div>
-              <h4>Business hours</h4>
-              <p>Monday - Sunday</p>
-              <small>24 Hours a Day / 7 Days a Week</small>
-            </div>
-          </div>
-        </aside>
       </section>
-
-      <article class="contact-bottom-cta">
-        <div class="contact-bottom-left">
-          <i class="bi bi-telephone-fill" aria-hidden="true"></i>
-          <div>
-            <p class="mini">Ready to book your ride?</p>
-            <h3>We're just one call away!</h3>
-            <p>Safe, reliable and comfortable transport whenever you need it.</p>
-          </div>
-        </div>
-        <a routerLink="/book" class="btn btn-primary">
-          Book your ride now <i class="bi bi-arrow-right" aria-hidden="true"></i>
-        </a>
-      </article>
     </section>
   `,
   styleUrl: "./contact.component.scss"

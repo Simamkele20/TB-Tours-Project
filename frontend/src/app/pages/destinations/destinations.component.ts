@@ -3,7 +3,7 @@ import { ContentPageComponent } from "../shared/content-page.component";
 import { SITE_CONTENT } from "../../data/site-content";
 
 @Component({
-  selector: "app-tours-page",
+  selector: "app-destinations-page",
   standalone: true,
   imports: [ContentPageComponent],
   template: `
@@ -14,42 +14,39 @@ import { SITE_CONTENT } from "../../data/site-content";
       [cardSubtitle]="cardSubtitle()"
       [cardLayout]="'tours'"
       [trustItems]="trustItems"
-      [trustVariant]="'tours'"
-      [introIcon]="'bi-patch-check'"
-      [introText]="introText">
+      [trustVariant]="'tours'">
     </app-content-page>
   `,
   styles: []
 })
-export class ToursPageComponent {
-  private readonly content = computed(() => SITE_CONTENT["tours"]);
+export class DestinationsPageComponent {
+  private readonly content = computed(() => SITE_CONTENT["destinations"]);
 
   readonly heroConfig = computed(() => this.content().hero);
   readonly cards = computed(() => this.content().cards);
   readonly cardTitle = computed(() => this.content().sectionTitle);
   readonly cardSubtitle = computed(() => this.content().sectionSubtitle);
-  readonly introText = "Private tours across the Peninsula, city and Winelands with flexible timing and local insight.";
 
   readonly trustItems = [
     {
-      icon: "bi-shield-check",
-      title: "Safe & reliable",
-      description: "Your safety is our top priority."
+      icon: "bi-geo-alt-fill",
+      title: "Cape Peninsula",
+      description: "Dramatic coastline, mountain passes and iconic lookouts."
     },
     {
-      icon: "bi-person-badge",
-      title: "Professional drivers",
-      description: "Experienced, friendly and punctual."
+      icon: "bi-buildings-fill",
+      title: "Cape Town City",
+      description: "History, culture and local food in one compact route."
     },
     {
-      icon: "bi-car-front-fill",
-      title: "Comfortable rides",
-      description: "Clean, modern vehicles for your comfort."
+      icon: "bi-flower1",
+      title: "Winelands",
+      description: "Relaxed estates across Stellenbosch and Franschhoek."
     },
     {
-      icon: "bi-clock-history",
-      title: "On time, every time",
-      description: "We value your time as much as you do."
+      icon: "bi-stars",
+      title: "Tailored Stops",
+      description: "Your day shaped around your pace and interests."
     }
   ];
 }

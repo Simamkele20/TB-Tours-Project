@@ -16,10 +16,7 @@ import { SITE_CONTENT } from "../../data/site-content";
       [trustItems]="trustItems"
       [trustVariant]="'services'"
       [introIcon]="'bi-patch-check'"
-      [introText]="introText"
-      [ctaVariant]="'default'"
-      [ctaTitle]="ctaTitle()"
-      [ctaText]="ctaText()">
+      [introText]="introText">
     </app-content-page>
   `,
   styles: []
@@ -31,9 +28,7 @@ export class ServicesPageComponent {
   readonly cards = computed(() => this.content().cards);
   readonly cardTitle = computed(() => this.content().sectionTitle);
   readonly cardSubtitle = computed(() => this.content().sectionSubtitle);
-  readonly ctaTitle = computed(() => this.content().ctaTitle);
-  readonly ctaText = computed(() => this.content().ctaText);
-  readonly introText = "We are committed to providing top-quality service, comfort and peace of mind.";
+  readonly introText = "Airport transfers, chauffeur services and custom day tours arranged around your schedule.";
 
   readonly trustItems = [
     {

@@ -8,7 +8,7 @@ Professional transport and tour booking web app for TB Tours.
 - Angular: 22.x
 - Angular CLI: 22.1.5
 - Express: 5.2.1
-- Stripe: 22.5.0
+- SMTP email quote workflow
 
 ## Project structure
 
@@ -20,9 +20,8 @@ Professional transport and tour booking web app for TB Tours.
 
 - Responsive multi-page website (Home, About, Services, Tours, Fleet, Contact)
 - Wireframe-aligned dark/gold brand styling
-- Online booking form with validation
-- Booking API endpoint
-- Stripe Checkout session endpoint
+- Contact/quote form with validation
+- Contact API endpoint for quote requests
 - Unified dev command for frontend + backend
 
 ## Run locally
@@ -45,7 +44,6 @@ copy backend\.env.example backend\.env
 
 ```env
 CLIENT_URLS=http://localhost:4200
-STRIPE_SECRET_KEY=sk_test_your_key
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your_email@gmail.com
@@ -66,7 +64,7 @@ npm run dev
 - `frontend/src/environments/environment.ts` (development)
 - `frontend/src/environments/environment.prod.ts` (production)
 
-The booking and contact API calls now use `environment.apiBaseUrl`.
+The contact API calls use `environment.apiBaseUrl`.
 
 Set your production backend URL in:
 
@@ -88,8 +86,6 @@ This repo includes `render.yaml` with one production service:
 In Render, set environment variables for each service:
 
 - `CLIENT_URLS` (comma-separated allowed origins)
-- `STRIPE_SECRET_KEY`
-- `STRIPE_CURRENCY=zar`
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`
 - `CONTACT_TO_EMAIL`
 
@@ -117,6 +113,5 @@ After Render deploys, update `environment.prod.ts` with your production backend 
 
 - GET /api/health
 - GET /api/services
-- POST /api/bookings
-- GET /api/bookings
-- POST /api/payments/checkout-session
+- POST /api/contact
+- GET /api/contact

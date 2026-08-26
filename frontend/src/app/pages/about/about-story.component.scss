@@ -1,0 +1,96 @@
+.story-page {
+  max-width: 840px;
+}
+
+.story-kicker {
+  margin: 0;
+  color: #d0a64b;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.story-page h2 {
+  margin: 0.7rem 0 0.5rem;
+  color: #213a63;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 300;
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+}
+
+.story-subtitle {
+  margin: 0 0 1.3rem;
+  color: #d0a64b;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.story-page p {
+  margin: 0 0 0.95rem;
+  color: #4d5a71;
+  line-height: 1.7;
+  font-size: 1.01rem;
+}
+
+.story-page blockquote {
+  margin: 1rem 0;
+  padding: 1rem 1.1rem;
+  border-left: 4px solid #f2b112;
+  background: #fbf7ea;
+  color: #5d4a1c;
+  font-weight: 700;
+  font-size: 1.04rem;
+}
+
+.story-figure {
+  margin: 1.4rem 0 1rem;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e2e7f0;
+  background: #fff;
+}
+
+.story-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.story-figure figcaption {
+  padding: 0.9rem 1rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.story-figure strong {
+  color: #0f1117;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.story-figure span {
+  color: #566075;
+}
+
+.closing-copy {
+  margin-top: 0.8rem;
+}
+
+.closing-brand {
+  margin-top: 0;
+  color: #22375c;
+  font-weight: 700;
+}
+
+.story-actions {
+  margin-top: 1.35rem;
+}
+
+@media (max-width: 860px) {
+  .story-page p {
+    font-size: 0.98rem;
+  }
+}
