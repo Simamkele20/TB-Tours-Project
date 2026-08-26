@@ -1,12 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Manrope:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&family=Poppins:wght@500;600;700&display=swap');
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
 :root {
-  --brand-gold: #f6b41a;
-  --brand-night: #0b0d12;
+  --font-sans: 'Jost', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-logo: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+
+  --brand-gold: #f2b112;
+  --brand-gold-soft: #ffc94d;
+  --brand-night: #0b1220;
+  --brand-night-soft: #111a2a;
   --brand-ink: #121212;
-  --brand-soft: #f5f6f7;
+  --brand-copy: #344155;
+  --brand-soft: #f8fafd;
+  --brand-border: #e4e9f1;
 }
 
 * {
@@ -17,20 +25,33 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
   color: var(--brand-ink);
-  background: transparent;
+  background: #ffffff;
   overflow-x: hidden;
 }
 
 h1,
 h2,
 h3,
-.brand,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: 0.03em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.1;
+}
+
+.brand-wordmark,
 .main-nav a,
 .btn {
-  font-family: 'Barlow Condensed', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: var(--font-logo);
 }
 
 .container {
@@ -45,11 +66,17 @@ h3,
   gap: 0.45rem;
   text-decoration: none;
   border: 0;
-  border-radius: 12px;
-  padding: 0.68rem 1.15rem;
+  border-radius: 9px;
+  padding: 0.64rem 1.1rem;
   text-transform: uppercase;
-  font-weight: 800;
+  font-weight: 700;
+  letter-spacing: 0.055em;
   cursor: pointer;
+  transition: transform 0.15s ease, filter 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
 }
 
 .btn .bi {
@@ -59,15 +86,15 @@ h3,
 
 .btn-primary {
   background: var(--brand-gold);
-  color: #121212;
+  color: #111621;
 }
 
 .btn-primary:hover {
-  background: #ffca4a;
+  background: var(--brand-gold-soft);
 }
 
 .btn-dark {
-  background: #101217;
+  background: #111621;
   color: #fdfdfd;
 }
 

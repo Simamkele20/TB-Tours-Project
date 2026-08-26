@@ -6,8 +6,9 @@ import { HomePageComponent } from "./home/home.component";
 import { AboutPageComponent } from "./about/about.component";
 import { ServicesPageComponent } from "./services/services.component";
 import { ToursPageComponent } from "./tours/tours.component";
-import { FleetPageComponent } from "./fleet/fleet.component";
 import { ContactPageComponent } from "./contact/contact.component";
+import { DestinationsPageComponent } from "./destinations/destinations.component";
+import { AboutStoryPageComponent } from "./about/about-story.component";
 
 @Component({
   selector: "app-page",
@@ -18,16 +19,18 @@ import { ContactPageComponent } from "./contact/contact.component";
     AboutPageComponent,
     ServicesPageComponent,
     ToursPageComponent,
-    FleetPageComponent,
-    ContactPageComponent
+    ContactPageComponent,
+    DestinationsPageComponent,
+    AboutStoryPageComponent
   ],
   template: `
     <ng-container [ngSwitch]="pageKey()">
       <app-home-page *ngSwitchCase="'home'"></app-home-page>
       <app-about-page *ngSwitchCase="'about'"></app-about-page>
+      <app-about-story-page *ngSwitchCase="'about-story'"></app-about-story-page>
       <app-services-page *ngSwitchCase="'services'"></app-services-page>
       <app-tours-page *ngSwitchCase="'tours'"></app-tours-page>
-      <app-fleet-page *ngSwitchCase="'fleet'"></app-fleet-page>
+      <app-destinations-page *ngSwitchCase="'destinations'"></app-destinations-page>
       <app-contact-page *ngSwitchCase="'contact'"></app-contact-page>
       <app-home-page *ngSwitchDefault></app-home-page>
     </ng-container>

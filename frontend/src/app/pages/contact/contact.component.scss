@@ -5,20 +5,20 @@
 
 .contact-header {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.6rem;
 
   h2 {
     margin: 0;
-    text-transform: uppercase;
-    color: #11141b;
-    font-size: clamp(2rem, 3.1vw, 3rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    text-transform: none;
+    color: #213a63;
+    font-size: clamp(2rem, 3.8vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.01em;
   }
 
   p {
-    margin: 0.35rem 0 0;
-    color: #4d5563;
+    margin: 0.65rem 0 0;
+    color: #5d6980;
     font-size: 1rem;
   }
 }
@@ -39,9 +39,9 @@
 }
 
 .contact-card {
-  background: #f6f7f9;
-  border: 1px solid #eceef3;
-  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #e4eaf2;
+  border-radius: 12px;
   padding: 0.95rem 0.8rem;
   text-align: center;
   min-height: 194px;
@@ -65,18 +65,18 @@
 
   h3 {
     margin: 0;
-    text-transform: uppercase;
-    color: #0f1117;
-    font-size: 1.65rem;
-    font-weight: 800;
+    text-transform: none;
+    color: #1f314d;
+    font-size: 1.35rem;
+    font-weight: 500;
     line-height: 1;
   }
 
   p {
     margin: 0.55rem 0 0.2rem;
-    color: #11141b;
+    color: #31415a;
     font-size: 0.98rem;
-    font-weight: 700;
+    font-weight: 500;
     min-height: 2.5em;
   }
 
@@ -101,35 +101,36 @@
 
 .contact-content {
   background: #ffffff;
-  border: 1px solid #e9ecf2;
-  border-radius: 12px;
+  border: 1px solid #e4eaf2;
+  border-radius: 14px;
   padding: 0.95rem;
   height: 100%;
+  box-shadow: 0 8px 20px rgba(10, 14, 24, 0.05);
 
   .contact-intro {
     margin-bottom: 0.75rem;
 
     h3 {
       margin: 0;
-      text-transform: uppercase;
-      color: #0f1117;
+      text-transform: none;
+      color: #213a63;
       font-size: 2rem;
-      font-weight: 800;
+      font-weight: 400;
       line-height: 1;
     }
 
     p {
       margin: 0.45rem 0 0;
-      color: #4f5866;
+      color: #5d6980;
       font-size: 0.93rem;
     }
   }
 }
 
 .contact-find-us {
-  background: #0f1117;
-  border: 1px solid #2b303c;
-  border-radius: 12px;
+  background: #101a2f;
+  border: 1px solid #30405a;
+  border-radius: 14px;
   padding: 0.95rem;
   color: #f2f3f5;
   height: 100%;
@@ -138,10 +139,10 @@
 
   h3 {
     margin: 0;
-    text-transform: uppercase;
+    text-transform: none;
     font-size: 2rem;
     line-height: 1;
-    font-weight: 800;
+    font-weight: 400;
     color: #ffffff;
   }
 
@@ -150,6 +151,13 @@
     color: #c4cad4;
     font-size: 0.94rem;
     line-height: 1.45;
+  }
+
+  .direct-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-bottom: 1rem;
   }
 
   .map-wrap {
@@ -249,17 +257,14 @@
 }
 
 .contact-bottom-cta {
-  border-radius: 12px;
-  border: 1px solid #252a35;
-  padding: 1.05rem 1.1rem;
+  border-radius: 0;
+  border: 0;
+  padding: 2.6rem 1.1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  background-image: linear-gradient(90deg, rgba(15, 17, 23, 0.94), rgba(15, 17, 23, 0.66)),
-    url("/images/contact-hero.jpg");
-  background-size: cover;
-  background-position: center;
+  background: #0a1530;
   margin-bottom: 1rem;
 
   @media (max-width: 900px) {
@@ -286,17 +291,19 @@
 
     .mini {
       margin: 0;
-      color: #f6b41a;
+      color: #d0a64b;
       text-transform: none;
-      font-size: 1rem;
-      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-weight: 500;
     }
 
     h3 {
       margin: 0.15rem 0 0;
       color: #ffffff;
-      font-size: 2rem;
-      font-weight: 800;
+      font-size: clamp(1.8rem, 3.4vw, 3rem);
+      font-weight: 400;
       line-height: 1;
     }
 

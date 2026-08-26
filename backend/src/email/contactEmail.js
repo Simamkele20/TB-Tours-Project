@@ -5,7 +5,6 @@ const buildContactEmailText = (contactMessage) =>
     `Name: ${contactMessage.name}`,
     `Email: ${contactMessage.email}`,
     `Phone: ${contactMessage.phone}`,
-    `Service: ${contactMessage.service}`,
     "",
     "Message:",
     contactMessage.message
