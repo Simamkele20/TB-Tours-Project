@@ -23,6 +23,15 @@ const confirmedPaymentSessions = new Set();
 
 const normalizeOrigin = (value) => String(value || "").trim().replace(/\/+$/, "").toLowerCase();
 const allowedOrigins = new Set(env.clientUrls.map(normalizeOrigin).filter(Boolean));
+const productionFallbackOrigins = new Set([
+  "https://tb-tours.co.za",
+  "https://www.tb-tours.co.za"
+]);
+
+const isAllowedOrigin = (origin) => {
+  const requestOrigin = normalizeOrigin(origin);
+  return allowedOrigins.has(requestOrigin) || productionFallbackOrigins.has(requestOrigin);
+};
 
 app.use(helmet());
 app.use(
@@ -32,12 +41,12 @@ app.use(
         return callback(null, true);
       }
 
-      const requestOrigin = normalizeOrigin(origin);
-      if (allowedOrigins.has(requestOrigin)) {
+      if (isAllowedOrigin(origin)) {
         return callback(null, true);
       }
 
-      console.warn(`[CORS] Blocked origin: ${origin}. Allowed: ${Array.from(allowedOrigins).join(", ")}`);
+      const effectiveAllowList = Array.from(new Set([...allowedOrigins, ...productionFallbackOrigins]));
+      console.warn(`[CORS] Blocked origin: ${origin}. Allowed: ${effectiveAllowList.join(", ")}`);
       return callback(null, false);
     }
   })
@@ -241,7 +250,10 @@ const confirmPaidSessionAndNotify = async (req, res) => {
       });
     }
 
-    if (confirmedPaymentSessions.has(`${session.id}:emailed`)) {
+    const emailSentKey = `${session.id}:emailed`;
+    const emailQueuedKey = `${session.id}:emailing`;
+
+    if (confirmedPaymentSessions.has(emailSentKey)) {
       return res.status(200).json({
         message: "Payment confirmed.",
         booking,
@@ -250,19 +262,40 @@ const confirmPaidSessionAndNotify = async (req, res) => {
       });
     }
 
-    await sendPaidBookingEmails({
-      mailTransporter,
-      smtpUser: env.smtpUser,
-      contactToEmail: env.contactToEmail,
-      booking
+    if (confirmedPaymentSessions.has(emailQueuedKey)) {
+      return res.status(200).json({
+        message: "Payment confirmed. Email is being sent in the background.",
+        booking,
+        email: { status: "pending" },
+        alreadyConfirmed: true
+      });
+    }
+
+    confirmedPaymentSessions.add(emailQueuedKey);
+
+    // Respond quickly after payment confirmation; email delivery continues in background.
+    setImmediate(async () => {
+      try {
+        await sendPaidBookingEmails({
+          mailTransporter,
+          smtpUser: env.smtpUser,
+          contactToEmail: env.contactToEmail,
+          booking
+        });
+
+        confirmedPaymentSessions.add(emailSentKey);
+      } catch (emailError) {
+        const details = emailError instanceof Error ? emailError.message : "Unknown email error";
+        console.error(`[EMAIL] Failed to send booking email for session ${session.id}: ${details}`);
+      } finally {
+        confirmedPaymentSessions.delete(emailQueuedKey);
+      }
     });
 
-    confirmedPaymentSessions.add(`${session.id}:emailed`);
-
     return res.status(200).json({
-      message: "Payment confirmed. Booking notification and customer confirmation sent.",
+      message: "Payment confirmed. Booking notification and customer confirmation are being sent.",
       booking,
-      email: { status: "sent" }
+      email: { status: "pending" }
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to confirm payment";

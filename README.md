@@ -75,25 +75,14 @@ Set your production backend URL in:
 apiBaseUrl: "https://your-render-backend.onrender.com/api"
 ```
 
-## GitHub branch strategy (dev + production)
+## GitHub branch strategy (production)
 
-- `develop` branch: staging/dev environment
 - `main` branch: production environment
-
-Suggested flow:
-
-```bash
-git checkout -b develop
-git push -u origin develop
-git checkout main
-git push -u origin main
-```
 
 ## Backend on Render (Web Service)
 
-This repo includes `render.yaml` with two services:
+This repo includes `render.yaml` with one production service:
 
-- `tb-tours-api-dev` from branch `develop`
 - `tb-tours-api-prod` from branch `main`
 
 In Render, set environment variables for each service:
@@ -107,35 +96,22 @@ In Render, set environment variables for each service:
 Example:
 
 ```env
-CLIENT_URLS=https://tb-tours-dev.netlify.app,https://tb-tours.netlify.app
+CLIENT_URLS=https://tb-tours.co.za,https://www.tb-tours.co.za
 ```
 
-## Frontend on Netlify
+## Frontend on Vercel
 
-This repo includes `netlify.toml` configured for Angular SPA:
+This repo is configured for Vercel deployment.
 
-- Base directory: `frontend`
-- Build command: `npm run build`
-- Publish directory: `dist/frontend/browser`
-- SPA redirect is included.
+- Production branch: `main`
+- Development/testing branch: `develop`
+- Production build command: `npm run build:prod`
+- Preview/develop build command: `npm run build:staging`
+- Output directory: `frontend/dist/frontend/browser`
 
-Create two Netlify sites:
+`vercel.json` handles SPA rewrites and environment-based build selection.
 
-- Dev site from branch `develop`
-- Production site from branch `main`
-
-After Render deploys, update `environment.prod.ts` and (optionally) `environment.ts` if your dev frontend uses hosted backend.
-
-## Frontend on Vercel (alternative)
-
-If you use Vercel instead of Netlify:
-
-- Set Root Directory to `frontend`
-- Framework Preset: Angular
-- Build command: `npm run build`
-- Output directory: `dist/frontend/browser`
-
-`frontend/vercel.json` includes SPA rewrites.
+After Render deploys, update `environment.prod.ts` with your production backend URL.
 
 ## API endpoints
 
