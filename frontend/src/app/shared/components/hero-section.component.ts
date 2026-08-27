@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, ViewChild, AfterViewInit, ElementRef } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { CommonModule } from "@angular/common";
 
@@ -20,13 +20,13 @@ export interface HeroConfig {
   template: `
     <section class="hero" [class.hero-home]="showPhone()" [style.background-image]="backgroundImage">
       <video
+        #videoElement
         *ngIf="showPhone() && !videoFailed"
         class="hero-video"
         autoplay
         muted
         loop
         playsinline
-        controls="false"
         preload="auto"
         [attr.poster]="posterImage"
         aria-hidden="true"
@@ -63,12 +63,27 @@ export interface HeroConfig {
   `,
   styleUrl: "./hero-section.component.scss"
 })
-export class HeroSectionComponent {
+export class HeroSectionComponent implements AfterViewInit {
   @Input() config!: HeroConfig;
   @Input() showPhone: () => boolean = () => false;
+  @ViewChild('videoElement') videoElement?: ElementRef<HTMLVideoElement>;
 
-  readonly heroVideoSrc = "https://tbtourscapetown.lovable.app/__l5e/assets-v1/4f82e84a-6f6a-4966-9a6e-37f3a0e4398f/hero-drive.mp4";
+  readonly heroVideoSrc = "/images/Home_Video.mp4";
   videoFailed = false;
+
+  ngAfterViewInit(): void {
+    // Ensure video starts playing when component is initialized
+    if (this.videoElement?.nativeElement) {
+      const video = this.videoElement.nativeElement;
+      video.currentTime = 0;
+      const playPromise = video.play();
+      if (playPromise) {
+        playPromise.catch((error) => {
+          console.warn("Video autoplay failed:", error);
+        });
+      }
+    }
+  }
 
   get backgroundImage(): string {
     const image = this.config?.image || "images/home-hero-mercedes-road.jpg";
