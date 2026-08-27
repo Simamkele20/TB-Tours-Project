@@ -81,4 +81,10 @@ export class ContactFormComponent {
       this.formSubmitted.emit(this.form.value);
     }
   }
+
+  resetForm(): void {
+    this.form.reset();
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+  }
 }

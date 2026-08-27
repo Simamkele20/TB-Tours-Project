@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal, OnInit } from "@angular/core";
+import { Component, computed, inject, signal, OnInit, ViewChild } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterLink, ActivatedRoute } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
@@ -71,7 +71,7 @@ import { finalize } from "rxjs";
             <h3>Send us a message</h3>
           </div>
 
-          <app-contact-form [isSending]="isSending()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
+          <app-contact-form #contactForm [isSending]="isSending()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
 
           <div *ngIf="toastMessage()" [class]="'toast toast-' + toastType()">
             <p>{{ toastMessage() }}</p>
@@ -88,6 +88,7 @@ import { finalize } from "rxjs";
 export class ContactPageComponent implements OnInit {
   private readonly bookingApi = inject(BookingApiService);
   private readonly route = inject(ActivatedRoute);
+  @ViewChild('contactForm') contactForm?: ContactFormComponent;
 
   readonly heroConfig = computed(() => SITE_CONTENT["contact"].hero);
 
@@ -120,6 +121,7 @@ export class ContactPageComponent implements OnInit {
       .pipe(finalize(() => this.isSending.set(false)))
       .subscribe({
         next: () => {
+          this.contactForm?.resetForm();
           this.showToast("Message sent successfully! We'll contact you soon.", "success");
         },
         error: (err) => {
