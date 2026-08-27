@@ -1,5 +1,8 @@
-const envFile = process.env.NODE_ENV === "production" ? ".env" : ".env.develop";
-require("dotenv").config({ path: envFile });
+// Load environment variables from .env.develop in development
+// In production, Render sets environment variables directly
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config({ path: ".env.develop" });
+}
 
 const express = require("express");
 const cors = require("cors");
@@ -55,6 +58,10 @@ app.use(
 );
 app.use(express.json({ limit: "1mb" }));
 app.use(morgan("dev"));
+
+app.get("/", (_req, res) => {
+  res.status(200).send("TB Tours API is running");
+});
 
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", service: "tb-tours-api" });
