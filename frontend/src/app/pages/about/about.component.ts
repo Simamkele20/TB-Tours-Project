@@ -19,7 +19,7 @@ import { SITE_CONTENT } from "../../data/site-content";
       <p class="about-kicker">Our Approach</p>
       <h2>Personal, professional and local</h2>
       <p>
-        TB Tours offers private tours, airport transfers and chauffeur services across Cape Town and the Cape
+        TB Tours (Pty)Ltd offers private tours, airport transfers and chauffeur services across Cape Town and the Cape
         Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.
       </p>
       <p>The company grew out of one person's time on the road - a story you can read below.</p>
@@ -31,13 +31,13 @@ import { SITE_CONTENT } from "../../data/site-content";
         <article class="about-founder-copy">
           <p class="about-kicker">The Founder</p>
           <h2>From the Road to Building a Dream</h2>
-          <p class="about-subtitle">Thabang's Story · Founder of TB Tours</p>
+          <p class="about-subtitle">Thabang's Story · Founder of TB Tours (Pty)Ltd</p>
           <div class="about-founder-divider" aria-hidden="true"></div>
           <p>
             Every journey begins somewhere.
           </p>
           <p>
-            For Thabang, the journey that eventually became TB Tours began behind the wheel.
+            For Thabang, the journey that eventually became TB Tours (Pty)Ltd began behind the wheel.
           </p>
           <p>
             Coming from a township, Thabang started his working life as an e-hailing driver, driving passengers across Cape
@@ -54,10 +54,10 @@ import { SITE_CONTENT } from "../../data/site-content";
             He wanted to build something of his own - a business built around service, reliability, dignity and personal
             connection.
           </p>
-          <p>So he took the experience he had gained on the road and turned it into a dream: TB Tours.</p>
+          <p>So he took the experience he had gained on the road and turned it into a dream: TB Tours (Pty)Ltd.</p>
           <p>
             What began with Thabang driving passengers as an e-hailing driver became the foundation for his own tour and
-            chauffeur company. Today, TB Tours gives visitors the opportunity to experience Cape Town, the Cape Peninsula
+            chauffeur company. Today, TB Tours (Pty)Ltd gives visitors the opportunity to experience Cape Town, the Cape Peninsula
             and the Winelands with a local driver who knows the roads, the destinations and the importance of making people
             feel comfortable along the way.
           </p>
@@ -71,7 +71,7 @@ import { SITE_CONTENT } from "../../data/site-content";
           </p>
           <p>
             From growing up in a township, to becoming an e-hailing driver, to taking the leap of faith to become an
-            entrepreneur and founder of TB Tours, Thabang's story is a reminder that sometimes the road you're already
+            entrepreneur and founder of TB Tours (Pty)Ltd, Thabang's story is a reminder that sometimes the road you're already
             travelling can lead you somewhere you never expected.
           </p>
           <p>Today, the journey continues.</p>
@@ -81,12 +81,12 @@ import { SITE_CONTENT } from "../../data/site-content";
           <figure class="about-founder-image">
             <img
               src="/images/about-founder.png"
-              alt="TB Tours founder and chauffeur service professional"
+              alt="TB Tours (Pty)Ltd founder and chauffeur service professional"
               loading="eager"
               fetchpriority="high" />
             <figcaption>
               <strong>Thabang</strong>
-              <span>Founder, TB Tours (Pty) Ltd</span>
+              <span>Founder, TB Tours (Pty)Ltd</span>
             </figcaption>
           </figure>
           <div class="about-founder-aside-divider" aria-hidden="true"></div>

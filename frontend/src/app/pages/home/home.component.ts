@@ -17,7 +17,7 @@ import { SITE_CONTENT } from "../../data/site-content";
     <section class="section container home-services">
       <p class="kicker">Our Services</p>
       <h2>Travel your way.</h2>
-      <p class="subtitle">From airport arrivals to private days exploring the Cape, TB Tours makes every journey comfortable, personal and effortless.</p>
+      <p class="subtitle">From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.</p>
 
       <div class="service-list">
         <a *ngFor="let item of serviceCards(); index as i" [routerLink]="item.link" class="service-item">
@@ -32,17 +32,17 @@ import { SITE_CONTENT } from "../../data/site-content";
 
     <section class="section container story-grid">
       <article class="story-card">
-        <p class="kicker">The TB Tours Experience</p>
+        <p class="kicker">The TB Tours (Pty)Ltd Experience</p>
         <h2>More than a ride. It's your Cape Town experience.</h2>
         <p>
           From the moment you arrive at Cape Town International Airport to your final sunset overlooking the Atlantic,
-          TB Tours gives you the freedom to experience the Cape at your own pace.
+          TB Tours (Pty)Ltd gives you the freedom to experience the Cape at your own pace.
         </p>
         <p>
           Travel privately with a professional local driver who knows the roads, the viewpoints and the places worth
-          stopping for. TB Tours is run personally by Thabang - not a tour-bus operation.
+          stopping for. TB Tours (Pty)Ltd is run personally by Thabang - not a tour-bus operation.
         </p>
-        <a routerLink="/about" class="btn btn-dark">Meet TB Tours</a>
+        <a routerLink="/about" class="btn btn-dark">Meet TB Tours (Pty)Ltd</a>
       </article>
       <figure class="story-image">
         <img src="https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg" alt="Chapman's Peak Drive winding above the Atlantic near Cape Town" loading="lazy" />
@@ -52,7 +52,7 @@ import { SITE_CONTENT } from "../../data/site-content";
     <section class="section container founder">
       <p class="kicker">The Founder</p>
       <h2>One journey at a time.</h2>
-      <p>From starting out as an e-hailing driver to founding TB Tours, Thabang's journey is at the heart of the company.</p>
+      <p>From starting out as an e-hailing driver to founding TB Tours (Pty)Ltd, Thabang's journey is at the heart of the company.</p>
       <a routerLink="/about/thabangs-story" class="btn btn-primary">Read Thabang's Story</a>
     </section>
 

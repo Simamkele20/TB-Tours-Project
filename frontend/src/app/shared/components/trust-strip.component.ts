@@ -19,7 +19,7 @@ export type TrustStripVariant = "services" | "tours" | "default";
         <article *ngIf="showIntro" class="strip-item strip-intro">
           <h3>
             <i [class]="'bi ' + introIcon" aria-hidden="true"></i>
-            Why Travel With <span>TB Tours?</span>
+            Why Travel With <span>TB Tours (Pty)Ltd?</span>
           </h3>
           <p>{{ introText }}</p>
         </article>
