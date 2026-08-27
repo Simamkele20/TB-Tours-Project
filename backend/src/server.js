@@ -12,12 +12,12 @@ const morgan = require("morgan");
 const { services } = require("./data");
 const { contactMessageSchema } = require("./validation");
 const { env } = require("./config/env");
-const { createMailTransporter, isAuthFailure } = require("./email/transport");
+const { createMailgunClient } = require("./email/transport");
 const { buildContactEmailText } = require("./email/contactEmail");
 
 const app = express();
-const mailTransporter = createMailTransporter(env);
-
+const mailgunClient = createMailgunClient(env);
+const mailgunDomain = "sandboxf1e866405b11426296207bac0d2f4cca.mailgun.org"; // In dev; production will use tb-tours.co.za
 const contactMessages = [];
 
 const normalizeOrigin = (value) => String(value || "").trim().replace(/\/+$/, "").toLowerCase();
@@ -80,10 +80,10 @@ app.post("/api/contact", async (req, res) => {
     });
   }
 
-  if (!mailTransporter) {
+  if (!mailgunClient) {
     return res.status(503).json({
       error: "Email sending is not configured",
-      hint: "Set SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS and CONTACT_TO_EMAIL in backend/.env"
+      hint: "Set SMTP_PASS (Mailgun API key) in backend/.env"
     });
   }
 
@@ -95,20 +95,13 @@ app.post("/api/contact", async (req, res) => {
   };
 
   try {
-    // Add timeout for email sending (60 seconds max)
-    const emailPromise = mailTransporter.sendMail({
-      from: `TB Tours Contact <${env.smtpUser}>`,
-      to: env.contactToEmail,
+    await mailgunClient.messages.create(mailgunDomain, {
+      from: "TB Tours <noreply@tb-tours.co.za>",
+      to: [env.contactToEmail],
       replyTo: contactMessage.email,
       subject: `TB Tours Contact: ${contactMessage.name}`,
       text: buildContactEmailText(contactMessage)
     });
-
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Email sending timeout")), 60000)
-    );
-
-    await Promise.race([emailPromise, timeoutPromise]);
 
     contactMessages.push({ ...contactMessage, status: "sent" });
 
@@ -117,25 +110,14 @@ app.post("/api/contact", async (req, res) => {
       contact: { id: contactMessage.id, status: "sent" }
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unable to send email";
-    const authFailure = isAuthFailure(message);
-
-    if (authFailure) {
-      return res.status(401).json({
-        error: "SMTP authentication failed",
-        hint: "For Gmail, use SMTP_USER as your full Gmail address and SMTP_PASS as a 16-character Google App Password (not your normal Gmail password).",
-        details: message
-      });
-    }
-
-    // Log timeout errors for debugging
-    if (message.includes("Timeout") || message.includes("timeout")) {
-      console.error(`[EMAIL TIMEOUT] Failed to send email for contact: ${contactMessage.name}`, message);
-    }
-
-    return res.status(500).json({
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    const errorStatus = error?.status || error?.statusCode || 500;
+    console.error("[EMAIL ERROR]", errorMessage);
+    console.error("[EMAIL ERROR DETAILS]", error);
+    return res.status(errorStatus).json({
       error: "Failed to send message",
-      details: message
+      details: errorMessage,
+      hint: "Sandbox domains only allow sending to authorized recipients. Add your email to Mailgun > Domain Settings > Authorized Recipients"
     });
   }
 });
