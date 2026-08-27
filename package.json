@@ -7,7 +7,9 @@
     "dev": "concurrently \"npm:dev:frontend\" \"npm:dev:backend\"",
     "dev:frontend": "npm --prefix frontend start",
     "dev:backend": "npm --prefix backend run dev",
-    "build": "npm --prefix frontend run build"
+    "build": "npm --prefix frontend run build",
+    "build:prod": "npm --prefix frontend run build:prod",
+    "build:staging": "npm --prefix frontend run build:staging"
   },
   "engines": {
     "node": ">=22"

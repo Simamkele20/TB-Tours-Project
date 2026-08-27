@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from "@angular/forms";
 
@@ -70,10 +70,10 @@ import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from "@angula
   styleUrl: "./contact-form.component.scss"
 })
 export class ContactFormComponent {
+  @Input() isSending = false;
   @Output() formSubmitted = new EventEmitter<any>();
 
   form: FormGroup;
-  isSending = false;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.nonNullable.group({

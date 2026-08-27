@@ -1,7 +1,7 @@
 const rawStripeSecret = (process.env.STRIPE_SECRET_KEY || "").trim();
 const rawClientUrls = process.env.CLIENT_URLS || process.env.CLIENT_URL || "http://localhost:4200";
 const clientUrls = rawClientUrls
-  .split(",")
+  .split(/[\s,]+/)
   .map((url) => url.trim())
   .filter(Boolean);
 

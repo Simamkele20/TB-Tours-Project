@@ -36,6 +36,7 @@
 }
 
 .about-image-wrap {
+  display: none;
   margin: 0;
   border-radius: 14px;
   overflow: hidden;
@@ -47,6 +48,33 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+@media (min-width: 1001px) {
+  .about-image-wrap {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1000px) {
+  .about-overview {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .about-story {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .about-story h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .about-story p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
 }
 
 .about-pillars {
@@ -131,11 +159,49 @@
   text-transform: uppercase;
   font-size: 1rem;
   color: #1a1a1a;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .value-item p {
   margin: 0;
   color: #4a4a4a;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  .values-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .value-item {
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0.9rem;
+  }
+
+  .value-item:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .value-item:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .value-item {
+    border-right: 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .value-item:last-child {
+    border-bottom: 0;
+  }
 }
 
 .about-stats {

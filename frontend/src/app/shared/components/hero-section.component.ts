@@ -9,6 +9,7 @@ export interface HeroConfig {
   description: string;
   showPhone?: boolean;
   bookButtonLabel?: string;
+  hideButton?: boolean;
 }
 
 @Component({
@@ -34,7 +35,7 @@ export interface HeroConfig {
           </a>
         </div>
 
-        <a *ngIf="!showPhone()" routerLink="/book" class="btn btn-primary">
+        <a *ngIf="!showPhone() && !(config?.hideButton)" routerLink="/book" class="btn btn-primary">
           <i class="bi bi-calendar-check" aria-hidden="true"></i>{{ config.bookButtonLabel || 'Book now' }}
         </a>
       </div>

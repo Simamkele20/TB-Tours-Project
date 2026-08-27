@@ -1,6 +1,11 @@
 {
+  "buildCommand": "if [ \"$VERCEL_ENV\" = \"production\" ]; then npm run build:prod; else npm run build:staging; fi",
   "outputDirectory": "dist/frontend/browser",
   "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://tb-tours-api-prod.onrender.com/api/$1"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

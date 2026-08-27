@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Component({
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
@@ -9,6 +10,7 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 })
 export class App {
   private readonly router = inject(Router);
+  readonly maintenanceMode = environment.maintenanceMode;
 
   readonly nav = [
     { label: 'Home', path: '/' },
@@ -27,5 +29,9 @@ export class App {
 
   isStatePage(): boolean {
     return this.router.url.startsWith('/booking-success') || this.router.url.startsWith('/booking-cancelled');
+  }
+
+  isAboutPage(): boolean {
+    return this.router.url === '/about';
   }
 }
