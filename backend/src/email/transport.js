@@ -12,9 +12,9 @@ const createMailTransporter = ({ smtpHost, smtpPort, smtpUser, smtpPass, smtpSec
     host: smtpHost,
     port: smtpPort,
     secure: smtpSecure,
-    connectionTimeout: 15000,
-    greetingTimeout: 10000,
-    socketTimeout: 20000,
+    connectionTimeout: 30000,
+    greetingTimeout: 30000,
+    socketTimeout: 30000,
     auth: {
       user: smtpUser,
       pass: smtpPass
