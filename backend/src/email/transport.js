@@ -4,7 +4,16 @@ const dns = require("node:dns");
 dns.setDefaultResultOrder("ipv4first");
 
 const createMailTransporter = ({ smtpHost, smtpPort, smtpUser, smtpPass, smtpSecure }) => {
+  console.log("Creating mail transporter with:", {
+    smtpHost,
+    smtpPort,
+    smtpUser: smtpUser ? `${smtpUser.substring(0, 5)}...` : "undefined",
+    smtpPass: smtpPass ? "***" : "undefined",
+    smtpSecure
+  });
+
   if (!smtpHost || !smtpUser || !smtpPass) {
+    console.error("Missing SMTP configuration:", { smtpHost: !!smtpHost, smtpUser: !!smtpUser, smtpPass: !!smtpPass });
     return null;
   }
 
