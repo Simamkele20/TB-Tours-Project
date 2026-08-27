@@ -46,7 +46,7 @@ export type CardGridLayout = "services" | "tours";
 
             <small *ngIf="card.meta">{{ card.meta }}</small>
 
-            <a *ngIf="card.ctaLabel && layout !== 'tours'" routerLink="/contact" class="card-link">
+            <a *ngIf="card.ctaLabel" [routerLink]="['/contact']" fragment="contact-form" class="card-link">
               {{ card.ctaLabel }}
             </a>
           </div>

@@ -79,7 +79,7 @@ import { SITE_CONTENT } from "../../data/site-content";
         <h2>Your Cape Town journey starts here.</h2>
         <p>Airport transfer, private tour or a day designed entirely around you - let's make it unforgettable.</p>
         <div class="cta-actions">
-          <a routerLink="/contact" class="btn btn-primary">Plan Your Journey</a>
+          <a [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary">Plan Your Journey</a>
           <a href="tel:+27734483958" class="btn btn-outline-gold">Call Thabang · 073 448 3958</a>
         </div>
         <a class="cta-email" href="mailto:info@tb-tours.co.za">info@tb-tours.co.za</a>

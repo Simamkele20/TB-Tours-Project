@@ -179,7 +179,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       image: "https://tbtourscapetown.lovable.app/assets/waterfront-CWKEfh8G.jpg"
     },
     sectionTitle: "Send us a message",
-    sectionSubtitle: "Booking form to be connected. For now, please WhatsApp or email us directly.",
+    sectionSubtitle: "",
     cards: [
       { title: "Contact Person", description: "Thabang", meta: "Founder", icon: "bi-person-badge-fill", image: "images/card-executive-sedan.jpg" },
       { title: "Phone / WhatsApp", description: "073 448 3958", meta: "Available daily", icon: "bi-telephone-fill", image: "images/card-waterfront.jpg" },

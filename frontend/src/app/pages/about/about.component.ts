@@ -1,6 +1,7 @@
-import { Component, computed } from "@angular/core";
+import { Component, computed, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { RouterLink } from "@angular/router";
+import { RouterLink, ActivatedRoute } from "@angular/router";
+import { ViewportScroller } from "@angular/common";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { SITE_CONTENT } from "../../data/site-content";
 
@@ -22,7 +23,7 @@ import { SITE_CONTENT } from "../../data/site-content";
         Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.
       </p>
       <p>The company grew out of one person's time on the road - a story you can read below.</p>
-      <a href="#founder-story" class="btn btn-outline-light about-approach-btn">Read Thabang's Story</a>
+      <a [routerLink]="['/about']" fragment="founder-story" class="btn btn-outline-light about-approach-btn">Read Thabang's Story</a>
     </section>
 
     <section id="founder-story" class="about-founder-section">
@@ -79,8 +80,8 @@ import { SITE_CONTENT } from "../../data/site-content";
         <aside class="about-founder-aside">
           <figure class="about-founder-image">
             <img
-              src="https://tbtourscapetown.lovable.app/assets/thabang-arrival-B7xuRbyw.jpg"
-              alt="TB Tours chauffeur opening the rear door of a white Honda for a smiling guest"
+              src="/images/about-founder.png"
+              alt="TB Tours founder and chauffeur service professional"
               loading="eager"
               fetchpriority="high" />
             <figcaption>
@@ -89,16 +90,34 @@ import { SITE_CONTENT } from "../../data/site-content";
             </figcaption>
           </figure>
           <div class="about-founder-aside-divider" aria-hidden="true"></div>
-          <a routerLink="/contact" class="btn btn-primary about-founder-plan-btn">Plan Your Journey</a>
+          <a [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary about-founder-plan-btn">Plan Your Journey</a>
         </aside>
       </div>
     </section>
   `,
   styleUrl: "./about.component.scss"
 })
-export class AboutPageComponent {
+export class AboutPageComponent implements OnInit {
   readonly heroConfig = computed(() => ({
     ...SITE_CONTENT["about"].hero,
     hideButton: true
   }));
+
+  constructor(
+    private route: ActivatedRoute,
+    private viewportScroller: ViewportScroller
+  ) {}
+
+  ngOnInit() {
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        setTimeout(() => {
+          const element = document.getElementById(fragment);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    });
+  }
 }

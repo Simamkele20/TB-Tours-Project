@@ -74,7 +74,7 @@ import { SITE_CONTENT } from "../../data/site-content";
       <p class="closing-brand">TB Tours - Your journey. Our priority.</p>
 
       <div class="story-actions">
-        <a routerLink="/contact" class="btn btn-primary">Plan Your Journey</a>
+        <a [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary">Plan Your Journey</a>
       </div>
     </section>
   `,

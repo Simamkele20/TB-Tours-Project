@@ -1,5 +1,6 @@
-import { Component, computed, inject, signal } from "@angular/core";
+import { Component, computed, inject, signal, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { RouterLink, ActivatedRoute } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { ContactFormComponent } from "../shared/contact-form.component";
 import { SITE_CONTENT } from "../../data/site-content";
@@ -45,7 +46,7 @@ import { finalize } from "rxjs";
         </article>
       </section>
 
-      <section class="contact-section">
+      <section class="contact-section" id="contact-form">
         <aside class="contact-find-us">
           <h3>Direct Contact</h3>
           <p>Prefer a quick booking conversation? Reach out directly and we can plan your route immediately.</p>
@@ -68,7 +69,6 @@ import { finalize } from "rxjs";
         <div class="contact-content">
           <div class="contact-intro">
             <h3>Send us a message</h3>
-            <p>Booking form to be connected. For now, please WhatsApp or email us directly.</p>
           </div>
 
           <app-contact-form [isSending]="isSending()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
@@ -85,8 +85,9 @@ import { finalize } from "rxjs";
   `,
   styleUrl: "./contact.component.scss"
 })
-export class ContactPageComponent {
+export class ContactPageComponent implements OnInit {
   private readonly bookingApi = inject(BookingApiService);
+  private readonly route = inject(ActivatedRoute);
 
   readonly heroConfig = computed(() => SITE_CONTENT["contact"].hero);
 
@@ -94,6 +95,19 @@ export class ContactPageComponent {
   toastType = signal<"success" | "error">("success");
   isSending = signal(false);
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
+
+  ngOnInit() {
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        setTimeout(() => {
+          const element = document.getElementById(fragment);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    });
+  }
 
   onContactFormSubmit(formData: any): void {
     if (this.isSending()) {
