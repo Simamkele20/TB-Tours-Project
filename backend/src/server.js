@@ -93,13 +93,20 @@ app.post("/api/contact", async (req, res) => {
   };
 
   try {
-    await mailTransporter.sendMail({
+    // Add timeout for email sending (60 seconds max)
+    const emailPromise = mailTransporter.sendMail({
       from: `TB Tours Contact <${env.smtpUser}>`,
       to: env.contactToEmail,
       replyTo: contactMessage.email,
       subject: `TB Tours Contact: ${contactMessage.name}`,
       text: buildContactEmailText(contactMessage)
     });
+
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Email sending timeout")), 60000)
+    );
+
+    await Promise.race([emailPromise, timeoutPromise]);
 
     contactMessages.push({ ...contactMessage, status: "sent" });
 
