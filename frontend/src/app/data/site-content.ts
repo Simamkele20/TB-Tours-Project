@@ -39,7 +39,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       image: "https://tbtourscapetown.lovable.app/__l5e/assets-v1/3dca2ca0-73a5-4c8b-afe5-e45085fb7cfe/hero-drive-poster.jpg"
     },
     sectionTitle: "Travel your way.",
-    sectionSubtitle: "From airport arrivals to private days exploring the Cape, TB Tours makes every journey comfortable, personal and effortless.",
+    sectionSubtitle: "From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.",
     cards: [
       {
         title: "Airport Transfers",
@@ -85,7 +85,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   about: {
     hero: {
       eyebrow: "About",
-      title: "TB Tours",
+      title: "TB Tours (Pty)Ltd",
       accent: "(Pty) Ltd",
       description:
         "A Cape Town-based private tour, airport transfer and chauffeur company.",
@@ -94,12 +94,12 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     sectionTitle: "Personal, professional and local",
     sectionSubtitle: "Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.",
     cards: [
-      { title: "From the Road to Building a Dream", description: "Thabang's story is the heart of TB Tours and how one journey became a business built on dignity and care.", image: "https://tbtourscapetown.lovable.app/assets/thabang-arrival-B7xuRbyw.jpg", ctaLabel: "Read the story" },
-      { title: "Built Around People", description: "Not a tour bus operation - personal service with local insight and flexibility.", image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg", ctaLabel: "Meet TB Tours" }
+      { title: "From the Road to Building a Dream", description: "Thabang's story is the heart of TB Tours (Pty)Ltd and how one journey became a business built on dignity and care.", image: "https://tbtourscapetown.lovable.app/assets/thabang-arrival-B7xuRbyw.jpg", ctaLabel: "Read the story" },
+      { title: "Built Around People", description: "Not a tour bus operation - personal service with local insight and flexibility.", image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg", ctaLabel: "Meet TB Tours (Pty)Ltd" }
     ],
     trustStrip: ["Faith", "Humility", "Integrity", "Perseverance"],
     ctaTitle: "One journey at a time.",
-    ctaText: "When you travel with TB Tours, you're travelling with the person who built his business one journey at a time."
+    ctaText: "When you travel with TB Tours (Pty)Ltd, you're travelling with the person who built his business one journey at a time."
   },
   services: {
     hero: {

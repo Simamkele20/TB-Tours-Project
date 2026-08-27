@@ -13,7 +13,7 @@ const env = {
   smtpUser: (process.env.SMTP_USER || "").trim(),
   smtpPass: (process.env.SMTP_PASS || "").replace(/\s+/g, ""),
   smtpSecure: String(process.env.SMTP_SECURE || "false").toLowerCase() === "true",
-  contactToEmail: (process.env.CONTACT_TO_EMAIL || "princetancu06@gmail.com").trim()
+  contactToEmail: (process.env.CONTACT_TO_EMAIL || "booking@tb-tours.co.za").trim()
 };
 
 module.exports = { env };

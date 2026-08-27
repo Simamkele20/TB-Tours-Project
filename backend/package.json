@@ -1,7 +1,7 @@
 {
   "name": "tb-tours-api",
   "version": "1.0.0",
-  "description": "Backend API for TB Tours quote and contact workflow",
+  "description": "Backend API for TB Tours (Pty)Ltd quote and contact workflow",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
