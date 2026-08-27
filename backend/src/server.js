@@ -116,6 +116,14 @@ app.post("/api/contact", async (req, res) => {
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to send email";
+    const errorStack = error instanceof Error ? error.stack : "";
+    
+    console.error("Email sending failed:", {
+      message,
+      errorStack,
+      errorType: error?.constructor?.name
+    });
+
     const authFailure = isAuthFailure(message);
 
     if (authFailure) {
