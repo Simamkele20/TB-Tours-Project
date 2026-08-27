@@ -13,7 +13,7 @@ import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from "@angula
         <input
           id="name"
           type="text"
-          placeholder="Full Name *"
+          placeholder="Full name"
           formControlName="name"
           [class.error]="isFieldInvalid('name')" />
       </div>
@@ -23,7 +23,7 @@ import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from "@angula
         <input
           id="email"
           type="email"
-          placeholder="Email Address *"
+          placeholder="Email"
           formControlName="email"
           [class.error]="isFieldInvalid('email')" />
       </div>
@@ -33,29 +33,16 @@ import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from "@angula
         <input
           id="phone"
           type="tel"
-          placeholder="Phone Number *"
+          placeholder="Phone"
           formControlName="phone"
           [class.error]="isFieldInvalid('phone')" />
       </div>
 
       <div class="form-group">
-        <label for="service">Service Interested In</label>
-        <select id="service" formControlName="service" [class.error]="isFieldInvalid('service')">
-          <option value="">Service Interested In</option>
-          <option value="airport-transfer">Airport Transfer</option>
-          <option value="city-tour">City Tour</option>
-          <option value="wine-tour">Wine Tour</option>
-          <option value="garden-route">Garden Route Tour</option>
-          <option value="event-transport">Event Transport</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="message">Your Message *</label>
+        <label for="message">Your Journey *</label>
         <textarea
           id="message"
-          placeholder="Your Message *"
+          placeholder="Your journey"
           formControlName="message"
           rows="4"
           [class.error]="isFieldInvalid('message')"></textarea>
@@ -63,7 +50,7 @@ import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from "@angula
 
       <button type="submit" class="btn btn-primary" [disabled]="!form.valid || isSending">
         <i class="bi" [class.bi-hourglass]="isSending" [class.bi-send-fill]="!isSending" aria-hidden="true"></i>
-        {{ isSending ? "Sending..." : "Send Message" }}
+        {{ isSending ? "Sending..." : "Send Enquiry" }}
       </button>
     </form>
   `,
@@ -80,7 +67,6 @@ export class ContactFormComponent {
       name: ["", [Validators.required, Validators.minLength(2)]],
       email: ["", [Validators.required, Validators.email]],
       phone: ["", [Validators.required, Validators.minLength(7)]],
-      service: ["", [Validators.required]],
       message: ["", [Validators.required, Validators.minLength(5)]]
     });
   }

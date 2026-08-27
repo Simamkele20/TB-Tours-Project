@@ -2,7 +2,7 @@
   <section class="maintenance" aria-labelledby="maintenance-title">
     <div class="maintenance-backdrop"></div>
     <div class="maintenance-content">
-      <img class="maintenance-logo" src="images/tb-tours-logo-transparent.png" alt="TB Tours logo" />
+      <img class="maintenance-logo" src="images/tb-tours-logo-new.png" alt="TB Tours logo" />
       <p class="maintenance-eyebrow">TB Tours</p>
       <h1 id="maintenance-title">We are still busy with development</h1>
       <p>
@@ -11,19 +11,27 @@
     </div>
   </section>
 } @else {
-  <header class="site-header" [class.home-overlay]="isHome()" [class.solid-header]="isStatePage()">
-    <a routerLink="/" class="brand brand-corner" aria-label="TB Tours home">
-      <img class="brand-logo" src="images/tb-tours-logo-transparent.png" alt="TB Tours logo" />
-    </a>
-
+  <header class="site-header" [class.home-overlay]="!isScrolled()" [class.solid-header]="isScrolled()" [class.menu-open]="isMobileMenuOpen()">
     <div class="container header-inner">
-      <nav class="main-nav" aria-label="Primary navigation">
+      <a routerLink="/" class="brand" aria-label="TB Tours home">
+        <img class="brand-logo" src="images/tb-tours-logo-new.png" alt="TB Tours logo" />
+        <span class="brand-wordmark" aria-hidden="true">
+          <strong>TB Tours</strong>
+          <small>CAPE TOWN</small>
+        </span>
+      </a>
+
+      <button class="menu-toggle" type="button" [attr.aria-expanded]="isMobileMenuOpen()" [attr.aria-label]="mobileMenuAriaLabel()" (click)="toggleMobileMenu()">
+        <i class="bi" [class.bi-list]="!isMobileMenuOpen()" [class.bi-x-lg]="isMobileMenuOpen()" aria-hidden="true"></i>
+      </button>
+
+      <nav class="main-nav" [class.mobile-open]="isMobileMenuOpen()" aria-label="Primary navigation">
         @for (item of nav; track item.path) {
-          <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.path === '/' }">{{ item.label }}</a>
+          <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.path === '/' }" (click)="closeMobileMenu()">{{ item.label }}</a>
         }
       </nav>
 
-      <a routerLink="/book" class="btn btn-primary header-book-now"><i class="bi bi-calendar-check" aria-hidden="true"></i>Book now</a>
+      <a [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary header-book-now" (click)="closeMobileMenu()"><i class="bi bi-calendar-check" aria-hidden="true"></i>Book now</a>
     </div>
   </header>
 
@@ -34,33 +42,38 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <img class="footer-logo" src="images/tb-tours-logo-transparent.png" alt="TB Tours logo" />
-        <p>Professional transport and tour services across South Africa.</p>
-        <p>Travel in comfort. Arrive in style.</p>
+        <img class="footer-logo" src="images/tb-tours-logo-new.png" alt="TB Tours logo" />
+        <p>Private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands.</p>
+        <span class="footer-accent" aria-hidden="true"></span>
       </div>
       <div class="footer-links">
-        <h3>Quick links</h3>
-        <a routerLink="/">Home <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
-        <a routerLink="/about">About Us <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
-        <a routerLink="/services">Services <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
-        <a routerLink="/tours">Tours <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
-        <a routerLink="/contact">Contact <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
+        <h3>Explore</h3>
+        <a routerLink="/">Home</a>
+        <a routerLink="/tours">Tours</a>
+        <a routerLink="/services">Services</a>
+        <a routerLink="/destinations">Destinations</a>
+        <a routerLink="/about">About</a>
+        <a routerLink="/contact">Contact</a>
       </div>
       <div class="footer-contact">
         <h3>Contact</h3>
-        <p><i class="bi bi-telephone-fill" aria-hidden="true"></i>073 448 3958</p>
-        <p><i class="bi bi-envelope-fill" aria-hidden="true"></i>traveling.buddies@tb-tours.com</p>
-        <p><i class="bi bi-geo-alt-fill" aria-hidden="true"></i>Cape Town, Western Cape</p>
-      </div>
-      <div class="footer-social">
-        <h3>Follow us</h3>
-        <div class="social-links">
-          <a href="https://www.facebook.com/profile.php?id=61591958549635" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="bi bi-facebook" aria-hidden="true"></i></a>
-          <a href="https://www.instagram.com/tb.tours.cpt?igsh=ZzV3bTMxNGhnbXBt" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bi bi-instagram" aria-hidden="true"></i></a>
-          <a href="https://wa.me/27734483958" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
-        </div>
+        <p>Thabang</p>
+        <p><a href="tel:+27734483958">073 448 3958</a></p>
+        <p><a href="mailto:info@tb-tours.co.za">info@tb-tours.co.za</a></p>
+        <p>Cape Town, South Africa</p>
+        <ul class="footer-services" aria-label="Services list">
+          <li>Airport Transfers</li>
+          <li>Cape Peninsula Tours</li>
+          <li>Cape Town City Tours</li>
+          <li>Winelands Tours</li>
+          <li>Private Chauffeur Services</li>
+          <li>Custom Day Tours</li>
+        </ul>
       </div>
     </div>
-    <p class="copyright">© {{ year }} TB Tours. All rights reserved.</p>
+    <div class="container footer-meta">
+      <p class="copyright">© {{ year }} TB Tours (Pty) Ltd. All rights reserved.</p>
+      <p class="footer-tagline">Private Tours · Transfers · Chauffeur</p>
+    </div>
   </footer>
 }

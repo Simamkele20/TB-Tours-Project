@@ -7,7 +7,7 @@ export interface TrustItem {
   description: string;
 }
 
-export type TrustStripVariant = "services" | "tours" | "fleet" | "default";
+export type TrustStripVariant = "services" | "tours" | "default";
 
 @Component({
   selector: "app-trust-strip",
@@ -26,11 +26,7 @@ export type TrustStripVariant = "services" | "tours" | "fleet" | "default";
 
         <article *ngFor="let item of items; trackBy: trackByTitle" [class]="itemClass">
           <i [class]="'bi ' + item.icon" aria-hidden="true"></i>
-          <div *ngIf="variant !== 'fleet'">
-            <h4>{{ item.title }}</h4>
-            <p>{{ item.description }}</p>
-          </div>
-          <div *ngIf="variant === 'fleet'">
+          <div>
             <h4>{{ item.title }}</h4>
             <p>{{ item.description }}</p>
           </div>
