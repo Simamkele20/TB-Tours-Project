@@ -15,7 +15,7 @@ export type CTAVariant = "tours" | "default";
       <p class="cta-text">{{ text }}</p>
 
       <div class="cta-actions">
-        <a routerLink="/contact" class="btn btn-primary">{{ actionLabel }}</a>
+        <a [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary">{{ actionLabel }}</a>
         <a href="tel:+27734483958" class="btn btn-outline-gold">Call Thabang · 073 448 3958</a>
       </div>
 

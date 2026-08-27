@@ -20,16 +20,19 @@ export interface HeroConfig {
   template: `
     <section class="hero" [class.hero-home]="showPhone()" [style.background-image]="backgroundImage">
       <video
-        *ngIf="showPhone()"
+        *ngIf="showPhone() && !videoFailed"
         class="hero-video"
         autoplay
         muted
         loop
         playsinline
-        preload="metadata"
+        controls="false"
+        preload="auto"
         [attr.poster]="posterImage"
-        aria-hidden="true">
+        aria-hidden="true"
+        (error)="onVideoError($event)">
         <source [src]="heroVideoSrc" type="video/mp4" />
+        Your browser does not support the video tag.
       </video>
 
       <div class="container hero-content">
@@ -42,7 +45,7 @@ export interface HeroConfig {
         <p class="description">{{ config.description }}</p>
 
         <div class="hero-actions" *ngIf="showPhone()">
-          <a routerLink="/contact" class="btn btn-outline-gold">
+          <a [routerLink]="['/contact']" fragment="contact-form" class="btn btn-outline-gold">
             Plan Your Journey
           </a>
           <a routerLink="/tours" class="btn btn-outline-light">
@@ -52,7 +55,7 @@ export interface HeroConfig {
 
         <p class="hero-trust" *ngIf="showPhone()">Private · Professional · Personal</p>
 
-        <a *ngIf="!showPhone() && !!config?.bookButtonLabel" routerLink="/contact" class="btn btn-primary">
+        <a *ngIf="!showPhone() && !!config?.bookButtonLabel" [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary">
           <i class="bi bi-envelope-fill" aria-hidden="true"></i>{{ config.bookButtonLabel }}
         </a>
       </div>
@@ -65,6 +68,7 @@ export class HeroSectionComponent {
   @Input() showPhone: () => boolean = () => false;
 
   readonly heroVideoSrc = "https://tbtourscapetown.lovable.app/__l5e/assets-v1/4f82e84a-6f6a-4966-9a6e-37f3a0e4398f/hero-drive.mp4";
+  videoFailed = false;
 
   get backgroundImage(): string {
     const image = this.config?.image || "images/home-hero-mercedes-road.jpg";
@@ -73,5 +77,10 @@ export class HeroSectionComponent {
 
   get posterImage(): string {
     return this.config?.image || "images/home-hero-mercedes-road.jpg";
+  }
+
+  onVideoError(event: Event): void {
+    console.warn("Video failed to load, falling back to background image", event);
+    this.videoFailed = true;
   }
 }
