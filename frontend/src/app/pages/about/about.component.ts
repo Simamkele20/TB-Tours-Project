@@ -1,96 +1,123 @@
-import { Component, computed } from "@angular/core";
+import { Component, computed, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { RouterLink, ActivatedRoute } from "@angular/router";
+import { ViewportScroller } from "@angular/common";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { SITE_CONTENT } from "../../data/site-content";
 
 @Component({
   selector: "app-about-page",
   standalone: true,
-  imports: [CommonModule, HeroSectionComponent],
+  imports: [CommonModule, RouterLink, HeroSectionComponent],
   template: `
     <app-hero-section
       [config]="heroConfig()"
       [showPhone]="() => false">
     </app-hero-section>
 
-    <section class="about-overview section container">
-      <article class="about-story">
-        <p class="about-kicker">Who we are</p>
-        <h2>Welcome to TB Tours</h2>
-        <p>
-          Founded with a passion for travel and a commitment to service excellence, TB Tours was created to offer more
-          than just transport. We deliver peace of mind, comfort and memorable experiences.
-        </p>
-        <p>
-          Whether you're arriving at the airport, exploring the scenic beauty of the Western Cape, or needing reliable
-          transport for your business or event, we are here to make your journey exceptional.
-        </p>
-        <p>
-          With professional drivers, well-maintained vehicles and a customer-first approach, we go the extra mile to
-          ensure every trip is smooth, safe and on time.
-        </p>
-        <p class="about-signature">Thabang Sekhobo</p>
-        <p class="about-role">Founders & owner</p>
-      </article>
-
-      <figure class="about-image-wrap">
-        <img src="images/about-hero.jpg" alt="TB Tours team and vehicle" />
-      </figure>
+    <section class="section container about-story-block">
+      <p class="about-kicker">Our Approach</p>
+      <h2>Personal, professional and local</h2>
+      <p>
+        TB Tours offers private tours, airport transfers and chauffeur services across Cape Town and the Cape
+        Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.
+      </p>
+      <p>The company grew out of one person's time on the road - a story you can read below.</p>
+      <a [routerLink]="['/about']" fragment="founder-story" class="btn btn-outline-light about-approach-btn">Read Thabang's Story</a>
     </section>
 
-    <section class="about-pillars container">
-      <article class="pillar-card">
-        <h3><i class="bi bi-bullseye" aria-hidden="true"></i>Our mission</h3>
-        <p>
-          To provide safe, reliable and comfortable transport and tour services while delivering exceptional customer
-          service and creating unforgettable travel experiences.
-        </p>
-      </article>
-      <article class="pillar-card">
-        <h3><i class="bi bi-eye" aria-hidden="true"></i>Our vision</h3>
-        <p>
-          To become one of South Africa's most trusted and preferred transport and tour companies, known for our
-          professionalism, reliability and excellence.
-        </p>
-      </article>
-    </section>
+    <section id="founder-story" class="about-founder-section">
+      <div class="section container about-founder-grid">
+        <article class="about-founder-copy">
+          <p class="about-kicker">The Founder</p>
+          <h2>From the Road to Building a Dream</h2>
+          <p class="about-subtitle">Thabang's Story · Founder of TB Tours</p>
+          <div class="about-founder-divider" aria-hidden="true"></div>
+          <p>
+            Every journey begins somewhere.
+          </p>
+          <p>
+            For Thabang, the journey that eventually became TB Tours began behind the wheel.
+          </p>
+          <p>
+            Coming from a township, Thabang started his working life as an e-hailing driver, driving passengers across Cape
+            Town and getting to know the city one journey at a time. What started as a way to make a living gradually became
+            something more.
+          </p>
+          <p>
+            Behind the wheel, he discovered that he genuinely enjoyed meeting people, hearing their stories and showing
+            them the different sides of Cape Town. Every passenger was different. Every destination was different. And every
+            journey taught him something.
+          </p>
+          <p>But Thabang had a bigger vision.</p>
+          <p>
+            He wanted to build something of his own - a business built around service, reliability, dignity and personal
+            connection.
+          </p>
+          <p>So he took the experience he had gained on the road and turned it into a dream: TB Tours.</p>
+          <p>
+            What began with Thabang driving passengers as an e-hailing driver became the foundation for his own tour and
+            chauffeur company. Today, TB Tours gives visitors the opportunity to experience Cape Town, the Cape Peninsula
+            and the Winelands with a local driver who knows the roads, the destinations and the importance of making people
+            feel comfortable along the way.
+          </p>
 
-    <section class="about-values section container">
-      <h2>Our values</h2>
-      <div class="values-grid">
-        <article class="value-item">
-          <i class="bi bi-shield-check"></i>
-          <h3>Safety</h3>
-          <p>We put your safety above everything.</p>
+          <blockquote>"Where you start does not have to determine where you finish."</blockquote>
+
+          <p>For Thabang, this journey is about more than business.</p>
+          <p>
+            His Christian faith is an important part of who he is and the values he brings to his work - faith, humility,
+            integrity, perseverance and treating people with respect.
+          </p>
+          <p>
+            From growing up in a township, to becoming an e-hailing driver, to taking the leap of faith to become an
+            entrepreneur and founder of TB Tours, Thabang's story is a reminder that sometimes the road you're already
+            travelling can lead you somewhere you never expected.
+          </p>
+          <p>Today, the journey continues.</p>
         </article>
-        <article class="value-item">
-          <i class="bi bi-person-badge"></i>
-          <h3>Professionalism</h3>
-          <p>Experienced team, professional service.</p>
-        </article>
-        <article class="value-item">
-          <i class="bi bi-clock-history"></i>
-          <h3>Punctuality</h3>
-          <p>On time, every time. You can count on us.</p>
-        </article>
-        <article class="value-item">
-          <i class="bi bi-heart"></i>
-          <h3>Customer care</h3>
-          <p>Your satisfaction is our priority.</p>
-        </article>
-        <article class="value-item">
-          <i class="bi bi-star"></i>
-          <h3>Excellence</h3>
-          <p>We strive for excellence in every journey.</p>
-        </article>
+
+        <aside class="about-founder-aside">
+          <figure class="about-founder-image">
+            <img
+              src="/images/about-founder.png"
+              alt="TB Tours founder and chauffeur service professional"
+              loading="eager"
+              fetchpriority="high" />
+            <figcaption>
+              <strong>Thabang</strong>
+              <span>Founder, TB Tours (Pty) Ltd</span>
+            </figcaption>
+          </figure>
+          <div class="about-founder-aside-divider" aria-hidden="true"></div>
+          <a [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary about-founder-plan-btn">Plan Your Journey</a>
+        </aside>
       </div>
     </section>
   `,
   styleUrl: "./about.component.scss"
 })
-export class AboutPageComponent {
+export class AboutPageComponent implements OnInit {
   readonly heroConfig = computed(() => ({
     ...SITE_CONTENT["about"].hero,
     hideButton: true
   }));
+
+  constructor(
+    private route: ActivatedRoute,
+    private viewportScroller: ViewportScroller
+  ) {}
+
+  ngOnInit() {
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        setTimeout(() => {
+          const element = document.getElementById(fragment);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    });
+  }
 }

@@ -3,14 +3,13 @@ import { CommonModule } from "@angular/common";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { CardGridComponent } from "../../shared/components/card-grid.component";
 import { TrustStripComponent, type TrustItem } from "../../shared/components/trust-strip.component";
-import { CtaSectionComponent, type CTAVariant } from "../../shared/components/cta-section.component";
 import { type Card, type CardGridLayout } from "../../shared/components/card-grid.component";
 import { type HeroConfig } from "../../shared/components/hero-section.component";
 
 @Component({
   selector: "app-content-page",
   standalone: true,
-  imports: [CommonModule, HeroSectionComponent, CardGridComponent, TrustStripComponent, CtaSectionComponent],
+  imports: [CommonModule, HeroSectionComponent, CardGridComponent, TrustStripComponent],
   template: `
     <app-hero-section
       [config]="heroConfig"
@@ -33,12 +32,6 @@ import { type HeroConfig } from "../../shared/components/hero-section.component"
       [introIcon]="introIcon"
       [introText]="introText">
     </app-trust-strip>
-
-    <app-cta-section
-      [variant]="ctaVariant"
-      [title]="ctaTitle"
-      [text]="ctaText">
-    </app-cta-section>
   `,
   styles: []
 })
@@ -49,10 +42,7 @@ export class ContentPageComponent {
   @Input() cardSubtitle = "";
   @Input() cardLayout: CardGridLayout = "services";
   @Input() trustItems: TrustItem[] = [];
-  @Input() trustVariant: "services" | "tours" | "fleet" | "default" = "default";
+  @Input() trustVariant: "services" | "tours" | "default" = "default";
   @Input() introIcon = "bi-patch-check";
   @Input() introText = "";
-  @Input() ctaVariant: CTAVariant = "default";
-  @Input() ctaTitle = "";
-  @Input() ctaText = "";
 }

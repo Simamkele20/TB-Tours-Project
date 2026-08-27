@@ -14,7 +14,7 @@ export interface Card {
   duration?: string;
 }
 
-export type CardGridLayout = "services" | "tours" | "fleet";
+export type CardGridLayout = "services" | "tours";
 
 @Component({
   selector: "app-card-grid",
@@ -38,15 +38,6 @@ export type CardGridLayout = "services" | "tours" | "fleet";
             <h3>{{ card.title }}</h3>
             <p>{{ card.description }}</p>
 
-            <div *ngIf="layout === 'fleet' && (card.passengers || card.bags)" class="fleet-meta">
-              <span *ngIf="card.passengers" class="fleet-meta-item">
-                <i class="bi bi-person-fill" aria-hidden="true"></i>{{ card.passengers }}
-              </span>
-              <span *ngIf="card.bags" class="fleet-meta-item">
-                <i class="bi bi-briefcase-fill" aria-hidden="true"></i>{{ card.bags }}
-              </span>
-            </div>
-
             <div *ngIf="(layout === 'services' || layout === 'tours') && (card.duration || card.passengers)"
                  class="card-meta-row">
               <span *ngIf="card.duration">{{ card.duration }}</span>
@@ -55,7 +46,7 @@ export type CardGridLayout = "services" | "tours" | "fleet";
 
             <small *ngIf="card.meta">{{ card.meta }}</small>
 
-            <a *ngIf="card.ctaLabel && layout !== 'tours'" routerLink="/book" class="card-link">
+            <a *ngIf="card.ctaLabel" [routerLink]="['/contact']" fragment="contact-form" class="card-link">
               {{ card.ctaLabel }}
             </a>
           </div>

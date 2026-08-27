@@ -7,6 +7,7 @@ export interface HeroConfig {
   title: string;
   accent: string;
   description: string;
+  image?: string;
   showPhone?: boolean;
   bookButtonLabel?: string;
   hideButton?: boolean;
@@ -18,25 +19,44 @@ export interface HeroConfig {
   imports: [RouterLink, CommonModule],
   template: `
     <section class="hero" [class.hero-home]="showPhone()" [style.background-image]="backgroundImage">
+      <video
+        *ngIf="showPhone() && !videoFailed"
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        controls="false"
+        preload="auto"
+        [attr.poster]="posterImage"
+        aria-hidden="true"
+        (error)="onVideoError($event)">
+        <source [src]="heroVideoSrc" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
       <div class="container hero-content">
         <p class="eyebrow">{{ config.eyebrow }}</p>
         <h1>
           {{ config.title }}
           <span>{{ config.accent }}</span>
         </h1>
+        <p class="hero-subtitle" *ngIf="showPhone()">Discover Cape Town</p>
         <p class="description">{{ config.description }}</p>
 
         <div class="hero-actions" *ngIf="showPhone()">
-          <a href="tel:+27734483958" class="btn btn-primary btn-phone">
-            <i class="bi bi-telephone-fill" aria-hidden="true"></i>073 448 3958
+          <a [routerLink]="['/contact']" fragment="contact-form" class="btn btn-outline-gold">
+            Plan Your Journey
           </a>
-          <a routerLink="/book" class="btn btn-outline-gold">
-            <i class="bi bi-car-front-fill" aria-hidden="true"></i>{{ config.bookButtonLabel || 'Book your ride' }}
+          <a routerLink="/tours" class="btn btn-outline-light">
+            Explore Our Tours
           </a>
         </div>
 
-        <a *ngIf="!showPhone() && !(config?.hideButton)" routerLink="/book" class="btn btn-primary">
-          <i class="bi bi-calendar-check" aria-hidden="true"></i>{{ config.bookButtonLabel || 'Book now' }}
+        <p class="hero-trust" *ngIf="showPhone()">Private · Professional · Personal</p>
+
+        <a *ngIf="!showPhone() && !!config?.bookButtonLabel" [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary">
+          <i class="bi bi-envelope-fill" aria-hidden="true"></i>{{ config.bookButtonLabel }}
         </a>
       </div>
     </section>
@@ -47,5 +67,20 @@ export class HeroSectionComponent {
   @Input() config!: HeroConfig;
   @Input() showPhone: () => boolean = () => false;
 
-  readonly backgroundImage = "linear-gradient(90deg, rgba(6, 8, 12, 0.62), rgba(6, 8, 12, 0.22)), url(images/home-hero-mercedes-road.jpg)";
+  readonly heroVideoSrc = "https://tbtourscapetown.lovable.app/__l5e/assets-v1/4f82e84a-6f6a-4966-9a6e-37f3a0e4398f/hero-drive.mp4";
+  videoFailed = false;
+
+  get backgroundImage(): string {
+    const image = this.config?.image || "images/home-hero-mercedes-road.jpg";
+    return `linear-gradient(90deg, rgba(6, 8, 12, 0.62), rgba(6, 8, 12, 0.22)), url(${image})`;
+  }
+
+  get posterImage(): string {
+    return this.config?.image || "images/home-hero-mercedes-road.jpg";
+  }
+
+  onVideoError(event: Event): void {
+    console.warn("Video failed to load, falling back to background image", event);
+    this.videoFailed = true;
+  }
 }

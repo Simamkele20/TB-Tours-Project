@@ -12,10 +12,6 @@ services:
         value: production
       - key: CLIENT_URLS
         sync: false
-      - key: STRIPE_SECRET_KEY
-        sync: false
-      - key: STRIPE_CURRENCY
-        value: zar
       - key: SMTP_HOST
         sync: false
       - key: SMTP_PORT

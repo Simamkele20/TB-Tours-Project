@@ -1,37 +1,24 @@
-const nodemailer = require("nodemailer");
-const dns = require("node:dns");
+const FormData = require("form-data");
+const Mailgun = require("mailgun.js");
 
-dns.setDefaultResultOrder("ipv4first");
-
-const createMailTransporter = ({ smtpHost, smtpPort, smtpUser, smtpPass, smtpSecure }) => {
-  console.log("Creating mail transporter with:", {
-    smtpHost,
-    smtpPort,
-    smtpUser: smtpUser ? `${smtpUser.substring(0, 5)}...` : "undefined",
-    smtpPass: smtpPass ? "***" : "undefined",
-    smtpSecure
-  });
-
-  if (!smtpHost || !smtpUser || !smtpPass) {
-    console.error("Missing SMTP configuration:", { smtpHost: !!smtpHost, smtpUser: !!smtpUser, smtpPass: !!smtpPass });
+const createMailgunClient = ({ smtpPass }) => {
+  if (!smtpPass) {
+    console.error("[MAILGUN] Missing API key (SMTP_PASS)");
     return null;
   }
 
-  return nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
-    secure: smtpSecure,
-    family: 4,
-    connectionTimeout: 30000,
-    greetingTimeout: 30000,
-    socketTimeout: 30000,
-    auth: {
-      user: smtpUser,
-      pass: smtpPass
-    }
-  });
+  try {
+    const mailgun = new Mailgun(FormData);
+    const mg = mailgun.client({
+      username: "api",
+      key: smtpPass
+    });
+    console.log("[MAILGUN] Client initialized successfully");
+    return mg;
+  } catch (error) {
+    console.error("[MAILGUN] Failed to initialize:", error.message);
+    return null;
+  }
 };
 
-const isAuthFailure = (message) => /535|badcredentials|username and password not accepted/i.test(message);
-
-module.exports = { createMailTransporter, isAuthFailure };
+module.exports = { createMailgunClient };
