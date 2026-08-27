@@ -22,14 +22,14 @@ const createInvoicePdf = (booking) =>
 
     if (logoAssetPath) {
       doc.image(logoAssetPath, 50, 44, { fit: [96, 72], align: "left" });
-      doc.fillColor("#121212").fontSize(22).text("TB Tours Invoice", 158, 58);
+      doc.fillColor("#121212").fontSize(22).text("TB Tours (Pty)Ltd Invoice", 158, 58);
       doc.moveDown(1.8);
     } else {
-      doc.fillColor("#121212").fontSize(22).text("TB Tours Invoice", { align: "left" });
+      doc.fillColor("#121212").fontSize(22).text("TB Tours (Pty)Ltd Invoice", { align: "left" });
       doc.moveDown(0.3);
     }
 
-    doc.fontSize(10).fillColor("#5b6578").text("TB Tours");
+    doc.fontSize(10).fillColor("#5b6578").text("TB Tours (Pty)Ltd");
     doc.text("Cape Town, Western Cape");
     doc.text("traveling.buddies@tb-tours.com");
     doc.text("073 448 3958");
@@ -60,7 +60,7 @@ const createInvoicePdf = (booking) =>
     }
 
     doc.moveDown(1.5);
-    doc.fontSize(10).fillColor("#5b6578").text("Thank you for choosing TB Tours.");
+    doc.fontSize(10).fillColor("#5b6578").text("Thank you for choosing TB Tours (Pty)Ltd.");
     doc.text("This document serves as your payment invoice.");
 
     doc.end();

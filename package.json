@@ -1,7 +1,7 @@
 {
   "name": "tb-tours",
   "version": "1.0.0",
-  "description": "TB Tours full-stack app (Angular + Node.js)",
+  "description": "TB Tours (Pty)Ltd full-stack app (Angular + Node.js)",
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm:dev:frontend\" \"npm:dev:backend\"",

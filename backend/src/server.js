@@ -62,7 +62,7 @@ app.use(express.json({ limit: "1mb" }));
 app.use(morgan("dev"));
 
 app.get("/", (_req, res) => {
-  res.status(200).send("TB Tours API is running");
+  res.status(200).send("TB Tours (Pty)Ltd API is running");
 });
 
 app.get("/api/health", (_req, res) => {
@@ -98,10 +98,10 @@ app.post("/api/contact", async (req, res) => {
 
   try {
     await mailgunClient.messages.create(mailgunDomain, {
-      from: "TB Tours <noreply@tb-tours.co.za>",
+      from: "TB Tours (Pty)Ltd <noreply@tb-tours.co.za>",
       to: [env.contactToEmail],
       replyTo: contactMessage.email,
-      subject: `TB Tours Contact: ${contactMessage.name}`,
+      subject: `TB Tours (Pty)Ltd Contact: ${contactMessage.name}`,
       text: buildContactEmailText(contactMessage)
     });
 
@@ -129,5 +129,5 @@ app.get("/api/contact", (_req, res) => {
 });
 
 app.listen(env.port, () => {
-  console.log(`TB Tours API running on http://localhost:${env.port}`);
+  console.log(`TB Tours (Pty)Ltd API running on http://localhost:${env.port}`);
 });

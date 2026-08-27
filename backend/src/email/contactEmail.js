@@ -1,6 +1,6 @@
 const buildContactEmailText = (contactMessage) =>
   [
-    "New contact message from TB Tours website",
+    "New contact message from TB Tours (Pty)Ltd website",
     "",
     `Name: ${contactMessage.name}`,
     `Email: ${contactMessage.email}`,

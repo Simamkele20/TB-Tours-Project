@@ -1,6 +1,6 @@
-# TB Tours - Angular + Node.js
+# TB Tours (Pty)Ltd - Angular + Node.js
 
-Professional transport and tour booking web app for TB Tours.
+Professional transport and tour booking web app for TB Tours (Pty)Ltd.
 
 ## Stack (latest at setup time)
 

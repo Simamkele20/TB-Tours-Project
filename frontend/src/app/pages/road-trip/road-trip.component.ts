@@ -16,7 +16,7 @@ import { Component } from "@angular/core";
         <div class="embed-wrap">
           <iframe
             src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4WYpdgoIcn6?utm_source=generator"
-            title="TB Tours Road Trip Playlist"
+            title="TB Tours (Pty)Ltd Road Trip Playlist"
             loading="lazy"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             referrerpolicy="no-referrer"
