@@ -17,9 +17,7 @@ const { buildContactEmailText } = require("./email/contactEmail");
 
 const app = express();
 const mailgunClient = createMailgunClient(env);
-const mailgunDomain = process.env.NODE_ENV === "production" 
-  ? "tb-tours.co.za" 
-  : "sandboxf1e866405b11426296207bac0d2f4cca.mailgun.org";
+const mailgunDomain = "sandboxf1e866405b11426296207bac0d2f4cca.mailgun.org"; // Using sandbox for testing
 const contactMessages = [];
 
 const normalizeOrigin = (value) => String(value || "").trim().replace(/\/+$/, "").toLowerCase();
