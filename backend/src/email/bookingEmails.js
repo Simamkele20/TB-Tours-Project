@@ -2,7 +2,7 @@ const { createInvoicePdf } = require("./invoice");
 
 const sendPaidBookingEmails = async ({ mailTransporter, smtpUser, contactToEmail, booking }) => {
   const businessEmailText = [
-    "Paid booking confirmed from TB Tours website",
+    "Paid booking confirmed from TB Tours (Pty)Ltd website",
     "",
     `Amount (ZAR): ${booking.amountZar}`,
     `Name: ${booking.fullName}`,
@@ -21,7 +21,7 @@ const sendPaidBookingEmails = async ({ mailTransporter, smtpUser, contactToEmail
   const customerEmailText = [
     `Hi ${booking.fullName},`,
     "",
-    "Thank you for booking with TB Tours.",
+    "Thank you for booking with TB Tours (Pty)Ltd.",
     "Your payment was successful and your booking is confirmed.",
     `Service: ${booking.serviceName}`,
     `Travel Date: ${booking.travelDate}`,
@@ -31,7 +31,7 @@ const sendPaidBookingEmails = async ({ mailTransporter, smtpUser, contactToEmail
     `Amount Paid (ZAR): ${booking.amountZar}`,
     "",
     "Kindly find your invoice attached.",
-    "Thank you for choosing TB Tours."
+    "Thank you for choosing TB Tours (Pty)Ltd."
   ].join("\n");
 
   const invoicePdf = await createInvoicePdf(booking);
@@ -43,19 +43,19 @@ const sendPaidBookingEmails = async ({ mailTransporter, smtpUser, contactToEmail
   };
 
   await mailTransporter.sendMail({
-    from: `TB Tours Bookings <${smtpUser}>`,
+    from: `TB Tours (Pty)Ltd Bookings <${smtpUser}>`,
     to: contactToEmail,
     replyTo: booking.email || undefined,
-    subject: `TB Tours Paid Booking: ${booking.fullName}`,
+    subject: `TB Tours (Pty)Ltd Paid Booking: ${booking.fullName}`,
     text: businessEmailText,
     attachments: [invoiceAttachment]
   });
 
   if (booking.email) {
     await mailTransporter.sendMail({
-      from: `TB Tours <${smtpUser}>`,
+      from: `TB Tours (Pty)Ltd <${smtpUser}>`,
       to: booking.email,
-      subject: "TB Tours Booking Confirmation",
+      subject: "TB Tours (Pty)Ltd Booking Confirmation",
       text: customerEmailText,
       attachments: [invoiceAttachment]
     });
