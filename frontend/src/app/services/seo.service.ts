@@ -80,11 +80,19 @@ export class SeoService {
     attrName: string,
     content: string
   ): void {
-    const tag = this.meta.selectOne(`${attrSelector}="${attrName}"`);
+    const selector = attrSelector === 'property'
+      ? `meta[property="${attrName}"]`
+      : `meta[name="${attrName}"]`;
+
+    let tag = document.querySelector(selector);
+
     if (tag) {
-      this.meta.updateTag({ [attrSelector]: attrName, content });
+      tag.setAttribute('content', content);
     } else {
-      this.meta.addTag({ [attrSelector]: attrName, content });
+      const newTag = document.createElement('meta');
+      newTag.setAttribute(attrSelector, attrName);
+      newTag.setAttribute('content', content);
+      document.head.appendChild(newTag);
     }
   }
 
@@ -133,6 +141,6 @@ export class SeoService {
       }
     };
 
-    return configs[page] || configs.home;
+    return configs[page] || configs['home'];
   }
 }
