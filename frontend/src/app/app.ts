@@ -1,6 +1,8 @@
-import { Component, HostListener } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { environment } from '../environments/environment';
+import { SeoService } from './services/seo.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
@@ -8,8 +10,41 @@ import { environment } from '../environments/environment';
   styleUrl: './app.scss',
   templateUrl: './app.html',
 })
-export class App {
+export class App implements OnInit {
   readonly maintenanceMode = environment.maintenanceMode;
+
+  constructor(private seoService: SeoService, private router: Router) {}
+
+  ngOnInit(): void {
+    // Set initial SEO tags based on current route
+    this.updateSeoForCurrentRoute();
+
+    // Update SEO tags on route change
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.updateSeoForCurrentRoute();
+      // Scroll to top
+      window.scrollTo(0, 0);
+    });
+  }
+
+  private updateSeoForCurrentRoute(): void {
+    const path = this.router.url.split('?')[0];
+    let pageKey = 'home';
+
+    if (path.includes('/tours')) pageKey = 'tours';
+    else if (path.includes('/services')) pageKey = 'services';
+    else if (path.includes('/destinations')) pageKey = 'destinations';
+    else if (path.includes('/about')) pageKey = 'about';
+    else if (path.includes('/contact')) pageKey = 'contact';
+
+    const config = this.seoService.getPageConfig(pageKey);
+    config.url = `https://tb-tours.co.za${path}`;
+    this.seoService.setMetaTags(config);
+    this.seoService.setLocalSearchOptimization();
+  }
+
   private scrolled = false;
   private mobileMenuOpen = false;
 
