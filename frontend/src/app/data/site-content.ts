@@ -85,10 +85,10 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   about: {
     hero: {
       eyebrow: "About",
-      title: "TB Tours (Pty)Ltd",
-      accent: "(Pty) Ltd",
+      title: "TB Tours",
+      accent: "Cape Town",
       description:
-        "A Cape Town-based private tour, airport transfer and chauffeur company.",
+        "A Cape Town-based private tour, airport transfer and chauffeur company built on dignity, care and local insight.",
       image: "https://tbtourscapetown.lovable.app/assets/winelands-CbN4j39m.jpg"
     },
     sectionTitle: "Personal, professional and local",
@@ -111,7 +111,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg"
     },
     sectionTitle: "Travel your way.",
-    sectionSubtitle: "An outline of the services we offer. Full details will be added as we build out the site.",
+    sectionSubtitle: "From punctual airport pickups to immersive private tours and professional chauffeur services, we handle every detail so you can simply enjoy the journey.",
     cards: [
       { title: "Airport Transfers", description: "Punctual, private arrivals and departures with a calm, professional welcome.", image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg", icon: "bi-airplane-fill", ctaLabel: "Request a quote" },
       { title: "Cape Peninsula Tours", description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.", image: "https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg", icon: "bi-geo-alt-fill", ctaLabel: "Request a quote" },
@@ -130,11 +130,11 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       title: "Private tours,",
       accent: "shaped around you",
       description:
-        "A first outline of our tour offering. Detailed itineraries will follow.",
+        "Experience Cape Town and the Winelands at your own pace with personalized itineraries designed for your interests and timing.",
       image: "https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg"
     },
     sectionTitle: "The Cape, at its most memorable",
-    sectionSubtitle: "A first outline of our tour offering. Detailed itineraries will follow.",
+    sectionSubtitle: "Explore breathtaking coastal routes, vibrant city experiences, world-class vineyards and custom adventures tailored entirely to you.",
     cards: [
       { title: "Cape Peninsula Tours", description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.", duration: "Full Day", passengers: "Private", ctaLabel: "Enquire", image: "https://tbtourscapetown.lovable.app/assets/cape-point-C_z81lyn.jpg", icon: "bi-geo-alt-fill" },
       { title: "Cape Town City Tours", description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.", duration: "Half Day / Full Day", passengers: "Private", ctaLabel: "Enquire", image: "https://tbtourscapetown.lovable.app/assets/waterfront-CWKEfh8G.jpg", icon: "bi-buildings-fill" },
