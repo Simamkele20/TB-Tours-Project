@@ -5,6 +5,7 @@ import { HeroSectionComponent } from "../../shared/components/hero-section.compo
 import { ContactFormComponent } from "../shared/contact-form.component";
 import { SITE_CONTENT } from "../../data/site-content";
 import { BookingApiService } from "../../booking/booking-api.service";
+import { GoogleAnalyticsService } from "../../services/google-analytics.service";
 import { finalize } from "rxjs";
 
 @Component({
@@ -88,6 +89,7 @@ import { finalize } from "rxjs";
 export class ContactPageComponent implements OnInit {
   private readonly bookingApi = inject(BookingApiService);
   private readonly route = inject(ActivatedRoute);
+  private readonly googleAnalytics = inject(GoogleAnalyticsService);
   @ViewChild('contactForm') contactForm?: ContactFormComponent;
 
   readonly heroConfig = computed(() => SITE_CONTENT["contact"].hero);
@@ -123,6 +125,12 @@ export class ContactPageComponent implements OnInit {
         next: () => {
           this.contactForm?.resetForm();
           this.showToast("Message sent successfully! We'll contact you soon.", "success");
+          // Track booking inquiry in Google Analytics
+          this.googleAnalytics.trackBookingInquiry({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone
+          });
         },
         error: (err) => {
           console.error("Contact form error:", err);
