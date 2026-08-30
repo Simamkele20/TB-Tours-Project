@@ -73,12 +73,13 @@ h1 {
   text-shadow: 0 5px 20px rgba(0, 0, 0, 0.34);
   letter-spacing: 0.01em;
   font-weight: 500;
-  color: #ffffff;
+  color: #f2b112;
+  white-space: nowrap;
 }
 
 h1 span {
-  color: #f2b112;
-  display: block;
+  color: #ffffff;
+  display: inline;
 }
 
 .description {
