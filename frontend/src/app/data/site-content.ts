@@ -85,7 +85,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   about: {
     hero: {
       eyebrow: "About",
-      title: "TB Tours",
+      title: "TB Tours (Pty)Ltd",
       accent: "Cape Town",
       description:
         "A Cape Town-based private tour, airport transfer and chauffeur company built on dignity, care and local insight.",
