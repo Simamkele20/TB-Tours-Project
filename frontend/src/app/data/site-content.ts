@@ -225,16 +225,16 @@ export const GOOGLE_REVIEWS: GoogleReview[] = [
     reviewCount: 1
   },
   {
-    name: "James Wilson",
+    name: "Victor Pena",
     rating: 5,
-    text: "Professional, punctual and courteous service. The best way to experience Cape Town is from the hands of someone who truly loves the place.",
-    date: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000),
+     text: "Excellent service.Punctual.Friendly.Highly recommended.",
+     date: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000),
     reviewCount: 1
   },
   {
-    name: "Maria Santos",
+    name: "Nokhona Mfutwana",
     rating: 5,
-    text: "Absolutely fantastic experience! Thabang made our Cape Town trip unforgettable with his knowledge and warm hospitality. Highly recommended!",
+    text: "Excellent service very good driver.The car is very clean and tidy",
     date: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000),
     reviewCount: 1
   }
