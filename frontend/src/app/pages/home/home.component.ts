@@ -15,49 +15,57 @@ import { SITE_CONTENT, GOOGLE_REVIEWS } from "../../data/site-content";
       [showPhone]="() => true">
     </app-hero-section>
 
-    <section class="section container home-services">
-      <p class="kicker">Our Services</p>
-      <h2>Travel your way.</h2>
-      <p class="subtitle">From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.</p>
+    <section class="section home-services">
+      <div class="content-wrapper">
+        <p class="kicker">Our Services</p>
+        <div class="services-header">
+          <h2>Travel your way.</h2>
+          <p class="subtitle">From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.</p>
+        </div>
 
-      <div class="service-list">
-        <a *ngFor="let item of serviceCards(); index as i" [routerLink]="item.link" class="service-item">
-          <span class="service-number">{{ (i + 1).toString().padStart(2, '0') }}</span>
-          <div>
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.description }}</p>
-          </div>
-        </a>
+        <div class="service-list">
+          <a *ngFor="let item of serviceCards(); index as i" [routerLink]="item.link" class="service-item">
+            <span class="service-number">{{ (i + 1).toString().padStart(2, '0') }}</span>
+            <div>
+              <h3>{{ item.title }}</h3>
+              <p>{{ item.description }}</p>
+            </div>
+          </a>
+        </div>
       </div>
     </section>
 
-    <section class="section container story-grid">
-      <article class="story-card">
-        <p class="kicker">The TB Tours (Pty)Ltd Experience</p>
-        <h2>More than a ride. It's your Cape Town experience.</h2>
-        <p>
-          From the moment you arrive at Cape Town International Airport to your final sunset overlooking the Atlantic,
-          TB Tours (Pty)Ltd gives you the freedom to experience the Cape at your own pace.
-        </p>
-        <p>
-          Travel privately with a professional local driver who knows the roads, the viewpoints and the places worth
-          stopping for. TB Tours (Pty)Ltd is run personally by Thabang - not a tour-bus operation.
-        </p>
-        <a routerLink="/about" class="btn btn-dark">Meet TB Tours (Pty)Ltd</a>
-      </article>
+    <section class="section story-grid">
       <figure class="story-image">
         <img src="https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg" alt="Chapman's Peak Drive winding above the Atlantic near Cape Town" loading="lazy" />
       </figure>
+      <article class="story-card">
+        <div class="story-card-content">
+          <p class="kicker">The TB Tours (Pty)Ltd Experience</p>
+          <h2>More than a ride. It's your Cape Town experience.</h2>
+          <p>
+            From the moment you arrive at Cape Town International Airport to your final sunset overlooking the Atlantic,
+            TB Tours (Pty)Ltd gives you the freedom to experience the Cape at your own pace.
+          </p>
+          <p>
+            Travel privately with a professional local driver who knows the roads, the viewpoints and the places worth
+            stopping for. TB Tours (Pty)Ltd is run personally by Thabang - not a tour-bus operation.
+          </p>
+          <a routerLink="/about" class="btn btn-outline-dark">Meet TB Tours (Pty)Ltd</a>
+        </div>
+      </article>
     </section>
 
-    <section class="section container founder">
-      <p class="kicker">The Founder</p>
-      <h2>One journey at a time.</h2>
-      <p>From starting out as an e-hailing driver to founding TB Tours (Pty)Ltd, Thabang's journey is at the heart of the company.</p>
-      <a routerLink="/about/thabangs-story" class="btn btn-primary">Read Thabang's Story</a>
+    <section class="section founder">
+      <div class="content-wrapper">
+        <p class="kicker">The Founder</p>
+        <h2>One journey at a time.</h2>
+        <p>From starting out as an e-hailing driver to founding TB Tours (Pty)Ltd, Thabang's journey is at the heart of the company.</p>
+        <a routerLink="/about/thabangs-story" class="btn btn-primary">Read Thabang's Story</a>
+      </div>
     </section>
 
-    <section class="section container destinations">
+    <section class="section destinations">
       <p class="kicker">Featured Experiences</p>
       <h2>The Cape, at its most memorable</h2>
 
@@ -74,37 +82,39 @@ import { SITE_CONTENT, GOOGLE_REVIEWS } from "../../data/site-content";
       <a routerLink="/destinations" class="btn btn-dark">Explore All Destinations</a>
     </section>
 
-    <section class="section container reviews">
-      <p class="kicker">Guest Reviews</p>
-      <h2>What our guests say</h2>
+    <section class="section reviews">
+      <div class="content-wrapper">
+        <p class="kicker">Guest Reviews</p>
+        <h2>What our guests say</h2>
 
-      <div class="reviews-wrapper">
-        <button class="review-nav review-prev" (click)="previousReviews()" aria-label="Previous reviews">
-          <span>‹</span>
-        </button>
+        <div class="reviews-wrapper">
+          <button class="review-nav review-prev" (click)="previousReviews()" aria-label="Previous reviews">
+            <span>‹</span>
+          </button>
 
-        <div class="review-grid">
-          <article class="review-card" *ngFor="let review of displayedReviews()">
-            <p class="review-badge">Google Review</p>
-            <div class="review-rating">
-              <span *ngFor="let i of [1, 2, 3, 4, 5]" class="star">★</span>
-            </div>
-            <p class="review-text">{{ review.text }}</p>
-            <div class="review-footer">
-              <p class="review-author">{{ review.name }}</p>
-              <p class="review-meta">{{ review.date | timeAgo }}</p>
-            </div>
-          </article>
+          <div class="review-grid">
+            <article class="review-card" *ngFor="let review of displayedReviews()">
+              <p class="review-badge">Google Review</p>
+              <div class="review-rating">
+                <span *ngFor="let i of [1, 2, 3, 4, 5]" class="star">★</span>
+              </div>
+              <p class="review-text">{{ review.text }}</p>
+              <div class="review-footer">
+                <p class="review-author">{{ review.name }}</p>
+                <p class="review-meta">{{ review.date | timeAgo }}</p>
+              </div>
+            </article>
+          </div>
+
+          <button class="review-nav review-next" (click)="nextReviews()" aria-label="Next reviews">
+            <span>›</span>
+          </button>
         </div>
-
-        <button class="review-nav review-next" (click)="nextReviews()" aria-label="Next reviews">
-          <span>›</span>
-        </button>
       </div>
     </section>
 
     <section class="section home-cta">
-      <div class="container home-cta-inner">
+      <div class="content-wrapper home-cta-inner">
         <p class="kicker">Book Your Journey</p>
         <h2>Your Cape Town journey starts here.</h2>
         <p>Airport transfer, private tour or a day designed entirely around you - let's make it unforgettable.</p>
