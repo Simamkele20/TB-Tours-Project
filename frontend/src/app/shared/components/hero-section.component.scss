@@ -4,10 +4,36 @@
   background-position: 74% 62%;
   background-repeat: no-repeat;
   color: #f8fbff;
-  height: 100svh;
   display: grid;
   align-items: center;
   position: relative;
+  margin-bottom: 3.4rem;
+}
+
+.hero {
+  height: 65vh;
+  align-items: center;
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 38rem;
+    margin-left: clamp(4rem, 22vw, 12rem);
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 4vw, 3.2rem);
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+}
+
+.hero.hero-home {
+  height: 100svh;
 
   .hero-video {
     position: absolute;
@@ -34,7 +60,7 @@
     position: relative;
     z-index: 2;
     max-width: 38rem;
-    margin-left: clamp(3rem, 10vw, 7rem);
+    margin-left: clamp(4rem, 22vw, 12rem);
     transform: translateY(1rem);
     padding-top: 5.3rem;
     padding-bottom: 4.5rem;
@@ -86,13 +112,13 @@
 
 h1 {
   margin: 0;
-  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
   line-height: 1.1;
   text-shadow: 0 5px 20px rgba(0, 0, 0, 0.34);
   letter-spacing: 0.01em;
   font-weight: 500;
-  color: #f2b112;
-  white-space: normal;
+  color: #ffffff;
+  white-space: nowrap;
   display: inline;
 }
 
@@ -101,18 +127,12 @@ h1 span {
   display: inline;
 }
 
-@media (max-width: 600px) {
-  h1 span {
-    display: block;
-  }
-}
-
 .description {
   margin: 1.2rem 0 1.9rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 1.58;
   color: #e9edf5;
-  max-width: 35rem;
+  max-width: 50rem;
 }
 
 .hero-subtitle {
@@ -125,34 +145,44 @@ h1 span {
 }
 
 .hero .btn {
-  padding: 0.58rem 0.95rem;
+  padding: 0.8rem 1.6rem;
   display: inline-block;
+  border-radius: 10px;
 }
 
 .hero-actions {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
 .btn-outline-gold {
-  border: 1.5px solid #f2b112;
+  background: #f6b41a;
   color: #0f141e;
-  background: #f2b112;
+  border: 2px solid #f6b41a;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(242, 177, 18, 0.2);
 
   &:hover {
-    background: #f7be37;
+    background: #e8a30a;
+    border-color: #e8a30a;
+    color: #0f141e;
+    box-shadow: 0 4px 12px rgba(242, 177, 18, 0.3);
+    transform: translateY(-2px);
   }
 }
 
 .btn-outline-light {
-  border: 1.5px solid rgba(232, 237, 245, 0.35);
+  border: 2px solid rgba(232, 237, 245, 0.5);
   color: #f4f6fa;
-  background: rgba(8, 14, 25, 0.3);
+  background: transparent;
+  font-weight: 600;
+  letter-spacing: 0.08em;
 
   &:hover {
     background: rgba(232, 237, 245, 0.1);
+    border-color: rgba(232, 237, 245, 0.8);
   }
 }
 

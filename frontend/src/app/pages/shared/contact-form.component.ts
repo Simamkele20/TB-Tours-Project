@@ -49,7 +49,6 @@ import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from "@angula
       </div>
 
       <button type="submit" class="btn btn-primary" [disabled]="!form.valid || isSending">
-        <i class="bi" [class.bi-hourglass]="isSending" [class.bi-send-fill]="!isSending" aria-hidden="true"></i>
         {{ isSending ? "Sending..." : "Send Enquiry" }}
       </button>
     </form>

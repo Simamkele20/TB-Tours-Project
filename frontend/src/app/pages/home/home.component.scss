@@ -4,9 +4,13 @@
   width: 100%;
 }
 
+.section.home-services {
+  padding-top: 0;
+}
+
 .content-wrapper {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -162,20 +166,24 @@ h2 {
   }
 
   .btn-outline-dark {
-    border: 1.5px solid #213a63;
-    color: #213a63;
+    border: 2px solid #d0d0d0;
+    color: #555;
     background: transparent;
-    padding: 0.75rem 1.8rem;
-    font-weight: 700;
-    border-radius: 8px;
+    padding: 0.85rem 2rem;
+    font-weight: 600;
+    border-radius: 10px;
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    transition: all 0.2s ease;
   }
 
   .btn-outline-dark:hover {
-    background: #213a63;
-    color: #fff;
+    background: #f9f9f9;
+    color: #333;
+    border-color: #999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
   }
 }
 
@@ -228,20 +236,23 @@ h2 {
   .btn-primary {
     margin-top: 1.5rem;
     background: transparent;
-    color: #556b82;
-    border: 1.5px solid #c9d1dd;
-    font-weight: 700;
-    padding: 0.75rem 1.8rem;
-    border-radius: 8px;
+    color: #666;
+    border: 2px solid #ddd;
+    font-weight: 600;
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: 0.9rem;
+    transition: all 0.2s ease;
   }
 
   .btn-primary:hover {
-    background: #556b82;
-    color: #fff;
-    border-color: #556b82;
+    background: #f9f9f9;
+    color: #333;
+    border-color: #999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
   }
 }
 
@@ -278,23 +289,25 @@ h2 {
 
   > .btn {
     margin-top: 1.5rem;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.85);
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 0.75rem 1.8rem;
-    font-weight: 700;
-    border-radius: 8px;
-    font-size: 0.85rem;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    padding: 0.85rem 2rem;
+    font-weight: 600;
+    border-radius: 10px;
+    font-size: 0.9rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     display: inline-block;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
   }
 
   > .btn:hover {
     background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #fff;
+    transform: translateY(-2px);
   }
 
   .destination-grid {

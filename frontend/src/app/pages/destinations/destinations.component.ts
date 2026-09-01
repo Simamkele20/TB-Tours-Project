@@ -12,7 +12,7 @@ import { SITE_CONTENT } from "../../data/site-content";
       [cards]="cards()"
       [cardTitle]="cardTitle()"
       [cardSubtitle]="cardSubtitle()"
-      [cardLayout]="'tours'"
+      [cardLayout]="'destinations'"
       [trustItems]="trustItems"
       [trustVariant]="'tours'">
     </app-content-page>
@@ -27,26 +27,5 @@ export class DestinationsPageComponent {
   readonly cardTitle = computed(() => this.content().sectionTitle);
   readonly cardSubtitle = computed(() => this.content().sectionSubtitle);
 
-  readonly trustItems = [
-    {
-      icon: "bi-geo-alt-fill",
-      title: "Cape Peninsula",
-      description: "Dramatic coastline, mountain passes and iconic lookouts."
-    },
-    {
-      icon: "bi-buildings-fill",
-      title: "Cape Town City",
-      description: "History, culture and local food in one compact route."
-    },
-    {
-      icon: "bi-flower1",
-      title: "Winelands",
-      description: "Relaxed estates across Stellenbosch and Franschhoek."
-    },
-    {
-      icon: "bi-stars",
-      title: "Tailored Stops",
-      description: "Your day shaped around your pace and interests."
-    }
-  ];
+  readonly trustItems = [];
 }
