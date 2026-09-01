@@ -64,26 +64,15 @@ h2 {
 
   .service-item {
     text-decoration: none;
-    border: none;
-    border-radius: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0;
     color: #0f121a;
-    background: transparent;
-    box-shadow: none;
     width: 100%;
   }
 
   .service-number {
-    width: auto;
-    height: auto;
-    min-width: unset;
-    border-radius: 0;
     display: block;
-    align-items: unset;
-    justify-content: unset;
     background: transparent;
     color: #d8b26a;
     font-weight: 700;
@@ -719,7 +708,7 @@ h2 {
 
   .story-card {
     padding: 2rem 1.5rem;
-    
+
     h2 {
       font-size: 1.5rem;
     }
