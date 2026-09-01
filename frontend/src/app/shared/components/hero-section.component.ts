@@ -30,7 +30,10 @@ export interface HeroConfig {
         preload="auto"
         [attr.poster]="posterImage"
         aria-hidden="true"
-        (error)="onVideoError($event)">
+        (error)="onVideoError($event)"
+        (loadedmetadata)="onVideoReady($event)"
+        (canplay)="onVideoReady($event)"
+        (playing)="onVideoPlaying($event)">
         <source [src]="heroVideoSrc" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
@@ -72,17 +75,43 @@ export class HeroSectionComponent implements AfterViewInit {
   videoFailed = false;
 
   ngAfterViewInit(): void {
-    // Ensure video starts playing when component is initialized
+    // Ensure video plays when component loads
     if (this.videoElement?.nativeElement) {
       const video = this.videoElement.nativeElement;
-      video.currentTime = 0;
-      const playPromise = video.play();
-      if (playPromise) {
-        playPromise.catch((error) => {
-          console.warn("Video autoplay failed:", error);
+
+      // Force the browser to load and play the video
+      video.autoplay = true;
+      video.muted = true;
+
+      // Attempt to play immediately
+      setTimeout(() => {
+        video.play().catch((error) => {
+          console.log("Initial play failed:", error.name);
+          // Try again after a short delay
+          setTimeout(() => {
+            video.play().catch((err) => {
+              console.log("Second play attempt failed:", err.name);
+            });
+          }, 100);
+        });
+      }, 0);
+    }
+  }
+
+  onVideoReady(event: Event): void {
+    // Video is ready, ensure it's playing
+    if (this.videoElement?.nativeElement) {
+      const video = this.videoElement.nativeElement;
+      if (video.paused) {
+        video.play().catch((error) => {
+          console.log("Play on ready failed:", error.name);
         });
       }
     }
+  }
+
+  onVideoPlaying(event: Event): void {
+    console.log("✓ Video is now playing");
   }
 
   get backgroundImage(): string {
