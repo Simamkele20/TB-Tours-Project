@@ -59,7 +59,7 @@ export interface HeroConfig {
         <p class="hero-trust" *ngIf="showPhone()">Private · Professional · Personal</p>
 
         <a *ngIf="!showPhone() && !!config?.bookButtonLabel" [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary">
-          <i class="bi bi-envelope-fill" aria-hidden="true"></i>{{ config.bookButtonLabel }}
+          {{ config.bookButtonLabel }}
         </a>
       </div>
     </section>

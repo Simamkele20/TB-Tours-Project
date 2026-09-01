@@ -57,20 +57,27 @@
 }
 
 .cta-actions .btn {
-  min-height: 3.3rem;
+  min-height: 3.2rem;
   padding-inline: 2rem;
-  letter-spacing: 0.17em;
+  letter-spacing: 0.08em;
   font-size: 0.9rem;
+  border-radius: 10px;
 }
 
 .btn-outline-gold {
-  border: 1px solid rgba(228, 232, 241, 0.34);
-  color: #f2f4f9;
-  background: transparent;
+  background: #f6b41a;
+  color: #0f141e;
+  border: 2px solid #f6b41a;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(246, 180, 26, 0.2);
 }
 
 .btn-outline-gold:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: #e8a30a;
+  color: #0f141e;
+  border-color: #e8a30a;
+  box-shadow: 0 4px 12px rgba(246, 180, 26, 0.3);
+  transform: translateY(-2px);
 }
 
 .cta-email {

@@ -1,38 +1,58 @@
 .about-story-block {
   display: grid;
-  grid-template-columns: minmax(180px, 0.9fr) minmax(420px, 1.6fr);
-  gap: clamp(1.2rem, 4vw, 5.5rem);
+  grid-template-columns: 1fr 1.4fr;
+  gap: 3.5rem;
+  align-items: start;
+  padding: 0 0 2rem 0;
 
   h2 {
-    color: #213a63;
-    font-size: clamp(2rem, 3.6vw, 2.8rem);
+    grid-column: 2;
+    color: #1a2d4d;
+    font-size: 2.25rem;
     font-weight: 400;
     letter-spacing: -0.01em;
-    margin: 0.7rem 0 0.8rem;
+    margin: 0 0 0.3rem 0;
+    font-family: var(--font-display);
+    line-height: 1.2;
   }
 
   p:not(.about-kicker) {
-    color: #5b6577;
-    max-width: 58rem;
-    line-height: 1.62;
+    grid-column: 2;
+    color: #445269;
+    max-width: 100%;
+    line-height: 1.65;
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
   }
 }
 
 .about-story-block {
-  padding-bottom: 1.3rem;
+  padding-bottom: 1.5rem;
 }
 
 .about-approach-btn {
+  grid-column: 2;
   justify-self: start;
-  margin-top: 0.8rem;
-  border: 1px solid #c6cedb;
-  color: #163465;
-  border-radius: 6px;
-  padding: 0.95rem 2rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
+  margin-top: 0.1rem;
+  border: 2px solid #d0d0d0;
+  color: #666;
+  border-radius: 10px;
+  padding: 0.85rem 2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  transition: all 0.2s ease;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: #f9f9f9;
+    color: #333;
+    border-color: #999;
+    transform: translateY(-2px);
+  }
 }
 
 .about-kicker {
@@ -44,7 +64,31 @@
   margin: 0;
 }
 
-.about-story-block .about-kicker,
+.about-story-block .about-kicker {
+  grid-column: 1;
+  color: #d0a64b;
+  position: relative;
+  padding-bottom: 0.7rem;
+  display: block;
+  margin-bottom: 0;
+  margin-top: 0;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  font-size: 0.68rem;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+}
+
+.about-story-block .about-kicker::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 55px;
+  height: 2px;
+  background: #d0a64b;
+}
+
 .about-founder-copy .about-kicker {
   color: #d0a64b;
 }
@@ -59,6 +103,7 @@
 .about-founder-section {
   background: #172746;
   scroll-margin-top: 80px;
+  padding-bottom: 3.4rem;
 }
 
 .about-founder-copy {
@@ -174,11 +219,14 @@
 
 .about-founder-plan-btn {
   justify-self: start;
-  border-radius: 7px;
-  letter-spacing: 0.16em;
+  border-radius: 10px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  font-size: 0.78rem;
-  padding: 0.95rem 2rem;
+  font-size: 0.85rem;
+  padding: 1rem 2.2rem;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  font-weight: 600;
 }
 
 @media (max-width: 940px) {
