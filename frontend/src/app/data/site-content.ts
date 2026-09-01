@@ -191,3 +191,51 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     ctaText: "Airport transfer, private tour or custom day out - let's plan it together by email."
   }
 };
+
+export interface GoogleReview {
+  name: string;
+  rating: number;
+  text: string;
+  date: Date;
+  reviewCount?: number;
+  badges?: string;
+  isTranslated?: boolean;
+}
+
+export const GOOGLE_REVIEWS: GoogleReview[] = [
+  {
+    name: "Nonkululeko Dlamini",
+    rating: 5,
+    text: "Great driver! Smooth, safe ride, friendly service, and a clean vehicle. Would definitely ride with him again!",
+    date: new Date(Date.now() - 6 * 60 * 60 * 1000),
+    reviewCount: 1
+  },
+  {
+    name: "Anthony Muturi",
+    rating: 5,
+    text: "TB Tours is very professional - my go to everytime am in the Cape. Uber is nice but it's better when you have a personalized & trusted service!",
+    date: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
+    reviewCount: 1
+  },
+  {
+    name: "Sara-Ann De Beer",
+    rating: 5,
+    text: "I thoroughly enjoyed the ride after a long day at work. Driver was great company. Thank you TB tours",
+    date: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+    reviewCount: 1
+  },
+  {
+    name: "James Wilson",
+    rating: 5,
+    text: "Professional, punctual and courteous service. The best way to experience Cape Town is from the hands of someone who truly loves the place.",
+    date: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000),
+    reviewCount: 1
+  },
+  {
+    name: "Maria Santos",
+    rating: 5,
+    text: "Absolutely fantastic experience! Thabang made our Cape Town trip unforgettable with his knowledge and warm hospitality. Highly recommended!",
+    date: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000),
+    reviewCount: 1
+  }
+];

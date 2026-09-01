@@ -1,13 +1,14 @@
 import { CommonModule } from "@angular/common";
-import { Component, computed } from "@angular/core";
+import { Component, computed, signal } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
-import { SITE_CONTENT } from "../../data/site-content";
+import { TimeAgoPipe } from "../../shared/pipes/time-ago.pipe";
+import { SITE_CONTENT, GOOGLE_REVIEWS } from "../../data/site-content";
 
 @Component({
   selector: "app-home-page",
   standalone: true,
-  imports: [CommonModule, RouterLink, HeroSectionComponent],
+  imports: [CommonModule, RouterLink, HeroSectionComponent, TimeAgoPipe],
   template: `
     <app-hero-section
       [config]="heroConfig()"
@@ -73,6 +74,35 @@ import { SITE_CONTENT } from "../../data/site-content";
       <a routerLink="/destinations" class="btn btn-dark">Explore All Destinations</a>
     </section>
 
+    <section class="section container reviews">
+      <p class="kicker">Guest Reviews</p>
+      <h2>What our guests say</h2>
+
+      <div class="reviews-wrapper">
+        <button class="review-nav review-prev" (click)="previousReviews()" aria-label="Previous reviews">
+          <span>‹</span>
+        </button>
+
+        <div class="review-grid">
+          <article class="review-card" *ngFor="let review of displayedReviews()">
+            <p class="review-badge">Google Review</p>
+            <div class="review-rating">
+              <span *ngFor="let i of [1, 2, 3, 4, 5]" class="star">★</span>
+            </div>
+            <p class="review-text">{{ review.text }}</p>
+            <div class="review-footer">
+              <p class="review-author">{{ review.name }}</p>
+              <p class="review-meta">{{ review.date | timeAgo }}</p>
+            </div>
+          </article>
+        </div>
+
+        <button class="review-nav review-next" (click)="nextReviews()" aria-label="Next reviews">
+          <span>›</span>
+        </button>
+      </div>
+    </section>
+
     <section class="section home-cta">
       <div class="container home-cta-inner">
         <p class="kicker">Book Your Journey</p>
@@ -91,6 +121,9 @@ import { SITE_CONTENT } from "../../data/site-content";
 export class HomePageComponent {
   readonly heroConfig = computed(() => SITE_CONTENT["home"].hero);
 
+  private reviewIndex = signal(0);
+  private isMobile = signal(typeof window !== 'undefined' && window.innerWidth <= 620);
+
   readonly serviceCards = computed(() => {
     const cards = SITE_CONTENT["home"].cards;
     return cards.map((card) => ({
@@ -98,6 +131,54 @@ export class HomePageComponent {
       link: card.title.includes("Transfer") || card.title.includes("Chauffeur") ? "/services" : "/tours"
     }));
   });
+
+  private getItemsPerPage(): number {
+    return this.isMobile() ? 1 : 3;
+  }
+
+  readonly displayedReviews = computed(() => {
+    const index = this.reviewIndex();
+    const itemsPerPage = this.getItemsPerPage();
+    return GOOGLE_REVIEWS.slice(index, index + itemsPerPage);
+  });
+
+  readonly totalReviewPages = computed(() => {
+    const itemsPerPage = this.getItemsPerPage();
+    return Math.ceil(GOOGLE_REVIEWS.length / itemsPerPage);
+  });
+
+  readonly currentReviewPage = computed(() => {
+    const itemsPerPage = this.getItemsPerPage();
+    return Math.floor(this.reviewIndex() / itemsPerPage) + 1;
+  });
+
+  constructor() {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', () => {
+        this.isMobile.set(window.innerWidth <= 620);
+      });
+    }
+  }
+
+  nextReviews() {
+    const itemsPerPage = this.getItemsPerPage();
+    const index = this.reviewIndex();
+    if (index + itemsPerPage < GOOGLE_REVIEWS.length) {
+      this.reviewIndex.set(index + itemsPerPage);
+    } else {
+      this.reviewIndex.set(0);
+    }
+  }
+
+  previousReviews() {
+    const itemsPerPage = this.getItemsPerPage();
+    const index = this.reviewIndex();
+    if (index - itemsPerPage >= 0) {
+      this.reviewIndex.set(index - itemsPerPage);
+    } else {
+      this.reviewIndex.set(Math.max(0, GOOGLE_REVIEWS.length - itemsPerPage));
+    }
+  }
 
   readonly destinationCards = [
     {
