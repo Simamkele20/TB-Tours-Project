@@ -32,7 +32,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   home: {
     hero: {
       eyebrow: "Cape Town · South Africa",
-      title: "Your journey.",
+      title: "Your journey. ",
       accent: "Our priority.",
       description:
         "Private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands.",
@@ -85,7 +85,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   about: {
     hero: {
       eyebrow: "About",
-      title: "TB Tours",
+      title: "TB Tours ",
       accent: "(Pty) Ltd",
       description: 
         "A Cape Town-based private tour, airport transfer and chauffeur company built on dignity, care and local insight.",
@@ -104,7 +104,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   services: {
     hero: {
       eyebrow: "Services",
-      title: "Travel arranged",
+      title: "Travel arranged ",
       accent: "with care",
       description:
         "An outline of the services we offer across Cape Town and the Cape Winelands.",
@@ -148,7 +148,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   destinations: {
     hero: {
       eyebrow: "Destinations",
-      title: "Where we will",
+      title: "Where we will ",
       accent: "take you",
       description:
         "A first selection of the places our journeys are built around.",
@@ -172,7 +172,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   contact: {
     hero: {
       eyebrow: "Contact",
-      title: "Plan your",
+      title: "Plan your ",
       accent: "journey",
       description:
         "Tell us your dates and what you would like to see - we will take care of the rest.",

@@ -38,28 +38,35 @@
     transform: translateY(1rem);
     padding-top: 5.3rem;
     padding-bottom: 4.5rem;
-
-    @media (max-width: 768px) {
-      margin-left: 1.5rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-
-    @media (max-width: 480px) {
-      margin-left: 1rem;
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-    }
   }
 }
 
-.hero-home {
-  height: 100svh;
+@media (max-width: 768px) {
+  .hero .hero-content {
+    margin-left: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  h1 {
+    white-space: normal;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero .hero-content {
+    margin-left: 1rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  h1 {
+    font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+    line-height: 1.15;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero .hero-video,
-  .hero-home .hero-video {
+  .hero .hero-video {
     display: none;
   }
 }
@@ -81,24 +88,23 @@ h1 {
   margin: 0;
   font-size: clamp(2.8rem, 6vw, 5.5rem);
   line-height: 1.1;
-  text-transform: none;
   text-shadow: 0 5px 20px rgba(0, 0, 0, 0.34);
   letter-spacing: 0.01em;
   font-weight: 500;
   color: #f2b112;
-  white-space: nowrap;
-}
-
-@media (max-width: 768px) {
-  h1 {
-    white-space: normal;
-  }
+  white-space: normal;
+  display: inline;
 }
 
 h1 span {
   color: #ffffff;
   display: inline;
-  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  h1 span {
+    display: block;
+  }
 }
 
 .description {
@@ -110,7 +116,7 @@ h1 span {
 }
 
 .hero-subtitle {
-  margin: 0.95rem 0 1.5rem 0;
+  margin: 0.95rem 0 1.5rem;
   color: #c9a961;
   font-size: 1.15rem;
   font-weight: 600;
@@ -128,10 +134,6 @@ h1 span {
   align-items: center;
   gap: 0.7rem;
   flex-wrap: wrap;
-}
-
-.btn-phone {
-  font-weight: 800;
 }
 
 .btn-outline-gold {
