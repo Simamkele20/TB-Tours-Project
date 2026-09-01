@@ -74,19 +74,19 @@ main {
   left: 0;
   right: 0;
   z-index: 20;
-  background: rgba(8, 14, 25, 0.95);
+  background: #0a1530;
   border-bottom: 0;
 }
 
 .site-header.solid-header {
   position: fixed;
-  background: rgba(8, 14, 25, 0.95);
+  background: #0a1530;
   border-bottom: 1px solid rgba(242, 177, 18, 0.26);
   backdrop-filter: blur(6px);
 }
 
 .site-header.home-overlay {
-  background: linear-gradient(180deg, rgba(7, 12, 22, 0.84), rgba(7, 12, 22, 0));
+  background: linear-gradient(180deg, rgba(10, 21, 48, 0.88), rgba(10, 21, 48, 0));
 }
 
 .header-inner {
