@@ -1,9 +1,8 @@
 .about-story-block {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
-  gap: 3.5rem;
-  align-items: start;
-  padding: 0 0 2rem 0;
+  gap: 10px;
+  margin-bottom: 50px;
 
   h2 {
     grid-column: 2;
@@ -11,7 +10,7 @@
     font-size: 2.25rem;
     font-weight: 400;
     letter-spacing: -0.01em;
-    margin: 0 0 0.3rem 0;
+    margin: 0 0 0.100rem 0;
     font-family: var(--font-display);
     line-height: 1.2;
   }
@@ -26,14 +25,9 @@
   }
 }
 
-.about-story-block {
-  padding-bottom: 1.5rem;
-}
-
 .about-approach-btn {
   grid-column: 2;
   justify-self: start;
-  margin-top: 0.1rem;
   border: 2px solid #d0d0d0;
   color: #666;
   border-radius: 10px;
@@ -59,7 +53,6 @@
   color: #d0a64b;
   text-transform: uppercase;
   font-weight: 500;
-  letter-spacing: 0.22em;
   font-size: 0.72rem;
   margin: 0;
 }
@@ -68,7 +61,7 @@
   grid-column: 1;
   color: #d0a64b;
   position: relative;
-  padding-bottom: 0.7rem;
+  padding-bottom: 0.2rem;
   display: block;
   margin-bottom: 0;
   margin-top: 0;
@@ -118,7 +111,6 @@
     font-weight: 300;
     letter-spacing: -0.01em;
     line-height: 1.1;
-    margin: 0.7rem 0 1rem;
   }
 
   p {
