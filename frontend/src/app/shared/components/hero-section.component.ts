@@ -42,6 +42,7 @@ export interface HeroConfig {
         <p class="eyebrow">{{ config.eyebrow }}</p>
         <h1>
           {{ config.title }}
+          <br />
           <span>{{ config.accent }}</span>
         </h1>
         <p class="hero-subtitle" *ngIf="showPhone()">Discover Cape Town</p>
