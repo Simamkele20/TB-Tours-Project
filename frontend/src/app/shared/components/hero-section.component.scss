@@ -24,7 +24,8 @@
   }
 
   h1 {
-    font-size: clamp(1.6rem, 4vw, 3.2rem);
+    font-size: clamp(1.4rem, 3vw, 2.4rem);
+    white-space: nowrap;
   }
 
   .description {
@@ -111,16 +112,19 @@
 
 h1 {
   margin: 0;
-  font-size: 2.75rem;
-  line-height: 1.05;
   text-shadow: 0 5px 20px rgba(0, 0, 0, 0.34);
   letter-spacing: 0.01em;
   font-weight: 400;
   font-family: 'Lora', 'Georgia', serif;
   color: #ffffff;
-  white-space: normal;
   display: block;
   text-transform: none;
+}
+
+.hero-home h1 {
+  font-size: 2.75rem;
+  line-height: 1.05;
+  white-space: normal;
   word-spacing: normal;
 
   @media (min-width: 640px) {
