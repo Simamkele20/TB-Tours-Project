@@ -130,7 +130,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       title: "Private tours,",
       accent: "shaped around you",
       description:
-        "A first outline of our tour offering. Detailed itineraries will follow.",
+        "Experience Cape Town and the Winelands at your own pace with personalized itineraries designed for your interests and timing.",
       image: "https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg"
     },
     sectionTitle: "",

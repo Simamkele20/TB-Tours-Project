@@ -47,8 +47,9 @@ h2 {
     border-bottom: 1px solid #e4eaf2;
 
     h2 {
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
       line-height: 1.1;
+      white-space: nowrap;
     }
 
     .subtitle {
