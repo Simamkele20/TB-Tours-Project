@@ -1,6 +1,6 @@
 .about-story-block {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: 0.8fr 1.6fr;
   gap: 10px;
   margin-bottom: 50px;
 
@@ -223,8 +223,11 @@
 
 @media (max-width: 940px) {
   .about-story-block {
+    display: flex;
+    flex-direction: column;
     grid-template-columns: 1fr;
     gap: 1.1rem;
+    padding-left: 0;
   }
 
   .about-founder-grid {
@@ -237,5 +240,11 @@
 
   .about-founder-copy blockquote {
     font-size: clamp(1.7rem, 7vw, 2.4rem);
+  }
+}
+
+@media (min-width: 941px) {
+  .about-story-block {
+    padding-left: 190px;
   }
 }
