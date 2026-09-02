@@ -60,7 +60,6 @@
     position: relative;
     z-index: 2;
     max-width: 38rem;
-    margin-left: clamp(4rem, 22vw, 12rem);
     transform: translateY(1rem);
     padding-top: 5.3rem;
     padding-bottom: 4.5rem;
@@ -69,7 +68,7 @@
 
 @media (max-width: 768px) {
   .hero .hero-content {
-    margin-left: 1.5rem;
+    margin-left: 0;
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -81,7 +80,7 @@
 
 @media (max-width: 480px) {
   .hero .hero-content {
-    margin-left: 1rem;
+    margin-left: 0;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
   }
@@ -112,14 +111,29 @@
 
 h1 {
   margin: 0;
-  font-size: clamp(2.2rem, 5vw, 4.5rem);
-  line-height: 1.1;
+  font-size: 2.75rem;
+  line-height: 1.05;
   text-shadow: 0 5px 20px rgba(0, 0, 0, 0.34);
   letter-spacing: 0.01em;
-  font-weight: 500;
+  font-weight: 400;
+  font-family: 'Lora', 'Georgia', serif;
   color: #ffffff;
-  white-space: nowrap;
-  display: inline;
+  white-space: normal;
+  display: block;
+  text-transform: none;
+  word-spacing: normal;
+
+  @media (min-width: 640px) {
+    font-size: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 3.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 4rem;
+  }
 }
 
 h1 span {

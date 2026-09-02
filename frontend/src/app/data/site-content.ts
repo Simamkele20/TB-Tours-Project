@@ -32,7 +32,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   home: {
     hero: {
       eyebrow: "Cape Town · South Africa",
-      title: "Your journey. ",
+      title: "Your journey.",
       accent: "Our priority.",
       description:
         "Private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands.",
