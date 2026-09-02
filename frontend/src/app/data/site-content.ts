@@ -159,7 +159,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     cards: [
       { title: "Cape Point", description: "Cape Peninsula", image: "images/cape-point.jpg" },
       { title: "Chapman's Peak Drive", description: "Atlantic Coast", image: "images/chapmans-peak.jpg" },
-      { title: "Boulders Beach", description: "Simon's Town", image: "images/cape-point.jpg" },
+      { title: "Boulders Beach", description: "Simon's Town", image: "images/boulders-beach.jpg" },
       { title: "Bo-Kaap", description: "Cape Town City", image: "images/city-tour.jpg" },
       { title: "V&A Waterfront", description: "Cape Town City", image: "images/waterfront.jpg" },
       { title: "Kirstenbosch", description: "Table Mountain", image: "images/table-mountain.jpg" },
