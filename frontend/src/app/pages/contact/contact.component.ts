@@ -5,6 +5,7 @@ import { HeroSectionComponent } from "../../shared/components/hero-section.compo
 import { ContactFormComponent } from "../shared/contact-form.component";
 import { SITE_CONTENT } from "../../data/site-content";
 import { BookingApiService } from "../../booking/booking-api.service";
+import { GoogleAnalyticsService } from "../../services/google-analytics.service";
 import { finalize } from "rxjs";
 
 @Component({
@@ -18,38 +19,28 @@ import { finalize } from "rxjs";
     </app-hero-section>
 
     <section class="contact-shell section container">
-      <header class="contact-header">
-        <h2>Plan your journey</h2>
-        <p>Tell us your dates and what you would like to see - we will take care of the rest.</p>
-      </header>
-
-      <section class="contact-cards" aria-label="Contact quick options">
-        <article class="contact-card">
-          <span class="icon-wrap"><i class="bi bi-person-badge-fill" aria-hidden="true"></i></span>
-          <h3>Contact Person</h3>
-          <p>Thabang</p>
-        </article>
-        <article class="contact-card">
-          <span class="icon-wrap"><i class="bi bi-telephone-fill" aria-hidden="true"></i></span>
-          <h3>Phone / WhatsApp</h3>
-          <p>073 448 3958</p>
-        </article>
-        <article class="contact-card">
-          <span class="icon-wrap"><i class="bi bi-envelope-fill" aria-hidden="true"></i></span>
-          <h3>Email</h3>
-          <p>info@tb-tours.co.za</p>
-        </article>
-        <article class="contact-card">
-          <span class="icon-wrap"><i class="bi bi-geo-alt-fill" aria-hidden="true"></i></span>
-          <h3>Location</h3>
-          <p>Cape Town, South Africa</p>
-        </article>
-      </section>
-
       <section class="contact-section" id="contact-form">
         <aside class="contact-find-us">
-          <h3>Direct Contact</h3>
-          <p>Prefer a quick booking conversation? Reach out directly and we can plan your route immediately.</p>
+          <h3>DIRECT CONTACT</h3>
+
+          <div class="contact-info">
+            <div class="contact-item">
+              <p class="label">CONTACT PERSON</p>
+              <p class="value">Thabang</p>
+            </div>
+            <div class="contact-item">
+              <p class="label">PHONE / WHATSAPP</p>
+              <p class="value">073 448 3958</p>
+            </div>
+            <div class="contact-item">
+              <p class="label">EMAIL</p>
+              <p class="value">info@tb-tours.co.za</p>
+            </div>
+            <div class="contact-item">
+              <p class="label">LOCATION</p>
+              <p class="value">Cape Town, South Africa</p>
+            </div>
+          </div>
 
           <div class="direct-actions">
             <a
@@ -57,18 +48,20 @@ import { finalize } from "rxjs";
               href="https://wa.me/27734483958?text=Hi%20TB%20Tours%2C%20I'd%20like%20to%20enquire%20about%20a%20tour%20or%20transfer."
               target="_blank"
               rel="noopener noreferrer">
-              <i class="bi bi-whatsapp" aria-hidden="true"></i>WhatsApp Us
+              WHATSAPP US
             </a>
             <a class="btn btn-dark" href="tel:+27734483958">
-              <i class="bi bi-telephone-fill" aria-hidden="true"></i>Call Us
+              CALL US
             </a>
           </div>
 
         </aside>
 
         <div class="contact-content">
+          <p class="kicker">ENQUIRY</p>
           <div class="contact-intro">
             <h3>Send us a message</h3>
+            <p>Booking form to be connected. For now, please WhatsApp or email us directly.</p>
           </div>
 
           <app-contact-form #contactForm [isSending]="isSending()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
@@ -88,6 +81,7 @@ import { finalize } from "rxjs";
 export class ContactPageComponent implements OnInit {
   private readonly bookingApi = inject(BookingApiService);
   private readonly route = inject(ActivatedRoute);
+  private readonly googleAnalytics = inject(GoogleAnalyticsService);
   @ViewChild('contactForm') contactForm?: ContactFormComponent;
 
   readonly heroConfig = computed(() => SITE_CONTENT["contact"].hero);
@@ -123,6 +117,12 @@ export class ContactPageComponent implements OnInit {
         next: () => {
           this.contactForm?.resetForm();
           this.showToast("Message sent successfully! We'll contact you soon.", "success");
+          // Track booking inquiry in Google Analytics
+          this.googleAnalytics.trackBookingInquiry({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone
+          });
         },
         error: (err) => {
           console.error("Contact form error:", err);

@@ -85,7 +85,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   about: {
     hero: {
       eyebrow: "About",
-      title: "TB Tours (Pty)Ltd",
+      title: "TB Tours ",
       accent: "(Pty) Ltd",
       description:
         "A Cape Town-based private tour, airport transfer and chauffeur company.",
@@ -104,14 +104,14 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   services: {
     hero: {
       eyebrow: "Services",
-      title: "Travel arranged",
+      title: "Travel arranged ",
       accent: "with care",
       description:
         "An outline of the services we offer across Cape Town and the Cape Winelands.",
       image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg"
     },
-    sectionTitle: "Travel your way.",
-    sectionSubtitle: "An outline of the services we offer. Full details will be added as we build out the site.",
+    sectionTitle: "",
+    sectionSubtitle: "",
     cards: [
       { title: "Airport Transfers", description: "Punctual, private arrivals and departures with a calm, professional welcome.", image: "https://tbtourscapetown.lovable.app/assets/chauffeur-bovu1Aoh.jpg", icon: "bi-airplane-fill", ctaLabel: "Request a quote" },
       { title: "Cape Peninsula Tours", description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.", image: "https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg", icon: "bi-geo-alt-fill", ctaLabel: "Request a quote" },
@@ -130,11 +130,11 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       title: "Private tours,",
       accent: "shaped around you",
       description:
-        "A first outline of our tour offering. Detailed itineraries will follow.",
+        "Experience Cape Town and the Winelands at your own pace with personalized itineraries designed for your interests and timing.",
       image: "https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg"
     },
-    sectionTitle: "The Cape, at its most memorable",
-    sectionSubtitle: "A first outline of our tour offering. Detailed itineraries will follow.",
+    sectionTitle: "",
+    sectionSubtitle: "",
     cards: [
       { title: "Cape Peninsula Tours", description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.", duration: "Full Day", passengers: "Private", ctaLabel: "Enquire", image: "https://tbtourscapetown.lovable.app/assets/cape-point-C_z81lyn.jpg", icon: "bi-geo-alt-fill" },
       { title: "Cape Town City Tours", description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.", duration: "Half Day / Full Day", passengers: "Private", ctaLabel: "Enquire", image: "https://tbtourscapetown.lovable.app/assets/waterfront-CWKEfh8G.jpg", icon: "bi-buildings-fill" },
@@ -148,31 +148,31 @@ export const SITE_CONTENT: Record<string, PageContent> = {
   destinations: {
     hero: {
       eyebrow: "Destinations",
-      title: "Where we will",
+      title: "Where we will ",
       accent: "take you",
       description:
         "A first selection of the places our journeys are built around.",
       image: "https://tbtourscapetown.lovable.app/assets/cape-point-C_z81lyn.jpg"
     },
-    sectionTitle: "The Cape, at its most memorable",
-    sectionSubtitle: "A first selection of the places our journeys are built around.",
+    sectionTitle: "",
+    sectionSubtitle: "",
     cards: [
-      { title: "Cape Point", description: "Cape Peninsula", image: "https://tbtourscapetown.lovable.app/assets/cape-point-C_z81lyn.jpg", ctaLabel: "Plan a stop" },
-      { title: "Chapman's Peak Drive", description: "Atlantic Coast", image: "https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg", ctaLabel: "Plan a stop" },
-      { title: "Boulders Beach", description: "Simon's Town", image: "https://tbtourscapetown.lovable.app/assets/boulders-CZnAwwfM.jpg", ctaLabel: "Plan a stop" },
-      { title: "Bo-Kaap", description: "Cape Town City", image: "https://tbtourscapetown.lovable.app/assets/bo-kaap-KgRFsEe_.jpg", ctaLabel: "Plan a stop" },
-      { title: "V&A Waterfront", description: "Cape Town City", image: "https://tbtourscapetown.lovable.app/assets/waterfront-CWKEfh8G.jpg", ctaLabel: "Plan a stop" },
-      { title: "Kirstenbosch", description: "Table Mountain", image: "https://tbtourscapetown.lovable.app/assets/kirstenbosch-Bi8CyJ4T.jpg", ctaLabel: "Plan a stop" },
-      { title: "Cape Winelands", description: "Stellenbosch & Franschhoek", image: "https://tbtourscapetown.lovable.app/assets/winelands-CbN4j39m.jpg", ctaLabel: "Plan a stop" }
+      { title: "Cape Point", description: "Cape Peninsula", image: "https://tbtourscapetown.lovable.app/assets/cape-point-C_z81lyn.jpg" },
+      { title: "Chapman's Peak Drive", description: "Atlantic Coast", image: "https://tbtourscapetown.lovable.app/assets/chapmans-peak-DtXI9Ubi.jpg" },
+      { title: "Boulders Beach", description: "Simon's Town", image: "https://tbtourscapetown.lovable.app/assets/boulders-CZnAwwfM.jpg" },
+      { title: "Bo-Kaap", description: "Cape Town City", image: "https://tbtourscapetown.lovable.app/assets/bo-kaap-KgRFsEe_.jpg" },
+      { title: "V&A Waterfront", description: "Cape Town City", image: "https://tbtourscapetown.lovable.app/assets/waterfront-CWKEfh8G.jpg" },
+      { title: "Kirstenbosch", description: "Table Mountain", image: "https://tbtourscapetown.lovable.app/assets/kirstenbosch-Bi8CyJ4T.jpg" },
+      { title: "Cape Winelands", description: "Stellenbosch & Franschhoek", image: "https://tbtourscapetown.lovable.app/assets/winelands-CbN4j39m.jpg" }
     ],
-    trustStrip: ["Coastal routes", "City highlights", "Nature stops", "Winelands"],
-    ctaTitle: "Explore all destinations",
-    ctaText: "Tell us what you want to see and we will shape the day around your pace."
+    trustStrip: [],
+    ctaTitle: "",
+    ctaText: ""
   },
   contact: {
     hero: {
       eyebrow: "Contact",
-      title: "Plan your",
+      title: "Plan your ",
       accent: "journey",
       description:
         "Tell us your dates and what you would like to see - we will take care of the rest.",
@@ -181,13 +181,61 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     sectionTitle: "Send us a message",
     sectionSubtitle: "",
     cards: [
-      { title: "Contact Person", description: "Thabang", meta: "Founder", icon: "bi-person-badge-fill", image: "images/card-executive-sedan.jpg" },
-      { title: "Phone / WhatsApp", description: "073 448 3958", meta: "Available daily", icon: "bi-telephone-fill", image: "images/card-waterfront.jpg" },
-      { title: "Email", description: "info@tb-tours.co.za", meta: "Fast replies", icon: "bi-envelope-fill", image: "images/card-harbour.jpg" },
-      { title: "Location", description: "Cape Town, South Africa", meta: "Local pickup and drop-off", icon: "bi-geo-alt-fill", image: "images/card-table-cableway.jpg" }
+      { title: "Contact Person", description: "Thabang", meta: "Founder", icon: "bi-person-badge-fill" },
+      { title: "Phone / WhatsApp", description: "073 448 3958", meta: "Available daily", icon: "bi-telephone-fill" },
+      { title: "Email", description: "info@tb-tours.co.za", meta: "Fast replies", icon: "bi-envelope-fill" },
+      { title: "Location", description: "Cape Town, South Africa", meta: "Local pickup and drop-off", icon: "bi-geo-alt-fill" }
     ],
     trustStrip: ["WhatsApp first", "Direct line", "Flexible timing", "Personal support"],
     ctaTitle: "Your Cape Town journey starts here.",
     ctaText: "Airport transfer, private tour or custom day out - let's plan it together by email."
   }
 };
+
+export interface GoogleReview {
+  name: string;
+  rating: number;
+  text: string;
+  date: Date;
+  reviewCount?: number;
+  badges?: string;
+  isTranslated?: boolean;
+}
+
+export const GOOGLE_REVIEWS: GoogleReview[] = [
+  {
+    name: "Nonkululeko Dlamini",
+    rating: 5,
+    text: "Great driver! Smooth, safe ride, friendly service, and a clean vehicle. Would definitely ride with him again!",
+    date: new Date(Date.now() - 6 * 60 * 60 * 1000),
+    reviewCount: 1
+  },
+  {
+    name: "Anthony Muturi",
+    rating: 5,
+    text: "TB Tours is very professional - my go to everytime am in the Cape. Uber is nice but it's better when you have a personalized & trusted service!",
+    date: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
+    reviewCount: 1
+  },
+  {
+    name: "Sara-Ann De Beer",
+    rating: 5,
+    text: "I thoroughly enjoyed the ride after a long day at work. Driver was great company. Thank you TB tours",
+    date: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+    reviewCount: 1
+  },
+  {
+    name: "Victor Pena",
+    rating: 5,
+     text: "Excellent service.Punctual.Friendly.Highly recommended.",
+     date: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000),
+    reviewCount: 1
+  },
+  {
+    name: "Nokhona Mfutwana",
+    rating: 5,
+    text: "Excellent service very good driver.The car is very clean and tidy",
+    date: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000),
+    reviewCount: 1
+  }
+];
