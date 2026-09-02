@@ -14,7 +14,7 @@ export interface Card {
   duration?: string;
 }
 
-export type CardGridLayout = "services" | "tours";
+export type CardGridLayout = "services" | "tours" | "destinations";
 
 @Component({
   selector: "app-card-grid",
@@ -30,7 +30,11 @@ export type CardGridLayout = "services" | "tours";
           <img *ngIf="card.image" class="card-image" [src]="card.image" [alt]="card.title" loading="lazy" />
 
           <div class="card-body">
-            <span *ngIf="card.icon && (layout === 'services' || layout === 'tours')"
+            <span *ngIf="layout === 'services'" class="card-number" aria-hidden="true">
+              {{ formatCardNumber(cards.indexOf(card)) }}
+            </span>
+
+            <span *ngIf="card.icon && layout === 'tours'"
                   class="card-icon-badge" aria-hidden="true">
               <i [class]="'bi ' + card.icon"></i>
             </span>
@@ -68,5 +72,9 @@ export class CardGridComponent {
 
   trackByTitle(index: number, card: Card): string {
     return card.title;
+  }
+
+  formatCardNumber(index: number): string {
+    return String(index + 1).padStart(2, '0');
   }
 }
