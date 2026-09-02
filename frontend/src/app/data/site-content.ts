@@ -62,7 +62,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       {
         title: "Winelands Tours",
         description: "Stellenbosch and Franschhoek estates at an unhurried pace.",
-        image: "images/winelands.jpg",
+        image: "images/franschhoek.jpg",
         ctaLabel: "Learn more"
       },
       {
@@ -89,7 +89,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       accent: "(Pty) Ltd",
       description:
         "A Cape Town-based private tour, airport transfer and chauffeur company.",
-      image: "images/winelands.jpg"
+      image: "images/franschhoek.jpg"
     },
     sectionTitle: "Personal, professional and local",
     sectionSubtitle: "Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.",
@@ -116,7 +116,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       { title: "Airport Transfers", description: "Punctual, private arrivals and departures with a calm, professional welcome.", image: "images/city-tour.jpg", icon: "bi-airplane-fill", ctaLabel: "Request a quote" },
       { title: "Cape Peninsula Tours", description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.", image: "images/chapmans-peak.jpg", icon: "bi-geo-alt-fill", ctaLabel: "Request a quote" },
       { title: "Cape Town City Tours", description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.", image: "images/waterfront.jpg", icon: "bi-buildings-fill", ctaLabel: "Request a quote" },
-      { title: "Winelands Tours", description: "Stellenbosch and Franschhoek estates at an unhurried pace.", image: "images/winelands.jpg", icon: "bi-cup-straw", ctaLabel: "Request a quote" },
+      { title: "Winelands Tours", description: "Stellenbosch and Franschhoek estates at an unhurried pace.", image: "images/franschhoek.jpg", icon: "bi-cup-straw", ctaLabel: "Request a quote" },
       { title: "Private Chauffeur Services", description: "A discreet driver at your disposal, by the hour or by the day.", image: "images/city-tour.jpg", icon: "bi-person-fill", ctaLabel: "Request a quote" },
       { title: "Custom Day Tours", description: "An itinerary shaped entirely around your interests and your time.", image: "images/table-mountain.jpg", icon: "bi-stars", ctaLabel: "Request a quote" }
     ],
@@ -138,7 +138,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     cards: [
       { title: "Cape Peninsula Tours", description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.", duration: "Full Day", passengers: "Private", ctaLabel: "Enquire", image: "images/cape-point.jpg", icon: "bi-geo-alt-fill" },
       { title: "Cape Town City Tours", description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.", duration: "Half Day / Full Day", passengers: "Private", ctaLabel: "Enquire", image: "images/waterfront.jpg", icon: "bi-buildings-fill" },
-      { title: "Winelands Tours", description: "Stellenbosch and Franschhoek estates at an unhurried pace.", duration: "Full Day", passengers: "Private", ctaLabel: "Enquire", image: "images/winelands.jpg", icon: "bi-cup-straw" },
+      { title: "Winelands Tours", description: "Stellenbosch and Franschhoek estates at an unhurried pace.", duration: "Full Day", passengers: "Private", ctaLabel: "Enquire", image: "images/franschhoek.jpg", icon: "bi-cup-straw" },
       { title: "Custom Day Tours", description: "An itinerary shaped entirely around your interests and your time.", duration: "Flexible", passengers: "Private", ctaLabel: "Enquire", image: "images/table-mountain.jpg", icon: "bi-stars" }
     ],
     trustStrip: ["Personalized", "Unhurried", "Local insight", "Comfort-first"],
@@ -162,8 +162,8 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       { title: "Boulders Beach", description: "Simon's Town", image: "images/boulders-beach.jpg" },
       { title: "Bo-Kaap", description: "Cape Town City", image: "images/city-tour.jpg" },
       { title: "V&A Waterfront", description: "Cape Town City", image: "images/waterfront.jpg" },
-      { title: "Kirstenbosch", description: "Table Mountain", image: "images/table-mountain.jpg" },
-      { title: "Cape Winelands", description: "Stellenbosch & Franschhoek", image: "images/winelands.jpg" }
+      { title: "Kirstenbosch", description: "Table Mountain", image: "images/kirstenbosch.jpg" },
+      { title: "Cape Winelands", description: "Stellenbosch & Franschhoek", image: "images/franschhoek.jpg" }
     ],
     trustStrip: [],
     ctaTitle: "",
