@@ -292,6 +292,7 @@
   .hero-home {
     padding: clamp(4.5rem, 12vw, 7rem) 1rem;
     background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/Home Backgroud.jpg');
+    background-attachment: scroll;
   }
 
   .hero-content {
@@ -322,6 +323,7 @@
   .hero-home {
     min-height: 80svh;
     background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/Home Backgroud.jpg');
+    background-attachment: scroll;
     justify-content: center;
 
     .container {
