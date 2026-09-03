@@ -15,7 +15,7 @@ export type CTAVariant = "tours" | "default";
       <p class="cta-text">{{ text }}</p>
 
       <div class="cta-actions">
-        <a [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary">{{ actionLabel }}</a>
+        <a [routerLink]="[buttonLink]" fragment="contact-form" class="btn btn-primary">{{ buttonLabel }}</a>
         <a href="tel:+27734483958" class="btn btn-outline-gold">Call Thabang · 073 448 3958</a>
       </div>
 
@@ -28,12 +28,10 @@ export class CtaSectionComponent {
   @Input() variant: CTAVariant = "default";
   @Input() title = "";
   @Input() text = "";
+  @Input() buttonLabel = "Plan Your Journey";
+  @Input() buttonLink = "/contact";
 
   get variantClass(): string {
     return this.variant !== "default" ? `${this.variant}-cta` : "";
-  }
-
-  get actionLabel(): string {
-    return this.variant === "tours" ? "Enquire About a Tour" : "Plan Your Journey";
   }
 }

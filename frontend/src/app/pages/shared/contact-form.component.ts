@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from "@angular/forms";
 
@@ -55,8 +55,9 @@ import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from "@angula
   `,
   styleUrl: "./contact-form.component.scss"
 })
-export class ContactFormComponent {
+export class ContactFormComponent implements OnChanges {
   @Input() isSending = false;
+  @Input() requestedService = "";
   @Output() formSubmitted = new EventEmitter<any>();
 
   form: FormGroup;
@@ -68,6 +69,15 @@ export class ContactFormComponent {
       phone: ["", [Validators.required, Validators.minLength(7)]],
       message: ["", [Validators.required, Validators.minLength(5)]]
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['requestedService'] && this.requestedService) {
+      // Pre-fill the message with the requested service
+      const serviceMessage = `I'm interested in requesting: ${this.requestedService}`;
+      this.form.patchValue({ message: serviceMessage });
+      this.form.get('message')?.markAsTouched();
+    }
   }
 
   isFieldInvalid(fieldName: string): boolean {

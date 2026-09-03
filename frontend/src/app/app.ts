@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { environment } from '../environments/environment';
 import { SeoService } from './services/seo.service';
@@ -14,23 +14,20 @@ import { filter } from 'rxjs/operators';
 export class App implements OnInit {
   readonly maintenanceMode = environment.maintenanceMode;
 
-  constructor(
-    private seoService: SeoService,
-    private router: Router,
-    private googleAnalytics: GoogleAnalyticsService
-  ) {}
+  private seoService = inject(SeoService);
+  private router = inject(Router);
+  private googleAnalytics = inject(GoogleAnalyticsService);
 
   ngOnInit(): void {
     // Set initial SEO tags based on current route
     this.updateSeoForCurrentRoute();
 
-    // Update SEO tags on route change
+    // Update SEO tags on route change, but don't scroll automatically
+    // Let anchor navigation work naturally
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.updateSeoForCurrentRoute();
-      // Scroll to top
-      window.scrollTo(0, 0);
     });
   }
 
@@ -39,13 +36,7 @@ export class App implements OnInit {
     let pageKey = 'home';
     let pageTitle = 'TB Tours - Private Tours & Airport Transfers in Cape Town';
 
-    if (path.includes('/tours')) {
-      pageKey = 'tours';
-      pageTitle = 'TB Tours - Tours in Cape Town & Winelands';
-    } else if (path.includes('/services')) {
-      pageKey = 'services';
-      pageTitle = 'TB Tours - Services';
-    } else if (path.includes('/destinations')) {
+    if (path.includes('/destinations')) {
       pageKey = 'destinations';
       pageTitle = 'TB Tours - Destinations';
     } else if (path.includes('/about')) {
@@ -70,10 +61,8 @@ export class App implements OnInit {
 
   readonly nav = [
     { label: 'Home', path: '/' },
-    { label: 'Tours', path: '/tours' },
-    { label: 'Services', path: '/services' },
-    { label: 'Destinations', path: '/destinations' },
     { label: 'About', path: '/about' },
+    { label: 'Destinations', path: '/destinations' },
     { label: 'Contact', path: '/contact' },
   ];
 
@@ -109,5 +98,10 @@ export class App implements OnInit {
     if (window.innerWidth > 860) {
       this.mobileMenuOpen = false;
     }
+  }
+
+  scrollToHome(): void {
+    window.location.hash = '#home';
+    this.mobileMenuOpen = false;
   }
 }

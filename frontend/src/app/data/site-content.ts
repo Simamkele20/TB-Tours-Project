@@ -16,6 +16,7 @@ export interface FeatureCard {
   passengers?: string;
   bags?: string;
   ctaLabel?: string;
+  ctaLink?: string;
 }
 
 export interface PageContent {
@@ -36,45 +37,45 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       accent: "Our priority.",
       description:
         "Private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands.",
-      image: "images/hero-drive-poster.jpg"
+      image: "images/camp-bay.jpg"
     },
     sectionTitle: "Travel your way.",
     sectionSubtitle: "From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.",
     cards: [
       {
-        title: "Airport Transfers",
-        description: "Punctual, private arrivals and departures with a calm, professional welcome.",
-        image: "images/city-tour.jpg",
+        title: "Table Mountain",
+        description: "See Cape Town from above.",
+        image: "images/Image(13).jpg",
         ctaLabel: "Learn more"
       },
       {
-        title: "Cape Peninsula Tours",
-        description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.",
-        image: "images/chapmans-peak.jpg",
+        title: "Cape Peninsula",
+        description: "Where the mountains meet the Atlantic.",
+        image: "images/Image(19).jpg",
         ctaLabel: "Learn more"
       },
       {
-        title: "Cape Town City Tours",
-        description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.",
-        image: "images/waterfront.jpg",
+        title: "Boulders Beach",
+        description: "Meet Cape Town's famous penguins.",
+        image: "images/Image(18).jpg",
         ctaLabel: "Learn more"
       },
       {
-        title: "Winelands Tours",
-        description: "Stellenbosch and Franschhoek estates at an unhurried pace.",
+        title: "Cape Winelands",
+        description: "Slow afternoons among vineyards and estates.",
         image: "images/franschhoek.jpg",
         ctaLabel: "Learn more"
       },
       {
         title: "Private Chauffeur Services",
         description: "A discreet driver at your disposal, by the hour or by the day.",
-        image: "images/city-tour.jpg",
+        image: "images/hermanus.jpg",
         ctaLabel: "Learn more"
       },
       {
         title: "Custom Day Tours",
         description: "An itinerary shaped entirely around your interests and your time.",
-        image: "images/table-mountain.jpg",
+        image: "images/kirstenbosch.jpg",
         ctaLabel: "Learn more"
       }
     ],
@@ -91,60 +92,17 @@ export const SITE_CONTENT: Record<string, PageContent> = {
         "A Cape Town-based private tour, airport transfer and chauffeur company.",
       image: "images/franschhoek.jpg"
     },
-    sectionTitle: "Personal, professional and local",
-    sectionSubtitle: "Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.",
+    sectionTitle: "About",
+    sectionSubtitle: "TB Tours (Pty)Ltd offers private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.\n\nThe company grew out of one person's time on the road - a story of entrepreneurship, service, and genuine care for every journey.",
     cards: [
-      { title: "From the Road to Building a Dream", description: "Thabang's story is the heart of TB Tours (Pty)Ltd and how one journey became a business built on dignity and care.", image: "images/thabang-portrait.jpg", ctaLabel: "Read the story" },
-      { title: "Built Around People", description: "Not a tour bus operation - personal service with local insight and flexibility.", image: "images/city-tour.jpg", ctaLabel: "Meet TB Tours (Pty)Ltd" }
+      { title: "From the Road to Building a Dream", description: "Thabang's story is the heart of TB Tours (Pty)Ltd and how one journey became a business built on dignity and care.", image: "images/About-removebg-preview.png", ctaLabel: "Read the story" },
+      { title: "Built Around People", description: "Not a tour bus operation - personal service with local insight and flexibility.", image: "images/DEst.jpg", ctaLabel: "Meet TB Tours (Pty)Ltd" }
     ],
     trustStrip: ["Faith", "Humility", "Integrity", "Perseverance"],
     ctaTitle: "One journey at a time.",
     ctaText: "When you travel with TB Tours (Pty)Ltd, you're travelling with the person who built his business one journey at a time."
   },
-  services: {
-    hero: {
-      eyebrow: "Services",
-      title: "Travel arranged ",
-      accent: "with care",
-      description:
-        "An outline of the services we offer across Cape Town and the Cape Winelands.",
-      image: "images/city-tour.jpg"
-    },
-    sectionTitle: "",
-    sectionSubtitle: "",
-    cards: [
-      { title: "Airport Transfers", description: "Punctual, private arrivals and departures with a calm, professional welcome.", image: "images/city-tour.jpg", icon: "bi-airplane-fill", ctaLabel: "Request a quote" },
-      { title: "Cape Peninsula Tours", description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.", image: "images/chapmans-peak.jpg", icon: "bi-geo-alt-fill", ctaLabel: "Request a quote" },
-      { title: "Cape Town City Tours", description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.", image: "images/waterfront.jpg", icon: "bi-buildings-fill", ctaLabel: "Request a quote" },
-      { title: "Winelands Tours", description: "Stellenbosch and Franschhoek estates at an unhurried pace.", image: "images/franschhoek.jpg", icon: "bi-cup-straw", ctaLabel: "Request a quote" },
-      { title: "Private Chauffeur Services", description: "A discreet driver at your disposal, by the hour or by the day.", image: "images/city-tour.jpg", icon: "bi-person-fill", ctaLabel: "Request a quote" },
-      { title: "Custom Day Tours", description: "An itinerary shaped entirely around your interests and your time.", image: "images/table-mountain.jpg", icon: "bi-stars", ctaLabel: "Request a quote" }
-    ],
-    trustStrip: ["Airport transfers", "Private touring", "Chauffeur days", "Custom itineraries"],
-    ctaTitle: "Need a custom day?",
-    ctaText: "Tell us your plan and we will shape a route around your interests and timing, then email your quote."
-  },
-  tours: {
-    hero: {
-      eyebrow: "Tours",
-      title: "Private tours,",
-      accent: "shaped around you",
-      description:
-        "Experience Cape Town and the Winelands at your own pace with personalized itineraries designed for your interests and timing.",
-      image: "images/chapmans-peak.jpg"
-    },
-    sectionTitle: "",
-    sectionSubtitle: "",
-    cards: [
-      { title: "Cape Peninsula Tours", description: "The full coastal arc - Chapman's Peak, Cape Point and Boulders Beach.", duration: "Full Day", passengers: "Private", ctaLabel: "Enquire", image: "images/cape-point.jpg", icon: "bi-geo-alt-fill" },
-      { title: "Cape Town City Tours", description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.", duration: "Half Day / Full Day", passengers: "Private", ctaLabel: "Enquire", image: "images/waterfront.jpg", icon: "bi-buildings-fill" },
-      { title: "Winelands Tours", description: "Stellenbosch and Franschhoek estates at an unhurried pace.", duration: "Full Day", passengers: "Private", ctaLabel: "Enquire", image: "images/franschhoek.jpg", icon: "bi-cup-straw" },
-      { title: "Custom Day Tours", description: "An itinerary shaped entirely around your interests and your time.", duration: "Flexible", passengers: "Private", ctaLabel: "Enquire", image: "images/table-mountain.jpg", icon: "bi-stars" }
-    ],
-    trustStrip: ["Personalized", "Unhurried", "Local insight", "Comfort-first"],
-    ctaTitle: "Enquire about a tour",
-    ctaText: "Share your dates and interests and we will tailor the best route for your day."
-  },
+
   destinations: {
     hero: {
       eyebrow: "Destinations",
@@ -152,18 +110,19 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       accent: "take you",
       description:
         "A first selection of the places our journeys are built around.",
-      image: "images/cape-point.jpg"
+      image: "images/camp-bay.jpg"
     },
     sectionTitle: "",
     sectionSubtitle: "",
     cards: [
-      { title: "Cape Point", description: "Cape Peninsula", image: "images/cape-point.jpg" },
-      { title: "Chapman's Peak Drive", description: "Atlantic Coast", image: "images/chapmans-peak.jpg" },
-      { title: "Boulders Beach", description: "Simon's Town", image: "images/boulders-beach.jpg" },
-      { title: "Bo-Kaap", description: "Cape Town City", image: "images/city-tour.jpg" },
-      { title: "V&A Waterfront", description: "Cape Town City", image: "images/waterfront.jpg" },
-      { title: "Kirstenbosch", description: "Table Mountain", image: "images/kirstenbosch.jpg" },
-      { title: "Cape Winelands", description: "Stellenbosch & Franschhoek", image: "images/franschhoek.jpg" }
+      { title: "Cape Point", description: "Cape Peninsula", image: "images/tsisikama.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
+      { title: "Chapman's Peak Drive", description: "Atlantic Coast", image: "images/camp-bay.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
+      { title: "Boulders Beach", description: "Simon's Town", image: "images/hermanus.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
+      { title: "Bo-Kaap", description: "Cape Town City", image: "images/DEst.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
+      { title: "V&A Waterfront", description: "Cape Town City", image: "images/franschhoek.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
+      { title: "Kirstenbosch", description: "Table Mountain", image: "images/camp-bay.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
+      { title: "Cape Winelands", description: "Stellenbosch & Franschhoek", image: "images/franschhoek.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
+      { title: "Aquila Game Reserve", description: "Meet the Big Five in their natural habitat.", image: "images/Game Reserve.jpg", ctaLabel: "Enquire", ctaLink: "/contact" }
     ],
     trustStrip: [],
     ctaTitle: "",
@@ -176,7 +135,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       accent: "journey",
       description:
         "Tell us your dates and what you would like to see - we will take care of the rest.",
-      image: "images/waterfront.jpg"
+      image: "images/tsisikama.jpg"
     },
     sectionTitle: "Send us a message",
     sectionSubtitle: "",
@@ -191,6 +150,52 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     ctaText: "Airport transfer, private tour or custom day out - let's plan it together by email."
   }
 };
+
+export interface ServiceCard {
+  number: string;
+  title: string;
+  description: string;
+  ctaLabel: string;
+}
+
+export const SITE_SERVICES: ServiceCard[] = [
+  {
+    number: "01",
+    title: "Airport Transfers",
+    description: "Punctual, private arrivals and departures with a calm, professional welcome.",
+    ctaLabel: "REQUEST A QUOTE"
+  },
+  {
+    number: "02",
+    title: "Cape Peninsula Tours",
+    description: "The full coastal arc • Chapman's Peak, Cape Point and Boulders Beach.",
+    ctaLabel: "REQUEST A QUOTE"
+  },
+  {
+    number: "03",
+    title: "Cape Town City Tours",
+    description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.",
+    ctaLabel: "REQUEST A QUOTE"
+  },
+  {
+    number: "04",
+    title: "Winelands Tours",
+    description: "Stellenbosch and Franschhoek estates at an unhurried pace.",
+    ctaLabel: "REQUEST A QUOTE"
+  },
+  {
+    number: "05",
+    title: "Private Chauffeur Services",
+    description: "A discreet driver at your disposal, by the hour or by the day.",
+    ctaLabel: "REQUEST A QUOTE"
+  },
+  {
+    number: "06",
+    title: "Custom Day Tours",
+    description: "An itinerary shaped entirely around your interests and your time.",
+    ctaLabel: "REQUEST A QUOTE"
+  }
+];
 
 export interface GoogleReview {
   name: string;
