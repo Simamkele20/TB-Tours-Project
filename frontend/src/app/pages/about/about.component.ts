@@ -1,9 +1,9 @@
-import { Component, computed, OnInit } from "@angular/core";
+import { Component, computed, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterLink, ActivatedRoute } from "@angular/router";
 import { ViewportScroller } from "@angular/common";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
-import { SITE_CONTENT } from "../../data/site-content";
+import { PageDataService } from "../../services/page-data.service";
 
 @Component({
   selector: "app-about-page",
@@ -98,15 +98,14 @@ import { SITE_CONTENT } from "../../data/site-content";
   styleUrl: "./about.component.scss"
 })
 export class AboutPageComponent implements OnInit {
-  readonly heroConfig = computed(() => ({
-    ...SITE_CONTENT["about"].hero,
-    hideButton: true
-  }));
+  private readonly pageDataService = inject(PageDataService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly viewportScroller = inject(ViewportScroller);
 
-  constructor(
-    private route: ActivatedRoute,
-    private viewportScroller: ViewportScroller
-  ) {}
+  readonly heroConfig = computed(() => {
+    const config = this.pageDataService.getPageConfig("about");
+    return config?.hero || { eyebrow: '', title: '', accent: '', description: '' };
+  });
 
   ngOnInit() {
     this.route.fragment.subscribe(fragment => {

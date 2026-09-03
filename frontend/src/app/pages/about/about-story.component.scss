@@ -1,96 +1,243 @@
-.story-page {
-  max-width: 840px;
-}
+// About Story Page - Modern Tech Startup Design
 
-.story-kicker {
-  margin: 0;
-  color: #d0a64b;
-  text-transform: uppercase;
-  letter-spacing: 0.24em;
-  font-size: 0.72rem;
-  font-weight: 500;
-}
-
-.story-page h2 {
-  margin: 0.7rem 0 0.5rem;
-  color: #213a63;
-  font-size: clamp(2rem, 3.5vw, 2.8rem);
-  font-weight: 300;
-  line-height: 1.16;
-  letter-spacing: -0.01em;
-}
-
-.story-subtitle {
-  margin: 0 0 1.3rem;
-  color: #d0a64b;
-  font-size: 0.78rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.story-page p {
-  margin: 0 0 0.95rem;
-  color: #4d5a71;
-  line-height: 1.7;
-  font-size: 1.01rem;
-}
-
-.story-page blockquote {
-  margin: 1rem 0;
-  padding: 1rem 1.1rem;
-  border-left: 4px solid #f2b112;
-  background: #fbf7ea;
-  color: #5d4a1c;
-  font-weight: 700;
-  font-size: 1.04rem;
-}
-
-.story-figure {
-  margin: 1.4rem 0 1rem;
-  border-radius: 14px;
+.hero-section {
+  background: linear-gradient(135deg, var(--brand-black) 0%, #1a1a1a 100%);
+  color: var(--brand-white);
+  padding: 4rem 2rem;
+  position: relative;
   overflow: hidden;
-  border: 1px solid #e2e7f0;
-  background: #fff;
+  margin-bottom: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: var(--brand-gold);
+    border-radius: 50%;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      color: var(--brand-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 700;
+      font-size: 0.8rem;
+
+      &::before {
+        content: '';
+        width: 4px;
+        height: 20px;
+        background: var(--brand-gold);
+      }
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .description {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #ddd;
+    }
+  }
 }
 
-.story-figure img {
+.section {
+  padding: 6rem 2rem;
   width: 100%;
-  height: auto;
-  display: block;
+
+  &.light {
+    background: var(--brand-white);
+  }
+
+  &.dark {
+    background: #e8e8e6;
+  }
+
+  &.black {
+    background: var(--brand-black);
+    color: var(--brand-white);
+  }
 }
 
-.story-figure figcaption {
-  padding: 0.9rem 1rem;
+.section-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.story-header {
+  text-align: center;
+  margin-bottom: 4rem;
+
+  .kicker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    color: var(--brand-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    font-size: 0.75rem;
+
+    &::before,
+    &::after {
+      content: '';
+      width: 40px;
+      height: 2px;
+      background: var(--brand-gold);
+    }
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    margin-bottom: 1rem;
+  }
+}
+
+// Story Content
+.story-content {
+  p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    color: var(--brand-black);
+  }
+}
+
+// Timeline or Milestone Section
+.milestones {
   display: grid;
-  gap: 0.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+
+  .milestone {
+    background: var(--brand-white);
+    border: 2px solid #e0e0e0;
+    border-radius: 2px;
+    padding: 2.5rem;
+    position: relative;
+    text-align: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--brand-gold);
+    }
+
+    &:hover {
+      border-color: var(--brand-gold);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(242, 177, 18, 0.2);
+    }
+
+    .year {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--brand-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--brand-black);
+      margin-bottom: 0.8rem;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.6;
+    }
+  }
 }
 
-.story-figure strong {
-  color: #0f1117;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+// CTA Section
+.cta-section {
+  background: var(--brand-black);
+  color: var(--brand-white);
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-top: 4rem;
+
+  .cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+
+    h3 {
+      color: var(--brand-white);
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+
+    p {
+      color: #ccc;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .btn {
+      margin-top: 1rem;
+    }
+  }
 }
 
-.story-figure span {
-  color: #566075;
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 1.5rem;
+  }
+
+  .section {
+    padding: 4rem 1.5rem;
+  }
+
+  .milestones {
+    grid-template-columns: 1fr;
+  }
 }
 
-.closing-copy {
-  margin-top: 0.8rem;
-}
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 2rem 1rem;
+  }
 
-.closing-brand {
-  margin-top: 0;
-  color: #22375c;
-  font-weight: 700;
-}
+  .section {
+    padding: 2.5rem 1rem;
+  }
 
-.story-actions {
-  margin-top: 1.35rem;
-}
-
-@media (max-width: 860px) {
-  .story-page p {
-    font-size: 0.98rem;
+  .story-content p {
+    font-size: 1rem;
   }
 }

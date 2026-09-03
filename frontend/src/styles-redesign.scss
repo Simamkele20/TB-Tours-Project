@@ -1,0 +1,373 @@
+// ==========================================
+// TB TOURS - REDESIGNED STYLES
+// Modern Layout with Animations & Creative Positioning
+// ==========================================
+
+// Import existing utilities and variables
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&family=Poppins:wght@500;600;700&display=swap');
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+// ==========================================
+// NEW DESIGN SYSTEM
+// ==========================================
+
+:root {
+  --font-sans: 'Jost', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-logo: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+
+  // Color palette - same colors, new usage
+  --brand-gold: #f2b112;
+  --brand-gold-soft: #ffc94d;
+  --brand-night: #0b1220;
+  --brand-night-soft: #111a2a;
+  --brand-ink: #121212;
+  --brand-copy: #344155;
+  --brand-soft: #f8fafd;
+  --brand-border: #e4e9f1;
+  --brand-white: #e8e8e6;
+
+  // New gradient definitions for modern look
+  --grad-primary: linear-gradient(135deg, #0f1419 0%, #1a2f5a 100%);
+  --grad-accent: linear-gradient(135deg, #f2b112 0%, #ffc94d 100%);
+  --grad-overlay: linear-gradient(135deg, rgba(15, 20, 25, 0.95), rgba(26, 47, 90, 0.85));
+
+  // Animation timing
+  --transition-fast: 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-base: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-slow: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: #f0f4f8;
+  background: var(--grad-primary);
+  overflow-x: hidden;
+}
+
+// ==========================================
+// TYPOGRAPHY
+// ==========================================
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  color: #ffffff;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: #ffffff;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  color: #f2b112;
+}
+
+h4 {
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+p {
+  color: rgba(240, 244, 248, 0.85);
+  line-height: 1.65;
+}
+
+.eyebrow {
+  color: #f2b112;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  font-size: 0.75rem;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+// ==========================================
+// BUTTONS
+// ==========================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 0.9rem 1.8rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  font-family: var(--font-logo);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 100%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(242, 177, 18, 0.25);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #f2b112, #ffc94d);
+  color: #0f1419;
+  border: none;
+  font-weight: 700;
+
+  &:hover {
+    background: linear-gradient(135deg, #ffc94d, #f2b112);
+    color: #0f1419;
+  }
+}
+
+.btn-outline-gold {
+  background: transparent;
+  color: #f2b112;
+  border: 2px solid #f2b112;
+
+  &:hover {
+    background: #f2b112;
+    color: #0f1419;
+  }
+}
+
+.btn-outline-light {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid rgba(240, 244, 248, 0.5);
+
+  &:hover {
+    background: rgba(240, 244, 248, 0.1);
+    border-color: #ffffff;
+    color: #ffffff;
+  }
+}
+
+// ==========================================
+// LAYOUT CONTAINERS
+// ==========================================
+
+.container {
+  width: min(1200px, 92vw);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section {
+  padding: clamp(3rem, 8vw, 6rem) 0;
+  position: relative;
+}
+
+.section-header {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  text-align: center;
+
+  .eyebrow {
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #f2b112, #ffc94d);
+      border-radius: 2px;
+    }
+  }
+
+  .subtitle {
+    color: rgba(240, 244, 248, 0.75);
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    max-width: 600px;
+    margin: 1.5rem auto 0;
+  }
+}
+
+// ==========================================
+// ANIMATIONS & TRANSITIONS
+// ==========================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(242, 177, 18, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(242, 177, 18, 0.5);
+  }
+}
+
+// Stagger animations for card sequences
+@for $i from 1 through 12 {
+  .card:nth-child(#{$i}) {
+    animation: fadeInUp var(--transition-slow) ease-out forwards;
+    animation-delay: #{$i * 0.08}s;
+    opacity: 0;
+  }
+}
+
+// ==========================================
+// RESPONSIVE UTILITIES
+// ==========================================
+
+@media (max-width: 768px) {
+  .container {
+    width: min(100%, 95vw);
+  }
+
+  .section {
+    padding: clamp(2rem, 5vw, 3.5rem) 0;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+  }
+
+  h2 {
+    font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+  }
+
+  .btn {
+    padding: 0.8rem 1.4rem;
+    font-size: 0.75rem;
+  }
+}
+
+// Reduce motion for accessibility
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

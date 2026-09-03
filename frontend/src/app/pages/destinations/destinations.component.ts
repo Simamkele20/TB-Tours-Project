@@ -1,31 +1,22 @@
-import { Component, computed } from "@angular/core";
-import { ContentPageComponent } from "../shared/content-page.component";
-import { SITE_CONTENT } from "../../data/site-content";
+import { Component, computed, inject } from "@angular/core";
+import { PageLayoutComponent, type PageLayoutConfig } from "../../shared/components/page-layout.component";
+import { PageDataService } from "../../services/page-data.service";
 
+/**
+ * Destinations page smart component
+ * Responsibility: Load page data and pass to presentation component
+ */
 @Component({
   selector: "app-destinations-page",
   standalone: true,
-  imports: [ContentPageComponent],
+  imports: [PageLayoutComponent],
   template: `
-    <app-content-page
-      [heroConfig]="heroConfig()"
-      [cards]="cards()"
-      [cardTitle]="cardTitle()"
-      [cardSubtitle]="cardSubtitle()"
-      [cardLayout]="'destinations'"
-      [trustItems]="trustItems"
-      [trustVariant]="'tours'">
-    </app-content-page>
+    <app-page-layout [config]="pageConfig()"></app-page-layout>
   `,
   styles: []
 })
 export class DestinationsPageComponent {
-  private readonly content = computed(() => SITE_CONTENT["destinations"]);
+  private readonly pageDataService = inject(PageDataService);
 
-  readonly heroConfig = computed(() => this.content().hero);
-  readonly cards = computed(() => this.content().cards);
-  readonly cardTitle = computed(() => this.content().sectionTitle);
-  readonly cardSubtitle = computed(() => this.content().sectionSubtitle);
-
-  readonly trustItems = [];
+  readonly pageConfig = computed(() => this.pageDataService.getPageConfig("destinations"));
 }

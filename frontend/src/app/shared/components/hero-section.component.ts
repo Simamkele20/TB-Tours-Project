@@ -1,5 +1,4 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef } from "@angular/core";
-import { RouterLink } from "@angular/router";
 import { CommonModule } from "@angular/common";
 
 export interface HeroConfig {
@@ -16,9 +15,9 @@ export interface HeroConfig {
 @Component({
   selector: "app-hero-section",
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [CommonModule],
   template: `
-    <section class="hero" [class.hero-home]="showPhone()" [style.background-image]="backgroundImage">
+    <section class="hero" [class.hero-home]="showPhone()">
       <video
         #videoElement
         *ngIf="showPhone() && !videoFailed"
@@ -28,7 +27,6 @@ export interface HeroConfig {
         loop
         playsinline
         preload="auto"
-        [attr.poster]="posterImage"
         aria-hidden="true"
         (error)="onVideoError($event)"
         (loadedmetadata)="onVideoReady($event)"
@@ -49,17 +47,17 @@ export interface HeroConfig {
         <p class="description">{{ config.description }}</p>
 
         <div class="hero-actions" *ngIf="showPhone()">
-          <a [routerLink]="['/contact']" fragment="contact-form" class="btn btn-outline-gold">
+          <a href="#contact" class="btn btn-outline-gold">
             Plan Your Journey
           </a>
-          <a routerLink="/tours" class="btn btn-outline-light">
-            Explore Our Tours
+          <a href="#destinations" class="btn btn-outline-light">
+            Explore Destinations
           </a>
         </div>
 
         <p class="hero-trust" *ngIf="showPhone()">Private · Professional · Personal</p>
 
-        <a *ngIf="!showPhone() && !!config?.bookButtonLabel" [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary">
+        <a *ngIf="!showPhone() && !!config?.bookButtonLabel" href="#contact" class="btn btn-primary">
           {{ config.bookButtonLabel }}
         </a>
       </div>
@@ -115,17 +113,8 @@ export class HeroSectionComponent implements AfterViewInit {
     console.log("✓ Video is now playing");
   }
 
-  get backgroundImage(): string {
-    const image = this.config?.image || "images/home-hero-mercedes-road.jpg";
-    return `linear-gradient(90deg, rgba(6, 8, 12, 0.62), rgba(6, 8, 12, 0.22)), url(${image})`;
-  }
-
-  get posterImage(): string {
-    return this.config?.image || "images/home-hero-mercedes-road.jpg";
-  }
-
   onVideoError(event: Event): void {
-    console.warn("Video failed to load, falling back to background image", event);
+    console.warn("Video failed to load, falling back to gradient", event);
     this.videoFailed = true;
   }
 }

@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { RouterLink, ActivatedRoute } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { ContactFormComponent } from "../shared/contact-form.component";
-import { SITE_CONTENT } from "../../data/site-content";
+import { PageDataService } from "../../services/page-data.service";
 import { BookingApiService } from "../../booking/booking-api.service";
 import { GoogleAnalyticsService } from "../../services/google-analytics.service";
 import { finalize } from "rxjs";
@@ -79,12 +79,16 @@ import { finalize } from "rxjs";
   styleUrl: "./contact.component.scss"
 })
 export class ContactPageComponent implements OnInit {
+  private readonly pageDataService = inject(PageDataService);
   private readonly bookingApi = inject(BookingApiService);
   private readonly route = inject(ActivatedRoute);
   private readonly googleAnalytics = inject(GoogleAnalyticsService);
   @ViewChild('contactForm') contactForm?: ContactFormComponent;
 
-  readonly heroConfig = computed(() => SITE_CONTENT["contact"].hero);
+  readonly heroConfig = computed(() => {
+    const config = this.pageDataService.getPageConfig("contact");
+    return config?.hero || { eyebrow: '', title: '', accent: '', description: '' };
+  });
 
   toastMessage = signal("");
   toastType = signal<"success" | "error">("success");
