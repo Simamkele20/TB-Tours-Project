@@ -34,7 +34,7 @@
   .section-header { text-align: center; margin-bottom: 3rem; }
   h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.8rem, 3.5vw, 2.2rem); font-weight: 400; color: #fff; }
   .destinations-wrapper { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2rem; margin-top: 3rem; }
-  .destination-nav { background: rgba(242, 177, 18, 0.1); border: 2px solid rgba(242, 177, 18, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 70px; height: 70px; border-radius: 50%; color: #f2b112; transition: all 0.3s ease; flex: 0; font-size: 1.8rem; &:hover { background: #f2b112; color: #0f1419; transform: scale(1.1); } }
+  .destination-nav { background: rgba(242, 177, 18, 0.1); border: 2px solid rgba(242, 177, 18, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 100px; height: 60px; border-radius: 50%; color: #f2b112; transition: all 0.3s ease; flex: 0; font-size: 1.8rem; &:hover { background: #f2b112; color: #0f1419; transform: scale(1.1); } }
   .destination-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; justify-content: center; width: 100%; max-width: 1100px; margin: 0 auto; flex: 0 0 100%; order: -1; }
   .destination-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(242, 177, 18, 0.2); border-radius: 2px; overflow: hidden; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); animation: fadeInUp 0.8s ease-out both; display: flex; flex-direction: column; width: 100%;
     @for $i from 1 through 3 { &:nth-child(#{$i}) { animation-delay: #{$i * 0.08}s; } }
@@ -50,7 +50,7 @@
   .section-header { text-align: center; margin-bottom: 4rem; }
   h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.8rem, 3.5vw, 2.2rem); font-weight: 400; color: #0f1419; }
   .services-wrapper { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2rem; margin-top: 3rem; }
-  .service-nav { background: rgba(242, 177, 18, 0.1); border: 2px solid rgba(242, 177, 18, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 70px; height: 70px; border-radius: 50%; color: #f2b112; transition: all 0.3s ease; flex: 0; font-size: 1.8rem; &:hover { background: #f2b112; color: #0f1419; transform: scale(1.1); } }
+  .service-nav { background: rgba(242, 177, 18, 0.1); border: 2px solid rgba(242, 177, 18, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 100px; height: 60px; border-radius: 50%; color: #f2b112; transition: all 0.3s ease; flex: 0; font-size: 1.8rem; &:hover { background: #f2b112; color: #0f1419; transform: scale(1.1); } }
   .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; justify-content: center; width: fit-content; flex: 0 0 100%; order: -1; }
   .service-card { padding: 2rem; transition: all 0.3s ease; animation: fadeInUp 0.8s ease-out both;
     @for $i from 1 through 6 { &:nth-child(#{$i}) { animation-delay: #{$i * 0.1}s; } }
@@ -67,7 +67,7 @@
   .section-header { text-align: center; margin-bottom: 3rem; }
   h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.8rem, 3.5vw, 2.2rem); font-weight: 400; color: #0f1419; }
   .reviews-wrapper { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2rem; margin-top: 3rem; }
-  .review-nav { background: rgba(242, 177, 18, 0.1); border: 2px solid rgba(242, 177, 18, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 70px; height: 70px; border-radius: 50%; color: #f2b112; transition: all 0.3s ease; flex: 0; font-size: 1.8rem; &:hover { background: #f2b112; color: #0f1419; transform: scale(1.1); } }
+  .review-nav { background: rgba(242, 177, 18, 0.1); border: 2px solid rgba(242, 177, 18, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 100px; height: 60px; border-radius: 50%; color: #f2b112; transition: all 0.3s ease; flex: 0; font-size: 1.8rem; &:hover { background: #f2b112; color: #0f1419; transform: scale(1.1); } }
   .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; justify-content: center; width: 100%; max-width: 1100px; margin: 0 auto; flex: 0 0 100%; order: -1; }
   .review-card { background: #ffffff; border: 1px solid rgba(242, 177, 18, 0.15); border-radius: 4px; padding: 2rem; animation: fadeInUp 0.8s ease-out both; transition: all 0.3s ease; text-align: center; display: flex; flex-direction: column; width: 100%; min-height: 280px;
     @for $i from 1 through 6 { &:nth-child(#{$i}) { animation-delay: #{$i * 0.1}s; } }
@@ -136,14 +136,14 @@
   .destinations-section .destination-grid { display: flex; justify-content: center; width: 100%; max-width: 400px; flex: 0 0 100%; order: -1; }
   .destinations-section .destination-card { width: 100%; }
   .destinations-section .destination-image-wrapper { height: 200px; }
-  .destinations-section .destination-nav { width: 40px; height: 40px; font-size: 1.5rem; }
+  .destinations-section .destination-nav { width: 60px; height: 40px; font-size: 1.5rem; }
   .services-section .services-wrapper { flex-wrap: wrap; gap: 1rem; }
   .services-section .services-grid { display: flex; justify-content: center; width: 100%; max-width: 500px; flex: 0 0 100%; order: -1; }
   .service-card { width: 100%; }
-  .service-nav { width: 40px; height: 40px; font-size: 1.5rem; }
+  .service-nav { width: 60px; height: 40px; font-size: 1.5rem; }
   .reviews-section .reviews-wrapper { flex-wrap: wrap; gap: 1rem; }
   .reviews-section .review-grid { display: flex; justify-content: center; width: 100%; max-width: 500px; flex: 0 0 100%; order: -1; }
   .review-card { width: 100%; }
-  .review-nav { width: 40px; height: 40px; font-size: 1.5rem; }
+  .review-nav { width: 60px; height: 40px; font-size: 1.5rem; }
   .contact-item .label { display: block; margin-bottom: 0.5rem; }
 }

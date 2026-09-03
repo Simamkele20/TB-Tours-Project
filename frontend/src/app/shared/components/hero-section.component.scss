@@ -44,6 +44,12 @@
 .hero-home {
   min-height: 100svh;
   padding: clamp(6rem, 15vw, 10rem) 1rem;
+  background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/hero-minibus.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  justify-content: flex-start;
+  align-items: center;
 
   .hero-video {
     position: absolute;
@@ -59,6 +65,11 @@
     background: linear-gradient(135deg, rgba(15, 20, 25, 0.82) 0%, rgba(26, 47, 90, 0.6) 50%, rgba(242, 177, 18, 0.03) 100%);
     z-index: 2;
   }
+
+  .container {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .hero-content {
@@ -66,11 +77,13 @@
   z-index: 3;
   max-width: 720px;
   width: 100%;
-  text-align: center;
+  text-align: left;
   animation: fadeInUp 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   opacity: 0;
   animation-delay: 0.15s;
   margin-top: 2rem;
+  padding-left: clamp(1rem, 7.5vw, 9rem);
+  padding-right: 0;
 }
 
 // Eyebrow with animated accent
@@ -81,6 +94,7 @@
   animation: slideDown 0.6s ease-out forwards;
   opacity: 0;
   animation-delay: 0.05s;
+  text-align: left;
 
   &::after {
     content: '';
@@ -121,6 +135,7 @@
   animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
   animation-delay: 0.25s;
+  text-align: left;
 
   span {
     color: #f2b112;
@@ -133,13 +148,14 @@
 // Description text
 .hero-content .description {
   font-size: clamp(0.95rem, 2vw, 1.1rem);
-  margin: 1.5rem auto 2rem;
+  margin: 1.5rem 0 2rem;
   line-height: 1.75;
   color: rgba(240, 244, 248, 0.85);
   animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
   animation-delay: 0.4s;
   max-width: 600px;
+  text-align: left;
 }
 
 .hero-subtitle {
@@ -152,6 +168,7 @@
   animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
   animation-delay: 0.5s;
+  text-align: left;
 }
 
 .hero-trust {
@@ -163,13 +180,14 @@
   animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
   animation-delay: 0.6s;
+  text-align: left;
 }
 
 // Hero buttons
 .hero-actions {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   flex-wrap: wrap;
   margin-top: 2.5rem;
@@ -273,6 +291,7 @@
 
   .hero-home {
     padding: clamp(4.5rem, 12vw, 7rem) 1rem;
+    background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/Home Backgroud.jpg');
   }
 
   .hero-content {
@@ -292,6 +311,7 @@
   .hero {
     min-height: 50vh;
     padding: clamp(2.5rem, 6vw, 3.5rem) 0.75rem;
+    justify-content: center;
 
     &::before,
     &::after {
@@ -301,11 +321,27 @@
 
   .hero-home {
     min-height: 80svh;
+    background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/Home Backgroud.jpg');
+    justify-content: center;
+
+    .container {
+      margin-inline: auto;
+    }
   }
 
   .hero-content {
     text-align: center;
     margin-top: 2.5rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .hero-content .eyebrow,
+  .hero-content h1,
+  .hero-content .description,
+  .hero-subtitle,
+  .hero-trust {
+    text-align: center;
   }
 
   .hero-content h1 {
@@ -316,6 +352,7 @@
   .hero-actions {
     flex-direction: column;
     width: 100%;
+    justify-content: center;
 
     .btn {
       width: 100%;
