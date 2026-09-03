@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, computed, signal, inject, ViewChild, HostListener } from "@angular/core";
+import { RouterModule } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { TimeAgoPipe } from "../../shared/pipes/time-ago.pipe";
 import { ContactFormComponent } from "../shared/contact-form.component";
@@ -10,7 +11,7 @@ import { finalize } from "rxjs";
 @Component({
   selector: "app-home-page",
   standalone: true,
-  imports: [CommonModule, HeroSectionComponent, TimeAgoPipe, ContactFormComponent],
+  imports: [CommonModule, RouterModule, HeroSectionComponent, TimeAgoPipe, ContactFormComponent],
   template: `
     <!-- HERO SECTION -->
     <section id="home">
@@ -33,55 +34,10 @@ import { finalize } from "rxjs";
           <p class="about-description">
             The company grew out of one person's time on the road - a story of entrepreneurship, service, and genuine care for every journey.
           </p>
-          <a href="#story" class="read-story-link">Read Thabang's Story</a>
+          <a routerLink="/story" class="read-story-link">Read Thabang's Story</a>
         </div>
         <div class="about-image">
-          <img src="/images/camp-bay.jpg" alt="Cape Town scenic view" loading="lazy" />
-        </div>
-      </div>
-    </section>
-
-    <!-- THABANG'S STORY SECTION -->
-    <section id="story" class="section founder-story-section">
-      <div class="container">
-        <div class="story-image-wrapper">
-          <div class="story-header">
-            <p class="kicker">The Founder</p>
-            <h2>From a Township Dream to the Founder of TB Tours</h2>
-          </div>
-
-          <div class="story-image">
-            <img src="/images/about-founder.png" alt="Thabang founder portrait" loading="lazy" />
-          </div>
-
-          <p class="story-subtitle">Thabang's Journey · Founder of TB Tours (Pty)Ltd</p>
-        </div>
-
-        <div class="story-content">
-          <p>
-            Every journey begins somewhere. Mine began in the township, with humble beginnings, big dreams, and a determination to create a better future.
-          </p>
-          <p>
-            Before becoming the founder of TB Tours, I was an everyday driver, working hard behind the wheel and learning something from every passenger, every road, and every journey. Driving gave me more than an income — it introduced me to people from different backgrounds and countries and opened my eyes to the incredible beauty of Cape Town.
-          </p>
-          <p>
-            I began to realise that there was an opportunity to turn my passion for driving, travelling, and meeting people into something bigger. That vision became TB Tours.
-          </p>
-          <p>
-            Building a company from humble beginnings has not always been easy. There have been challenges, setbacks, and moments when giving up would have been the easier choice. But I kept going. I believed that where you come from does not determine where you can go.
-          </p>
-          <p>
-            Today, TB Tours is more than just a transport and tourism business. It represents dreams, perseverance, and the belief that something great can be built from very humble beginnings.
-          </p>
-          <p>
-            Our mission is simple: to give every client a safe, comfortable, reliable, and memorable experience while discovering the beauty of Cape Town and beyond. From airport transfers to private rides and unforgettable Cape Town experiences, we want every journey with TB Tours to feel personal and special.
-          </p>
-          <p>
-            I am proud of where I come from, proud of how far I have come, and excited about where TB Tours is going. This is more than a business. This is a journey.
-          </p>
-          <p class="story-closing">
-            <strong>TB Tours — Your Journey, Our Priority.</strong>
-          </p>
+          <img src="/images/About.jpg" alt="Cape Town scenic view" loading="lazy" />
         </div>
       </div>
     </section>
@@ -321,6 +277,11 @@ export class HomePageComponent {
       title: "Boulders Beach",
       description: "Meet Cape Town's famous penguins.",
       image: "/images/Image (18).jpg"
+    },
+    {
+      title: "Bo-Kaap",
+      description: "Cape Town City",
+      image: "/images/DEst.jpg"
     },
     {
       title: "Hermanus",

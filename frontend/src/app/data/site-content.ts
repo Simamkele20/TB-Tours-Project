@@ -92,11 +92,11 @@ export const SITE_CONTENT: Record<string, PageContent> = {
         "A Cape Town-based private tour, airport transfer and chauffeur company.",
       image: "images/franschhoek.jpg"
     },
-    sectionTitle: "Personal, professional and local",
-    sectionSubtitle: "Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.",
+    sectionTitle: "About",
+    sectionSubtitle: "TB Tours (Pty)Ltd offers private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.\n\nThe company grew out of one person's time on the road - a story of entrepreneurship, service, and genuine care for every journey.",
     cards: [
       { title: "From the Road to Building a Dream", description: "Thabang's story is the heart of TB Tours (Pty)Ltd and how one journey became a business built on dignity and care.", image: "images/About-removebg-preview.png", ctaLabel: "Read the story" },
-      { title: "Built Around People", description: "Not a tour bus operation - personal service with local insight and flexibility.", image: "images/hermanus.jpg", ctaLabel: "Meet TB Tours (Pty)Ltd" }
+      { title: "Built Around People", description: "Not a tour bus operation - personal service with local insight and flexibility.", image: "images/DEst.jpg", ctaLabel: "Meet TB Tours (Pty)Ltd" }
     ],
     trustStrip: ["Faith", "Humility", "Integrity", "Perseverance"],
     ctaTitle: "One journey at a time.",
@@ -118,7 +118,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       { title: "Cape Point", description: "Cape Peninsula", image: "images/tsisikama.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
       { title: "Chapman's Peak Drive", description: "Atlantic Coast", image: "images/camp-bay.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
       { title: "Boulders Beach", description: "Simon's Town", image: "images/hermanus.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
-      { title: "Bo-Kaap", description: "Cape Town City", image: "images/kirstenbosch.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
+      { title: "Bo-Kaap", description: "Cape Town City", image: "images/DEst.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
       { title: "V&A Waterfront", description: "Cape Town City", image: "images/franschhoek.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
       { title: "Kirstenbosch", description: "Table Mountain", image: "images/camp-bay.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
       { title: "Cape Winelands", description: "Stellenbosch & Franschhoek", image: "images/franschhoek.jpg", ctaLabel: "Enquire", ctaLink: "/contact" }
