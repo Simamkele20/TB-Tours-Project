@@ -147,3 +147,25 @@
   .review-nav { width: 60px; height: 40px; font-size: 1.5rem; }
   .contact-item .label { display: block; margin-bottom: 0.5rem; }
 }
+
+@media (max-width: 480px) {
+  .container,
+  .container-fluid,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .container[_ngcontent-ng-c3998313829] {
+    width: fit-content;
+    margin: 0;
+    padding: 0;
+  }
+}

@@ -349,6 +349,18 @@
     margin: 1.2rem 0 0.8rem;
   }
 
+  .hero-content .description {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    line-height: 1.75;
+    margin-bottom: 200px;
+    color: rgba(240, 244, 248, 0.85);
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    animation-delay: 0.4s;
+    max-width: 600px;
+    text-align: center;
+  }
+
   .hero-actions {
     flex-direction: column;
     width: 100%;
