@@ -121,7 +121,8 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       { title: "Bo-Kaap", description: "Cape Town City", image: "images/DEst.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
       { title: "V&A Waterfront", description: "Cape Town City", image: "images/franschhoek.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
       { title: "Kirstenbosch", description: "Table Mountain", image: "images/camp-bay.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
-      { title: "Cape Winelands", description: "Stellenbosch & Franschhoek", image: "images/franschhoek.jpg", ctaLabel: "Enquire", ctaLink: "/contact" }
+      { title: "Cape Winelands", description: "Stellenbosch & Franschhoek", image: "images/franschhoek.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
+      { title: "Aquila Game Reserve", description: "Meet the Big Five in their natural habitat.", image: "images/Game Reserve.jpg", ctaLabel: "Enquire", ctaLink: "/contact" }
     ],
     trustStrip: [],
     ctaTitle: "",

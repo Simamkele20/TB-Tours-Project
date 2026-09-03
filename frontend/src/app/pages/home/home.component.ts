@@ -296,7 +296,12 @@ export class HomePageComponent {
     {
       title: "Cape Winelands",
       description: "Slow afternoons among vineyards and estates.",
-      image: "/images/Image (8).jpg"
+      image: "/images/Image (3).jpg"
+    },
+    {
+      title: "Aquila Game Reserve",
+      description: "Meet the Big Five in their natural habitat.",
+      image: "/images/Game Reserve.jpg"
     }
   ];
 
