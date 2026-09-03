@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, AfterViewInit, ElementRef } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 export interface HeroConfig {
@@ -18,24 +18,6 @@ export interface HeroConfig {
   imports: [CommonModule],
   template: `
     <section class="hero" [class.hero-home]="showPhone()">
-      <video
-        #videoElement
-        *ngIf="showPhone() && !videoFailed"
-        class="hero-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        aria-hidden="true"
-        (error)="onVideoError($event)"
-        (loadedmetadata)="onVideoReady($event)"
-        (canplay)="onVideoReady($event)"
-        (playing)="onVideoPlaying($event)">
-        <source [src]="heroVideoSrc" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
       <div class="container hero-content">
         <p class="eyebrow">{{ config.eyebrow }}</p>
         <h1>
@@ -65,56 +47,7 @@ export interface HeroConfig {
   `,
   styleUrl: "./hero-section.component.scss"
 })
-export class HeroSectionComponent implements AfterViewInit {
+export class HeroSectionComponent {
   @Input() config!: HeroConfig;
   @Input() showPhone: () => boolean = () => false;
-  @ViewChild('videoElement') videoElement?: ElementRef<HTMLVideoElement>;
-
-  readonly heroVideoSrc = "/images/Home_Video.mp4";
-  videoFailed = false;
-
-  ngAfterViewInit(): void {
-    // Ensure video plays when component loads
-    if (this.videoElement?.nativeElement) {
-      const video = this.videoElement.nativeElement;
-
-      // Force the browser to load and play the video
-      video.autoplay = true;
-      video.muted = true;
-
-      // Attempt to play immediately
-      setTimeout(() => {
-        video.play().catch((error) => {
-          console.log("Initial play failed:", error.name);
-          // Try again after a short delay
-          setTimeout(() => {
-            video.play().catch((err) => {
-              console.log("Second play attempt failed:", err.name);
-            });
-          }, 100);
-        });
-      }, 0);
-    }
-  }
-
-  onVideoReady(event: Event): void {
-    // Video is ready, ensure it's playing
-    if (this.videoElement?.nativeElement) {
-      const video = this.videoElement.nativeElement;
-      if (video.paused) {
-        video.play().catch((error) => {
-          console.log("Play on ready failed:", error.name);
-        });
-      }
-    }
-  }
-
-  onVideoPlaying(event: Event): void {
-    console.log("✓ Video is now playing");
-  }
-
-  onVideoError(event: Event): void {
-    console.warn("Video failed to load, falling back to gradient", event);
-    this.videoFailed = true;
-  }
 }
