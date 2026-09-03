@@ -4,8 +4,6 @@ import { toSignal } from "@angular/core/rxjs-interop";
 import { CommonModule } from "@angular/common";
 import { HomePageComponent } from "./home/home.component";
 import { AboutPageComponent } from "./about/about.component";
-import { ServicesPageComponent } from "./services/services.component";
-import { ToursPageComponent } from "./tours/tours.component";
 import { ContactPageComponent } from "./contact/contact.component";
 import { DestinationsPageComponent } from "./destinations/destinations.component";
 import { AboutStoryPageComponent } from "./about/about-story.component";
@@ -17,8 +15,6 @@ import { AboutStoryPageComponent } from "./about/about-story.component";
     CommonModule,
     HomePageComponent,
     AboutPageComponent,
-    ServicesPageComponent,
-    ToursPageComponent,
     ContactPageComponent,
     DestinationsPageComponent,
     AboutStoryPageComponent
@@ -28,8 +24,6 @@ import { AboutStoryPageComponent } from "./about/about-story.component";
       <app-home-page *ngSwitchCase="'home'"></app-home-page>
       <app-about-page *ngSwitchCase="'about'"></app-about-page>
       <app-about-story-page *ngSwitchCase="'about-story'"></app-about-story-page>
-      <app-services-page *ngSwitchCase="'services'"></app-services-page>
-      <app-tours-page *ngSwitchCase="'tours'"></app-tours-page>
       <app-destinations-page *ngSwitchCase="'destinations'"></app-destinations-page>
       <app-contact-page *ngSwitchCase="'contact'"></app-contact-page>
       <app-home-page *ngSwitchDefault></app-home-page>

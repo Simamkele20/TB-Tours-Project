@@ -9,6 +9,7 @@ export interface Card {
   icon?: string;
   meta?: string;
   ctaLabel?: string;
+  ctaLink?: string;
   passengers?: string;
   bags?: string;
   duration?: string;
@@ -50,7 +51,7 @@ export type CardGridLayout = "services" | "tours" | "destinations";
 
             <small *ngIf="card.meta">{{ card.meta }}</small>
 
-            <a *ngIf="card.ctaLabel" [routerLink]="['/contact']" fragment="contact-form" class="card-link">
+            <a *ngIf="card.ctaLabel" [routerLink]="[card.ctaLink || '/contact']" fragment="contact-form" class="card-link">
               {{ card.ctaLabel }}
             </a>
           </div>

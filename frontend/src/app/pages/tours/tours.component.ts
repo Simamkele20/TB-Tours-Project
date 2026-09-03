@@ -1,33 +1,22 @@
-import { Component, computed } from "@angular/core";
-import { ContentPageComponent } from "../shared/content-page.component";
-import { SITE_CONTENT } from "../../data/site-content";
+import { Component, computed, inject } from "@angular/core";
+import { PageLayoutComponent, type PageLayoutConfig } from "../../shared/components/page-layout.component";
+import { PageDataService } from "../../services/page-data.service";
 
+/**
+ * Tours page smart component
+ * Responsibility: Load page data and pass to presentation component
+ */
 @Component({
   selector: "app-tours-page",
   standalone: true,
-  imports: [ContentPageComponent],
+  imports: [PageLayoutComponent],
   template: `
-    <app-content-page
-      [heroConfig]="heroConfig()"
-      [cards]="cards()"
-      [cardTitle]="cardTitle()"
-      [cardSubtitle]="cardSubtitle()"
-      [cardLayout]="'tours'"
-      [trustVariant]="'tours'"
-      [introIcon]="'bi-patch-check'"
-      [introText]="introText">
-    </app-content-page>
+    <app-page-layout [config]="pageConfig()"></app-page-layout>
   `,
   styles: []
 })
 export class ToursPageComponent {
-  private readonly content = computed(() => SITE_CONTENT["tours"]);
+  private readonly pageDataService = inject(PageDataService);
 
-  readonly heroConfig = computed(() => this.content().hero);
-  readonly cards = computed(() => this.content().cards);
-  readonly cardTitle = computed(() => this.content().sectionTitle);
-  readonly cardSubtitle = computed(() => this.content().sectionSubtitle);
-  readonly introText = "Private tours across the Peninsula, city and Winelands with flexible timing and local insight.";
-
-
+  readonly pageConfig = computed(() => this.pageDataService.getPageConfig("tours"));
 }

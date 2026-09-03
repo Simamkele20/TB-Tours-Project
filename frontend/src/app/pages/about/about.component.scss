@@ -1,250 +1,239 @@
-.about-story-block {
-  display: grid;
-  grid-template-columns: 0.8fr 1.6fr;
-  gap: 10px;
-  margin-bottom: 50px;
+// About Page - Modern Tech Startup Design
 
-  h2 {
-    grid-column: 2;
-    color: #1a2d4d;
-    font-size: 2.25rem;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    margin: 0 0 0.100rem 0;
-    font-family: var(--font-display);
-    line-height: 1.2;
-  }
-
-  p:not(.about-kicker) {
-    grid-column: 2;
-    color: #445269;
-    max-width: 100%;
-    line-height: 1.65;
-    font-size: 1rem;
-    margin-bottom: 0.6rem;
-  }
-}
-
-.about-approach-btn {
-  grid-column: 2;
-  justify-self: start;
-  border: 2px solid #d0d0d0;
-  color: #666;
-  border-radius: 10px;
-  padding: 0.85rem 2rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-family: var(--font-sans);
-  transition: all 0.2s ease;
-  background: transparent;
-  cursor: pointer;
-
-  &:hover {
-    background: #f9f9f9;
-    color: #333;
-    border-color: #999;
-    transform: translateY(-2px);
-  }
-}
-
-.about-kicker {
-  color: #d0a64b;
-  text-transform: uppercase;
-  font-weight: 500;
-  font-size: 0.72rem;
-  margin: 0;
-}
-
-.about-story-block .about-kicker {
-  grid-column: 1;
-  color: #d0a64b;
+.hero-section {
+  background: linear-gradient(135deg, var(--brand-black) 0%, #1a1a1a 100%);
+  color: var(--brand-white);
+  padding: 4rem 2rem;
   position: relative;
-  padding-bottom: 0.2rem;
-  display: block;
+  overflow: hidden;
   margin-bottom: 0;
-  margin-top: 0;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  font-size: 0.68rem;
-  font-family: var(--font-sans);
-  text-transform: uppercase;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: var(--brand-gold);
+    border-radius: 50%;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      color: var(--brand-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 700;
+      font-size: 0.8rem;
+
+      &::before {
+        content: '';
+        width: 4px;
+        height: 20px;
+        background: var(--brand-gold);
+      }
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .description {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #ddd;
+      max-width: 700px;
+    }
+  }
 }
 
-.about-story-block .about-kicker::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 55px;
-  height: 2px;
-  background: #d0a64b;
+.section {
+  padding: 6rem 2rem;
+  width: 100%;
+
+  &.light {
+    background: var(--brand-white);
+  }
+
+  &.dark {
+    background: #e8e8e6;
+  }
+
+  &.black {
+    background: var(--brand-black);
+    color: var(--brand-white);
+  }
 }
 
-.about-founder-copy .about-kicker {
-  color: #d0a64b;
+.section-content {
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-.about-founder-grid {
-  display: grid;
-  grid-template-columns: minmax(520px, 1.75fr) minmax(280px, 0.95fr);
-  gap: clamp(1.4rem, 3vw, 2.4rem);
-  align-items: start;
-}
+.section-header {
+  margin-bottom: 3rem;
 
-.about-founder-section {
-  background: #172746;
-  scroll-margin-top: 80px;
-  padding-bottom: 3.4rem;
-}
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    color: var(--brand-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    font-size: 0.75rem;
 
-.about-founder-copy {
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  background: transparent;
+    &::before {
+      content: '';
+      width: 3px;
+      height: 18px;
+      background: var(--brand-gold);
+    }
+  }
 
   h2 {
-    color: #f4f6fb;
-    font-size: clamp(2.2rem, 3.95vw, 3.75rem);
-    font-weight: 300;
-    letter-spacing: -0.01em;
-    line-height: 1.1;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 700px;
+  }
+}
+
+// Content Blocks
+.content-block {
+  margin-bottom: 3rem;
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--brand-black);
   }
 
   p {
-    color: #cfd7e6;
-    margin-top: 0;
-    line-height: 1.65;
-    max-width: 48rem;
-    font-size: 1.05rem;
-  }
-
-  p.about-subtitle {
-    color: #f5c22a;
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
   }
 }
 
-.about-subtitle {
-  color: #ddb766;
-  font-size: clamp(1.2rem, 1.55vw, 1.5rem);
-  letter-spacing: 0.01em;
-  text-transform: none;
-  font-style: italic;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  margin: 0 0 1rem;
-}
-
-.about-founder-divider {
-  width: 70px;
-  height: 1px;
-  background: #6e6a5f;
-  margin: 0.25rem 0 2rem;
-}
-
-.about-founder-copy blockquote {
-  margin: 1.2rem 0 1.4rem;
-  padding: 0.45rem 0 0.45rem 1.2rem;
-  border-left: 3px solid #f2b112;
-  color: #f2bf39;
-  font-size: clamp(2rem, 3vw, 3.25rem);
-  line-height: 1.2;
-  font-family: "Cormorant Garamond", Georgia, serif;
-}
-
-.about-founder-aside {
-  position: sticky;
-  top: 120px;
+.feature-grid {
   display: grid;
-  align-content: start;
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin-top: 2rem;
+
+  .feature-card {
+    background: var(--brand-white);
+    border: 2px solid #e0e0e0;
+    border-radius: 2px;
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--brand-gold);
+    }
+
+    &:hover {
+      border-color: var(--brand-gold);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(242, 177, 18, 0.2);
+    }
+
+    h4 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--brand-black);
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+  }
 }
 
-.about-founder-image {
-  margin: 0;
-  border: 1px solid #6b5a2f;
-  border-radius: 0;
-  overflow: hidden;
-  background: transparent;
+// CTA Section
+.cta-section {
+  background: var(--brand-black);
+  color: var(--brand-white);
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-top: 4rem;
 
-  img {
-    width: 100%;
-    height: 100%;
-    min-height: 380px;
-    object-fit: cover;
-    display: block;
-  }
+  .cta-content {
+    max-width: 700px;
+    margin: 0 auto;
 
-  figcaption {
-    padding: 0.85rem 0;
-    display: grid;
-    gap: 0.2rem;
-
-    strong {
-      color: #f6f7fb;
+    h3 {
+      color: var(--brand-white);
+      margin-bottom: 1.5rem;
       font-size: 2rem;
-      font-weight: 500;
     }
 
-    span {
-      color: #d3ab57;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 0.77rem;
+    p {
+      color: #ccc;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .btn {
+      margin-top: 1rem;
     }
   }
 }
 
-.about-founder-copy .about-kicker {
-  font-size: 0.69rem;
-  font-weight: 400;
-  letter-spacing: 0.28em;
-  color: #e3a902;
-}
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 1.5rem;
+  }
 
-.about-founder-aside-divider {
-  width: 70px;
-  height: 1px;
-  background: #6e6a5f;
-}
+  .section {
+    padding: 4rem 1.5rem;
+  }
 
-.about-founder-plan-btn {
-  justify-self: start;
-  border-radius: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  padding: 1rem 2.2rem;
-  border: 2px solid transparent;
-  transition: all 0.2s ease;
-  font-weight: 600;
-}
-
-@media (max-width: 940px) {
-  .about-story-block {
-    display: flex;
-    flex-direction: column;
+  .feature-grid {
     grid-template-columns: 1fr;
-    gap: 1.1rem;
-    padding-left: 0;
-  }
-
-  .about-founder-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .about-founder-aside {
-    position: static;
-  }
-
-  .about-founder-copy blockquote {
-    font-size: clamp(1.7rem, 7vw, 2.4rem);
+    gap: 2rem;
   }
 }
 
-@media (min-width: 941px) {
-  .about-story-block {
-    padding-left: 190px;
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 2rem 1rem;
+
+    .content-wrapper h1 {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+    }
+  }
+
+  .section {
+    padding: 2.5rem 1rem;
   }
 }
