@@ -4,22 +4,6 @@
   background: var(--brand-white);
 }
 
-// Page Label Section
-.destination-page-label {
-  padding: 3rem 2rem;
-  max-width: 900px;
-  text-align: center;
-
-  .page-kicker {
-    color: var(--brand-gold);
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-weight: 700;
-    font-size: 0.9rem;
-    margin: 0;
-  }
-}
-
 .destination-intro {
   padding: 6rem 2rem;
   max-width: 900px;
@@ -312,15 +296,6 @@
 
 // Responsive Design
 @media (max-width: 768px) {
-  .destination-page-label {
-    padding: 2rem 1.5rem;
-    max-width: 100%;
-
-    .page-kicker {
-      font-size: 0.85rem;
-    }
-  }
-
   .destination-intro,
   .destination-itinerary,
   .destination-highlights,

@@ -67,7 +67,7 @@ export class App implements OnInit {
       url: `https://tb-tours.co.za${path}`,
       keywords: 'cape town tours, private tours, airport transfers, cape winelands, safari'
     };
-    
+
     if (!config.url) {
       config.url = `https://tb-tours.co.za${path}`;
     }
@@ -77,7 +77,7 @@ export class App implements OnInit {
     if (pageImage && !config.image) {
       config.image = pageImage;
     }
-    
+
     this.seoService.setMetaTags(config);
     this.seoService.setLocalSearchOptimization();
 

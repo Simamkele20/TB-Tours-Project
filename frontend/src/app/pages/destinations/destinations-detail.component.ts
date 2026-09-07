@@ -2,7 +2,7 @@ import { Component, computed, inject, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterLink, ActivatedRoute, Router } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
-import { DESTINATIONS_DETAIL, type DestinationDetail } from "../../data/site-content";
+import { DESTINATIONS_DETAIL } from "../../data/site-content";
 
 @Component({
   selector: "app-destination-detail",
