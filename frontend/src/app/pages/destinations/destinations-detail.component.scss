@@ -1,0 +1,360 @@
+// Destination Detail Page Styles
+
+.destination-detail-container {
+  background: var(--brand-white);
+}
+
+// Page Label Section
+.destination-page-label {
+  padding: 3rem 2rem;
+  max-width: 900px;
+  text-align: center;
+
+  .page-kicker {
+    color: var(--brand-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+.destination-intro {
+  padding: 6rem 2rem;
+  max-width: 900px;
+  text-align: center;
+
+  .kicker {
+    color: var(--brand-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--brand-black);
+  }
+}
+
+// Itinerary Timeline
+.destination-itinerary {
+  padding: 6rem 2rem;
+  background: #f8f8f6;
+  max-width: 900px;
+
+  h2 {
+    margin-bottom: 3rem;
+    font-size: 2rem;
+    color: var(--brand-black);
+  }
+
+  .itinerary-timeline {
+    position: relative;
+    padding: 2rem 0;
+  }
+
+  .itinerary-stop {
+    display: grid;
+    grid-template-columns: 100px 1px 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    align-items: start;
+
+    &:last-child .stop-divider {
+      height: 0;
+    }
+
+    .stop-time {
+      font-weight: 700;
+      color: var(--brand-gold);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .stop-divider {
+      background: var(--brand-gold);
+      width: 1px;
+      height: 60px;
+      opacity: 0.5;
+      margin-left: 0;
+    }
+
+    .stop-content {
+      padding-top: 0.2rem;
+
+      h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--brand-black);
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #555;
+        line-height: 1.6;
+      }
+    }
+  }
+}
+
+// Highlights Section
+.destination-highlights {
+  padding: 6rem 2rem;
+  background: var(--brand-white);
+  max-width: 900px;
+
+  h2 {
+    margin-bottom: 3rem;
+    font-size: 2rem;
+    color: var(--brand-black);
+  }
+
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .highlight-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+
+    i {
+      color: var(--brand-gold);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--brand-black);
+    }
+  }
+}
+
+// Inclusions Section
+.destination-inclusions {
+  padding: 6rem 2rem;
+  background: #f8f8f6;
+  max-width: 900px;
+
+  .inclusions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .inclusion-column {
+      h3 {
+        margin: 0 0 1.5rem 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--brand-black);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          display: flex;
+          gap: 0.8rem;
+          margin-bottom: 1rem;
+          font-size: 0.95rem;
+          line-height: 1.6;
+          color: var(--brand-black);
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .check-icon {
+            color: var(--brand-gold);
+            font-weight: bold;
+            flex-shrink: 0;
+          }
+
+          .dash-icon {
+            color: #999;
+            font-weight: bold;
+            flex-shrink: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Additional Info Section
+.destination-additional {
+  padding: 6rem 2rem;
+  background: var(--brand-white);
+  max-width: 900px;
+
+  .additional-block {
+    margin-bottom: 3rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    h3 {
+      margin: 0 0 1rem 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--brand-black);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #555;
+    }
+  }
+
+  .note-block {
+    background: #fef9f0;
+    padding: 1.5rem;
+    border-left: 4px solid var(--brand-gold);
+
+    .note-label {
+      font-weight: 700;
+      color: var(--brand-gold);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.85rem;
+    }
+
+    p {
+      margin: 0;
+
+      &:not(.note-label) {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}
+
+// CTA Section
+.destination-cta {
+  padding: 6rem 2rem;
+  background: var(--brand-black);
+  color: var(--brand-white);
+  text-align: center;
+  max-width: 900px;
+
+  .cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+
+    h2 {
+      margin: 0 0 1rem 0;
+      font-size: 2rem;
+      color: var(--brand-white);
+    }
+
+    p {
+      margin: 0 0 2rem 0;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--brand-white);
+    }
+
+    .btn {
+      margin-top: 1rem;
+    }
+  }
+}
+
+// Not Found Section
+.not-found {
+  padding: 6rem 2rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+
+  h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: var(--brand-black);
+  }
+
+  p {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .destination-page-label {
+    padding: 2rem 1.5rem;
+    max-width: 100%;
+
+    .page-kicker {
+      font-size: 0.85rem;
+    }
+  }
+
+  .destination-intro,
+  .destination-itinerary,
+  .destination-highlights,
+  .destination-inclusions,
+  .destination-additional,
+  .destination-cta {
+    padding: 4rem 1.5rem;
+    max-width: 100%;
+  }
+
+  .itinerary-stop {
+    grid-template-columns: 80px 1px 1fr !important;
+    gap: 1.5rem !important;
+
+    .stop-time {
+      font-size: 0.8rem;
+    }
+
+    .stop-content {
+      h3 {
+        font-size: 0.95rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .highlight-item {
+    gap: 0.8rem;
+  }
+
+  .destination-cta .cta-content h2 {
+    font-size: 1.5rem;
+  }
+}

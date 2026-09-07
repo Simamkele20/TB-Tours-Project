@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
-import { Component, computed, signal, inject, ViewChild, HostListener } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { Component, computed, signal, inject, ViewChild, HostListener, OnInit } from "@angular/core";
+import { RouterModule, Router, ActivatedRoute } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { TimeAgoPipe } from "../../shared/pipes/time-ago.pipe";
 import { ContactFormComponent } from "../shared/contact-form.component";
@@ -63,6 +63,7 @@ import { finalize } from "rxjs";
               <div class="destination-content">
                 <h3>{{ destination.title }}</h3>
                 <p>{{ destination.description }}</p>
+                <a [routerLink]="['/destinations', destination.slug]" class="view-details-link">View Details</a>
               </div>
             </div>
           </div>
@@ -185,7 +186,7 @@ import { finalize } from "rxjs";
             <h3>Get in touch</h3>
             <p class="form-intro">Connect with us to book your journey or ask any questions.</p>
 
-            <app-contact-form #contactForm [isSending]="isSending()" [requestedService]="requestedService()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
+            <app-contact-form #contactForm [isSending]="isSending()" [requestedService]="requestedService()" [requestedDestination]="destinationName()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
 
             <div *ngIf="toastMessage()" [class]="'toast toast-' + toastType()">
               <p>{{ toastMessage() }}</p>
@@ -200,11 +201,12 @@ import { finalize } from "rxjs";
   `,
   styleUrls: ["./home.component.scss"]
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
   readonly heroConfig = computed(() => SITE_CONTENT["home"].hero);
   readonly SITE_SERVICES = SITE_SERVICES;
 
   private bookingApi = inject(BookingApiService);
+  private route = inject(ActivatedRoute);
 
   private reviewIndex = signal(0);
   private destinationIndex = signal(0);
@@ -214,6 +216,7 @@ export class HomePageComponent {
   readonly toastMessage = signal("");
   readonly toastType = signal<"success" | "error" | "info">("info");
   readonly requestedService = signal<string>("");
+  readonly destinationName = signal<string>("");
 
   @ViewChild("contactForm") contactForm?: ContactFormComponent;
 
@@ -261,47 +264,74 @@ export class HomePageComponent {
     {
       title: "Table Mountain",
       description: "See Cape Town from above.",
-      image: "/images/Image (13).jpg"
+      image: "/images/Image (13).jpg",
+      slug: "cape-town-highlights"
     },
     {
       title: "Camps Bay Beach",
       description: "Golden sands and mountain views.",
-      image: "/images/Image (6).jpg"
+      image: "/images/Image (6).jpg",
+      slug: "cape-peninsula"
     },
     {
       title: "Cape Point",
       description: "Where two oceans meet.",
-      image: "/images/Image (19).jpg"
+      image: "/images/Image (19).jpg",
+      slug: "cape-peninsula"
     },
     {
       title: "Boulders Beach",
       description: "Meet Cape Town's famous penguins.",
-      image: "/images/Image (18).jpg"
+      image: "/images/Image (18).jpg",
+      slug: "cape-peninsula"
     },
     {
       title: "Bo-Kaap",
       description: "Cape Town City",
-      image: "/images/DEst.jpg"
+      image: "/images/DEst.jpg",
+      slug: "bo-kaap"
     },
     {
       title: "Hermanus",
       description: "Whale watching and coastal beauty.",
-      image: "/images/Image (10).jpg"
+      image: "/images/Image (10).jpg",
+      slug: "hermanus"
     },
     {
       title: "Tsitsikama",
       description: "Ancient forests and dramatic cliffs.",
-      image: "/images/Image (11).jpg"
+      image: "/images/Image (11).jpg",
+      slug: "garden-route"
     },
     {
       title: "Cape Winelands",
       description: "Slow afternoons among vineyards and estates.",
-      image: "/images/Image (3).jpg"
+      image: "/images/Image (3).jpg",
+      slug: "cape-winelands"
     },
     {
       title: "Aquila Game Reserve",
       description: "Meet the Big Five in their natural habitat.",
-      image: "/images/Game Reserve.jpg"
+      image: "/images/Game Reserve.jpg",
+      slug: "aquila-safari"
+    },
+    {
+      title: "Cape Agulhas",
+      description: "Where the Atlantic and Indian Oceans meet.",
+      image: "/images/destinations/cape-agulhas.jpg",
+      slug: "cape-agulhas"
+    },
+    {
+      title: "Constantia Wine Valley",
+      description: "Historic vineyards and mountain views.",
+      image: "/images/destinations/constantia-wine.jpg",
+      slug: "constantia-wine"
+    },
+    {
+      title: "West Coast",
+      description: "Scenic coastal drives and wildflowers.",
+      image: "/images/destinations/cape-west-coast.jpg",
+      slug: "cape-west-coast"
     }
   ];
 
@@ -317,6 +347,27 @@ export class HomePageComponent {
         this.isMobile.set(window.innerWidth <= 620);
       });
     }
+  }
+
+  ngOnInit(): void {
+    // Listen for query params (destination from detail page)
+    this.route.queryParams.subscribe(params => {
+      if (params['destination']) {
+        this.destinationName.set(params['destination']);
+      }
+    });
+
+    // Listen for fragment changes to scroll to contact
+    this.route.fragment.subscribe(fragment => {
+      if (fragment === 'contact' && typeof window !== 'undefined') {
+        setTimeout(() => {
+          const contactElement = document.getElementById('contact');
+          if (contactElement) {
+            contactElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    });
   }
 
   nextReviews() {

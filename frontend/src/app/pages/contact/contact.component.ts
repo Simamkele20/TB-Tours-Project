@@ -64,7 +64,11 @@ import { finalize } from "rxjs";
             <p>Booking form to be connected. For now, please WhatsApp or email us directly.</p>
           </div>
 
-          <app-contact-form #contactForm [isSending]="isSending()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
+          <app-contact-form 
+            #contactForm 
+            [isSending]="isSending()" 
+            [requestedService]="requestedDestination()"
+            (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
 
           <div *ngIf="toastMessage()" [class]="'toast toast-' + toastType()">
             <p>{{ toastMessage() }}</p>
@@ -93,9 +97,11 @@ export class ContactPageComponent implements OnInit {
   toastMessage = signal("");
   toastType = signal<"success" | "error">("success");
   isSending = signal(false);
+  requestedDestination = signal("");
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
 
   ngOnInit() {
+    // Handle fragment navigation
     this.route.fragment.subscribe(fragment => {
       if (fragment) {
         setTimeout(() => {
@@ -104,6 +110,13 @@ export class ContactPageComponent implements OnInit {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         }, 100);
+      }
+    });
+
+    // Handle destination query parameter
+    this.route.queryParams.subscribe(params => {
+      if (params['destination']) {
+        this.requestedDestination.set(params['destination']);
       }
     });
   }
