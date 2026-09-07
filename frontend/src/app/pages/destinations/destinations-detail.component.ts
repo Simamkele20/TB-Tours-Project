@@ -13,7 +13,8 @@ import { DESTINATIONS_DETAIL } from "../../data/site-content";
       <app-hero-section
         *ngIf="heroConfig()"
         [config]="heroConfig()!"
-        [showPhone]="() => false">
+        [showPhone]="() => false"
+        [isDestination]="true">
       </app-hero-section>
 
       <section class="destination-detail-container">
