@@ -22,7 +22,7 @@ import { finalize } from "rxjs";
     </section>
 
     <!-- ABOUT SECTION -->
-    <section id="about" class="section about-section">
+    <section id="about" class="section about-section" [style.backgroundImage]="'url(/images/About.jpg)'">
       <div class="container">
         <div class="about-content">
           <p class="kicker">About TB Tours</p>
@@ -36,12 +36,9 @@ import { finalize } from "rxjs";
           </p>
           <a routerLink="/story" class="read-story-link">Read Thabang's Story</a>
         </div>
-        <div class="about-image">
-          <img src="/images/About.jpg" alt="Cape Town scenic view" loading="lazy" />
-        </div>
       </div>
     </section>
-
+    
     <!-- DESTINATIONS SECTION -->
     <section id="destinations" class="section destinations-section">
       <div class="container">
@@ -271,7 +268,7 @@ export class HomePageComponent implements OnInit {
       title: "Camps Bay Beach",
       description: "Golden sands and mountain views.",
       image: "/images/Image (6).jpg",
-      slug: "cape-peninsula"
+      slug: "camps-bay"
     },
     {
       title: "Cape Point",

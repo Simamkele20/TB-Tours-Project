@@ -427,7 +427,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Cape ",
       accent: "Winelands Tour",
       description: "Stellenbosch & Franschhoek - Experience vineyards, historic towns and mountain scenery.",
-      image: "images/destinations/Image (8).jpg"
+      image: "images/destinations/Image (20).jpg"
     },
     description: "Experience the beauty of the Cape Winelands with a private journey through vineyards, historic towns and spectacular mountain scenery.",
     duration: "±8 Hours",
@@ -468,32 +468,29 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
     ]
   },
 
-  "cape-peninsula": {
+  "camps-bay": {
     title: "Cape Town Beach Escape",
-    slug: "cape-peninsula",
+    slug: "camps-bay",
     hero: {
       eyebrow: "TOUR",
-      title: "Cape Town",
+      title: "Cape Town ",
       accent: "Beach Escape",
       description: "Experience Cape Town's Famous Beaches & Coastal Scenery",
-      image: "images/destinations/Image (6).jpg"
+      image: "images/destinations/Image (30).jpg"
     },
     description: "Discover the beauty of Cape Town's Atlantic Seaboard on a relaxing private tour with TB Tours. Enjoy breathtaking ocean views, beautiful beaches, mountain scenery and some of Cape Town's most iconic coastal locations.",
     duration: "4–5 Hours",
     tourType: "Private Tour",
     itinerary: [
       { time: "08:30", title: "Pickup from your accommodation" },
-      { time: "09:00", title: "Camps Bay" },
-      { time: "09:30", title: "Hout Bay" },
-      { time: "10:00", title: "Chapman's Peak scenic drive (subject to road conditions)" },
-      { time: "10:45", title: "Noordhoek" },
-      { time: "11:30", title: "Cape Point Nature Reserve" },
-      { time: "12:30", title: "Cape Point and Cape of Good Hope" },
-      { time: "13:30", title: "Lunch stop (own cost)" },
-      { time: "14:30", title: "Simon's Town" },
-      { time: "15:00", title: "Boulder's Beach penguin area (optional entrance fee)" },
-      { time: "16:00", title: "Muizenberg" },
-      { time: "17:00", title: "Return to Cape Town" }
+      { time: "09:00", title: "Camps Bay Beach" },
+      { time: "09:45", title: "Clifton Beaches" },
+      { time: "10:30", title: "Sea Point Promenade" },
+      { time: "11:00", title: "Hout Bay, Chapman's Peak, Noordhoek" },
+      { time: "12:30", title: "Lunch stop (own cost)" },
+      { time: "13:30", title: "Cape Point and Cape of Good Hope" },
+      { time: "14:30", title: "Boulder's Beach penguin area (optional entrance fee)" },
+      { time: "15:30", title: "Return to Cape Town" }
     ],
     highlights: [
       "Camps Bay Beach",
@@ -516,6 +513,52 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
     ],
     customizeInfo: "Enjoy a private, comfortable journey with TB Tours, with convenient pickup and drop-off from your accommodation or agreed location in Cape Town. Perfect for couples, families, solo travellers, groups, first-time visitors to Cape Town and photography lovers.",
     bestTime: "Experience beautiful beaches, mountain and ocean views, amazing photo opportunities, scenic coastal drives and relaxed Cape Town atmosphere."
+  },
+
+  "cape-peninsula": {
+    title: "Cape Point and Cape Peninsula Tour",
+    slug: "cape-peninsula",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Cape Point & ",
+      accent: "Cape Peninsula Tour",
+      description: "Where two oceans meet - Explore Cape Point and Cape of Good Hope",
+      image: "images/destinations/Image (6).jpg"
+    },
+    description: "Experience the iconic Cape Peninsula with a private tour showcasing Cape Point, Cape of Good Hope, and Boulder's Beach penguins.",
+    duration: "5–6 Hours",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "09:00", title: "Pickup from your accommodation" },
+      { time: "10:00", title: "Chapman's Peak scenic drive" },
+      { time: "11:00", title: "Cape Point Nature Reserve" },
+      { time: "11:30", title: "Cape Point and Cape of Good Hope viewpoints" },
+      { time: "12:30", title: "Lunch stop (own cost)" },
+      { time: "13:30", title: "Simon's Town" },
+      { time: "14:00", title: "Boulder's Beach penguin area (optional entrance fee)" },
+      { time: "15:00", title: "Return to Cape Town" }
+    ],
+    highlights: [
+      "Cape Point Nature Reserve",
+      "Cape of Good Hope",
+      "Chapman's Peak Drive",
+      "Boulder's Beach Penguins",
+      "Simon's Town",
+      "Dramatic coastal scenery"
+    ],
+    included: [
+      "Private transportation",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water"
+    ],
+    excluded: [
+      "Attraction entrance fees",
+      "Meals and drinks",
+      "Personal expenses",
+      "Optional activities"
+    ]
   },
 
   "hermanus": {
