@@ -17,7 +17,7 @@ export interface HeroConfig {
   standalone: true,
   imports: [CommonModule],
   template: `
-    <section class="hero" [class.hero-home]="showPhone()">
+    <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [style.backgroundImage]="getBackgroundImage()">
       <div class="container hero-content">
         <p class="eyebrow">{{ config.eyebrow }}</p>
         <h1>
@@ -50,4 +50,14 @@ export interface HeroConfig {
 export class HeroSectionComponent {
   @Input() config!: HeroConfig;
   @Input() showPhone: () => boolean = () => false;
+  @Input() isDestination: boolean = false;
+
+  getBackgroundImage(): string {
+    // Only apply background image for destination pages (not home)
+    if (!this.showPhone() && this.isDestination && this.config?.image) {
+      return `linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('${this.config.image}')`;
+    }
+    // For home page, let CSS handle it
+    return '';
+  }
 }
