@@ -51,7 +51,10 @@ export type CardGridLayout = "services" | "tours" | "destinations";
 
             <small *ngIf="card.meta">{{ card.meta }}</small>
 
-            <a *ngIf="card.ctaLabel" [routerLink]="[card.ctaLink || '/contact']" fragment="contact-form" class="card-link">
+            <a *ngIf="card.ctaLabel"
+               [routerLink]="[card.ctaLink || '/contact']"
+               [fragment]="isContactLink(card.ctaLink) ? 'contact-form' : undefined"
+               class="card-link">
               {{ card.ctaLabel }}
             </a>
           </div>
@@ -77,5 +80,9 @@ export class CardGridComponent {
 
   formatCardNumber(index: number): string {
     return String(index + 1).padStart(2, '0');
+  }
+
+  isContactLink(link: string | undefined): boolean {
+    return link?.includes('/contact') || false;
   }
 }

@@ -1,12 +1,13 @@
 import { Component, HostListener, OnInit, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { RouterLink, RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { environment } from '../environments/environment';
 import { SeoService } from './services/seo.service';
 import { GoogleAnalyticsService } from './services/google-analytics.service';
+import { DESTINATIONS_DETAIL } from './data/site-content';
 import { filter } from 'rxjs/operators';
 
 @Component({
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
@@ -35,10 +36,22 @@ export class App implements OnInit {
     const path = this.router.url.split('?')[0];
     let pageKey = 'home';
     let pageTitle = 'TB Tours - Private Tours & Airport Transfers in Cape Town';
+    let description = 'Discover premium private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands.';
+    let pageImage: string | undefined;
 
-    if (path.includes('/destinations')) {
-      pageKey = 'destinations';
-      pageTitle = 'TB Tours - Destinations';
+    // Check for destination detail page
+    const destMatch = path.match(/^\/destinations\/([a-z0-9-]+)/);
+    if (destMatch) {
+      const slug = destMatch[1];
+      const destination = DESTINATIONS_DETAIL[slug];
+      if (destination) {
+        pageKey = slug;
+        pageTitle = `${destination.title} | TB Tours - Cape Town`;
+        description = destination.description;
+        if (destination.hero?.image) {
+          pageImage = `https://tb-tours.co.za/${destination.hero.image}`;
+        }
+      }
     } else if (path.includes('/about')) {
       pageKey = 'about';
       pageTitle = 'TB Tours - About Us';
@@ -47,8 +60,24 @@ export class App implements OnInit {
       pageTitle = 'TB Tours - Contact Us';
     }
 
-    const config = this.seoService.getPageConfig(pageKey);
-    config.url = `https://tb-tours.co.za${path}`;
+    const config = this.seoService.getPageConfig(pageKey) || {
+      title: pageTitle,
+      description: description,
+      image: pageImage,
+      url: `https://tb-tours.co.za${path}`,
+      keywords: 'cape town tours, private tours, airport transfers, cape winelands, safari'
+    };
+    
+    if (!config.url) {
+      config.url = `https://tb-tours.co.za${path}`;
+    }
+    if (!config.description) {
+      config.description = description;
+    }
+    if (pageImage && !config.image) {
+      config.image = pageImage;
+    }
+    
     this.seoService.setMetaTags(config);
     this.seoService.setLocalSearchOptimization();
 
@@ -62,7 +91,6 @@ export class App implements OnInit {
   readonly nav = [
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
-    { label: 'Destinations', path: '/destinations' },
     { label: 'Contact', path: '/contact' },
   ];
 
