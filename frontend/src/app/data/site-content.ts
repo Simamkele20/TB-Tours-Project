@@ -278,7 +278,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Cape Agulhas ",
       accent: "Day Tour",
       description: "Visit the Southernmost Tip of Africa where the Atlantic and Indian Oceans meet.",
-      image: "images/destinations/cape-agulhas.jpg"
+      image: "images/destinations/Cape Agulhas.jpg"
     },
     description: "Take an unforgettable journey from Cape Town to Cape Agulhas, where the Atlantic and Indian Oceans meet. Enjoy beautiful coastal scenery, charming seaside towns and the iconic Cape Agulhas lighthouse.",
     duration: "Full Day",
@@ -329,7 +329,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Bo-Kaap & Cape Town ",
       accent: "City Tour",
       description: "Culture, History & Iconic Cape Town in one unforgettable journey.",
-      image: "images/destinations/bo-kaap.jpg"
+      image: "images/destinations/Image (9).jpg"
     },
     description: "Discover the colourful streets, historic landmarks and beautiful viewpoints that make Cape Town one of South Africa's most exciting cities.",
     duration: "±4–5 Hours",
@@ -377,7 +377,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Cape Town ",
       accent: "Highlights Tour",
       description: "Experience the highlights of Cape Town on a private and comfortable journey.",
-      image: "images/destinations/cape-town-highlights.jpg"
+      image: "images/destinations/Image (5).jpg"
     },
     description: "Experience the highlights of Cape Town on a private and comfortable tour designed to showcase some of the city's most iconic destinations.",
     duration: "±6–7 Hours",
@@ -427,7 +427,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Cape ",
       accent: "Winelands Tour",
       description: "Stellenbosch & Franschhoek - Experience vineyards, historic towns and mountain scenery.",
-      image: "images/destinations/cape-winelands.jpg"
+      image: "images/destinations/Image (8).jpg"
     },
     description: "Experience the beauty of the Cape Winelands with a private journey through vineyards, historic towns and spectacular mountain scenery.",
     duration: "±8 Hours",
@@ -469,17 +469,17 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
   },
 
   "cape-peninsula": {
-    title: "Cape Peninsula Tour",
+    title: "Cape Town Beach Escape",
     slug: "cape-peninsula",
     hero: {
       eyebrow: "TOUR",
-      title: "Cape ",
-      accent: "Peninsula Tour",
-      description: "Cape Point • Cape of Good Hope • Boulder's Beach - Experience one of the world's most spectacular coastal routes.",
-      image: "images/destinations/cape-peninsula.jpg"
+      title: "Cape Town",
+      accent: "Beach Escape",
+      description: "Experience Cape Town's Famous Beaches & Coastal Scenery",
+      image: "images/destinations/Image (6).jpg"
     },
-    description: "Explore one of the most spectacular coastal routes in the world and discover the natural beauty of the Cape Peninsula.",
-    duration: "±8–9 Hours",
+    description: "Discover the beauty of Cape Town's Atlantic Seaboard on a relaxing private tour with TB Tours. Enjoy breathtaking ocean views, beautiful beaches, mountain scenery and some of Cape Town's most iconic coastal locations.",
+    duration: "4–5 Hours",
     tourType: "Private Tour",
     itinerary: [
       { time: "08:30", title: "Pickup from your accommodation" },
@@ -496,15 +496,11 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       { time: "17:00", title: "Return to Cape Town" }
     ],
     highlights: [
-      "Camps Bay",
-      "Hout Bay",
-      "Chapman's Peak",
-      "Noordhoek",
-      "Cape Point",
-      "Cape of Good Hope",
-      "Simon's Town",
-      "Boulder's Beach",
-      "Muizenberg"
+      "Camps Bay Beach",
+      "Clifton Beaches",
+      "Sea Point Promenade",
+      "Bantry Bay",
+      "Maiden's Cove"
     ],
     included: [
       "Private transportation",
@@ -514,11 +510,12 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       "Bottled water"
     ],
     excluded: [
-      "Entrance fees",
       "Meals and drinks",
-      "Optional activities",
-      "Personal expenses"
-    ]
+      "Personal expenses",
+      "Optional activities"
+    ],
+    customizeInfo: "Enjoy a private, comfortable journey with TB Tours, with convenient pickup and drop-off from your accommodation or agreed location in Cape Town. Perfect for couples, families, solo travellers, groups, first-time visitors to Cape Town and photography lovers.",
+    bestTime: "Experience beautiful beaches, mountain and ocean views, amazing photo opportunities, scenic coastal drives and relaxed Cape Town atmosphere."
   },
 
   "hermanus": {
@@ -529,7 +526,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Hermanus ",
       accent: "Whale Coast Tour",
       description: "Scenic Coastal Drive & Hermanus - Experience the spectacular Whale Coast.",
-      image: "images/destinations/hermanus.jpg"
+      image: "images/destinations/Image (7).jpg"
     },
     description: "Escape Cape Town for a spectacular journey along the Whale Coast and discover the charming coastal town of Hermanus.",
     duration: "±8–9 Hours",
@@ -578,7 +575,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Aquila ",
       accent: "Safari Experience",
       description: "An Unforgettable African Wildlife Adventure at Aquila Private Game Reserve.",
-      image: "images/destinations/aquila-safari.jpg"
+      image: "images/destinations/Image (10).jpg"
     },
     description: "Leave Cape Town behind and experience the beauty of the South African wilderness with a private trip to Aquila Private Game Reserve.",
     duration: "Full Day",
@@ -625,7 +622,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Constantia Wine & ",
       accent: "Scenic Tour",
       description: "Cape Town's Historic Wine Valley - Discover Constantia's vineyards and scenic beauty.",
-      image: "images/destinations/constantia-wine.jpg"
+      image: "images/destinations/Wine Valley.jpg"
     },
     description: "Discover the beauty of Constantia, one of Cape Town's most scenic and historic wine regions. Enjoy peaceful vineyards, mountain views, beautiful estates and the relaxed atmosphere of Cape Town's southern suburbs.",
     duration: "±5–6 Hours",
@@ -677,7 +674,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Cape ",
       accent: "West Coast Tour",
       description: "Discover the Wild Beauty of the West Coast - Langebaan, beaches and coastal villages.",
-      image: "images/destinations/cape-west-coast.jpg"
+      image: "images/destinations/Image (4).jpg"
     },
     description: "Escape the city and experience the peaceful beauty of South Africa's West Coast. Enjoy spectacular ocean views, charming coastal towns, natural landscapes and delicious local experiences on a private journey with TB Tours.",
     duration: "Full Day",
@@ -728,7 +725,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Garden Route ",
       accent: "Experience",
       description: "Discover South Africa's Beautiful Garden Route - A 3-5 day journey through coastal beauty.",
-      image: "images/destinations/garden-route.jpg"
+      image: "images/destinations/Image (8).jpg"
     },
     description: "Embark on an unforgettable journey from Cape Town through the spectacular Garden Route. Experience beautiful coastlines, forests, lagoons, charming towns and some of South Africa's most scenic destinations.",
     duration: "3–5 Days",

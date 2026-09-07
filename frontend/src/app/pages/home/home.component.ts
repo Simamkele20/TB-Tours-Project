@@ -318,13 +318,13 @@ export class HomePageComponent implements OnInit {
     {
       title: "Cape Agulhas",
       description: "Where the Atlantic and Indian Oceans meet.",
-      image: "/images/destinations/cape-agulhas.jpg",
+      image: "/images/destinations/Cape Agulhas.jpg",
       slug: "cape-agulhas"
     },
     {
       title: "Constantia Wine Valley",
       description: "Historic vineyards and mountain views.",
-      image: "/images/destinations/constantia-wine.jpg",
+      image: "/images/destinations/Wine Valley.jpg",
       slug: "constantia-wine"
     },
     {
