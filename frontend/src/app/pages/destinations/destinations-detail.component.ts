@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from "@angular/core";
+import { Component, computed, inject, signal, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterLink, ActivatedRoute, Router } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
@@ -118,7 +118,7 @@ import { DESTINATIONS_DETAIL } from "../../data/site-content";
   `,
   styleUrl: "./destinations-detail.component.scss"
 })
-export class DestinationDetailComponent {
+export class DestinationDetailComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
@@ -141,6 +141,11 @@ export class DestinationDetailComponent {
     this.activatedRoute.params.subscribe(params => {
       this.slug.set(params['slug'] || null);
     });
+  }
+
+  ngOnInit(): void {
+    // Scroll to top when navigating to a destination detail page
+    window.scrollTo(0, 0);
   }
 
   onRequestQuote(): void {
