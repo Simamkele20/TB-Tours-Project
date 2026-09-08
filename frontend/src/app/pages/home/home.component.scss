@@ -11,7 +11,7 @@
   .container { display: block; }
   .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; animation: fadeInLeft 0.8s ease-out 0.2s both; }
   .about-text { display: flex; flex-direction: column; justify-content: center; }
-  .about-image { margin: 0 !important; padding: 0 !important; display: block; line-height: 0; font-size: 0; border-radius: 0; overflow: hidden; box-shadow: none; img { width: 100%; height: 100%; display: block; object-fit: cover; } }
+  .about-image { margin: 0; padding: 0; display: block; img { width: 100%; height: 100%; display: block; object-fit: cover; } }
   h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.8rem, 3.5vw, 2.2rem); font-weight: 400; margin: 0 0 1.5rem; color: #213a63; }
   .about-description { color: #333333; font-size: 1.05rem; line-height: 1.8; margin: 1.2rem 0; }
   .read-story-link {
@@ -151,7 +151,7 @@
 @media (max-width: 980px) {
   .about-section { padding: 3rem 1.5rem; }
   .about-section .about-content { grid-template-columns: 1fr; gap: 1.5rem; }
-  .about-section .about-image { height: 350px; margin: 0 !important; padding: 0 !important; display: block; line-height: 0; font-size: 0; }
+  .about-section .about-image { height: 350px; margin: 0; padding: 0; display: block; }
   .about-section .container { width: 100%; margin: 0 auto; padding: 0; }
   .about-section .about-text { text-align: center; }
   .about-section .read-story-link { margin: 1.5rem auto 0; display: block; width: fit-content; }
@@ -183,7 +183,7 @@
   .about-section { padding: 3rem 1.5rem; }
   .about-section .container { width: 100%; margin: 0 auto; padding: 0; }
   .about-section .about-text { text-align: center; }
-  .about-section .about-image { height: 250px; margin: 0 !important; padding: 0 !important; display: block; line-height: 0; font-size: 0; }
+  .about-section .about-image { height: 250px; margin: 0; padding: 0; display: block; }
   .about-section .read-story-link { margin: 1.5rem auto 0; display: block; width: fit-content; }
   .story-image-wrapper { flex: 0 0 100% !important; }
   .story-content { flex: 0 0 100% !important; }
