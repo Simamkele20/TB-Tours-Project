@@ -476,7 +476,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Cape Town ",
       accent: "Beach Escape",
       description: "Experience Cape Town's Famous Beaches & Coastal Scenery",
-      image: "images/destinations/Image (30).jpg"
+      image: "images/destinations/Image (31).jpg"
     },
     description: "Discover the beauty of Cape Town's Atlantic Seaboard on a relaxing private tour with TB Tours. Enjoy breathtaking ocean views, beautiful beaches, mountain scenery and some of Cape Town's most iconic coastal locations.",
     duration: "4–5 Hours",
@@ -523,7 +523,7 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       title: "Cape Point & ",
       accent: "Cape Peninsula Tour",
       description: "Where two oceans meet - Explore Cape Point and Cape of Good Hope",
-      image: "images/destinations/Image (6).jpg"
+      image: "images/destinations/Image (30).jpg"
     },
     description: "Experience the iconic Cape Peninsula with a private tour showcasing Cape Point, Cape of Good Hope, and Boulder's Beach penguins.",
     duration: "5–6 Hours",
