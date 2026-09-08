@@ -1,4 +1,112 @@
-// About Page - Modern Tech Startup Design
+// About Page - Modern Design
+
+// Hero Section with Image on Right
+.about-hero-wrapper {
+  background: linear-gradient(135deg, #0a4a6b 0%, #1a3a5a 50%, #0f1f3f 100%);
+  padding: clamp(4rem, 10vw, 8rem) 2rem;
+  position: relative;
+  overflow: hidden;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.about-hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.about-hero-text {
+  color: #f0f4f8;
+  
+  .eyebrow {
+    display: inline-block;
+    color: #f2b112;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    
+    span {
+      color: #f2b112;
+      font-weight: 500;
+    }
+  }
+  
+  .description {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(240, 244, 248, 0.9);
+    max-width: 550px;
+  }
+}
+
+.about-hero-image {
+  margin: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .about-hero-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .about-hero-image img {
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero-wrapper {
+    min-height: auto;
+    padding: 3rem 1.5rem;
+  }
+  
+  .about-hero-text {
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    .description {
+      font-size: 0.95rem;
+    }
+  }
+  
+  .about-hero-image img {
+    min-height: 300px;
+  }
+}
+
+// Remove old hero section styles
+::ng-deep .about-hero-section .hero {
+  background: none !important;
+  background-image: none !important;
+}
 
 .hero-section {
   background: linear-gradient(135deg, var(--brand-black) 0%, #1a1a1a 100%);
@@ -206,9 +314,19 @@
 
 .about-story-block {
   background: var(--brand-white);
-  text-align: center;
-  max-width: 700px;
+  padding: 4rem 2rem;
+}
 
+.about-story-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-story-text {
   .about-kicker {
     color: var(--brand-gold);
     text-transform: uppercase;
@@ -222,6 +340,7 @@
     font-size: 2.2rem;
     margin-bottom: 1.5rem;
     color: var(--brand-black);
+    font-weight: 400;
   }
 
   p {
@@ -233,6 +352,27 @@
 
   .about-approach-btn {
     margin-top: 2rem;
+  }
+}
+
+.about-story-image {
+  margin: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-story-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 }
 

@@ -3,7 +3,7 @@ export interface HeroBlock {
   title: string;
   accent: string;
   description: string;
-  image: string;
+  image?: string;
 }
 
 export interface FeatureCard {
@@ -111,8 +111,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       title: "TB Tours ",
       accent: "(Pty) Ltd",
       description:
-        "A Cape Town-based private tour, airport transfer and chauffeur company.",
-      image: "images/franschhoek.jpg"
+        "A Cape Town-based private tour, airport transfer and chauffeur company."
     },
     sectionTitle: "About",
     sectionSubtitle: "TB Tours (Pty)Ltd offers private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.\n\nThe company grew out of one person's time on the road - a story of entrepreneurship, service, and genuine care for every journey.",
