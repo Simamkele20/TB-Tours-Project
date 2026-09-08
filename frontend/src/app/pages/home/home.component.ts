@@ -38,7 +38,7 @@ import { finalize } from "rxjs";
         </div>
       </div>
     </section>
-    
+
     <!-- DESTINATIONS SECTION -->
     <section id="destinations" class="section destinations-section">
       <div class="container">
