@@ -2,28 +2,52 @@ import { Component, computed, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterLink, ActivatedRoute } from "@angular/router";
 import { ViewportScroller } from "@angular/common";
-import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { PageDataService } from "../../services/page-data.service";
 
 @Component({
   selector: "app-about-page",
   standalone: true,
-  imports: [CommonModule, RouterLink, HeroSectionComponent],
+  imports: [CommonModule, RouterLink],
   template: `
-    <app-hero-section
-      [config]="heroConfig()"
-      [showPhone]="() => false">
-    </app-hero-section>
+    <section class="about-hero-wrapper">
+      <div class="about-hero-content">
+        <div class="about-hero-text">
+          <p class="eyebrow">{{ heroConfig().eyebrow }}</p>
+          <h1>
+            {{ heroConfig().title }}
+            <span>{{ heroConfig().accent }}</span>
+          </h1>
+          <p class="description">{{ heroConfig().description }}</p>
+        </div>
+        <figure class="about-hero-image">
+          <img
+            src="/images/hero-minibus.jpg"
+            alt="TB Tours vehicle on scenic coastal road"
+            loading="eager"
+            fetchpriority="high" />
+        </figure>
+      </div>
+    </section>
 
     <section class="section container about-story-block">
-      <p class="about-kicker">Our Approach</p>
-      <h2>Personal, professional and local</h2>
-      <p>
-        TB Tours (Pty)Ltd offers private tours, airport transfers and chauffeur services across Cape Town and the Cape
-        Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.
-      </p>
-      <p>The company grew out of one person's time on the road - a story you can read below.</p>
-      <a [routerLink]="['/about']" fragment="founder-story" class="btn btn-outline-light about-approach-btn">Read Thabang's Story</a>
+      <div class="about-story-content">
+        <div class="about-story-text">
+          <p class="about-kicker">Our Approach</p>
+          <h2>Personal, professional and local</h2>
+          <p>
+            TB Tours (Pty)Ltd offers private tours, airport transfers and chauffeur services across Cape Town and the Cape
+            Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.
+          </p>
+          <p>The company grew out of one person's time on the road - a story you can read below.</p>
+          <a [routerLink]="['/about']" fragment="founder-story" class="btn btn-outline-light about-approach-btn">Read Thabang's Story</a>
+        </div>
+        <figure class="about-story-image">
+          <img
+            src="/images/hero-minibus.jpg"
+            alt="TB Tours vehicle on scenic coastal road"
+            loading="lazy" />
+        </figure>
+      </div>
     </section>
 
     <section id="founder-story" class="about-founder-section">

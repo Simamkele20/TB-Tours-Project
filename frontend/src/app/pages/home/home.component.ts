@@ -22,19 +22,27 @@ import { finalize } from "rxjs";
     </section>
 
     <!-- ABOUT SECTION -->
-    <section id="about" class="section about-section" [style.backgroundImage]="'url(/images/About.jpg)'">
+    <section id="about" class="section about-section">
       <div class="container">
         <div class="about-content">
-          <p class="kicker">About TB Tours</p>
-          <h2>Personal, professional and local</h2>
-          <p class="about-description">
-            TB Tours (Pty)Ltd offers private tours, airport transfers and chauffeur services across Cape Town and the Cape
-            Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.
-          </p>
-          <p class="about-description">
-            The company grew out of one person's time on the road - a story of entrepreneurship, service, and genuine care for every journey.
-          </p>
-          <a routerLink="/story" class="read-story-link">Read Thabang's Story</a>
+          <div class="about-text">
+            <p class="kicker">About TB Tours</p>
+            <h2>Personal, professional and local</h2>
+            <p class="about-description">
+              TB Tours (Pty)Ltd offers private tours, airport transfers and chauffeur services across Cape Town and the Cape
+              Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.
+            </p>
+            <p class="about-description">
+              The company grew out of one person's time on the road - a story of entrepreneurship, service, and genuine care for every journey.
+            </p>
+            <a routerLink="/story" class="read-story-link">Read Thabang's Story</a>
+          </div>
+          <figure class="about-image">
+            <img
+              src="/images/About.jpg"
+              alt="TB Tours about section image"
+              loading="lazy" />
+          </figure>
         </div>
       </div>
     </section>
