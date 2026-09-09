@@ -14,7 +14,7 @@ import { RouterLink } from "@angular/router";
           <p class="story-kicker">The Founder</p>
           <h2>From the Road to Building a Dream</h2>
           <p class="story-subtitle">Thabang's Story · Founder of TB Tours (Pty)Ltd</p>
-          
+
           <p>Every journey begins somewhere.</p>
           <p>For Thabang, the journey that eventually became TB Tours (Pty)Ltd began behind the wheel.</p>
           <p>
@@ -62,7 +62,7 @@ import { RouterLink } from "@angular/router";
         </div>
         <figure class="story-figure-header">
           <img
-            src="/images/about-founder.png"
+            src="/images/Story-image.jpg"
             alt="TB Tours (Pty)Ltd chauffeur in a black suit opening the rear door of a white Honda for a smiling guest, with Table Mountain in the background"
             loading="eager"
             fetchpriority="high" />
