@@ -1,11 +1,10 @@
-import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { environment } from '../environments/environment';
 import { SeoService } from './services/seo.service';
 import { GoogleAnalyticsService } from './services/google-analytics.service';
 import { AuthService } from './services/auth.service';
 import { DESTINATIONS_DETAIL } from './data/site-content';
-import { filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -14,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.scss',
   templateUrl: './app.html',
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
   readonly maintenanceMode = environment.maintenanceMode;
 
   private seoService = inject(SeoService);
@@ -23,19 +22,57 @@ export class App implements OnInit {
   public authService = inject(AuthService);
 
   private userMenuOpen = signal(false);
+  private scrollPositions = new Map<string, number>();
+  private currentUrl: string = '';
+  private scrollHandler!: () => void;
 
   ngOnInit(): void {
     // Set initial SEO tags based on current route
     this.updateSeoForCurrentRoute();
+    this.currentUrl = this.router.url;
 
-    // Update SEO tags on route change and scroll to top
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      // Scroll to top of page on navigation
-      window.scrollTo(0, 0);
-      this.updateSeoForCurrentRoute();
+    // Save scroll position before navigation
+    this.router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd) {
+        // Routes that should always scroll to top
+        const alwaysScrollToTopRoutes = ['/auth/login', '/auth/register', '/auth/forgot-password', '/booking', '/admin/management'];
+        const shouldScrollToTop = alwaysScrollToTopRoutes.some(route => event.urlAfterRedirects.startsWith(route));
+
+        // Restore scroll position for the new route after a small delay to ensure DOM is ready
+        setTimeout(() => {
+          if (shouldScrollToTop) {
+            // Always scroll to top for auth and booking pages
+            window.scrollTo(0, 0);
+          } else {
+            // For other pages, restore saved position or go to top
+            const savedPosition = this.scrollPositions.get(event.urlAfterRedirects);
+            if (savedPosition !== undefined) {
+              window.scrollTo(0, savedPosition);
+            } else {
+              window.scrollTo(0, 0);
+            }
+          }
+        }, 50);
+
+        this.currentUrl = event.urlAfterRedirects;
+        this.updateSeoForCurrentRoute();
+      }
     });
+
+    // Listen to scroll events and save position
+    this.scrollHandler = this.saveScrollPosition.bind(this);
+    window.addEventListener('scroll', this.scrollHandler);
+  }
+
+  private saveScrollPosition(): void {
+    // Debounce scroll saving
+    const scrollY = window.scrollY;
+    this.scrollPositions.set(this.currentUrl, scrollY);
+  }
+
+  ngOnDestroy(): void {
+    // Clean up scroll event listener
+    window.removeEventListener('scroll', this.scrollHandler);
   }
 
   private updateSeoForCurrentRoute(): void {
