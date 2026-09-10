@@ -28,11 +28,12 @@ export class App implements OnInit {
     // Set initial SEO tags based on current route
     this.updateSeoForCurrentRoute();
 
-    // Update SEO tags on route change, but don't scroll automatically
-    // Let anchor navigation work naturally
+    // Update SEO tags on route change and scroll to top
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
+      // Scroll to top of page on navigation
+      window.scrollTo(0, 0);
       this.updateSeoForCurrentRoute();
     });
   }
