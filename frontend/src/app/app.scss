@@ -4,6 +4,13 @@
   min-height: 100svh;
 }
 
+html {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  background: transparent;
+}
+
 .maintenance {
   position: relative;
   min-height: 100svh;
@@ -75,18 +82,18 @@ main {
   right: 0;
   z-index: 20;
   background: #0a1530;
-  border-bottom: 0;
+  border-bottom: none;
 }
 
 .site-header.solid-header {
   position: fixed;
   background: #0a1530;
-  border-bottom: 1px solid rgba(242, 177, 18, 0.26);
+  border-bottom: none;
   backdrop-filter: blur(6px);
 }
 
 .site-header.home-overlay {
-  background: linear-gradient(180deg, rgba(10, 21, 48, 0.88), rgba(10, 21, 48, 0));
+  background: #0a1530;
 }
 
 .header-inner {
@@ -437,3 +444,167 @@ main {
     font-size: 1.6rem;
   }
 }
+
+// User Menu & Auth Links
+.user-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .user-menu-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: transparent;
+    border: 1px solid rgba(242, 177, 18, 0.4);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.6rem 0.8rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(242, 177, 18, 0.15);
+      border-color: #f2b112;
+    }
+
+    i {
+      font-size: 1.5rem;
+      color: #ffc94d;
+      flex-shrink: 0;
+    }
+
+    .user-name {
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.85rem;
+      color: #ffc94d;
+      font-weight: 500;
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+
+    .dropdown-icon {
+      font-size: 1rem;
+      color: #f2b112;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    &[aria-expanded="true"] .dropdown-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  .user-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: linear-gradient(135deg, #0a1530 0%, #1a2d5a 100%);
+    border: 2px solid #f2b112;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    min-width: 220px;
+    margin-top: 0.5rem;
+    z-index: 1000;
+
+    .user-email-header {
+      padding: 0.85rem 1.2rem;
+      color: #ffc94d;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-bottom: 2px solid rgba(242, 177, 18, 0.3);
+      word-break: break-word;
+      border-radius: 6px 6px 0 0;
+    }
+
+    a, button {
+      display: block;
+      width: 100%;
+      padding: 0.85rem 1.2rem;
+      text-align: left;
+      color: white;
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      &:hover {
+        background-color: rgba(242, 177, 18, 0.15);
+        color: #ffc94d;
+        padding-left: 1.4rem;
+      }
+
+      &:first-child {
+        border-radius: 0;
+      }
+
+      &:last-child {
+        border-radius: 0 0 6px 6px;
+        border-bottom: none;
+      }
+    }
+
+    .logout-btn {
+      color: #ff6b6b;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+      &:hover {
+        background-color: rgba(255, 107, 107, 0.15);
+        color: #ff8787;
+      }
+    }
+  }
+}
+
+.auth-links-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  .btn-text {
+    color: #0a1530;
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    background-color: #f2b112;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #ffc94d;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(242, 177, 18, 0.3);
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+
+    .btn-text {
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+}
+

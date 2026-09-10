@@ -279,6 +279,15 @@ p {
   margin: 1rem 0;
   font-size: 0.85rem;
   color: #f2b112;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.card-meta-row .price {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #ffc94d;
+  margin-left: auto;
 }
 
 small {

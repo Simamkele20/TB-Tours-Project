@@ -1,13 +1,15 @@
-import { Component, HostListener, OnInit, inject } from '@angular/core';
+import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { environment } from '../environments/environment';
 import { SeoService } from './services/seo.service';
 import { GoogleAnalyticsService } from './services/google-analytics.service';
+import { AuthService } from './services/auth.service';
 import { DESTINATIONS_DETAIL } from './data/site-content';
 import { filter } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, CommonModule],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
@@ -18,6 +20,9 @@ export class App implements OnInit {
   private seoService = inject(SeoService);
   private router = inject(Router);
   private googleAnalytics = inject(GoogleAnalyticsService);
+  public authService = inject(AuthService);
+
+  private userMenuOpen = signal(false);
 
   ngOnInit(): void {
     // Set initial SEO tags based on current route
@@ -131,5 +136,23 @@ export class App implements OnInit {
   scrollToHome(): void {
     window.location.hash = '#home';
     this.mobileMenuOpen = false;
+  }
+
+  isUserMenuOpen(): boolean {
+    return this.userMenuOpen();
+  }
+
+  toggleUserMenu(): void {
+    this.userMenuOpen.update(value => !value);
+  }
+
+  closeUserMenu(): void {
+    this.userMenuOpen.set(false);
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.userMenuOpen.set(false);
+    this.router.navigate(['/']);
   }
 }

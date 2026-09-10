@@ -98,7 +98,8 @@ import { finalize } from "rxjs";
               <div class="service-number">{{ service.number }}</div>
               <h3>{{ service.title }}</h3>
               <p>{{ service.description }}</p>
-              <button class="service-cta" (click)="requestService(service.title)">{{ service.ctaLabel }}</button>
+              <div class="service-price">From R{{ service.price }}</div>
+              <a [routerLink]="service.ctaLink" class="service-cta">{{ service.ctaLabel }}</a>
             </div>
           </div>
 

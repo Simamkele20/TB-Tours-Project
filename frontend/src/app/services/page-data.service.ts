@@ -30,7 +30,7 @@ export class PageDataService {
       cardLayout: this.inferCardLayout(pageKey),
       trustItems,
       trustVariant: this.inferTrustVariant(pageKey),
-      trustShowIntro: pageKey !== "destinations",
+      trustShowIntro: pageKey !== "destinations" && pageKey !== "services",
       trustIntroIcon: "bi-patch-check",
       trustIntroText: this.getIntroText(pageKey),
       ctaTitle: content.ctaTitle,
@@ -119,6 +119,19 @@ export class PageDataService {
   }
 
   /**
+   * Get CTA label based on page type
+   */
+  private getCtaLabel(pageKey: string): string {
+    const labelMap: Record<string, string> = {
+      services: "Book Now",
+      home: "Explore",
+      about: "Learn More",
+      contact: "Send Message"
+    };
+    return labelMap[pageKey] || "Learn More";
+  }
+
+  /**
    * Infer trust variant based on page type
    */
   private inferTrustVariant(pageKey: string): "services" | "tours" | "default" {
@@ -150,22 +163,5 @@ export class PageDataService {
       "road-trip": "Experience Cape Town's most scenic drives with professional guidance."
     };
     return introMap[pageKey] || "We are committed to providing top-quality service.";
-  }
-
-  /**
-   * Get CTA label based on page type
-   */
-  private getCtaLabel(pageKey: string): string {
-    const labelMap: Record<string, string> = {
-      home: "Plan Your Journey",
-      tours: "Enquire About a Tour",
-      destinations: "Enquire",
-      about: "Get in Touch",
-      services: "Browse Our Services",
-      contact: "Send Message",
-      fleet: "View Fleet Details",
-      "road-trip": "Plan Your Road Trip"
-    };
-    return labelMap[pageKey] || "Get Started";
   }
 }
