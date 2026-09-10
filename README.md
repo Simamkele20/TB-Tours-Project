@@ -2,31 +2,77 @@
 
 Professional transport and tour booking web app for TB Tours (Pty)Ltd.
 
-## Stack (latest at setup time)
+## Stack
 
-- Node.js: 26.4.0 (project requires >=22)
-- Angular: 22.x
-- Angular CLI: 22.1.5
-- Express: 5.2.1
-- SMTP email quote workflow
+- **Node.js**: 26.4.0 (requires >=22)
+- **Angular**: 17+ (standalone components)
+- **Express**: 5.2.1
+- **MySQL**: with Sequelize ORM
+- **TypeScript**: strict mode
+- **SMTP**: Email notifications
 
-## Project structure
+## Project Structure
 
-- frontend: Angular app
-- backend: Node.js/Express API
-- Images: source wireframes and design references
+```
+├── backend/              # Node.js/Express API
+│   ├── src/
+│   │   ├── models/      # Sequelize models (User, Booking, Tour, etc.)
+│   │   ├── routes/      # API routes (auth, admin, bookings)
+│   │   ├── auth/        # JWT, password hashing
+│   │   ├── email/       # Email templates
+│   │   └── server.js    # Express app setup
+│   └── package.json
+├── frontend/            # Angular app
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── pages/   # Feature components
+│   │   │   ├── services/ # API services
+│   │   │   ├── guards/  # Route guards (auth, admin)
+│   │   │   └── app.ts   # Root component
+│   │   └── main.ts
+│   └── package.json
+└── Images/             # Design references
+```
 
 ## Features
 
-- Responsive multi-page website (Home, About, Services, Tours, Fleet, Contact)
-- Wireframe-aligned dark/gold brand styling
-- Contact/quote form with validation
-- Contact API endpoint for quote requests
-- Unified dev command for frontend + backend
+- **Authentication**: JWT-based login/register with email verification
+- **Role-Based Access**: Customer, Admin (dashboard only), Manager (full admin)
+- **Admin Dashboard**: View analytics, user management, booking management
+- **Management Console**: Full admin controls (users, bookings, tours) - manager only
+- **Domain-Based Roles**: Users registering with @tb-tours.co.za automatically get admin role
+- **Booking System**: View and manage tour bookings
+- **Responsive Design**: Mobile-first dark/gold theme
+- **Currency**: South African Rand (ZAR)
 
-## Run locally
+## Test Credentials
 
-1. Install dependencies:
+### Manager Account (Full Admin Access)
+```
+Email: princetancu06@gmail.com
+Password: Prince123!!
+Access: Admin Dashboard + Management Console
+```
+
+### Admin Dashboard User (View-Only Admin)
+```
+Email: admin@gmail.com
+Password: Admin!!12
+Access: Admin Dashboard only (no management)
+```
+
+### Customer User
+```
+Email: testing@gmail.com
+Password: Testing!!12
+Access: My Bookings, Tours, Contact
+```
+
+⚠️ **DO NOT use these credentials in production**
+
+## Quick Start
+
+### 1. Install Dependencies
 
 ```bash
 npm install
@@ -34,70 +80,186 @@ npm --prefix frontend install
 npm --prefix backend install
 ```
 
-2. Configure backend environment:
+### 2. Configure Backend
 
-```bash
-copy backend\.env.example backend\.env
-```
-
-3. Add your real values in backend/.env:
+Create `backend/.env`:
 
 ```env
+PORT=4000
+NODE_ENV=development
 CLIENT_URLS=http://localhost:4200
+
+# MySQL
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=tb_tours
+
+# JWT
+JWT_SECRET=your-secret-key-change-in-production
+JWT_EXPIRY=24h
+
+# Email (Gmail SMTP recommended)
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_16_char_app_password
+SMTP_PASS=your_app_password
+CONTACT_TO_EMAIL=info@tb-tours.co.za
 ```
 
-4. Start full stack:
+### 3. Start Development Servers
 
+**Terminal 1 - Backend:**
 ```bash
+cd backend
 npm run dev
+# Runs on http://localhost:4000
 ```
 
-- Frontend: http://localhost:4200
-- Backend: http://localhost:4000
-
-## Frontend environments
-
-- `frontend/src/environments/environment.ts` (development)
-- `frontend/src/environments/environment.prod.ts` (production)
-
-The contact API calls use `environment.apiBaseUrl`.
-
-Set your production backend URL in:
-
-```ts
-// frontend/src/environments/environment.prod.ts
-apiBaseUrl: "https://your-render-backend.onrender.com/api"
+**Terminal 2 - Frontend:**
+```bash
+cd frontend
+npm start
+# Runs on http://localhost:4200
 ```
 
-## GitHub branch strategy (production)
+## Frontend Environments
 
-- `main` branch: production environment
+Development and production configurations:
 
-## Backend on Render (Web Service)
+```typescript
+// frontend/src/environments/environment.ts (dev)
+export const environment = {
+  production: false,
+  apiBaseUrl: "http://localhost:4000/api",
+  useMockData: true
+};
 
-This repo includes `render.yaml` with one production service:
+// frontend/src/environments/environment.prod.ts (production)
+export const environment = {
+  production: true,
+  apiBaseUrl: "https://your-backend-domain.com/api",
+  useMockData: false
+};
+```
 
-- `tb-tours-api-prod` from branch `main`
+## Access Control
 
-In Render, set environment variables for each service:
+### Frontend Routes
+| Route | Admin | Manager | Customer |
+|-------|-------|---------|----------|
+| `/admin` (Dashboard) | ✅ | ✅ | ❌ |
+| `/admin/management` | ❌ | ✅ | ❌ |
+| `/admin/tours` | ❌ | ✅ | ❌ |
+| `/my-bookings` | ❌ | ❌ | ✅ |
 
-- `CLIENT_URLS` (comma-separated allowed origins)
-- `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`
-- `CONTACT_TO_EMAIL`
+### Backend API
+| Endpoint | Admin | Manager | Customer |
+|----------|-------|---------|----------|
+| `GET /api/admin/analytics` | ✅ | ✅ | ❌ |
+| `GET /api/admin/users` | ❌ | ✅ | ❌ |
+| `PUT /api/admin/users/:id` | ❌ | ✅ | ❌ |
+| `GET /api/bookings` | ❌ | ❌ | ✅ |
 
-Example:
+**Note:** Management features (users, bookings, tours) are ONLY accessible to `princetancu06@gmail.com`
+
+## Role Assignment Policy
+
+### Automatic Role Assignment Based on Email Domain
+
+When users register, their role is automatically assigned based on their email domain:
+
+- **@tb-tours.co.za** → `admin` role (full dashboard access)
+- **@tbtours.test** → Testing domain (role set manually for testing)
+- **Any other domain** → `customer` role (limited access)
+
+### Management Access
+
+Within the `admin` role, only the authorized manager email has access to management features:
+- **Manager Email**: `princetancu06@gmail.com`
+- **Access**: Full management console (users, bookings, tours management)
+- **Other Admins**: Dashboard view-only (analytics, statistics)
+
+**Example:**
+```
+User A: alice@tb-tours.co.za → Registered as admin (dashboard access)
+User B: bob@gmail.com → Registered as customer (limited access)
+User C: princetancu06@gmail.com → Registered as admin + manager (full access)
+```
+
+## GitHub Strategy
+
+- `main` branch: Production environment
+- Deploy backend to Render
+- Deploy frontend to Vercel
+
+## Deployment
+
+### Backend on Render
+
+Configure `render.yaml` service with environment variables:
 
 ```env
-CLIENT_URLS=https://tb-tours.co.za,https://www.tb-tours.co.za
+CLIENT_URLS=https://your-domain.com
+DB_HOST=your-mysql-host
+DB_USER=production_user
+DB_PASSWORD=secure_password
+DB_NAME=tb_tours_prod
+JWT_SECRET=production_secret_key
+SMTP_USER=production_email@gmail.com
+SMTP_PASS=production_app_password
+CONTACT_TO_EMAIL=support@tb-tours.co.za
 ```
 
-## Frontend on Vercel
+### Frontend on Vercel
 
-This repo is configured for Vercel deployment.
+Vercel automatically deploys on push to `main` branch.
+
+Configure:
+- Build: `npm run build`
+- Output: `dist/frontend/browser`
+
+## Testing
+
+Run the comprehensive testing guide:
+
+See [PHASE1_TESTING_GUIDE.md](./PHASE1_TESTING_GUIDE.md) for:
+- Setup instructions
+- Test cases with expected results
+- Access control matrix
+- API testing examples
+- Troubleshooting guide
+
+## Key Files
+
+- **Authentication**: `backend/src/routes/auth.js`
+- **Admin Routes**: `backend/src/routes/admin.js`
+- **Auth Guard**: `frontend/src/app/guards/admin.guard.ts`
+- **Auth Service**: `frontend/src/app/services/auth.service.ts`
+- **Admin Dashboard**: `frontend/src/app/pages/admin/admin-dashboard.component.ts`
+
+## Coding Standards
+
+### Frontend (Angular 17+)
+- Standalone components (no shared modules)
+- RxJS for reactive state
+- Strict TypeScript (no `any` types)
+- Lazy-loaded feature routes
+- Responsive design with SCSS
+
+### Backend (Express)
+- Modular route handlers
+- Consistent error handling
+- Input validation on all endpoints
+- Service-layer pattern
+- Sequelize ORM for database
+
+## Support
+
+For issues or questions, check:
+1. [PHASE1_TESTING_GUIDE.md](./PHASE1_TESTING_GUIDE.md) - Troubleshooting section
+2. Backend logs: `npm run dev` output
+3. Frontend console: Browser DevTools → Console tab
 
 - Production branch: `main`
 - Development/testing branch: `develop`

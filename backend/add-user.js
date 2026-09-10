@@ -22,14 +22,18 @@ async function addUser(email, password, firstName, lastName) {
     // Hash the password
     const passwordHash = await hashPassword(password);
     
+    // Determine role based on email domain
+    const normalizedEmail = email.toLowerCase();
+    const role = normalizedEmail.endsWith('@tb-tours.co.za') ? 'admin' : 'customer';
+    
     // Create the user
     const newUser = await User.create({
       firstName,
       lastName,
-      email: email.toLowerCase(),
+      email: normalizedEmail,
       passwordHash,
       verified: true,
-      role: 'admin'
+      role: role
     });
 
     console.log(`✓ User created successfully`);
