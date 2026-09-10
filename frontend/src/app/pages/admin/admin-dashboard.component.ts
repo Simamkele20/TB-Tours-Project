@@ -111,8 +111,8 @@ const MOCK_BOOKING_ANALYTICS: BookingAnalytics = {
 
 const MOCK_USERS: User[] = [
   { id: 1, firstName: 'Prince', lastName: 'Tancu', email: 'princetancu06@gmail.com', role: 'admin', verified: true, createdAt: '2026-01-10T08:00:00Z', updatedAt: '2026-01-10T08:00:00Z' },
-  { id: 41, firstName: 'Christopher', lastName: 'Clark', email: 'christopher.clark@tbtours.test', role: 'admin', verified: true, createdAt: '2026-01-15T10:30:00Z', updatedAt: '2026-01-15T10:30:00Z' },
-  { id: 42, firstName: 'Jennifer', lastName: 'Rodriguez', email: 'jennifer.rodriguez@tbtours.test', role: 'admin', verified: true, createdAt: '2026-01-15T10:31:00Z', updatedAt: '2026-01-15T10:31:00Z' },
+  { id: 41, firstName: 'Christopher', lastName: 'Clark', email: 'christopher.clark@tb-tours.co.za', role: 'admin', verified: true, createdAt: '2026-01-15T10:30:00Z', updatedAt: '2026-01-15T10:30:00Z' },
+  { id: 42, firstName: 'Jennifer', lastName: 'Rodriguez', email: 'jennifer.rodriguez@tb-tours.co.za', role: 'admin', verified: true, createdAt: '2026-01-15T10:31:00Z', updatedAt: '2026-01-15T10:31:00Z' },
   { id: 43, firstName: 'John', lastName: 'Smith', email: 'john.smith@tbtours.test', role: 'customer', verified: true, createdAt: '2026-02-20T11:00:00Z', updatedAt: '2026-02-20T11:00:00Z' },
   { id: 44, firstName: 'Sarah', lastName: 'Johnson', email: 'sarah.johnson@tbtours.test', role: 'customer', verified: true, createdAt: '2026-03-05T11:05:00Z', updatedAt: '2026-03-05T11:05:00Z' },
   { id: 45, firstName: 'Michael', lastName: 'Brown', email: 'michael.brown@tbtours.test', role: 'customer', verified: false, createdAt: '2026-05-10T11:10:00Z', updatedAt: '2026-05-10T11:10:00Z' },

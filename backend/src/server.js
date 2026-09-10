@@ -196,9 +196,9 @@ app.post("/api/auth/register", async (req, res) => {
     const verificationCode = generateVerificationCode();
     const verificationCodeExpiry = getCodeExpiry(15);
 
-    // Determine if user is admin based on specific email
+    // Determine role based on email domain
     let role = "customer";
-    if (normalizedEmail === "princetancu06@gmail.com") {
+    if (normalizedEmail.endsWith("@tb-tours.co.za")) {
       role = "admin";
     }
 
