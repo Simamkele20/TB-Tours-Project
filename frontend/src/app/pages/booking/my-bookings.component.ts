@@ -484,7 +484,6 @@ export class MyBookingsComponent implements OnInit {
           this.filterBookings();
         },
         error: (error) => {
-          console.error('Failed to load bookings:', error);
         }
       });
   }
@@ -518,7 +517,6 @@ export class MyBookingsComponent implements OnInit {
   }
 
   viewDetails(booking: Booking) {
-    console.log('View details for booking:', booking);
     // TODO: Navigate to booking details page or open modal
   }
 
@@ -541,7 +539,6 @@ export class MyBookingsComponent implements OnInit {
           this.loadBookings();
         },
         error: (error) => {
-          console.error('Failed to cancel booking:', error);
           alert('Failed to cancel booking');
         }
       });

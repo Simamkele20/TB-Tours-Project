@@ -558,7 +558,6 @@ export class BookingPageComponent implements OnInit {
 
   ngOnInit() {
     const tourId = this.route.snapshot.paramMap.get('tourId');
-    console.log('[BOOKING] tourId from route:', tourId);
     this.initializeForm();
     this.setTodayDate();
     if (tourId) {
@@ -586,35 +585,27 @@ export class BookingPageComponent implements OnInit {
 
   loadTour(tourId: number) {
     const url = `${environment.apiBaseUrl}/tours/${tourId}`;
-    console.log('[BOOKING] Loading tour from URL:', url);
     this.http.get<{ data: Tour }>(url)
       .subscribe({
         next: (response) => {
-          console.log('[BOOKING] Tour loaded successfully:', response);
           this.tour = response.data;
-          console.log('[BOOKING] this.tour after assignment:', this.tour);
-          console.log('[BOOKING] this.tour is truthy:', !!this.tour);
           this.cdr.detectChanges();
           this.updateEstimatedTotal();
         },
         error: (error) => {
-          console.error('[BOOKING] Failed to load tour:', error);
           this.router.navigate(['/']);
         }
       });
   }
 
   updateEstimatedTotal() {
-    console.log('[BOOKING] updateEstimatedTotal called, tour:', this.tour);
     if (!this.tour) {
-      console.log('[BOOKING] No tour available yet');
       return;
     }
     const passengers = this.bookingForm.get('numberOfPassengers')?.value || 1;
     this.estimatedTotal = this.tour.pricePerPerson
       ? this.tour.pricePerPerson * passengers
       : this.tour.price;
-    console.log('[BOOKING] Estimated total calculated:', this.estimatedTotal);
     this.cdr.detectChanges();
   }
 
@@ -643,7 +634,6 @@ export class BookingPageComponent implements OnInit {
           this.initializePaystackPayment();
         },
         error: (error) => {
-          console.error('Failed to create booking:', error);
           this.isSubmitting = false;
           alert('Failed to create booking. Please try again.');
         }
@@ -652,7 +642,6 @@ export class BookingPageComponent implements OnInit {
 
   initializePaystackPayment() {
     if (!this.paystackAuthUrl) {
-      console.error('Paystack authorization URL not available');
       this.isSubmitting = false;
       return;
     }

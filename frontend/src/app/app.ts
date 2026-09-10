@@ -150,6 +150,15 @@ export class App implements OnInit {
     this.userMenuOpen.set(false);
   }
 
+  isAdminDashboard(): boolean {
+    return this.router.url.includes('/admin');
+  }
+
+  isAuthorizedManager(): boolean {
+    const AUTHORIZED_MANAGER_EMAIL = 'princetancu06@gmail.com';
+    return this.authService.currentUser()?.email?.toLowerCase() === AUTHORIZED_MANAGER_EMAIL;
+  }
+
   logout(): void {
     this.authService.logout();
     this.userMenuOpen.set(false);

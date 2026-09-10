@@ -71,8 +71,6 @@ export class SeoService {
     };
 
     // This is handled in index.html, but can be enhanced dynamically if needed
-    console.log('Local search optimization active for:',
-      scriptData.areaServed.map(area => (area as any).name).join(', '));
   }
 
   private updateMetaTag(

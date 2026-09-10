@@ -598,7 +598,6 @@ export class AdminToursComponent implements OnInit {
           this.isLoading = false;
         },
         error: (error) => {
-          console.error('Error loading tours:', error);
           this.isLoading = false;
           alert('Failed to load tours');
         }
@@ -642,7 +641,6 @@ export class AdminToursComponent implements OnInit {
           this.isSubmitting = false;
         },
         error: (error) => {
-          console.error('Error updating tour:', error);
           alert(error?.error?.error || 'Failed to update tour');
           this.isSubmitting = false;
         }
@@ -659,7 +657,6 @@ export class AdminToursComponent implements OnInit {
           this.isSubmitting = false;
         },
         error: (error) => {
-          console.error('Error creating tour:', error);
           alert(error?.error?.error || 'Failed to create tour');
           this.isSubmitting = false;
         }
@@ -680,7 +677,6 @@ export class AdminToursComponent implements OnInit {
         this.loadTours();
       },
       error: (error) => {
-        console.error('Error deleting tour:', error);
         alert(error?.error?.error || 'Failed to delete tour');
       }
     });

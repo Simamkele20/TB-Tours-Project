@@ -21,7 +21,7 @@ export class GoogleAnalyticsService {
           page_title: pageTitle
         });
       } catch (error) {
-        console.warn('Error tracking page view:', error);
+        // Google Analytics tracking failed silently
       }
     }
   }
@@ -39,7 +39,7 @@ export class GoogleAnalyticsService {
           ...bookingDetails
         });
       } catch (error) {
-        console.warn('Error tracking booking inquiry:', error);
+        // Google Analytics tracking failed silently
       }
     }
   }

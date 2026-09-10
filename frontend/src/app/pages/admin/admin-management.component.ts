@@ -56,14 +56,14 @@ interface Destination {
 
         <!-- Tab Navigation -->
         <div class="tab-navigation">
-        <button 
+        <button
           class="tab-btn"
           [class.active]="activeTab === 'tours'"
           (click)="activeTab = 'tours'"
         >
           <i class="bi bi-map" aria-hidden="true"></i> Services & Tours
         </button>
-        <button 
+        <button
           class="tab-btn"
           [class.active]="activeTab === 'destinations'"
           (click)="activeTab = 'destinations'"
@@ -172,7 +172,7 @@ interface Destination {
             <!-- Basic Info -->
             <div class="form-section">
               <h3>Basic Information</h3>
-              
+
               <div class="form-group">
                 <label>Tour Title *</label>
                 <input type="text" formControlName="title" placeholder="e.g., Cape Peninsula Tours" />
@@ -197,7 +197,7 @@ interface Destination {
             <!-- Pricing & Availability -->
             <div class="form-section">
               <h3>Pricing & Availability</h3>
-              
+
               <div class="form-row">
                 <div class="form-group">
                   <label>Base Price (R) *</label>
@@ -254,7 +254,7 @@ interface Destination {
             <!-- Basic Info -->
             <div class="form-section">
               <h3>Basic Information</h3>
-              
+
               <div class="form-group">
                 <label>Destination Title *</label>
                 <input type="text" formControlName="title" placeholder="e.g., Cape Peninsula" />
@@ -284,7 +284,7 @@ interface Destination {
             <!-- Details -->
             <div class="form-section">
               <h3>Details</h3>
-              
+
               <div class="form-group">
                 <label>Duration</label>
                 <input type="text" formControlName="duration" placeholder="e.g., 8 hours" />
@@ -877,7 +877,7 @@ export class AdminManagementComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   activeTab: 'tours' | 'destinations' = 'tours';
-  
+
   // Tours
   tours: Tour[] = [];
   tourForm!: FormGroup;
@@ -946,7 +946,6 @@ export class AdminManagementComponent implements OnInit {
           this.isLoadingTours = false;
         },
         error: (error) => {
-          console.error('Error loading tours:', error);
           this.isLoadingTours = false;
           alert('Failed to load tours');
         }
@@ -990,7 +989,6 @@ export class AdminManagementComponent implements OnInit {
           this.isSubmittingTour = false;
         },
         error: (error) => {
-          console.error('Error updating tour:', error);
           alert(error?.error?.error || 'Failed to update tour');
           this.isSubmittingTour = false;
         }
@@ -1007,7 +1005,6 @@ export class AdminManagementComponent implements OnInit {
           this.isSubmittingTour = false;
         },
         error: (error) => {
-          console.error('Error creating tour:', error);
           alert(error?.error?.error || 'Failed to create tour');
           this.isSubmittingTour = false;
         }
@@ -1028,7 +1025,6 @@ export class AdminManagementComponent implements OnInit {
         this.loadTours();
       },
       error: (error) => {
-        console.error('Error deleting tour:', error);
         alert(error?.error?.error || 'Failed to delete tour');
       }
     });
@@ -1045,7 +1041,6 @@ export class AdminManagementComponent implements OnInit {
           this.isLoadingDestinations = false;
         },
         error: (error) => {
-          console.error('Error loading destinations:', error);
           this.isLoadingDestinations = false;
           alert('Failed to load destinations');
         }
@@ -1089,7 +1084,6 @@ export class AdminManagementComponent implements OnInit {
           this.isSubmittingDest = false;
         },
         error: (error) => {
-          console.error('Error updating destination:', error);
           alert(error?.error?.error || 'Failed to update destination');
           this.isSubmittingDest = false;
         }
@@ -1106,7 +1100,6 @@ export class AdminManagementComponent implements OnInit {
           this.isSubmittingDest = false;
         },
         error: (error) => {
-          console.error('Error creating destination:', error);
           alert(error?.error?.error || 'Failed to create destination');
           this.isSubmittingDest = false;
         }
@@ -1127,7 +1120,6 @@ export class AdminManagementComponent implements OnInit {
         this.loadDestinations();
       },
       error: (error) => {
-        console.error('Error deleting destination:', error);
         alert(error?.error?.error || 'Failed to delete destination');
       }
     });

@@ -49,6 +49,8 @@
               }
               @if (authService.isAdmin()) {
                 <a routerLink="/admin" (click)="closeUserMenu()">Admin Dashboard</a>
+              }
+              @if (isAuthorizedManager()) {
                 <a routerLink="/admin/management" (click)="closeUserMenu()">Management</a>
               }
               <button class="logout-btn" (click)="logout()">Logout</button>
@@ -67,8 +69,8 @@
     <router-outlet></router-outlet>
   </main>
 
-  <!-- WhatsApp Button -->
-  <a href="https://wa.me/27734483958?text=Hi%20TB%20Tours%2C%20I%20would%20like%20to%20inquire%20about%20your%20services" target="_blank" rel="noopener noreferrer" class="whatsapp-button" aria-label="Contact us on WhatsApp" title="Chat with us on WhatsApp">
+  <!-- WhatsApp Button (hidden on admin dashboard) -->
+  <a *ngIf="!isAdminDashboard()" href="https://wa.me/27734483958?text=Hi%20TB%20Tours%2C%20I%20would%20like%20to%20inquire%20about%20your%20services" target="_blank" rel="noopener noreferrer" class="whatsapp-button" aria-label="Contact us on WhatsApp" title="Chat with us on WhatsApp">
     <i class="bi bi-whatsapp" aria-hidden="true"></i>
   </a>
 
