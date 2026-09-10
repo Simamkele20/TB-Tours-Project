@@ -40,8 +40,12 @@ const bookingRouter = require("./routes/bookings");
 
 const app = express();
 const mailgunClient = createMailgunClient(env);
-const mailgunDomain = "sandboxf1e866405b11426296207bac0d2f4cca.mailgun.org"; // Using sandbox for testing
+const mailgunDomain = env.mailgunDomain;
 const contactMessages = [];
+
+if (!mailgunClient) {
+  console.warn("[STARTUP] Email service not configured. Set SMTP_PASS environment variable to enable emails.");
+}
 
 const normalizeOrigin = (value) => String(value || "").trim().replace(/\/+$/, "").toLowerCase();
 const allowedOrigins = new Set(env.clientUrls.map(normalizeOrigin).filter(Boolean));
@@ -198,7 +202,7 @@ app.post("/api/auth/register", async (req, res) => {
       role = "admin";
     }
 
-    // ALL emails require verification
+    // ALL users require email verification before login
     const verified = false;
 
     // Create user (with normalized email)
@@ -213,7 +217,7 @@ app.post("/api/auth/register", async (req, res) => {
       verified: verified,
     });
 
-    // Send verification email to everyone
+    // Send verification email if mailgun is configured
     if (mailgunClient) {
       try {
         await mailgunClient.messages.create(mailgunDomain, {
@@ -226,13 +230,13 @@ app.post("/api/auth/register", async (req, res) => {
         console.log(`[EMAIL SENT] Verification code sent to ${normalizedEmail}`);
       } catch (emailError) {
         console.error("[EMAIL ERROR] Failed to send verification email:", emailError.message);
-        console.error("[EMAIL ERROR] Full details:", emailError);
-        // Log verification code to console for testing when email fails
-        console.log(`[DEBUG] Verification code for ${normalizedEmail}: ${verificationCode}`);
+        if (emailError.message.includes("Recipient validation failed")) {
+          console.log("[TIP] For Mailgun sandbox: Add your email to Authorized Recipients in Domain Settings");
+        }
+        console.log(`[DEBUG] Verification code for testing: ${verificationCode}`);
       }
     } else {
-      console.warn("[EMAIL WARN] Mailgun client not initialized");
-      console.log(`[DEBUG] Verification code for ${email}: ${verificationCode}`);
+      console.log(`[DEBUG] Verification code for testing: ${verificationCode}`);
     }
 
     const message = "Registration successful. Please check your email to verify your account.";
@@ -429,17 +433,15 @@ app.post("/api/auth/forgot-password", async (req, res) => {
         console.log(`[EMAIL SENT] Password reset code sent to ${normalizedEmail}`);
       } catch (emailError) {
         console.error("[EMAIL ERROR] Failed to send password reset email:", emailError.message);
-        console.error("[EMAIL ERROR] Full details:", emailError);
-        // Log reset code to console for testing when email fails
-        console.log(`[DEBUG] Password reset code for ${normalizedEmail}: ${resetCode}`);
+        console.log(`[DEBUG] Password reset code for testing: ${resetCode}`);
       }
     } else {
-      console.warn("[EMAIL WARN] Mailgun client not initialized");
-      console.log(`[DEBUG] Password reset code for ${email}: ${resetCode}`);
+      console.log(`[DEBUG] Password reset code for testing: ${resetCode}`);
     }
 
     return res.json({
       message: "If the email exists, a password reset code has been sent.",
+      debug: env.nodeEnv === "development" ? { resetCode } : undefined
     });
   } catch (error) {
     console.error("[FORGOT PASSWORD ERROR]", error);

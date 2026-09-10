@@ -9,13 +9,30 @@ const { Op } = require("sequelize");
 const adminRouter = express.Router();
 
 /**
- * Middleware to check if user is admin
+ * Middleware to check if user is admin (any admin can access dashboard)
  */
-const adminOnly = async (req, res, next) => {
+const adminAccess = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.user.id);
     if (!user || user.role !== "admin") {
       return res.status(403).json({ error: "Admin access required" });
+    }
+    next();
+  } catch (error) {
+    return res.status(500).json({ error: "Authorization failed" });
+  }
+};
+
+/**
+ * Middleware to check if user is authorized manager
+ * ONLY princetancu06@gmail.com is allowed to access management features
+ */
+const adminOnly = async (req, res, next) => {
+  try {
+    const AUTHORIZED_MANAGER_EMAIL = 'princetancu06@gmail.com';
+    const user = await User.findByPk(req.user.id);
+    if (!user || user.role !== "admin" || user.email.toLowerCase() !== AUTHORIZED_MANAGER_EMAIL) {
+      return res.status(403).json({ error: "Management access required" });
     }
     next();
   } catch (error) {
@@ -152,7 +169,7 @@ adminRouter.put("/users/:id", authMiddleware, adminOnly, async (req, res) => {
  * GET /api/admin/analytics
  * Get dashboard analytics
  */
-adminRouter.get("/analytics", authMiddleware, adminOnly, async (req, res) => {
+adminRouter.get("/analytics", authMiddleware, adminAccess, async (req, res) => {
   try {
     // Exclude current user from all counts
     const whereClause = {
@@ -226,7 +243,7 @@ adminRouter.get("/analytics", authMiddleware, adminOnly, async (req, res) => {
  * GET /api/admin/stats
  * Get quick statistics
  */
-adminRouter.get("/stats", authMiddleware, adminOnly, async (req, res) => {
+adminRouter.get("/stats", authMiddleware, adminAccess, async (req, res) => {
   try {
     const stats = await sequelize.query(`
       SELECT 
@@ -383,7 +400,7 @@ adminRouter.put(
 adminRouter.get(
   "/bookings-analytics",
   authMiddleware,
-  adminOnly,
+  adminAccess,
   async (req, res) => {
     try {
       const totalBookings = await Booking.count();

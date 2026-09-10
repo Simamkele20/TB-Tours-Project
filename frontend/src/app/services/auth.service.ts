@@ -160,13 +160,13 @@ export class AuthService {
   /**
    * Request password reset code
    */
-  async forgotPassword(email: string): Promise<{ message: string }> {
+  async forgotPassword(email: string): Promise<{ message: string; debug?: { resetCode: string } }> {
     this.isLoadingSignal.set(true);
     this.errorSignal.set(null);
 
     try {
       const response = await lastValueFrom(
-        this.http.post<{ message: string }>(`${this.apiBaseUrl}/auth/forgot-password`, {
+        this.http.post<{ message: string; debug?: { resetCode: string } }>(`${this.apiBaseUrl}/auth/forgot-password`, {
           email,
         })
       );
@@ -294,7 +294,6 @@ export class AuthService {
       );
       this.userSignal.set(response.user);
     } catch (error) {
-      console.error('Failed to refresh user', error);
       // If token is invalid, logout
       this.logout();
     }

@@ -64,9 +64,9 @@ import { finalize } from "rxjs";
             <p>Booking form to be connected. For now, please WhatsApp or email us directly.</p>
           </div>
 
-          <app-contact-form 
-            #contactForm 
-            [isSending]="isSending()" 
+          <app-contact-form
+            #contactForm
+            [isSending]="isSending()"
             [requestedService]="requestedDestination()"
             (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
 
@@ -142,7 +142,6 @@ export class ContactPageComponent implements OnInit {
           });
         },
         error: (err) => {
-          console.error("Contact form error:", err);
           this.showToast("Failed to send message right now. Please call us on 073 448 3958.", "error");
         }
       });
