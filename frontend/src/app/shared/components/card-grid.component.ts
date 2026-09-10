@@ -13,6 +13,8 @@ export interface Card {
   passengers?: string;
   bags?: string;
   duration?: string;
+  price?: string;
+  tourId?: number;
 }
 
 export type CardGridLayout = "services" | "tours" | "destinations";
@@ -43,10 +45,11 @@ export type CardGridLayout = "services" | "tours" | "destinations";
             <h3>{{ card.title }}</h3>
             <p>{{ card.description }}</p>
 
-            <div *ngIf="(layout === 'services' || layout === 'tours') && (card.duration || card.passengers)"
+            <div *ngIf="(layout === 'services' || layout === 'tours') && (card.duration || card.passengers || card.price)"
                  class="card-meta-row">
               <span *ngIf="card.duration">{{ card.duration }}</span>
               <span *ngIf="card.passengers">{{ card.passengers }}</span>
+              <span *ngIf="card.price" class="price">{{ card.price }}</span>
             </div>
 
             <small *ngIf="card.meta">{{ card.meta }}</small>

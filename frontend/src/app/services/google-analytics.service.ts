@@ -15,10 +15,14 @@ export class GoogleAnalyticsService {
    */
   trackPageView(pagePath: string, pageTitle: string): void {
     if (this.isGtagAvailable()) {
-      gtag('config', this.measurementId, {
-        page_path: pagePath,
-        page_title: pageTitle
-      });
+      try {
+        gtag('config', this.measurementId, {
+          page_path: pagePath,
+          page_title: pageTitle
+        });
+      } catch (error) {
+        console.warn('Error tracking page view:', error);
+      }
     }
   }
 
@@ -28,11 +32,15 @@ export class GoogleAnalyticsService {
    */
   trackBookingInquiry(bookingDetails?: any): void {
     if (this.isGtagAvailable()) {
-      gtag('event', 'booking_inquiry', {
-        event_category: 'engagement',
-        event_label: 'Booking Form Submission',
-        ...bookingDetails
-      });
+      try {
+        gtag('event', 'booking_inquiry', {
+          event_category: 'engagement',
+          event_label: 'Booking Form Submission',
+          ...bookingDetails
+        });
+      } catch (error) {
+        console.warn('Error tracking booking inquiry:', error);
+      }
     }
   }
 

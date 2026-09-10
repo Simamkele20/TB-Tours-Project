@@ -15,8 +15,10 @@ export interface FeatureCard {
   duration?: string;
   passengers?: string;
   bags?: string;
+  price?: string;
   ctaLabel?: string;
   ctaLink?: string;
+  tourId?: number;
 }
 
 export interface PageContent {
@@ -171,6 +173,83 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     trustStrip: ["WhatsApp first", "Direct line", "Flexible timing", "Personal support"],
     ctaTitle: "Your Cape Town journey starts here.",
     ctaText: "Airport transfer, private tour or custom day out - let's plan it together by email."
+  },
+
+  services: {
+    hero: {
+      eyebrow: "SERVICES",
+      title: "Travel your ",
+      accent: "way",
+      description: "From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.",
+      image: "images/camp-bay.jpg"
+    },
+    sectionTitle: "Travel your way",
+    sectionSubtitle: "Choose from our curated tours and experiences. Each journey is tailored to your preferences.",
+    cards: [
+      {
+        title: "Table Mountain",
+        description: "See Cape Town from above.",
+        image: "images/Image(13).jpg",
+        price: "R150pp",
+        duration: "Half Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/1",
+        tourId: 1
+      },
+      {
+        title: "Cape Peninsula",
+        description: "Where the mountains meet the Atlantic.",
+        image: "images/Image(19).jpg",
+        price: "R200pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/2",
+        tourId: 2
+      },
+      {
+        title: "Boulders Beach",
+        description: "Meet Cape Town's famous penguins.",
+        image: "images/Image(18).jpg",
+        price: "R120pp",
+        duration: "Half Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/3",
+        tourId: 3
+      },
+      {
+        title: "Cape Winelands",
+        description: "Slow afternoons among vineyards and estates.",
+        image: "images/franschhoek.jpg",
+        price: "R250pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/4",
+        tourId: 4
+      },
+      {
+        title: "Private Chauffeur Services",
+        description: "A discreet driver at your disposal, by the hour or by the day.",
+        image: "images/hermanus.jpg",
+        price: "R200/hr",
+        duration: "Flexible",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/5",
+        tourId: 5
+      },
+      {
+        title: "Custom Day Tours",
+        description: "An itinerary shaped entirely around your interests and your time.",
+        image: "images/kirstenbosch.jpg",
+        price: "R250pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/6",
+        tourId: 6
+      }
+    ],
+    trustStrip: ["Private", "Professional", "Personal", "Local insight"],
+    ctaTitle: "Ready for this adventure?",
+    ctaText: "Request a quote and let us customize your journey"
   }
 };
 
@@ -178,7 +257,10 @@ export interface ServiceCard {
   number: string;
   title: string;
   description: string;
+  price?: number;
   ctaLabel: string;
+  tourId?: number;
+  ctaLink?: string;
 }
 
 export const SITE_SERVICES: ServiceCard[] = [
@@ -186,37 +268,55 @@ export const SITE_SERVICES: ServiceCard[] = [
     number: "01",
     title: "Airport Transfers",
     description: "Punctual, private arrivals and departures with a calm, professional welcome.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 650,
+    ctaLabel: "BOOK",
+    tourId: 1,
+    ctaLink: "/booking/1"
   },
   {
     number: "02",
     title: "Cape Peninsula Tours",
     description: "The full coastal arc • Chapman's Peak, Cape Point and Boulders Beach.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 1800,
+    ctaLabel: "BOOK",
+    tourId: 2,
+    ctaLink: "/booking/2"
   },
   {
     number: "03",
     title: "Cape Town City Tours",
     description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 1500,
+    ctaLabel: "BOOK",
+    tourId: 3,
+    ctaLink: "/booking/3"
   },
   {
     number: "04",
     title: "Winelands Tours",
     description: "Stellenbosch and Franschhoek estates at an unhurried pace.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 2200,
+    ctaLabel: "BOOK",
+    tourId: 4,
+    ctaLink: "/booking/4"
   },
   {
     number: "05",
     title: "Private Chauffeur Services",
     description: "A discreet driver at your disposal, by the hour or by the day.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 1200,
+    ctaLabel: "BOOK",
+    tourId: 5,
+    ctaLink: "/booking/5"
   },
   {
     number: "06",
     title: "Custom Day Tours",
     description: "An itinerary shaped entirely around your interests and your time.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 2500,
+    ctaLabel: "BOOK",
+    tourId: 6,
+    ctaLink: "/booking/6"
   }
 ];
 

@@ -13,7 +13,17 @@ const env = {
   smtpUser: (process.env.SMTP_USER || "").trim(),
   smtpPass: (process.env.SMTP_PASS || "").replace(/\s+/g, ""),
   smtpSecure: String(process.env.SMTP_SECURE || "false").toLowerCase() === "true",
-  contactToEmail: (process.env.CONTACT_TO_EMAIL || "info@tb-tours.co.za").trim()
+  contactToEmail: (process.env.CONTACT_TO_EMAIL || "info@tb-tours.co.za").trim(),
+  // MySQL Configuration
+  mysqlHost: (process.env.MYSQL_HOST || "localhost").trim(),
+  mysqlUser: (process.env.MYSQL_USER || "root").trim(),
+  mysqlPassword: (process.env.MYSQL_PASSWORD || "").trim(),
+  mysqlDatabase: (process.env.MYSQL_DATABASE || "tb_tours").trim(),
+  // JWT Configuration
+  jwtSecret: process.env.JWT_SECRET || "your-secret-key-change-in-production",
+  jwtExpiry: process.env.JWT_EXPIRY || "24h",
+  verificationCodeExpiry: Number(process.env.VERIFICATION_CODE_EXPIRY || 15 * 60 * 1000), // 15 minutes in ms
+  adminEmails: [] // Only @tb-tours.co.za emails are auto-admin now
 };
 
 module.exports = { env };

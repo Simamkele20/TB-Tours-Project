@@ -1,4 +1,12 @@
-.section { padding: clamp(4rem, 10vw, 8rem) 0; position: relative; overflow: hidden; }
+.section {
+  padding: clamp(4rem, 10vw, 8rem) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+#home {
+  margin-top: 108px;
+}
 .container { width: min(1200px, 92vw); margin: 0 auto; padding: 0 1.5rem; }
 .kicker { color: #f2b112; text-transform: uppercase; letter-spacing: 0.16em; font-weight: 700; font-size: 0.7rem; margin-bottom: 1rem; }
 
@@ -102,7 +110,8 @@
   .service-number { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2rem; font-weight: 400; color: #0f1419; margin-bottom: 0.5rem; }
   h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; font-weight: 400; color: #0f1419; margin-bottom: 1rem; }
   p { color: #556b82; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; }
-  .service-cta { background: transparent; border: none; color: #0f1419; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 0.3rem; transition: all 0.3s ease; &:hover { color: #f2b112; } }
+  .service-price { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.3rem; font-weight: 700; color: #f2b112; margin-bottom: 1.5rem; }
+  .service-cta { background: transparent; border: none; color: #0f1419; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 0.3rem; transition: all 0.3s ease; display: inline-block; &:hover { color: #f2b112; } }
 }
 
 .reviews-section { background: linear-gradient(135deg, #ffffff 0%, #f5f3f0 100%); padding: clamp(5rem, 10vw, 8rem) 0;

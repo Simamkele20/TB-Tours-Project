@@ -33,7 +33,33 @@
         <a href="#contact" (click)="closeMobileMenu()">Contact</a>
       </nav>
 
-      <a href="#contact" class="btn btn-primary header-book-now" (click)="closeMobileMenu()">Book now</a>
+      <!-- User Menu or Auth Links -->
+      @if (authService.isAuthenticated()) {
+        <div class="user-menu">
+          <button class="user-menu-toggle" (click)="toggleUserMenu()" [attr.aria-expanded]="isUserMenuOpen()">
+            <i class="bi bi-person-circle" aria-hidden="true"></i>
+            <span class="user-name">{{ authService.currentUser()?.firstName }} {{ authService.currentUser()?.lastName }}</span>
+            <i class="bi bi-chevron-down dropdown-icon" aria-hidden="true"></i>
+          </button>
+          @if (isUserMenuOpen()) {
+            <div class="user-menu-dropdown">
+              <div class="user-email-header">{{ authService.currentUser()?.email }}</div>
+              @if (!authService.isAdmin()) {
+                <a routerLink="/my-bookings" (click)="closeUserMenu()">My Bookings</a>
+              }
+              @if (authService.isAdmin()) {
+                <a routerLink="/admin" (click)="closeUserMenu()">Admin Dashboard</a>
+                <a routerLink="/admin/management" (click)="closeUserMenu()">Management</a>
+              }
+              <button class="logout-btn" (click)="logout()">Logout</button>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="auth-links-header">
+          <a routerLink="/auth/login" class="btn btn-primary" (click)="closeMobileMenu()">Login</a>
+        </div>
+      }
     </div>
   </header>
 
