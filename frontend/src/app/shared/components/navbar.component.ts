@@ -30,7 +30,7 @@ import { Router, RouterLink } from '@angular/router';
         </ul>
 
         <!-- CTA Button -->
-        <button class="navbar-cta" (click)="navigateTo('/contact'); closeMobileMenu()">Book Now</button>
+        <button class="navbar-cta" (click)="navigateTo('/tours'); closeMobileMenu()">Book Now</button>
       </div>
     </nav>
   `,
