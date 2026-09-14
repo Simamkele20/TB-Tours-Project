@@ -33,7 +33,7 @@ body {
   font-size: 16px;
   line-height: 1.55;
   color: var(--brand-ink);
-  background: #ffffff;
+  background: #e8e8e6;
   overflow-x: hidden;
 }
 
@@ -59,7 +59,7 @@ h4 {
 }
 
 .container {
-  width: min(900px, 92vw);
+  width: min(1200px, 92vw);
   margin-inline: auto;
 }
 
@@ -111,7 +111,7 @@ h4 {
 }
 
 .btn-dark:hover {
-  background: #f9f9f9;
+  background: #e8e8e6;
   border-color: #999;
 }
 
@@ -123,7 +123,7 @@ h4 {
 }
 
 .btn-outline:hover {
-  background: #f8f9fc;
+  background: #e8e8e6;
   border-color: #222835;
 }
 
@@ -131,4 +131,26 @@ h4 {
   padding-top: 3.4rem;
   padding-bottom: 3.4rem;
   width: 100%;
+}
+
+@media (max-width: 480px) {
+  .container,
+  .container-fluid,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .container[_ngcontent-ng-c3998313829] {
+    width: fit-content;
+    margin: 0;
+    padding: 0;
+  }
 }

@@ -1,6 +1,6 @@
-import { Component, Input, ViewChild, AfterViewInit, ElementRef } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 
 export interface HeroConfig {
   eyebrow: string;
@@ -16,28 +16,9 @@ export interface HeroConfig {
 @Component({
   selector: "app-hero-section",
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
-    <section class="hero" [class.hero-home]="showPhone()" [style.background-image]="backgroundImage">
-      <video
-        #videoElement
-        *ngIf="showPhone() && !videoFailed"
-        class="hero-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        [attr.poster]="posterImage"
-        aria-hidden="true"
-        (error)="onVideoError($event)"
-        (loadedmetadata)="onVideoReady($event)"
-        (canplay)="onVideoReady($event)"
-        (playing)="onVideoPlaying($event)">
-        <source [src]="heroVideoSrc" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
+    <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [class.hero-couriers]="isCouriers" [class.hero-left]="alignLeft" [style.backgroundImage]="getBackgroundImage()">
       <div class="container hero-content">
         <p class="eyebrow">{{ config.eyebrow }}</p>
         <h1>
@@ -49,17 +30,20 @@ export interface HeroConfig {
         <p class="description">{{ config.description }}</p>
 
         <div class="hero-actions" *ngIf="showPhone()">
-          <a [routerLink]="['/contact']" fragment="contact-form" class="btn btn-outline-gold">
+          <a href="#contact" class="btn btn-outline-gold">
             Plan Your Journey
           </a>
-          <a routerLink="/tours" class="btn btn-outline-light">
-            Explore Our Tours
+          <a href="#destinations" class="btn btn-outline-light">
+            Explore Destinations
+          </a>
+          <a routerLink="/couriers" class="btn btn-outline-gold">
+            Courier Service
           </a>
         </div>
 
         <p class="hero-trust" *ngIf="showPhone()">Private · Professional · Personal</p>
 
-        <a *ngIf="!showPhone() && !!config?.bookButtonLabel" [routerLink]="['/contact']" fragment="contact-form" class="btn btn-primary">
+        <a *ngIf="!showPhone() && !!config?.bookButtonLabel" href="#contact" class="btn btn-primary">
           {{ config.bookButtonLabel }}
         </a>
       </div>
@@ -67,65 +51,19 @@ export interface HeroConfig {
   `,
   styleUrl: "./hero-section.component.scss"
 })
-export class HeroSectionComponent implements AfterViewInit {
+export class HeroSectionComponent {
   @Input() config!: HeroConfig;
   @Input() showPhone: () => boolean = () => false;
-  @ViewChild('videoElement') videoElement?: ElementRef<HTMLVideoElement>;
+  @Input() isDestination: boolean = false;
+  @Input() alignLeft: boolean = false;
+  @Input() isCouriers: boolean = false;
 
-  readonly heroVideoSrc = "/images/Home_Video.mp4";
-  videoFailed = false;
-
-  ngAfterViewInit(): void {
-    // Ensure video plays when component loads
-    if (this.videoElement?.nativeElement) {
-      const video = this.videoElement.nativeElement;
-
-      // Force the browser to load and play the video
-      video.autoplay = true;
-      video.muted = true;
-
-      // Attempt to play immediately
-      setTimeout(() => {
-        video.play().catch((error) => {
-          console.log("Initial play failed:", error.name);
-          // Try again after a short delay
-          setTimeout(() => {
-            video.play().catch((err) => {
-              console.log("Second play attempt failed:", err.name);
-            });
-          }, 100);
-        });
-      }, 0);
+  getBackgroundImage(): string {
+    // Only apply background image for destination pages (not home)
+    if (!this.showPhone() && this.isDestination && this.config?.image) {
+      return `linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('${this.config.image}')`;
     }
-  }
-
-  onVideoReady(event: Event): void {
-    // Video is ready, ensure it's playing
-    if (this.videoElement?.nativeElement) {
-      const video = this.videoElement.nativeElement;
-      if (video.paused) {
-        video.play().catch((error) => {
-          console.log("Play on ready failed:", error.name);
-        });
-      }
-    }
-  }
-
-  onVideoPlaying(event: Event): void {
-    console.log("✓ Video is now playing");
-  }
-
-  get backgroundImage(): string {
-    const image = this.config?.image || "images/home-hero-mercedes-road.jpg";
-    return `linear-gradient(90deg, rgba(6, 8, 12, 0.62), rgba(6, 8, 12, 0.22)), url(${image})`;
-  }
-
-  get posterImage(): string {
-    return this.config?.image || "images/home-hero-mercedes-road.jpg";
-  }
-
-  onVideoError(event: Event): void {
-    console.warn("Video failed to load, falling back to background image", event);
-    this.videoFailed = true;
+    // For home page, let CSS handle it
+    return '';
   }
 }

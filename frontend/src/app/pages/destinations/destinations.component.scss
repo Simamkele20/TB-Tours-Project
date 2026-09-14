@@ -1,0 +1,247 @@
+// Destinations Page - Modern Tech Startup Design
+
+.hero-section {
+  background: linear-gradient(135deg, var(--brand-black) 0%, #1a1a1a 100%);
+  color: var(--brand-white);
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -15%;
+    width: 400px;
+    height: 400px;
+    background: var(--brand-gold);
+    border-radius: 50%;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      color: var(--brand-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 700;
+      font-size: 0.8rem;
+
+      &::before {
+        content: '';
+        width: 4px;
+        height: 20px;
+        background: var(--brand-gold);
+      }
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .description {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #ddd;
+    }
+  }
+}
+
+.section {
+  padding: 6rem 2rem;
+  width: 100%;
+
+  &.light {
+    background: var(--brand-white);
+  }
+
+  &.dark {
+    background: #e8e8e6;
+  }
+}
+
+.section-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  margin-bottom: 4rem;
+
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    color: var(--brand-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    font-size: 0.75rem;
+
+    &::before {
+      content: '';
+      width: 3px;
+      height: 18px;
+      background: var(--brand-gold);
+    }
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    margin-bottom: 1rem;
+  }
+}
+
+.destinations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2.5rem;
+}
+
+.destination-card {
+  background: var(--brand-white);
+  border: 2px solid #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--brand-gold);
+  }
+
+  &:hover {
+    border-color: var(--brand-gold);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(242, 177, 18, 0.2);
+  }
+
+  .destination-image {
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(135deg, #e8e8e6 0%, #dcdcd9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+
+    .image-placeholder {
+      font-size: 3rem;
+      color: var(--brand-gold);
+      opacity: 0.3;
+    }
+  }
+
+  .destination-content {
+    padding: 2.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    .destination-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+      color: var(--brand-black);
+    }
+
+    .destination-description {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .destination-highlights {
+      margin: 1.5rem 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e0e0e0;
+
+      .highlight-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        li {
+          list-style: none;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #666;
+          font-size: 0.9rem;
+
+          &::before {
+            content: '→';
+            color: var(--brand-gold);
+            font-weight: 800;
+          }
+        }
+      }
+    }
+
+    .destination-cta {
+      align-self: flex-start;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 1.5rem;
+  }
+
+  .section {
+    padding: 4rem 1.5rem;
+  }
+
+  .destinations-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 2.5rem 1rem;
+  }
+
+  .destination-content {
+    padding: 1.5rem;
+  }
+
+  .destination-image {
+    height: 200px;
+  }
+}

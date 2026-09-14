@@ -1,0 +1,391 @@
+// Services Page - Merged Services, Tours, Destinations
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--brand-black);
+    margin: 0 0 1rem 0;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 768px) {
+    margin-bottom: 2.5rem;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 2rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+  }
+}
+
+// Services Section
+.services-section {
+  padding: 6rem 2rem;
+  background: #f5f5f5;
+
+  @media (max-width: 768px) {
+    padding: 4rem 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2.5rem 1rem;
+  }
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+
+  @media (max-width: 768px) {
+    gap: 2rem;
+  }
+}
+
+.service-card {
+  background: var(--brand-white);
+  padding: 2.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 2px;
+  position: relative;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--brand-gold);
+  }
+
+  .service-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(242, 177, 18, 0.1);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.8rem;
+    color: var(--brand-gold);
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--brand-black);
+    margin: 0 0 1rem 0;
+    font-family: var(--font-display);
+  }
+
+  p {
+    color: #666;
+    font-size: 1rem;
+    margin: 0 0 1.5rem 0;
+    flex-grow: 1;
+  }
+
+  .btn {
+    align-self: center;
+  }
+
+  &:hover {
+    border-color: var(--brand-gold);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(242, 177, 18, 0.2);
+  }
+}
+
+// Tours Section
+.tours-section {
+  padding: 6rem 2rem;
+  background: var(--brand-white);
+
+  @media (max-width: 768px) {
+    padding: 4rem 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2.5rem 1rem;
+  }
+}
+
+.tours-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+
+  @media (max-width: 768px) {
+    gap: 2rem;
+  }
+}
+
+.tour-card {
+  background: #f5f5f5;
+  padding: 2.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 2px;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--brand-gold);
+  }
+
+  .tour-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tour-duration,
+  .tour-passengers {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.4rem 0.8rem;
+    background: var(--brand-gold);
+    color: var(--brand-black);
+    border-radius: 2px;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--brand-black);
+    margin: 0 0 1rem 0;
+    font-family: var(--font-display);
+  }
+
+  p {
+    color: #666;
+    font-size: 1rem;
+    margin: 0 0 1.5rem 0;
+    flex-grow: 1;
+  }
+
+  &:hover {
+    border-color: var(--brand-gold);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(242, 177, 18, 0.2);
+  }
+}
+
+// Destinations Section
+.destinations-section {
+  padding: 6rem 2rem;
+  background: #f5f5f5;
+
+  @media (max-width: 768px) {
+    padding: 4rem 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 2.5rem 1rem;
+  }
+}
+
+.destinations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    gap: 1.5rem;
+  }
+}
+
+.destination-card {
+  background: var(--brand-white);
+  border: 2px solid #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--brand-gold);
+    z-index: 2;
+  }
+
+  .destination-image {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+
+    @media (max-width: 480px) {
+      height: 150px;
+    }
+  }
+
+  .destination-content {
+    padding: 2rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--brand-black);
+    margin: 0 0 0.5rem 0;
+    font-family: var(--font-display);
+  }
+
+  .destination-location {
+    font-size: 0.95rem;
+    color: var(--brand-gold);
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  &:hover {
+    border-color: var(--brand-gold);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(242, 177, 18, 0.2);
+
+    .destination-image {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// CTA Section
+.cta-section {
+  padding: 6rem 2rem;
+  background: var(--brand-black);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: var(--brand-gold);
+    border-radius: 50%;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -15%;
+    width: 350px;
+    height: 350px;
+    background: var(--brand-gold);
+    border-radius: 50%;
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--brand-white);
+    margin: 0 0 1rem 0;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: #ddd;
+    margin: 0 0 2rem 0;
+  }
+
+  .btn {
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    padding: 4rem 1.5rem;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 2.5rem 1rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+  }
+}

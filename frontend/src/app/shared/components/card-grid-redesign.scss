@@ -1,0 +1,526 @@
+// ==========================================
+// CARD GRID - REDESIGNED
+// Modern creative layouts with staggered animations and hover effects
+// ==========================================
+
+.card-grid-section {
+  position: relative;
+  padding: clamp(4rem, 8vw, 6rem) 0;
+  background: linear-gradient(135deg, #0f1419 0%, #1a2f5a 100%);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(242, 177, 18, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+}
+
+// Section header with modern styling
+.section-header {
+  text-align: center;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+  position: relative;
+  z-index: 2;
+
+  .eyebrow {
+    animation: slideDown 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  h2 {
+    margin: 0.8rem 0 1.2rem;
+    position: relative;
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    animation-delay: 0.1s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #f2b112, #ffc94d);
+      border-radius: 2px;
+      animation: scaleInX 0.6s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+  }
+
+  .subtitle {
+    color: rgba(240, 244, 248, 0.75);
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    max-width: 700px;
+    margin: 1.2rem auto 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    animation-delay: 0.2s;
+    line-height: 1.7;
+  }
+}
+
+@keyframes scaleInX {
+  to {
+    transform: translateX(-50%) scaleX(1);
+  }
+}
+
+// ==========================================
+// CARD CONTAINER
+// ==========================================
+
+.cards-container {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+// Default grid layout (3 columns)
+.cards-container.default-layout {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Services layout (3 columns, text only)
+.cards-container.services-layout {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem 2rem;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .card {
+    text-align: left;
+    border: none;
+    background: transparent;
+
+    .card-body {
+      border-left: 3px solid #f2b112;
+      padding-left: 1.5rem;
+    }
+  }
+}
+
+// Tours layout (2 columns with alternating left-right)
+.cards-container.tours-layout {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem 2rem;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .card {
+    &:nth-child(even) {
+      margin-top: 2rem;
+    }
+
+    &:nth-child(odd) {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Destinations layout (3 columns, masonry-like)
+.cards-container.destinations-layout {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: start;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    &:nth-child(2) {
+      margin-top: 1.5rem;
+    }
+
+    &:nth-child(3) {
+      margin-top: -1rem;
+    }
+
+    &:nth-child(5) {
+      margin-top: 1.5rem;
+    }
+  }
+}
+
+// ==========================================
+// CARD COMPONENT
+// ==========================================
+
+.card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(242, 177, 18, 0.15);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateY(0);
+  opacity: 0;
+  animation: fadeInUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+
+  // Stagger animation for each card
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.06}s;
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(242, 177, 18, 0.1) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-12px);
+    border-color: rgba(242, 177, 18, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 20px 50px rgba(242, 177, 18, 0.15),
+                0 0 60px rgba(26, 47, 90, 0.3);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .card-image {
+      transform: scale(1.08) rotate(0.5deg);
+    }
+
+    .card-number {
+      color: #ffc94d;
+      transform: scale(1.2);
+    }
+
+    h3 {
+      color: #ffc94d;
+    }
+  }
+}
+
+// ==========================================
+// CARD IMAGE
+// ==========================================
+
+.card-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: brightness(0.95) saturate(1.05);
+  position: relative;
+  z-index: 0;
+
+  &:hover {
+    filter: brightness(1.05) saturate(1.15);
+  }
+}
+
+// Hide images in text-based layouts
+.services-layout .card-image,
+.tours-layout .card-image {
+  display: none;
+}
+
+// ==========================================
+// CARD BODY
+// ==========================================
+
+.card-body {
+  padding: clamp(1.5rem, 3vw, 2rem);
+  position: relative;
+  z-index: 2;
+
+  .services-layout & {
+    padding: 1.2rem 0;
+  }
+
+  .tours-layout & {
+    padding: 1.2rem 0;
+  }
+}
+
+// Card number (numbered layout)
+.card-number {
+  display: inline-block;
+  color: #f2b112;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center;
+}
+
+// Card heading
+.card h3,
+.card-body h3 {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: #ffffff;
+  line-height: 1.15;
+  transition: color 0.3s ease;
+  font-weight: 400;
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+// Card description
+.card p,
+.card-body p {
+  margin: 0 0 1rem;
+  color: rgba(240, 244, 248, 0.8);
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  line-height: 1.6;
+  transition: color 0.3s ease;
+}
+
+// Card meta (duration, passengers, etc)
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  color: rgba(240, 244, 248, 0.65);
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+}
+
+.card-meta-row {
+  display: flex;
+  gap: 1rem;
+  margin: 0.8rem 0;
+  font-size: 0.85rem;
+  color: #f2b112;
+}
+
+// Card CTA link
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #f2b112;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+  margin-top: 0.8rem;
+
+  &::after {
+    content: '→';
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  &:hover {
+    color: #ffc94d;
+    gap: 0.8rem;
+
+    &::after {
+      transform: translateX(4px);
+    }
+  }
+}
+
+// Card small text (meta info)
+.card small,
+.card-body small {
+  display: block;
+  color: rgba(240, 244, 248, 0.6);
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+// ==========================================
+// SPECIAL CARD STYLES
+// ==========================================
+
+// Services layout borders
+.services-layout .card-body {
+  border-left: 3px solid #f2b112;
+  padding-left: 1.5rem;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 0;
+    background: linear-gradient(180deg, #f2b112, #ffc94d);
+    animation: growHeight 0.6s ease-out forwards;
+    animation-delay: inherit;
+  }
+}
+
+@keyframes growHeight {
+  to {
+    height: 100%;
+  }
+}
+
+// Tours layout left-right alternation
+.tours-layout .card-body {
+  border-left: 3px solid #f2b112;
+  padding-left: 1.5rem;
+
+  h3::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, #f2b112, transparent);
+    margin-top: 0.6rem;
+  }
+}
+
+// Destinations layout with subtle depth
+.destinations-layout .card {
+  &:nth-child(3n) {
+    border-color: rgba(242, 177, 18, 0.2);
+  }
+
+  &:nth-child(3n + 2) {
+    border-color: rgba(242, 177, 18, 0.15);
+  }
+}
+
+// ==========================================
+// EMPTY STATE / NO CARDS
+// ==========================================
+
+.no-cards-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: rgba(240, 244, 248, 0.6);
+  font-size: 1rem;
+}
+
+// ==========================================
+// RESPONSIVE
+// ==========================================
+
+@media (max-width: 768px) {
+  .card-grid-section {
+    padding: clamp(2.5rem, 6vw, 4rem) 0;
+
+    &::before {
+      width: 300px;
+      height: 300px;
+    }
+  }
+
+  .section-header {
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+
+  .card {
+    border-radius: 12px;
+
+    &:hover {
+      transform: translateY(-8px);
+    }
+  }
+
+  .card-body {
+    padding: clamp(1.2rem, 2.5vw, 1.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-container {
+    gap: clamp(1rem, 2vw, 1.5rem);
+    margin-top: 2rem;
+  }
+
+  .card {
+    border-radius: 12px;
+
+    &:hover {
+      transform: translateY(-6px);
+    }
+  }
+
+  .card-image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+  }
+}
+
+// Reduce motion
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+    opacity: 1;
+    transform: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  .card-image {
+    transition: none;
+  }
+
+  .card-number,
+  .card-link {
+    transition: none;
+  }
+}

@@ -3,9 +3,10 @@ import { CommonModule } from "@angular/common";
 import { RouterLink, ActivatedRoute } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { ContactFormComponent } from "../shared/contact-form.component";
-import { SITE_CONTENT } from "../../data/site-content";
+import { PageDataService } from "../../services/page-data.service";
 import { BookingApiService } from "../../booking/booking-api.service";
 import { GoogleAnalyticsService } from "../../services/google-analytics.service";
+import { FAQS } from "../../data/site-content";
 import { finalize } from "rxjs";
 
 @Component({
@@ -64,7 +65,11 @@ import { finalize } from "rxjs";
             <p>Booking form to be connected. For now, please WhatsApp or email us directly.</p>
           </div>
 
-          <app-contact-form #contactForm [isSending]="isSending()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
+          <app-contact-form
+            #contactForm
+            [isSending]="isSending()"
+            [requestedService]="requestedDestination()"
+            (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
 
           <div *ngIf="toastMessage()" [class]="'toast toast-' + toastType()">
             <p>{{ toastMessage() }}</p>
@@ -74,24 +79,54 @@ import { finalize } from "rxjs";
           </div>
         </div>
       </section>
+
+      <!-- FAQ SECTION -->
+      <section class="faq-section" id="faqs">
+        <h2 class="faq-title">Frequently Asked Questions</h2>
+        <div class="faq-container">
+          <div class="faq-item" *ngFor="let faq of FAQS">
+            <button
+              class="faq-question"
+              (click)="toggleFaq(faq.question)"
+              [class.active]="expandedFaq() === faq.question"
+              type="button">
+              <span>{{ faq.question }}</span>
+              <span class="faq-icon">{{ expandedFaq() === faq.question ? '−' : '+' }}</span>
+            </button>
+            <div
+              class="faq-answer"
+              [class.open]="expandedFaq() === faq.question">
+              <p>{{ faq.answer }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </section>
   `,
   styleUrl: "./contact.component.scss"
 })
 export class ContactPageComponent implements OnInit {
+  private readonly pageDataService = inject(PageDataService);
   private readonly bookingApi = inject(BookingApiService);
   private readonly route = inject(ActivatedRoute);
   private readonly googleAnalytics = inject(GoogleAnalyticsService);
   @ViewChild('contactForm') contactForm?: ContactFormComponent;
 
-  readonly heroConfig = computed(() => SITE_CONTENT["contact"].hero);
+  readonly heroConfig = computed(() => {
+    const config = this.pageDataService.getPageConfig("contact");
+    return config?.hero || { eyebrow: '', title: '', accent: '', description: '' };
+  });
 
   toastMessage = signal("");
   toastType = signal<"success" | "error">("success");
   isSending = signal(false);
+  requestedDestination = signal("");
+  expandedFaq = signal<string | null>(null);
+  FAQS = FAQS;
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
 
   ngOnInit() {
+    // Handle fragment navigation
     this.route.fragment.subscribe(fragment => {
       if (fragment) {
         setTimeout(() => {
@@ -100,6 +135,13 @@ export class ContactPageComponent implements OnInit {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         }, 100);
+      }
+    });
+
+    // Handle destination query parameter
+    this.route.queryParams.subscribe(params => {
+      if (params['destination']) {
+        this.requestedDestination.set(params['destination']);
       }
     });
   }
@@ -150,5 +192,13 @@ export class ContactPageComponent implements OnInit {
       this.toastTimer = null;
     }
     this.toastMessage.set("");
+  }
+
+  toggleFaq(question: string): void {
+    if (this.expandedFaq() === question) {
+      this.expandedFaq.set(null);
+    } else {
+      this.expandedFaq.set(question);
+    }
   }
 }
