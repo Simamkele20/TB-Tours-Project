@@ -99,6 +99,12 @@ export const SITE_CONTENT: Record<string, PageContent> = {
         description: "An itinerary shaped entirely around your interests and your time.",
         image: "images/kirstenbosch.jpg",
         ctaLabel: "Learn more"
+      },
+      {
+        title: "Courier Service",
+        description: "Fast and reliable door-to-door delivery services.",
+        image: "images/Del 2.jpg",
+        ctaLabel: "Learn more"
       }
     ],
     trustStrip: ["Private", "Professional", "Personal", "Local insight"],
@@ -216,6 +222,12 @@ export const SITE_SERVICES: ServiceCard[] = [
     number: "06",
     title: "Custom Day Tours",
     description: "An itinerary shaped entirely around your interests and your time.",
+    ctaLabel: "REQUEST A QUOTE"
+  },
+  {
+    number: "07",
+    title: "Courier Service",
+    description: "Fast and reliable door-to-door delivery services across Cape Town.",
     ctaLabel: "REQUEST A QUOTE"
   }
 ];
@@ -870,6 +882,11 @@ export const COURIERS_PAGE_CONTENT = {
       icon: "📄",
       title: "Documents & Small Parcels",
       description: "Ideal for important documents, packages, personal items and other suitable deliveries."
+    },
+    {
+      icon: "🚚",
+      title: "Courier Service",
+      description: "Complete courier solutions for your delivery needs."
     }
   ],
   pricing: [

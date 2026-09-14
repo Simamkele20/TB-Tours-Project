@@ -16,7 +16,8 @@ import { finalize } from "rxjs";
     <app-hero-section
       [config]="heroConfig()"
       [showPhone]="() => false"
-      [isDestination]="true">
+      [isDestination]="false"
+      [isCouriers]="true">
     </app-hero-section>
 
     <!-- TAGLINE SECTION -->

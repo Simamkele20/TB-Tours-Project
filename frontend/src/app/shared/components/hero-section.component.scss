@@ -78,14 +78,36 @@
     padding-right: 1rem !important;
 
     @media (max-width: 768px) {
-      text-align: left !important;
+      text-align: center !important;
       padding-left: 1rem !important;
       padding-right: 1rem !important;
+      margin-inline: auto !important;
     }
   }
 
   .eyebrow {
     text-align: left !important;
+
+    @media (max-width: 768px) {
+      text-align: center !important;
+      display: block !important;
+
+      &::after {
+        transform-origin: center !important;
+      }
+    }
+  }
+
+  .hero-content h1 {
+    @media (max-width: 768px) {
+      text-align: center !important;
+    }
+  }
+
+  .hero-content .description {
+    @media (max-width: 768px) {
+      text-align: center !important;
+    }
   }
 }
 
@@ -523,6 +545,90 @@
   .hero-destination .hero-content .description {
     font-size: 1.5rem;
     text-align: center;
+  }
+}
+
+// Couriers page hero section
+.hero-couriers {
+  background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/Del 2.jpg');
+  background-size: cover;
+  background-position: center;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  padding-top: clamp(6rem, 15vw, 10rem) !important;
+
+  .container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: clamp(1rem, 7.5vw, 9rem) !important;
+    width: 100% !important;
+  }
+
+  .hero-content {
+    text-align: left !important;
+    padding-left: 0 !important;
+    padding-right: 1rem !important;
+    margin-top: 0 !important;
+  }
+
+  .hero-content .eyebrow {
+    color: #f2b112 !important;
+    font-size: 2.2rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    text-align: left !important;
+    display: inline-block !important;
+
+    &::after {
+      background: #f2b112 !important;
+    }
+  }
+
+  .hero-content h1 {
+    color: #f2b112 !important;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    text-align: left !important;
+
+    span {
+      color: #ffffff !important;
+    }
+  }
+
+  .hero-content .description {
+    text-align: left !important;
+    color: rgba(240, 244, 248, 0.85) !important;
+  }
+
+  @media (max-width: 768px) {
+    justify-content: center !important;
+    align-items: center !important;
+    padding-top: clamp(4.5rem, 12vw, 7rem) !important;
+
+    .container {
+      padding-left: 1rem !important;
+      text-align: center !important;
+    }
+
+    .hero-content {
+      text-align: center !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .hero-content .eyebrow,
+    .hero-content h1,
+    .hero-content .description {
+      text-align: center !important;
+    }
+
+    .hero-content .eyebrow {
+      display: block !important;
+
+      &::after {
+        transform-origin: center !important;
+      }
+    }
   }
 }
 

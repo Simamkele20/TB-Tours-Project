@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 
 export interface HeroConfig {
   eyebrow: string;
@@ -15,9 +16,9 @@ export interface HeroConfig {
 @Component({
   selector: "app-hero-section",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
-    <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [class.hero-left]="alignLeft" [style.backgroundImage]="getBackgroundImage()">
+    <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [class.hero-couriers]="isCouriers" [class.hero-left]="alignLeft" [style.backgroundImage]="getBackgroundImage()">
       <div class="container hero-content">
         <p class="eyebrow">{{ config.eyebrow }}</p>
         <h1>
@@ -34,6 +35,9 @@ export interface HeroConfig {
           </a>
           <a href="#destinations" class="btn btn-outline-light">
             Explore Destinations
+          </a>
+          <a routerLink="/couriers" class="btn btn-outline-gold">
+            Courier Service
           </a>
         </div>
 
@@ -52,6 +56,7 @@ export class HeroSectionComponent {
   @Input() showPhone: () => boolean = () => false;
   @Input() isDestination: boolean = false;
   @Input() alignLeft: boolean = false;
+  @Input() isCouriers: boolean = false;
 
   getBackgroundImage(): string {
     // Only apply background image for destination pages (not home)
