@@ -23,11 +23,21 @@ export class App implements OnInit {
     // Set initial SEO tags based on current route
     this.updateSeoForCurrentRoute();
 
-    // Update SEO tags on route change, but don't scroll automatically
-    // Let anchor navigation work naturally
+    // Track previous path to detect route changes vs hash changes
+    let previousPath = this.router.url.split('#')[0];
+
+    // Update SEO tags on route change and scroll to top only if path changed
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
+      const currentPath = this.router.url.split('#')[0];
+      
+      // Only scroll to top if the path changed (not just the hash)
+      if (currentPath !== previousPath) {
+        window.scrollTo(0, 0);
+        previousPath = currentPath;
+      }
+      
       this.updateSeoForCurrentRoute();
     });
   }
