@@ -43,7 +43,7 @@ import { PageDataService } from "../../services/page-data.service";
         </div>
         <figure class="about-story-image">
           <img
-            src="/images/hero-minibus.jpg"
+            src="/images/Home.jpg"
             alt="TB Tours vehicle on scenic coastal road"
             loading="lazy" />
         </figure>

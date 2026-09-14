@@ -39,7 +39,7 @@ import { finalize } from "rxjs";
           </div>
           <figure class="about-image">
             <img
-              src="/images/About.jpg"
+              src="/images/Home.jpg"
               alt="TB Tours about section image"
               loading="lazy" />
           </figure>

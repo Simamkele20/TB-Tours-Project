@@ -814,3 +814,360 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
     customizeInfo: "Your Garden Route experience can be customised according to your preferred number of days, accommodation, activities and destinations. Contact TB Tours for a personalised Garden Route quote."
   }
 };
+
+// Courier-related interfaces and data
+export interface CourierService {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface PricingTier {
+  distance: string;
+  price: string;
+}
+
+export interface CourierStep {
+  number: number;
+  title: string;
+  description: string;
+}
+
+export interface CourierVehicle {
+  id: number;
+  name: string;
+  capacity: string;
+  specs: string;
+  image: string;
+}
+
+export const COURIERS_PAGE_CONTENT = {
+  hero: {
+    eyebrow: "Delivery Services",
+    title: "TB TOURS ",
+    accent: "COURIER",
+    description: "Fast. Reliable. Door-to-Door. Need to send a parcel, document or package? TB Tours Courier provides reliable door-to-door delivery services for individuals and businesses.",
+    image: "images/Del 2.jpg"
+  },
+  tagline: "We offer convenient local deliveries with a professional and personal service.",
+  services: [
+    {
+      icon: "📦",
+      title: "Same-Day Deliveries",
+      description: "Send documents and parcels across your local area with convenient same-day delivery."
+    },
+    {
+      icon: "🚐",
+      title: "Door-to-Door Delivery",
+      description: "We collect your parcel from your chosen location and deliver it directly to the recipient."
+    },
+    {
+      icon: "🏢",
+      title: "Business Deliveries",
+      description: "Reliable delivery support for small businesses, offices, guesthouses and other businesses."
+    },
+    {
+      icon: "📄",
+      title: "Documents & Small Parcels",
+      description: "Ideal for important documents, packages, personal items and other suitable deliveries."
+    }
+  ],
+  pricing: [
+    { distance: "0–5 km", price: "R60" },
+    { distance: "5–10 km", price: "R80" },
+    { distance: "10–15 km", price: "R100" },
+    { distance: "15–20 km", price: "R120" },
+    { distance: "20–30 km", price: "R150" },
+    { distance: "30–40 km", price: "R180" },
+    { distance: "40–50 km", price: "R220" },
+    { distance: "Over 50 km", price: "Contact for quote" }
+  ],
+  whyChoose: [
+    "Reliable service",
+    "Door-to-door delivery",
+    "Same-day delivery options",
+    "Competitive pricing",
+    "Professional service",
+    "Ideal for individuals and businesses"
+  ],
+  steps: [
+    { number: 1, title: "Request a Quote", description: "Contact us with your pickup location, delivery location and parcel details." },
+    { number: 2, title: "Confirm Your Booking", description: "We'll confirm the price and delivery details with you." },
+    { number: 3, title: "We Collect", description: "We collect your parcel from the agreed pickup location." },
+    { number: 4, title: "We Deliver", description: "Your parcel is delivered directly to the recipient." }
+  ]
+};
+
+export const COURIERS_VEHICLES: CourierVehicle[] = [
+  {
+    id: 1,
+    name: "Express Delivery",
+    capacity: "Small parcels & documents",
+    specs: "Fast, efficient delivery for urgent items",
+    image: "images/Del 1.jpg"
+  },
+  {
+    id: 2,
+    name: "Standard Delivery",
+    capacity: "Medium packages",
+    specs: "Reliable service for standard deliveries",
+    image: "images/Del 2.jpg"
+  },
+  {
+    id: 3,
+    name: "Premium Delivery",
+    capacity: "Large packages",
+    specs: "Professional delivery for bulk items",
+    image: "images/Del 3.jpg"
+  },
+  {
+    id: 4,
+    name: "Corporate Delivery",
+    capacity: "Business deliveries",
+    specs: "Dedicated service for corporate clients",
+    image: "images/Del 4.jpg"
+  },
+  {
+    id: 5,
+    name: "Multi-Stop Delivery",
+    capacity: "Multiple deliveries",
+    specs: "Efficient multi-stop delivery routes",
+    image: "images/Del 5.jpg"
+  }
+];
+
+export interface TermsSection {
+  number: number;
+  title: string;
+  content: string[];
+}
+
+export const TERMS_CONTENT: TermsSection[] = [
+  {
+    number: 1,
+    title: "Services",
+    content: [
+      "TB Tours provides private transport, airport transfers, chauffeur services, sightseeing tours, wine tours, and other transport-related services within Cape Town and surrounding areas."
+    ]
+  },
+  {
+    number: 2,
+    title: "Bookings",
+    content: [
+      "All bookings are subject to availability and are confirmed only after acceptance by TB Tours. Customers are responsible for providing accurate booking details."
+    ]
+  },
+  {
+    number: 3,
+    title: "Payments",
+    content: [
+      "Payment may be required in advance to secure your booking. Any outstanding balance must be paid before or at the start of the service unless otherwise agreed."
+    ]
+  },
+  {
+    number: 4,
+    title: "Cancellations and Refunds",
+    content: [
+      "• Cancellations made more than 48 hours before the scheduled service may qualify for a refund.",
+      "• Cancellations made within 48 hours may be subject to cancellation fees.",
+      "• No-shows are non-refundable."
+    ]
+  },
+  {
+    number: 5,
+    title: "Customer Responsibilities",
+    content: [
+      "Customers must:",
+      "• Provide accurate booking information.",
+      "• Arrive at the agreed pickup location on time.",
+      "• Treat our vehicles and staff with respect.",
+      "• Follow all safety instructions and wear seat belts where provided."
+    ]
+  },
+  {
+    number: 6,
+    title: "Vehicle Damage",
+    content: [
+      "Customers may be held responsible for any damage caused to a TB Tours vehicle through negligence or intentional misconduct."
+    ]
+  },
+  {
+    number: 7,
+    title: "Delays",
+    content: [
+      "TB Tours will make every effort to arrive on time. However, we are not liable for delays caused by traffic, weather, road closures, vehicle breakdowns, accidents, or other events beyond our reasonable control."
+    ]
+  },
+  {
+    number: 8,
+    title: "Personal Belongings",
+    content: [
+      "Passengers are responsible for their personal belongings. While we will do our best to assist in recovering lost property, TB Tours accepts no responsibility for items left in our vehicles."
+    ]
+  },
+  {
+    number: 9,
+    title: "Right to Refuse Service",
+    content: [
+      "TB Tours reserves the right to refuse or terminate a service if a passenger behaves in a threatening, abusive, violent, intoxicated, or unlawful manner that may endanger the driver, other passengers, or the vehicle."
+    ]
+  },
+  {
+    number: 10,
+    title: "Limitation of Liability",
+    content: [
+      "To the fullest extent permitted by law, TB Tours shall not be liable for indirect, incidental, or consequential losses arising from the use of our services."
+    ]
+  },
+  {
+    number: 11,
+    title: "Privacy",
+    content: [
+      "Personal information collected during bookings will be used only to provide our services, communicate with customers, and comply with legal obligations. We respect your privacy and handle your information responsibly."
+    ]
+  },
+  {
+    number: 12,
+    title: "Changes to These Terms",
+    content: [
+      "TB Tours reserves the right to update these Terms & Conditions at any time. Any changes will be published on this website and become effective upon posting."
+    ]
+  },
+  {
+    number: 13,
+    title: "Governing Law",
+    content: [
+      "These Terms & Conditions are governed by the laws of the Republic of South Africa."
+    ]
+  }
+];
+
+export interface BookingPolicySection {
+  number: number;
+  title: string;
+  content: string[];
+}
+
+export const BOOKING_POLICY_CONTENT: BookingPolicySection[] = [
+  {
+    number: 1,
+    title: "Booking Policy",
+    content: [
+      "All bookings are subject to availability and are confirmed only after confirmation from TB Tours. We recommend booking in advance, especially during weekends, public holidays, and peak tourist seasons."
+    ]
+  },
+  {
+    number: 2,
+    title: "Payment Policy",
+    content: [
+      "Payment may be required to secure your booking. The remaining balance, if applicable, must be paid before or at the start of the service unless otherwise agreed."
+    ]
+  },
+  {
+    number: 3,
+    title: "Cancellation Policy",
+    content: [
+      "• Cancellations made more than 48 hours before the scheduled service may qualify for a refund, subject to any non-refundable costs.",
+      "• Cancellations made within 48 hours of the booking may incur cancellation charges.",
+      "• No-shows are non-refundable."
+    ]
+  },
+  {
+    number: 4,
+    title: "Changes to Bookings",
+    content: [
+      "We will do our best to accommodate changes to bookings. However, changes are subject to vehicle and driver availability."
+    ]
+  },
+  {
+    number: 5,
+    title: "Waiting Time",
+    content: [
+      "For airport pickups, complimentary waiting time is provided for delayed flights where flight details have been supplied in advance. Additional waiting time for other services may result in extra charges."
+    ]
+  },
+  {
+    number: 6,
+    title: "Passenger Responsibility",
+    content: [
+      "Passengers are expected to treat our vehicles and drivers with respect. TB Tours reserves the right to refuse service to anyone whose behaviour is unsafe, abusive, or illegal."
+    ]
+  },
+  {
+    number: 7,
+    title: "Safety",
+    content: [
+      "Your safety is our priority. All passengers must wear seat belts where provided and follow the driver's safety instructions throughout the journey."
+    ]
+  },
+  {
+    number: 8,
+    title: "Personal Belongings",
+    content: [
+      "While every effort will be made to return lost items, TB Tours is not responsible for personal belongings left in our vehicles."
+    ]
+  },
+  {
+    number: 9,
+    title: "Delays",
+    content: [
+      "Although we always aim to arrive on time, TB Tours cannot be held responsible for delays caused by traffic, weather conditions, road closures, accidents, or other circumstances beyond our control."
+    ]
+  },
+  {
+    number: 10,
+    title: "Privacy",
+    content: [
+      "Any personal information collected during bookings is used only to provide our services and communicate with customers. We do not sell or share your personal information with third parties except where required by law."
+    ]
+  },
+  {
+    number: 11,
+    title: "Contact",
+    content: [
+      "For booking enquiries, cancellations, or assistance, please contact TB Tours using the details provided on our Contact page.",
+      "",
+      "Thank you for choosing TB Tours. We are committed to providing safe, reliable, professional, and friendly transport and tour services throughout Cape Town and the surrounding areas."
+    ]
+  }
+];
+
+export interface FAQ {
+  question: string;
+  answer: string;
+}
+
+export const FAQS: FAQ[] = [
+  {
+    question: "How do I book a tour or transfer?",
+    answer: "You can book directly through our website contact form, by phone (073 448 3958), WhatsApp, or by emailing info@tb-tours.co.za. We'll confirm availability and pricing with you promptly."
+  },
+  {
+    question: "What are your delivery timeframes?",
+    answer: "For same-day courier services, deliveries are typically completed within 2-4 hours depending on distance. For tours and transfers, timing depends on the specific itinerary and distance."
+  },
+  {
+    question: "Do you operate on weekends and public holidays?",
+    answer: "Yes, we offer services on weekends and public holidays. Please contact us in advance for bookings on these days as availability may vary."
+  },
+  {
+    question: "Can I cancel or modify my booking?",
+    answer: "Cancellations made more than 48 hours before your booking may qualify for a refund. Cancellations within 48 hours may be subject to fees. Please contact us as soon as possible to discuss modifications."
+  },
+  {
+    question: "What if my parcel is damaged?",
+    answer: "We handle all parcels with care. Please report any damage immediately. We will work with you to document the issue and resolve it appropriately."
+  },
+  {
+    question: "Do you offer corporate/bulk delivery discounts?",
+    answer: "Yes, we offer competitive pricing for businesses and regular clients. Contact us directly at info@tb-tours.co.za or 073 448 3958 for a customized quote."
+  },
+  {
+    question: "What payment methods do you accept?",
+    answer: "We accept cash, bank transfer, and major credit/debit cards. Payment terms can be arranged for corporate clients. Contact us for details."
+  },
+  {
+    question: "Is my personal information secure?",
+    answer: "Yes, we protect all personal information according to our privacy policy. Your data is used only for service delivery and communication purposes."
+  }
+];

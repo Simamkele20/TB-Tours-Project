@@ -6,6 +6,7 @@ import { ContactFormComponent } from "../shared/contact-form.component";
 import { PageDataService } from "../../services/page-data.service";
 import { BookingApiService } from "../../booking/booking-api.service";
 import { GoogleAnalyticsService } from "../../services/google-analytics.service";
+import { FAQS } from "../../data/site-content";
 import { finalize } from "rxjs";
 
 @Component({
@@ -64,9 +65,9 @@ import { finalize } from "rxjs";
             <p>Booking form to be connected. For now, please WhatsApp or email us directly.</p>
           </div>
 
-          <app-contact-form 
-            #contactForm 
-            [isSending]="isSending()" 
+          <app-contact-form
+            #contactForm
+            [isSending]="isSending()"
             [requestedService]="requestedDestination()"
             (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
 
@@ -75,6 +76,28 @@ import { finalize } from "rxjs";
             <button type="button" aria-label="Close" (click)="dismissToast()">
               <i class="bi bi-x" aria-hidden="true"></i>
             </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ SECTION -->
+      <section class="faq-section" id="faqs">
+        <h2 class="faq-title">Frequently Asked Questions</h2>
+        <div class="faq-container">
+          <div class="faq-item" *ngFor="let faq of FAQS">
+            <button
+              class="faq-question"
+              (click)="toggleFaq(faq.question)"
+              [class.active]="expandedFaq() === faq.question"
+              type="button">
+              <span>{{ faq.question }}</span>
+              <span class="faq-icon">{{ expandedFaq() === faq.question ? '−' : '+' }}</span>
+            </button>
+            <div
+              class="faq-answer"
+              [class.open]="expandedFaq() === faq.question">
+              <p>{{ faq.answer }}</p>
+            </div>
           </div>
         </div>
       </section>
@@ -98,6 +121,8 @@ export class ContactPageComponent implements OnInit {
   toastType = signal<"success" | "error">("success");
   isSending = signal(false);
   requestedDestination = signal("");
+  expandedFaq = signal<string | null>(null);
+  FAQS = FAQS;
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
 
   ngOnInit() {
@@ -167,5 +192,13 @@ export class ContactPageComponent implements OnInit {
       this.toastTimer = null;
     }
     this.toastMessage.set("");
+  }
+
+  toggleFaq(question: string): void {
+    if (this.expandedFaq() === question) {
+      this.expandedFaq.set(null);
+    } else {
+      this.expandedFaq.set(question);
+    }
   }
 }

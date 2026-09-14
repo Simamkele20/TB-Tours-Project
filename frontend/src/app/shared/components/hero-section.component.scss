@@ -12,44 +12,34 @@
   background: linear-gradient(135deg, #0f1419 0%, #1a2f5a 100%);
   overflow: hidden;
   padding: clamp(4rem, 10vw, 8rem) 1rem;
-
-  // Decorative gradient orbs
-  &::before {
-    content: '';
-    position: absolute;
-    top: -40%;
-    right: -5%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(242, 177, 18, 0.12) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -20%;
-    left: 5%;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(26, 47, 90, 0.25) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 1;
-  }
 }
 
 .hero-home {
   min-height: 100svh;
   padding: clamp(6rem, 15vw, 10rem) 1rem;
-  background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/hero-minibus.jpg');
+  background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/Home.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   justify-content: flex-start;
   align-items: center;
+
+  @media (max-width: 768px) {
+    padding: clamp(4.5rem, 12vw, 7rem) 1rem;
+    background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/Home Backgroud.jpg');
+    background-attachment: scroll;
+  }
+
+  @media (max-width: 480px) {
+    min-height: 80svh;
+    background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/Home Backgroud.jpg');
+    background-attachment: scroll;
+    justify-content: center;
+
+    .container {
+      margin-inline: auto;
+    }
+  }
 
   .hero-video {
     position: absolute;
@@ -62,13 +52,40 @@
   }
 
   &::before {
-    background: linear-gradient(135deg, rgba(15, 20, 25, 0.82) 0%, rgba(26, 47, 90, 0.6) 50%, rgba(242, 177, 18, 0.03) 100%);
+    background: rgba(15, 20, 25, 0.7);
     z-index: 2;
   }
 
   .container {
     margin-left: 0;
     margin-right: 0;
+  }
+}
+
+// Left-aligned hero (for Terms, Booking Policy, etc.)
+.hero.hero-left {
+  justify-content: flex-start !important;
+  align-items: center !important;
+
+  .container {
+    margin-inline: unset !important;
+    margin-left: 0 !important;
+  }
+
+  .hero-content {
+    text-align: left !important;
+    padding-left: clamp(1rem, 7.5vw, 9rem) !important;
+    padding-right: 1rem !important;
+
+    @media (max-width: 768px) {
+      text-align: left !important;
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
+    }
+  }
+
+  .eyebrow {
+    text-align: left !important;
   }
 }
 
@@ -84,6 +101,17 @@
   margin-top: 2rem;
   padding-left: clamp(1rem, 7.5vw, 9rem);
   padding-right: 0;
+
+  @media (max-width: 768px) {
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 480px) {
+    text-align: center;
+    margin-top: 2.5rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 // Eyebrow with animated accent
@@ -109,6 +137,15 @@
     animation: scaleInX 0.5s ease-out forwards;
     animation-delay: 0.25s;
   }
+
+  @media (max-width: 480px) {
+    display: block;
+    text-align: center;
+
+    &::after {
+      transform-origin: center;
+    }
+  }
 }
 
 @keyframes slideDown {
@@ -132,10 +169,21 @@
   font-weight: 300;
   letter-spacing: -0.02em;
   color: #ffffff;
+  font-size: clamp(2rem, 6vw, 3.5rem);
   animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
   animation-delay: 0.25s;
   text-align: left;
+
+  @media (max-width: 768px) {
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+  }
+
+  @media (max-width: 480px) {
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    margin: 1.2rem 0 0.8rem;
+    text-align: center;
+  }
 
   span {
     color: #f2b112;
@@ -156,6 +204,13 @@
   animation-delay: 0.4s;
   max-width: 600px;
   text-align: left;
+
+  @media (max-width: 480px) {
+    text-align: center;
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    line-height: 1.75;
+    margin-bottom: 200px;
+  }
 }
 
 .hero-subtitle {
@@ -169,6 +224,10 @@
   opacity: 0;
   animation-delay: 0.5s;
   text-align: left;
+
+  @media (max-width: 480px) {
+    text-align: center;
+  }
 }
 
 .hero-trust {
@@ -181,6 +240,10 @@
   opacity: 0;
   animation-delay: 0.6s;
   text-align: left;
+
+  @media (max-width: 480px) {
+    text-align: center;
+  }
 }
 
 // Hero buttons
@@ -194,6 +257,11 @@
   animation: fadeInUp 0.8s ease-out forwards;
   opacity: 0;
   animation-delay: 0.65s;
+
+  @media (max-width: 480px) {
+    justify-content: center;
+    gap: 0.75rem;
+  }
 }
 
 .btn {

@@ -132,4 +132,9 @@ export class App implements OnInit {
     window.location.hash = '#home';
     this.mobileMenuOpen = false;
   }
+
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
+    this.mobileMenuOpen = false;
+  }
 }
