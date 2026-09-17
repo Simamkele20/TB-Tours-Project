@@ -6,7 +6,7 @@ import { ContactFormComponent } from "../shared/contact-form.component";
 import { PageDataService } from "../../services/page-data.service";
 import { BookingApiService } from "../../booking/booking-api.service";
 import { GoogleAnalyticsService } from "../../services/google-analytics.service";
-import { FAQS } from "../../data/site-content";
+import { FAQS_PAGE_CONTENT } from "../../data/site-content";
 import { finalize } from "rxjs";
 
 @Component({
@@ -19,7 +19,9 @@ import { finalize } from "rxjs";
       [showPhone]="() => false">
     </app-hero-section>
 
-    <section class="contact-shell section container">
+    <!-- CONTACT PAGE SECTION -->
+    <section class="contact-shell section container" id="contact">
+      <!-- CONTACT FORM SECTION -->
       <section class="contact-section" id="contact-form">
         <aside class="contact-find-us">
           <h3>DIRECT CONTACT</h3>
@@ -82,7 +84,7 @@ import { finalize } from "rxjs";
 
       <!-- FAQ SECTION -->
       <section class="faq-section" id="faqs">
-        <h2 class="faq-title">Frequently Asked Questions</h2>
+        <h2 class="faq-title">FREQUENTLY ASKED QUESTIONS</h2>
         <div class="faq-container">
           <div class="faq-item" *ngFor="let faq of FAQS">
             <button
@@ -90,7 +92,7 @@ import { finalize } from "rxjs";
               (click)="toggleFaq(faq.question)"
               [class.active]="expandedFaq() === faq.question"
               type="button">
-              <span>{{ faq.question }}</span>
+              <span class="question-text">{{ faq.question }}</span>
               <span class="faq-icon">{{ expandedFaq() === faq.question ? '−' : '+' }}</span>
             </button>
             <div
@@ -122,7 +124,7 @@ export class ContactPageComponent implements OnInit {
   isSending = signal(false);
   requestedDestination = signal("");
   expandedFaq = signal<string | null>(null);
-  FAQS = FAQS;
+  FAQS = FAQS_PAGE_CONTENT.faqs;
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
 
   ngOnInit() {

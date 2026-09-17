@@ -5,7 +5,7 @@ import { HeroSectionComponent } from "../../shared/components/hero-section.compo
 import { TimeAgoPipe } from "../../shared/pipes/time-ago.pipe";
 import { ContactFormComponent } from "../shared/contact-form.component";
 import { BookingApiService } from "../../booking/booking-api.service";
-import { SITE_CONTENT, GOOGLE_REVIEWS, SITE_SERVICES } from "../../data/site-content";
+import { SITE_CONTENT, GOOGLE_REVIEWS, SITE_SERVICES, FAQS_PAGE_CONTENT } from "../../data/site-content";
 import { finalize } from "rxjs";
 
 @Component({
@@ -203,12 +203,39 @@ import { finalize } from "rxjs";
         </div>
       </div>
     </section>
+
+    <!-- FAQs SECTION -->
+    <section id="faqs" class="section faqs-section">
+      <div class="container">
+        <div class="section-header">
+          <p class="kicker">Have Questions?</p>
+          <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-container">
+          <div class="faq-item" *ngFor="let faq of FAQS">
+            <button
+              class="faq-question"
+              [class.active]="expandedFaq() === faq.question"
+              (click)="toggleFaq(faq.question)"
+              type="button">
+              <span class="question-text">{{ faq.question }}</span>
+              <span class="faq-icon">{{ expandedFaq() === faq.question ? '−' : '+' }}</span>
+            </button>
+            <div class="faq-answer" [class.open]="expandedFaq() === faq.question">
+              <p>{{ faq.answer }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   `,
   styleUrls: ["./home.component.scss"]
 })
 export class HomePageComponent implements OnInit {
   readonly heroConfig = computed(() => SITE_CONTENT["home"].hero);
   readonly SITE_SERVICES = SITE_SERVICES;
+  readonly FAQS = FAQS_PAGE_CONTENT.faqs;
 
   private bookingApi = inject(BookingApiService);
   private route = inject(ActivatedRoute);
@@ -216,6 +243,7 @@ export class HomePageComponent implements OnInit {
   private reviewIndex = signal(0);
   private destinationIndex = signal(0);
   private serviceIndex = signal(0);
+  readonly expandedFaq = signal<string | null>(null);
   readonly isMobile = signal(typeof window !== 'undefined' && window.innerWidth <= 620);
   readonly isSending = signal(false);
   readonly toastMessage = signal("");
@@ -478,5 +506,13 @@ export class HomePageComponent implements OnInit {
 
   dismissToast() {
     this.toastMessage.set("");
+  }
+
+  toggleFaq(question: string): void {
+    if (this.expandedFaq() === question) {
+      this.expandedFaq.set(null);
+    } else {
+      this.expandedFaq.set(question);
+    }
   }
 }
