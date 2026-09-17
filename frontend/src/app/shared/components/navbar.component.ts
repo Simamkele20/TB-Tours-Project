@@ -26,6 +26,7 @@ import { Router, RouterLink } from '@angular/router';
         <ul class="navbar-menu" [class.open]="mobileMenuOpen()">
           <li><a [routerLink]="['']" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'home'">Home</a></li>
           <li><a [routerLink]="['/story']" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'about'">About</a></li>
+          <li><a [routerLink]="['/contact']" fragment="faqs" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'faqs'">FAQs</a></li>
           <li><a [routerLink]="['/contact']" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'contact'">Contact</a></li>
         </ul>
 
@@ -40,7 +41,7 @@ export class NavbarComponent implements AfterViewInit {
   mobileMenuOpen = signal(false);
   currentPage = signal('home');
 
-  private sections = ['home', 'about', 'destinations', 'services', 'contact'];
+  private sections = ['home', 'about', 'faqs', 'contact'];
   private ngZone = inject(NgZone);
   private router = inject(Router);
 

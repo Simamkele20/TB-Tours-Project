@@ -1188,3 +1188,82 @@ export const FAQS: FAQ[] = [
     answer: "Yes, we protect all personal information according to our privacy policy. Your data is used only for service delivery and communication purposes."
   }
 ];
+
+export interface FAQPageContent {
+  hero: HeroBlock;
+  faqs: FAQ[];
+  closing: string;
+}
+
+export const FAQS_PAGE_CONTENT: FAQPageContent = {
+  hero: {
+    eyebrow: "Support",
+    title: "Frequently Asked ",
+    accent: "Questions",
+    description: "Find answers to common questions about TB Tours services, bookings, payments and more.",
+    image: "images/camp-bay.jpg"
+  },
+  faqs: [
+    {
+      question: "What does TB Tours offer?",
+      answer: "TB Tours provides premium private tours, airport transfers and personalised travel experiences across Cape Town and the Western Cape."
+    },
+    {
+      question: "Are your tours private?",
+      answer: "Yes. Our tours are designed to provide a private and personalised experience, allowing you to explore Cape Town at your own pace."
+    },
+    {
+      question: "Can I customise my itinerary?",
+      answer: "Absolutely. We can tailor your experience around your interests, available time and preferred destinations."
+    },
+    {
+      question: "Do you offer airport transfers?",
+      answer: "Yes. We offer private airport transfers to and from Cape Town International Airport, with a focus on comfort, punctuality and a seamless arrival or departure."
+    },
+    {
+      question: "Which destinations do you cover?",
+      answer: "We operate across Cape Town and surrounding areas, including the Cape Town CBD, Blouberg, Melkbosstrand, Table View, Durbanville, Stellenbosch and other popular Western Cape destinations."
+    },
+    {
+      question: "Can you arrange a complete Cape Town experience?",
+      answer: "Yes. We can combine airport transfers, private tours and multiple destinations to create a seamless travel experience throughout your stay."
+    },
+    {
+      question: "Do you cater for couples, families and groups?",
+      answer: "Yes. We welcome couples, families, private groups and corporate travellers. We can recommend suitable options based on your group size and requirements."
+    },
+    {
+      question: "How do I reserve a tour?",
+      answer: "Simply contact TB Tours with your preferred date, number of guests and desired experience. We will check availability and provide a personalised quotation."
+    },
+    {
+      question: "How far in advance should I book?",
+      answer: "We recommend booking in advance to secure your preferred date and itinerary, particularly during peak travel seasons."
+    },
+    {
+      question: "What is included in my tour?",
+      answer: "Your quotation will clearly outline what is included. Depending on the experience, this may include private transportation, collection and drop-off, and the agreed itinerary."
+    },
+    {
+      question: "Do you provide personalised travel recommendations?",
+      answer: "Yes. If you're visiting Cape Town for the first time, we can recommend destinations and experiences that suit your interests and available time."
+    },
+    {
+      question: "Do you offer courier services?",
+      answer: "Yes. TB Tours also provides a professional courier and delivery service for suitable items within our service areas."
+    },
+    {
+      question: "How do I receive a quotation?",
+      answer: "Send us your requirements via WhatsApp, phone or our website. Our team will provide a personalised quotation based on your journey or experience."
+    },
+    {
+      question: "Why choose TB Tours?",
+      answer: "At TB Tours, we focus on comfort, reliability, personal service and memorable experiences. Our goal is to make every journey effortless from the moment you arrive in Cape Town."
+    },
+    {
+      question: "Where can I contact TB Tours?",
+      answer: "Our team is available via WhatsApp, phone and our website to assist with bookings, enquiries and personalised travel arrangements."
+    }
+  ],
+  closing: "TB Tours — Discover Cape Town. Travel in Comfort. Experience More."
+};
