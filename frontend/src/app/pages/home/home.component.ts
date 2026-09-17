@@ -214,8 +214,8 @@ import { finalize } from "rxjs";
 
         <div class="faq-container">
           <div class="faq-item" *ngFor="let faq of FAQS">
-            <button 
-              class="faq-question" 
+            <button
+              class="faq-question"
               [class.active]="expandedFaq() === faq.question"
               (click)="toggleFaq(faq.question)"
               type="button">
