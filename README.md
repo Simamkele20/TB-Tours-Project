@@ -47,28 +47,28 @@ Professional transport and tour booking web app for TB Tours (Pty)Ltd.
 
 ## Test Credentials
 
+⚠️ **These are example test credentials for development. DO NOT use in production.**
+
 ### Manager Account (Full Admin Access)
 ```
-Email: princetancu06@gmail.com
-Password: Prince123!!
+Email: <manager-email@example.com>
+Password: <manager-password>
 Access: Admin Dashboard + Management Console
 ```
 
 ### Admin Dashboard User (View-Only Admin)
 ```
-Email: admin@gmail.com
-Password: Admin!!12
+Email: <admin-email@example.com>
+Password: <admin-password>
 Access: Admin Dashboard only (no management)
 ```
 
 ### Customer User
 ```
-Email: testing@gmail.com
-Password: Testing!!12
+Email: <customer-email@example.com>
+Password: <customer-password>
 Access: My Bookings, Tours, Contact
 ```
-
-⚠️ **DO NOT use these credentials in production**
 
 ## Quick Start
 
