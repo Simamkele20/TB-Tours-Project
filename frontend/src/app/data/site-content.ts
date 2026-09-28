@@ -69,8 +69,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       accent: "Our priority.",
       description:
         "Private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands.",
-      image: "images/camp-bay.jpg",
-      video: "images/MicrosoftTeams-video.mp4"
+      image: "images/camp-bay.jpg"
     },
     partners: [
       {

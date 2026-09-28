@@ -33,11 +33,14 @@ export interface HeroConfig {
         <p class="description">{{ config.description }}</p>
 
         <div class="hero-actions" *ngIf="showPhone()">
-          <a href="#contact" class="btn btn-outline-gold">
-            Plan Your Journey
+          <a href="#services" class="btn btn-outline-gold">
+            Book Now
           </a>
           <a href="#destinations" class="btn btn-outline-light">
             Explore Destinations
+          </a>
+          <a href="#services" class="btn btn-outline-light">
+            Courier Service
           </a>
         </div>
 
