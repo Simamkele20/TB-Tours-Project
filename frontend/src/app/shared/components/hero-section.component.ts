@@ -55,6 +55,8 @@ export class HeroSectionComponent {
   @Input() config!: HeroConfig;
   @Input() showPhone: () => boolean = () => false;
   @Input() isDestination: boolean = false;
+  @Input() alignLeft: boolean = false;
+  @Input() isCouriers: boolean = false;
 
   getBackgroundImage(): string {
     // Only apply background image for destination pages (not home)

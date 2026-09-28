@@ -929,3 +929,174 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
     customizeInfo: "Your Garden Route experience can be customised according to your preferred number of days, accommodation, activities and destinations. Contact TB Tours for a personalised Garden Route quote."
   }
 };
+
+// Terms & Conditions Content
+export interface TermsSection {
+  number: string;
+  title: string;
+  content: string[];
+}
+
+export const TERMS_CONTENT: TermsSection[] = [
+  {
+    number: "1",
+    title: "Acceptance of Terms",
+    content: [
+      "By booking and using TB Tours services, you agree to these Terms & Conditions.",
+      "Please read all terms carefully before booking."
+    ]
+  },
+  {
+    number: "2",
+    title: "Bookings and Cancellations",
+    content: [
+      "Bookings must be made in advance.",
+      "Cancellations made 48 hours before the tour date receive a full refund.",
+      "Cancellations within 48 hours are subject to a 50% charge."
+    ]
+  }
+];
+
+// FAQs Content
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface FAQsPageContent {
+  hero: {
+    eyebrow: string;
+    title: string;
+    accent: string;
+    description: string;
+    image: string;
+  };
+  faqs: FAQItem[];
+  closing: string;
+}
+
+export const FAQS_PAGE_CONTENT: FAQsPageContent = {
+  hero: {
+    eyebrow: "Questions?",
+    title: "Frequently Asked",
+    accent: "Questions",
+    description: "Find answers to common questions about booking tours and our services.",
+    image: "images/faq.jpg"
+  },
+  faqs: [
+    {
+      question: "How do I book a tour?",
+      answer: "You can book through our website or contact us directly for personalized assistance."
+    },
+    {
+      question: "What is your cancellation policy?",
+      answer: "Full refund for cancellations 48 hours before the tour date. 50% charge for cancellations within 48 hours."
+    }
+  ],
+  closing: "Didn't find your answer? Contact us for more help!"
+};
+
+// Couriers Page Content
+export interface CourierVehicle {
+  name: string;
+  seats: number;
+  features: string[];
+  image?: string;
+  capacity?: string;
+  specs?: string;
+}
+
+export const COURIERS_VEHICLES: CourierVehicle[] = [
+  {
+    name: "Sedan",
+    seats: 4,
+    features: ["Air conditioning", "Comfortable seating", "Professional driver"],
+    image: "images/sedan.jpg",
+    capacity: "4 passengers",
+    specs: "Luxury sedan for comfort"
+  },
+  {
+    name: "Minibus",
+    seats: 8,
+    features: ["Spacious interior", "Air conditioning", "Luggage space"],
+    image: "images/minibus.jpg",
+    capacity: "8 passengers",
+    specs: "Spacious minibus for groups"
+  }
+];
+
+export interface CourierService {
+  number: string;
+  title: string;
+  description: string;
+  icon?: string;
+  price?: string;
+}
+
+export const COURIERS_PAGE_CONTENT = {
+  hero: {
+    eyebrow: "Professional Delivery",
+    title: "Courier",
+    accent: "Services",
+    description: "Fast, reliable and secure courier services across Cape Town and the Winelands.",
+    image: "images/courier.jpg"
+  },
+  tagline: "We deliver excellence",
+  services: [
+    {
+      number: "01",
+      title: "Same-Day Delivery",
+      description: "Fast and reliable same-day courier services",
+      icon: "📦"
+    },
+    {
+      number: "02",
+      title: "Scheduled Delivery",
+      description: "Plan ahead with our scheduled delivery options",
+      icon: "📅"
+    }
+  ],
+  pricing: [
+    { tier: "Local", distance: "Within 5km", rate: "R50", price: "R50" },
+    { tier: "Regional", distance: "5-50km", rate: "R200", price: "R200" }
+  ],
+  whyChoose: [
+    "Professional drivers",
+    "Insured packages",
+    "Real-time tracking",
+    "24/7 service"
+  ],
+  steps: [
+    { number: "01", title: "Book", description: "Request a courier" },
+    { number: "02", title: "Confirm", description: "We confirm pickup" },
+    { number: "03", title: "Deliver", description: "Fast delivery" }
+  ]
+};
+
+// Booking Policy Content
+export interface BookingPolicySection {
+  number: string;
+  title: string;
+  content: string[];
+}
+
+export const BOOKING_POLICY_CONTENT: BookingPolicySection[] = [
+  {
+    number: "1",
+    title: "How to Book",
+    content: [
+      "Visit our website and select your preferred tour",
+      "Choose your date and number of participants",
+      "Complete payment to confirm your booking"
+    ]
+  },
+  {
+    number: "2",
+    title: "Cancellation and Refunds",
+    content: [
+      "Cancel up to 48 hours before for full refund",
+      "Cancellations within 48 hours are subject to 50% charge",
+      "No-shows are non-refundable"
+    ]
+  }
+];

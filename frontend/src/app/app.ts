@@ -147,6 +147,11 @@ export class App implements OnInit {
     this.mobileMenuOpen = false;
   }
 
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
+    this.mobileMenuOpen = false;
+  }
+
   isUserMenuOpen(): boolean {
     return this.userMenuOpen();
   }
