@@ -7,6 +7,7 @@ export interface HeroConfig {
   accent: string;
   description: string;
   image?: string;
+  video?: string;
   showPhone?: boolean;
   bookButtonLabel?: string;
   hideButton?: boolean;
@@ -18,6 +19,9 @@ export interface HeroConfig {
   imports: [CommonModule],
   template: `
     <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [style.backgroundImage]="getBackgroundImage()">
+      <video *ngIf="showPhone() && config?.video" class="hero-video" autoplay muted loop playsinline>
+        <source [src]="config.video" type="video/mp4">
+      </video>
       <div class="container hero-content">
         <p class="eyebrow">{{ config.eyebrow }}</p>
         <h1>

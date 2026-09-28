@@ -43,6 +43,7 @@
 
 .hero-home {
   min-height: 100svh;
+  margin-top: -108px;
   padding: clamp(6rem, 15vw, 10rem) 1rem;
   background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/hero-minibus.jpg');
   background-size: cover;
@@ -322,6 +323,7 @@
 
   .hero-home {
     min-height: 80svh;
+    margin-top: -80px;
     background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/Home Backgroud.jpg');
     background-attachment: scroll;
     justify-content: center;

@@ -4,6 +4,7 @@ export interface HeroBlock {
   accent: string;
   description: string;
   image?: string;
+  video?: string;
 }
 
 export interface FeatureCard {
@@ -21,8 +22,15 @@ export interface FeatureCard {
   tourId?: number;
 }
 
+export interface Partner {
+  name: string;
+  logo: string;
+  url?: string;
+}
+
 export interface PageContent {
   hero: HeroBlock;
+  partners?: Partner[];
   sectionTitle: string;
   sectionSubtitle: string;
   cards: FeatureCard[];
@@ -61,8 +69,15 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       accent: "Our priority.",
       description:
         "Private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands.",
-      image: "images/camp-bay.jpg"
+      image: "images/camp-bay.jpg",
+      video: "images/MicrosoftTeams-video.mp4"
     },
+    partners: [
+      {
+        name: "Tourism Board",
+        logo: "/images/Partner.jpg"
+      }
+    ],
     sectionTitle: "Travel your way.",
     sectionSubtitle: "From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.",
     cards: [
@@ -277,7 +292,7 @@ export const SITE_SERVICES: ServiceCard[] = [
     number: "02",
     title: "Cape Peninsula Tours",
     description: "The full coastal arc • Chapman's Peak, Cape Point and Boulders Beach.",
-    price: 1800,
+    price: 2500,
     ctaLabel: "BOOK",
     tourId: 2,
     ctaLink: "/booking/2"
@@ -286,7 +301,7 @@ export const SITE_SERVICES: ServiceCard[] = [
     number: "03",
     title: "Cape Town City Tours",
     description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.",
-    price: 1500,
+    price: 2000,
     ctaLabel: "BOOK",
     tourId: 3,
     ctaLink: "/booking/3"
@@ -295,16 +310,16 @@ export const SITE_SERVICES: ServiceCard[] = [
     number: "04",
     title: "Winelands Tours",
     description: "Stellenbosch and Franschhoek estates at an unhurried pace.",
-    price: 2200,
+    price: 2500,
     ctaLabel: "BOOK",
     tourId: 4,
     ctaLink: "/booking/4"
   },
   {
     number: "05",
-    title: "Private Chauffeur Services",
-    description: "A discreet driver at your disposal, by the hour or by the day.",
-    price: 1200,
+    title: "Full-Day Private Tour",
+    description: "A full day of private tour with flexible itinerary shaped around your interests.",
+    price: 3500,
     ctaLabel: "BOOK",
     tourId: 5,
     ctaLink: "/booking/5"

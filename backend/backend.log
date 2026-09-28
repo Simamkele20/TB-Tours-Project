@@ -1,0 +1,23 @@
+
+> tb-tours-api@1.0.0 start
+> node src/server.js
+
+◇ injected env (20) from .env.develop // tip: ⌁ auth for agents [www.vestauth.com]
+[MAILGUN] SSL verification disabled for development
+[MAILGUN] Client initialized successfully
+Executing (default): SELECT 1+1 AS result
+[DB] Connected successfully (SQLite)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='users';
+Executing (default): PRAGMA INDEX_LIST(`users`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_users_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='tours';
+Executing (default): PRAGMA INDEX_LIST(`tours`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_tours_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='bookings';
+Executing (default): PRAGMA INDEX_LIST(`bookings`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_bookings_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Destinations';
+Executing (default): PRAGMA INDEX_LIST(`Destinations`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Destinations_1`)
+[DB] Models synchronized
+TB Tours (Pty)Ltd API running on http://localhost:4000

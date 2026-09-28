@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -25,17 +25,30 @@ interface Tour {
 
 interface Booking {
   id: number;
-  bookingReference: string;
   userId: number;
   tourId: number;
+  bookingReference: string;
   tourDate: string;
   numberOfPassengers: number;
   totalPrice: number;
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
   paymentStatus: 'unpaid' | 'pending' | 'paid' | 'failed' | 'refunded';
+  paystackReference?: string;
+  paymentReference?: string;
+  transactionId?: string;
+  paymentDate?: string;
+  refundAmount?: number;
+  refundDate?: string;
+  specialRequests?: string;
+  accommodationPreferences?: string;
+  passengerDetails?: any[];
+  notes?: string;
+  cancellationReason?: string;
+  cancellationDate?: string;
+  confirmationEmailSent?: boolean;
+  reminderEmailSent?: boolean;
   createdAt: string;
   updatedAt?: string;
-  notes?: string;
   User?: User;
   Tour?: Tour;
 }
@@ -111,8 +124,8 @@ const MOCK_BOOKING_ANALYTICS: BookingAnalytics = {
 
 const MOCK_USERS: User[] = [
   { id: 1, firstName: 'Prince', lastName: 'Tancu', email: 'princetancu06@gmail.com', role: 'admin', verified: true, createdAt: '2026-01-10T08:00:00Z', updatedAt: '2026-01-10T08:00:00Z' },
-  { id: 41, firstName: 'Christopher', lastName: 'Clark', email: 'christopher.clark@tbtours.test', role: 'admin', verified: true, createdAt: '2026-01-15T10:30:00Z', updatedAt: '2026-01-15T10:30:00Z' },
-  { id: 42, firstName: 'Jennifer', lastName: 'Rodriguez', email: 'jennifer.rodriguez@tbtours.test', role: 'admin', verified: true, createdAt: '2026-01-15T10:31:00Z', updatedAt: '2026-01-15T10:31:00Z' },
+  { id: 41, firstName: 'Christopher', lastName: 'Clark', email: 'christopher.clark@tb-tours.co.za', role: 'admin', verified: true, createdAt: '2026-01-15T10:30:00Z', updatedAt: '2026-01-15T10:30:00Z' },
+  { id: 42, firstName: 'Jennifer', lastName: 'Rodriguez', email: 'jennifer.rodriguez@tb-tours.co.za', role: 'admin', verified: true, createdAt: '2026-01-15T10:31:00Z', updatedAt: '2026-01-15T10:31:00Z' },
   { id: 43, firstName: 'John', lastName: 'Smith', email: 'john.smith@tbtours.test', role: 'customer', verified: true, createdAt: '2026-02-20T11:00:00Z', updatedAt: '2026-02-20T11:00:00Z' },
   { id: 44, firstName: 'Sarah', lastName: 'Johnson', email: 'sarah.johnson@tbtours.test', role: 'customer', verified: true, createdAt: '2026-03-05T11:05:00Z', updatedAt: '2026-03-05T11:05:00Z' },
   { id: 45, firstName: 'Michael', lastName: 'Brown', email: 'michael.brown@tbtours.test', role: 'customer', verified: false, createdAt: '2026-05-10T11:10:00Z', updatedAt: '2026-05-10T11:10:00Z' },
@@ -226,7 +239,10 @@ export class AdminDashboardComponent implements OnInit {
   private apiBaseUrl = environment.apiBaseUrl;
   private useMockData = environment.useMockData;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.loadAnalytics();
@@ -245,16 +261,22 @@ export class AdminDashboardComponent implements OnInit {
   loadAnalytics() {
     if (this.useMockData) {
       this.analytics = this.filterAnalyticsByDateRange(MOCK_ANALYTICS, MOCK_USERS);
+      this.cdr.detectChanges();
       return;
     }
 
+    console.log('[ADMIN] Loading analytics...');
     this.http.get<{ data: Analytics }>(`${this.apiBaseUrl}/admin/analytics?range=${this.dateRange}`)
       .subscribe({
         next: (response) => {
-          this.analytics = response.data;
+          console.log('[ADMIN] Analytics loaded:', response.data);
+          this.analytics = response?.data || {};
+          this.cdr.detectChanges();
         },
         error: (error) => {
+          console.error('[ADMIN] Analytics error:', error);
           this.analytics = this.filterAnalyticsByDateRange(MOCK_ANALYTICS, MOCK_USERS); // Fallback to mock data
+          this.cdr.detectChanges();
         }
       });
   }
@@ -262,16 +284,22 @@ export class AdminDashboardComponent implements OnInit {
   loadBookingAnalytics() {
     if (this.useMockData) {
       this.bookingAnalytics = this.filterBookingAnalyticsByDateRange(MOCK_BOOKING_ANALYTICS, MOCK_BOOKINGS);
+      this.cdr.detectChanges();
       return;
     }
 
+    console.log('[ADMIN] Loading booking analytics...');
     this.http.get<{ data: BookingAnalytics }>(`${this.apiBaseUrl}/admin/bookings-analytics?range=${this.dateRange}`)
       .subscribe({
         next: (response) => {
-          this.bookingAnalytics = response.data;
+          console.log('[ADMIN] Booking analytics loaded:', response.data);
+          this.bookingAnalytics = response?.data || {};
+          this.cdr.detectChanges();
         },
         error: (error) => {
+          console.error('[ADMIN] Booking analytics error:', error);
           this.bookingAnalytics = this.filterBookingAnalyticsByDateRange(MOCK_BOOKING_ANALYTICS, MOCK_BOOKINGS); // Fallback to mock data
+          this.cdr.detectChanges();
         }
       });
   }
@@ -401,21 +429,27 @@ export class AdminDashboardComponent implements OnInit {
       this.users = MOCK_USERS;
       this.totalPages = Math.ceil(MOCK_USERS.length / this.pageSize);
       this.filterUsers();
+      this.cdr.detectChanges();
       return;
     }
 
+    console.log('[ADMIN] Loading users from API...');
     this.http.get<{ data: User[]; pagination: any }>(
       `${this.apiBaseUrl}/admin/users?page=${this.currentPage}&limit=${this.pageSize}`
     ).subscribe({
       next: (response) => {
-        this.users = response.data;
-        this.totalPages = response.pagination.pages;
+        console.log('[ADMIN] Users loaded:', response.data.length);
+        this.users = response?.data || [];
+        this.totalPages = response?.pagination?.pages || 1;
         this.filterUsers();
+        this.cdr.detectChanges();
       },
       error: (error) => {
+        console.error('[ADMIN] Error loading users:', error);
         this.users = MOCK_USERS; // Fallback to mock data
         this.totalPages = Math.ceil(MOCK_USERS.length / this.pageSize);
         this.filterUsers();
+        this.cdr.detectChanges();
       }
     });
   }
@@ -435,22 +469,28 @@ export class AdminDashboardComponent implements OnInit {
       this.bookings = MOCK_BOOKINGS;
       this.bookingTotalPages = Math.ceil(MOCK_BOOKINGS.length / this.bookingPageSize);
       this.filterBookings();
+      this.cdr.detectChanges();
       return;
     }
 
+    console.log('[ADMIN] Loading bookings from API...');
     const params = 'page=' + this.bookingCurrentPage + '&limit=' + this.bookingPageSize;
     this.http.get<{ data: Booking[]; pagination: any }>(
       `${this.apiBaseUrl}/admin/bookings?${params}`
     ).subscribe({
       next: (response) => {
-        this.bookings = response.data;
-        this.bookingTotalPages = response.pagination.pages;
+        console.log('[ADMIN] Bookings loaded:', response.data.length);
+        this.bookings = response?.data || [];
+        this.bookingTotalPages = response?.pagination?.pages || 1;
         this.filterBookings();
+        this.cdr.detectChanges();
       },
       error: (error) => {
+        console.error('[ADMIN] Error loading bookings:', error);
         this.bookings = MOCK_BOOKINGS; // Fallback to mock data
         this.bookingTotalPages = Math.ceil(MOCK_BOOKINGS.length / this.bookingPageSize);
         this.filterBookings();
+        this.cdr.detectChanges();
       }
     });
   }

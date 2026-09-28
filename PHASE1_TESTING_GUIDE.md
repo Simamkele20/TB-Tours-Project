@@ -2,44 +2,102 @@
 
 ## Prerequisites
 
-### 1. MongoDB Setup
-Install MongoDB locally or use MongoDB Atlas (cloud):
-- **Local:** `brew install mongodb-community` (macOS) or download from [mongodb.com](https://www.mongodb.com)
-- **Atlas:** Sign up at https://www.mongodb.com/cloud/atlas (free tier available)
+### 1. Database Setup
+This project uses **MySQL** with **Sequelize ORM** (not MongoDB).
 
-### 2. Environment Configuration
+- **Local:** Install MySQL Community Server from [mysql.com](https://www.mysql.com/downloads/)
+- **Cloud:** Use MySQL on AWS RDS, DigitalOcean, or similar cloud provider
+- Create a database: `tb_tours`
 
-**Backend (.env.develop)**
-Create `backend/.env.develop`:
-```
+### 2. Role Assignment Policy
+
+Roles are automatically assigned based on email domain during registration:
+
+| Email Domain | Assigned Role | Description |
+|---|---|---|
+| `@tb-tours.co.za` | `admin` | Full admin access with dashboard view |
+| `@tbtours.test` | Manual (testing) | Testing domain - role assigned for test scenarios |
+| Any other domain | `customer` | Limited access to bookings and tours |
+
+**Management Access:** Only the authorized manager email (`princetancu06@gmail.com`) can access management features, regardless of role.
+
+### 3. Environment Configuration
+
+**Backend (.env)**
+Create or update `backend/.env`:
+```env
 PORT=4000
 NODE_ENV=development
 CLIENT_URLS=http://localhost:4200
-MONGODB_URI=mongodb://localhost:27017/tb-tours
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=tb_tours
 JWT_SECRET=your-super-secret-key-change-in-production
 JWT_EXPIRY=24h
-VERIFICATION_CODE_EXPIRY=900000
-SMTP_PASS=your-mailgun-api-key
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_16_char_app_password
 CONTACT_TO_EMAIL=info@tb-tours.co.za
 ```
 
-**Frontend (.env)**
-Already configured in `frontend/src/environments/environment.ts`:
+**Frontend (src/environments/environment.ts)**
+Already configured:
 ```typescript
-apiBaseUrl: 'http://localhost:4000/api'
+export const environment = {
+  production: false,
+  apiBaseUrl: 'http://localhost:4000/api',
+  useMockData: true,
+  paystackPublicKey: 'pk_test_placeholder_replace_with_actual_key'
+};
 ```
 
-### 3. Mailgun Setup (Optional for Email Testing)
-- Sign up at https://mailgun.com
-- Get API key from dashboard
-- Add authorized recipients in sandbox domain settings for testing
-- Copy API key to `SMTP_PASS` in `.env.develop`
+### 3. Email Setup (Optional for Testing)
+- Use Gmail SMTP for easy local testing
+- Enable "Less secure app access" or create an App Password
+- Copy credentials to `SMTP_USER` and `SMTP_PASS` in `.env`
+
+## Test Credentials
+
+> **⚠️ IMPORTANT:** These are test accounts for development. DO NOT use in production.
+
+### 1️⃣ Manager Account (Full Admin Access)
+- **Email:** `princetancu06@gmail.com`
+- **Password:** `Prince123!!`
+- **Role:** admin
+- **Name:** Prince Tancu
+- **Access:** 
+  - ✅ Admin Dashboard (Analytics, Users, Bookings)
+  - ✅ Management (User management, Booking management, Tour management)
+- **Status:** Verified ✓
+
+### 2️⃣ Admin Dashboard User (Limited Admin)
+- **Email:** `admin@gmail.com`
+- **Password:** `Admin!!12`
+- **Role:** admin
+- **Name:** Test User
+- **Access:** 
+  - ✅ Admin Dashboard (View-only analytics, stats)
+  - ❌ Management (User/Booking management blocked)
+- **Status:** Verified ✓
+
+### 3️⃣ Customer User
+- **Email:** `testing@gmail.com`
+- **Password:** `Testing!!12`
+- **Role:** customer
+- **Name:** Test Customer
+- **Access:** 
+  - ✅ My Bookings, Tours, Contact
+  - ❌ Admin Dashboard (blocked)
+- **Status:** Verified ✓
 
 ## Running Phase 1
 
 ### Terminal 1: Backend
 ```bash
 cd backend
+npm install  # First time only
 npm run dev  # Uses nodemon for auto-reload
 # Server starts on http://localhost:4000
 ```
@@ -47,130 +105,176 @@ npm run dev  # Uses nodemon for auto-reload
 ### Terminal 2: Frontend
 ```bash
 cd frontend
-npm start  # or ng serve
+npm install  # First time only
+npm start    # or ng serve
 # App runs on http://localhost:4200
 ```
 
 ## Test Cases
 
-### Test 1: User Registration with Auto-Admin Detection
+### Test 1: Manager Login (Full Access)
 
-**Test 1a: Regular Customer Account**
-1. Navigate to `http://localhost:4200/auth/register`
-2. Enter email: `customer@example.com`
-3. Enter password: `TestPassword123` (min 8 chars)
-4. Click "Create Account"
-5. ✅ Expected: Form submitted, move to Step 2 (verification code input)
-6. Check terminal/console for verification code (printed to server logs)
-7. Enter the 6-digit code
-8. ✅ Expected: Redirected to login page with success message
-
-**Test 1b: Admin Auto-Detection (tb-tours.co.za domain)**
-1. Register with email: `admin-test@tb-tours.co.za`
-2. Complete verification flow
-3. After login, check navbar for "Admin Dashboard" link
-4. ✅ Expected: Admin menu item appears in user dropdown
-
-**Test 1c: Admin Auto-Detection (Specific Email)**
-1. Register with email: `princetancu06@gmail.com`
-2. Complete verification flow
-3. After login, check user menu
-4. ✅ Expected: "Admin Dashboard" link present
+1. Navigate to `http://localhost:4200/auth/login`
+2. Enter email: `princetancu06@gmail.com`
+3. Enter password: `Prince123!!`
+4. Click "Login"
+5. ✅ Expected: User dropdown shows:
+   - Admin Dashboard
+   - Management (THIS IS THE KEY TEST - should be visible)
+6. Click "Admin Dashboard"
+7. ✅ Expected: Analytics dashboard loads with stats, charts, user management
+8. Click "Management"
+9. ✅ Expected: Management console loads with user management, booking management, tour management
 
 ---
 
-### Test 2: Email Verification Flow
+### Test 2: Admin Dashboard Only Login
 
-1. Register with any email
-2. Check server logs or Mailgun dashboard for verification email
-3. ✅ Expected: Email contains 6-digit code
-4. Try entering wrong code
-5. ✅ Expected: Error message "Invalid verification code"
-6. Try entering correct code multiple times
-7. ✅ Expected: Success after correct code
-
----
-
-### Test 3: Login Flow
-
-1. After successful registration, navigate to `/auth/login`
-2. Enter registered email and password
-3. Click "Login"
-4. ✅ Expected: Redirected to home page, user menu shows in navbar
-5. Try logging in with wrong password
-6. ✅ Expected: Error message "Invalid email or password"
-7. Try logging in with unverified email (if using MongoDB seed data)
-8. ✅ Expected: Error message "Email not verified. Please verify your email before logging in"
+1. Navigate to `http://localhost:4200/auth/login`
+2. Enter email: `admin@gmail.com`
+3. Enter password: `Admin!!12`
+4. Click "Login"
+5. ✅ Expected: User dropdown shows:
+   - Admin Dashboard
+   - **Management should NOT be visible** (CRITICAL TEST)
+6. Click "Admin Dashboard"
+7. ✅ Expected: Analytics dashboard loads (view-only)
+8. Try accessing `http://localhost:4200/admin/management` directly
+9. ✅ Expected: Redirected back to `/admin` (access denied)
 
 ---
 
-### Test 4: Password Reset Flow
+### Test 3: Customer Login (No Admin Access)
 
-1. On login page, click "Forgot your password?"
-2. Enter email address
-3. Click "Send Reset Code"
-4. ✅ Expected: Success message "If the email exists, a password reset code has been sent"
-5. Check server logs/Mailgun for reset code email
-6. Enter the 6-digit code from email
-7. Click "Verify Code"
-8. ✅ Expected: Move to Step 3 (password reset form)
-9. Enter new password and confirm
-10. Click "Reset Password"
-11. ✅ Expected: Success message, redirected to login page after 2 seconds
-12. Login with new password
-13. ✅ Expected: Should succeed with new password, fail with old password
+1. Navigate to `http://localhost:4200/auth/login`
+2. Enter email: `testing@gmail.com`
+3. Enter password: `Testing!!12`
+4. Click "Login"
+5. ✅ Expected: User dropdown shows:
+   - My Bookings
+   - **No Admin Dashboard or Management menus**
+6. Try accessing `http://localhost:4200/admin` directly
+7. ✅ Expected: Redirected to home page
+
+---
+
+### Test 4: Access Control Restrictions
+
+#### 4a: Management API Endpoint Protection
+```bash
+# Login as admin@gmail.com (will get token)
+curl -X POST http://localhost:4000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@gmail.com","password":"Admin!!12"}'
+
+# Try accessing management endpoint with admin@gmail.com token
+curl -X GET http://localhost:4000/api/admin/users \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+
+# ✅ Expected: Error 403 "Management access required"
+```
+
+#### 4b: Dashboard API Endpoint (Allowed for All Admins)
+```bash
+# Same token from above
+curl -X GET http://localhost:4000/api/admin/analytics \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+
+# ✅ Expected: Returns analytics data (200 OK)
+```
 
 ---
 
 ### Test 5: Token Persistence
 
-1. Login successfully
+1. Login as any user
 2. Refresh the page (`Ctrl+R` or `Cmd+R`)
 3. ✅ Expected: User menu still shows (token persisted in localStorage)
-4. Close browser tab and reopen
-5. Navigate to `http://localhost:4200`
-6. ✅ Expected: User menu still shows (token restored from localStorage)
+4. Open DevTools → Application → Local Storage
+5. ✅ Expected: `auth_token` key contains JWT
 
 ---
 
 ### Test 6: Protected Routes
 
-1. Logout (click Logout in user menu)
-2. Try accessing a future protected route: `http://localhost:4200/bookings` (will exist in Phase 3)
-3. ✅ Expected: Redirected to `/auth/login` with `returnUrl=/bookings`
-4. Login successfully
-5. ✅ Expected: Redirected back to `/bookings` (once it's created in Phase 3)
+1. Logout
+2. Try accessing `http://localhost:4200/admin`
+3. ✅ Expected: Redirected to `/auth/login` with returnUrl
+4. Login as manager account
+5. ✅ Expected: Allowed access to admin dashboard
 
 ---
 
-### Test 7: Admin-Only Routes
+## API Testing with cURL
 
-1. Login as non-admin customer account
-2. Try accessing admin route (once created): `http://localhost:4200/admin`
-3. ✅ Expected: Redirected to home page
-4. Login as admin account (created in Test 1b or 1c)
-5. Try accessing `/admin`
-6. ✅ Expected: Admin pages load successfully
+### Login
+```bash
+curl -X POST http://localhost:4000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "princetancu06@gmail.com",
+    "password": "Prince123!!"
+  }'
+```
+
+### Get Analytics (All Admins)
+```bash
+curl -X GET http://localhost:4000/api/admin/analytics \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+```
+
+### Get Users (Management Only)
+```bash
+curl -X GET http://localhost:4000/api/admin/users \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+
+# If token is from admin@gmail.com:
+# ✅ Expected: Error 403 "Management access required"
+
+# If token is from princetancu06@gmail.com:
+# ✅ Expected: Returns user list (200 OK)
+```
+
+### Get Bookings (Management Only)
+```bash
+curl -X GET http://localhost:4000/api/admin/bookings \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+
+# Same restriction as above applies
+```
 
 ---
 
-### Test 8: HTTP Interceptor (Token Injection)
+## Troubleshooting Checklist
 
-1. Open browser Developer Tools (F12)
-2. Go to Network tab
-3. Login successfully
-4. Make a request to protected endpoint (manually in DevTools console):
-   ```javascript
-   fetch('http://localhost:4000/api/auth/me', {
-     headers: { 'Authorization': 'Bearer ' + localStorage.getItem('auth_token') }
-   }).then(r => r.json()).then(console.log)
-   ```
-5. ✅ Expected: Returns current user data
-6. Try without Authorization header:
-   ```javascript
-   fetch('http://localhost:4000/api/auth/me').then(r => r.json()).then(console.log)
-   ```
-7. ✅ Expected: Returns 401 error "Missing or invalid authorization header"
+- [ ] MySQL running and accessible
+- [ ] Database `tb_tours` created
+- [ ] `.env` file configured with DB credentials
+- [ ] Backend starts without errors (`npm run dev`)
+- [ ] Frontend builds without errors (`npm start`)
+- [ ] Browser can access `http://localhost:4200`
+- [ ] Manager login works with full access
+- [ ] Admin login works but blocks Management
+- [ ] Customer login works with no admin access
+- [ ] Token persists in localStorage
+- [ ] Logout clears token
+- [ ] Protected endpoints return 401 without token
+- [ ] Management endpoints return 403 for non-manager admins
+
+---
+
+## Access Control Matrix
+
+| Feature | Manager (princetancu06@gmail.com) | Admin (admin@gmail.com) | Customer (testing@gmail.com) |
+|---------|----------------------------------|------------------------|------------------------------|
+| Admin Dashboard | ✅ | ✅ | ❌ |
+| View Analytics | ✅ | ✅ | ❌ |
+| Management | ✅ | ❌ | ❌ |
+| User Management | ✅ | ❌ | ❌ |
+| Booking Management | ✅ | ❌ | ❌ |
+| Tour Management | ✅ | ❌ | ❌ |
+| My Bookings | ✅ | ❌ | ✅ |
+| Contact Form | ✅ | ✅ | ✅ |
 
 ---
 
@@ -178,17 +282,19 @@ npm start  # or ng serve
 
 ### Backend Issues
 
-**"Cannot connect to MongoDB"**
-- Ensure MongoDB is running: `mongod` or check MongoDB Atlas connection string
-- Check `MONGODB_URI` in `.env.develop` is correct format
+**"Cannot connect to MySQL"**
+- Ensure MySQL is running: `mysql -u root -p` should connect
+- Check `DB_HOST`, `DB_USER`, `DB_PASSWORD` in `.env`
+- Verify database `tb_tours` exists
 
-**"Mailgun not configured"**
-- Email sending will fail silently if `SMTP_PASS` is not set
-- To test without email: Generate code manually and test verification endpoint with Postman
+**"Admin access denied"**
+- Check user email is exactly `princetancu06@gmail.com` (case-insensitive)
+- Verify user role is `admin` in database
+- Check JWT token is valid and not expired
 
-**JWT token errors**
+**Token errors**
 - Clear browser localStorage: DevTools → Application → Local Storage → Clear All
-- Regenerate token by logging in again
+- Delete auth_token key and login again
 
 ### Frontend Issues
 
@@ -197,99 +303,17 @@ npm start  # or ng serve
 - Check CORS configuration in `backend/src/server.js`
 - Browser console should show error details
 
-**"Token not being sent"**
-- Check localStorage has `auth_token` key: DevTools → Application → Local Storage
-- Check Network tab in DevTools to verify Authorization header is present
-- Verify auth interceptor is registered in `app.config.ts`
-
----
-
-## API Testing with Postman/cURL
-
-### Register Endpoint
-```bash
-curl -X POST http://localhost:4000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "test@example.com",
-    "password": "TestPassword123",
-    "confirmPassword": "TestPassword123"
-  }'
-```
-
-### Verify Email Endpoint
-```bash
-curl -X POST http://localhost:4000/api/auth/verify-email \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "test@example.com",
-    "code": "123456"
-  }'
-```
-
-### Login Endpoint
-```bash
-curl -X POST http://localhost:4000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "test@example.com",
-    "password": "TestPassword123"
-  }'
-```
-
-### Protected Endpoint (Get Current User)
-```bash
-curl -X GET http://localhost:4000/api/auth/me \
-  -H "Authorization: Bearer YOUR_TOKEN_HERE"
-```
-
-### Forgot Password
-```bash
-curl -X POST http://localhost:4000/api/auth/forgot-password \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "test@example.com"
-  }'
-```
-
-### Reset Password
-```bash
-curl -X POST http://localhost:4000/api/auth/reset-password \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "test@example.com",
-    "code": "123456",
-    "newPassword": "NewPassword123",
-    "confirmPassword": "NewPassword123"
-  }'
-```
-
----
-
-## Troubleshooting Checklist
-
-- [ ] MongoDB running and accessible
-- [ ] `.env.develop` file created with required variables
-- [ ] Backend starts without errors (`npm run dev`)
-- [ ] Frontend builds without errors (`npm start`)
-- [ ] Browser can access `http://localhost:4200`
-- [ ] Can navigate to `/auth/register`
-- [ ] Form validation works (email format, password length)
-- [ ] User can complete registration and verification
-- [ ] User can login after verification
-- [ ] User menu shows after login
-- [ ] Token persists in localStorage
-- [ ] Logout clears token
-- [ ] Can request password reset
-- [ ] Admin detection works for recognized emails
-- [ ] Protected endpoints return 401 without token
+**"Admin menu not showing"**
+- Check if logged-in user role is `admin` (not `customer`)
+- Open DevTools Console → `localStorage.getItem('auth_token')`
+- Decode JWT at https://jwt.io to verify role field
 
 ---
 
 ## Next Steps
 
 Once Phase 1 is fully tested:
-1. **Phase 2**: Admin Dashboard (user management, stats)
-2. **Phase 3**: Booking Management (create, view, cancel bookings)
-3. **Phase 4**: Payment Gateway Integration (Stripe/PayPal)
+1. **Phase 2**: Booking Management (view, create, cancel bookings)
+2. **Phase 3**: Payment Integration (Paystack/Stripe)
+3. **Phase 4**: Advanced Features (tour analytics, reporting)
 

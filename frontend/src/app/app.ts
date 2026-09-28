@@ -28,11 +28,20 @@ export class App implements OnInit {
     // Set initial SEO tags based on current route
     this.updateSeoForCurrentRoute();
 
-    // Update SEO tags on route change, but don't scroll automatically
-    // Let anchor navigation work naturally
+    // Update SEO tags on route change
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
+    ).subscribe((event: any) => {
+      // Routes that should scroll to top
+      const scrollToTopRoutes = ['/auth/login', '/auth/register', '/auth/forgot-password', '/booking'];
+      const shouldScrollToTop = scrollToTopRoutes.some(route => event.urlAfterRedirects.startsWith(route));
+
+      if (shouldScrollToTop) {
+        // Scroll to top for auth and booking pages
+        window.scrollTo(0, 0);
+      }
+      // For other pages, let anchor navigation work naturally
+
       this.updateSeoForCurrentRoute();
     });
   }

@@ -5,6 +5,7 @@ const Booking = require("../models/Booking");
 const Tour = require("../models/Tour");
 const { sequelize } = require("../db/connect");
 const { Op } = require("sequelize");
+const { env } = require("../config/env");
 
 const adminRouter = express.Router();
 
@@ -29,13 +30,16 @@ const adminAccess = async (req, res, next) => {
  */
 const adminOnly = async (req, res, next) => {
   try {
-    const AUTHORIZED_MANAGER_EMAIL = 'princetancu06@gmail.com';
     const user = await User.findByPk(req.user.id);
-    if (!user || user.role !== "admin" || user.email.toLowerCase() !== AUTHORIZED_MANAGER_EMAIL) {
+    console.log(`[ADMIN CHECK] User: ${user?.email}, Role: ${user?.role}`);
+    if (!user || user.role !== "admin") {
+      console.log(`[ADMIN CHECK] ❌ Access Denied - User role: ${user?.role || 'null'}`);
       return res.status(403).json({ error: "Management access required" });
     }
+    console.log(`[ADMIN CHECK] ✓ Access Granted`);
     next();
   } catch (error) {
+    console.error(`[ADMIN CHECK] Error:`, error.message);
     return res.status(500).json({ error: "Authorization failed" });
   }
 };
@@ -44,7 +48,7 @@ const adminOnly = async (req, res, next) => {
  * GET /api/admin/users
  * Get all users (paginated)
  */
-adminRouter.get("/users", authMiddleware, adminOnly, async (req, res) => {
+adminRouter.get("/users", authMiddleware(env.jwtSecret), adminOnly, async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -82,7 +86,7 @@ adminRouter.get("/users", authMiddleware, adminOnly, async (req, res) => {
  * GET /api/admin/users/:id
  * Get single user details
  */
-adminRouter.get("/users/:id", authMiddleware, adminOnly, async (req, res) => {
+adminRouter.get("/users/:id", authMiddleware(env.jwtSecret), adminOnly, async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id, {
       attributes: { exclude: ["passwordHash"] },
@@ -106,7 +110,7 @@ adminRouter.get("/users/:id", authMiddleware, adminOnly, async (req, res) => {
  * DELETE /api/admin/users/:id
  * Delete a user
  */
-adminRouter.delete("/users/:id", authMiddleware, adminOnly, async (req, res) => {
+adminRouter.delete("/users/:id", authMiddleware(env.jwtSecret), adminOnly, async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
     if (!user) {
@@ -135,7 +139,7 @@ adminRouter.delete("/users/:id", authMiddleware, adminOnly, async (req, res) => 
  * PUT /api/admin/users/:id
  * Update user details (role, etc)
  */
-adminRouter.put("/users/:id", authMiddleware, adminOnly, async (req, res) => {
+adminRouter.put("/users/:id", authMiddleware(env.jwtSecret), adminOnly, async (req, res) => {
   try {
     const { role, verified } = req.body;
     const user = await User.findByPk(req.params.id);
@@ -169,7 +173,7 @@ adminRouter.put("/users/:id", authMiddleware, adminOnly, async (req, res) => {
  * GET /api/admin/analytics
  * Get dashboard analytics
  */
-adminRouter.get("/analytics", authMiddleware, adminAccess, async (req, res) => {
+adminRouter.get("/analytics", authMiddleware(env.jwtSecret), adminAccess, async (req, res) => {
   try {
     // Exclude current user from all counts
     const whereClause = {
@@ -243,7 +247,7 @@ adminRouter.get("/analytics", authMiddleware, adminAccess, async (req, res) => {
  * GET /api/admin/stats
  * Get quick statistics
  */
-adminRouter.get("/stats", authMiddleware, adminAccess, async (req, res) => {
+adminRouter.get("/stats", authMiddleware(env.jwtSecret), adminAccess, async (req, res) => {
   try {
     const stats = await sequelize.query(`
       SELECT 
@@ -268,7 +272,7 @@ adminRouter.get("/stats", authMiddleware, adminAccess, async (req, res) => {
  * GET /api/admin/bookings
  * Get all bookings (paginated, with filters)
  */
-adminRouter.get("/bookings", authMiddleware, adminOnly, async (req, res) => {
+adminRouter.get("/bookings", authMiddleware(env.jwtSecret), adminOnly, async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -317,7 +321,7 @@ adminRouter.get("/bookings", authMiddleware, adminOnly, async (req, res) => {
  * GET /api/admin/bookings/:id
  * Get booking details
  */
-adminRouter.get("/bookings/:id", authMiddleware, adminOnly, async (req, res) => {
+adminRouter.get("/bookings/:id", authMiddleware(env.jwtSecret), adminOnly, async (req, res) => {
   try {
     const booking = await Booking.findByPk(req.params.id, {
       include: [
@@ -358,7 +362,7 @@ adminRouter.get("/bookings/:id", authMiddleware, adminOnly, async (req, res) => 
  */
 adminRouter.put(
   "/bookings/:id",
-  authMiddleware,
+  authMiddleware(env.jwtSecret),
   adminOnly,
   async (req, res) => {
     try {
@@ -399,7 +403,7 @@ adminRouter.put(
  */
 adminRouter.get(
   "/bookings-analytics",
-  authMiddleware,
+  authMiddleware(env.jwtSecret),
   adminAccess,
   async (req, res) => {
     try {

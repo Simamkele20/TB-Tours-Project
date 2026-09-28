@@ -37,6 +37,7 @@ const { generateVerificationCode, getCodeExpiry } = require("./auth/codeGenerato
 const { authMiddleware } = require("./middleware/authMiddleware");
 const adminRouter = require("./routes/admin");
 const bookingRouter = require("./routes/bookings");
+const paymentRouter = require("./routes/payments");
 
 const app = express();
 const mailgunClient = createMailgunClient(env);
@@ -196,9 +197,9 @@ app.post("/api/auth/register", async (req, res) => {
     const verificationCode = generateVerificationCode();
     const verificationCodeExpiry = getCodeExpiry(15);
 
-    // Determine if user is admin based on specific email
+    // Determine role based on email domain
     let role = "customer";
-    if (normalizedEmail === "princetancu06@gmail.com") {
+    if (normalizedEmail.endsWith("@tb-tours.co.za")) {
       role = "admin";
     }
 
@@ -538,9 +539,15 @@ app.get("/api/auth/me", authMiddleware(env.jwtSecret), async (req, res) => {
 // ============================================
 app.use("/api/admin", adminRouter);
 
+// ============================================
 // BOOKING ROUTES
 // ============================================
 app.use("/api", bookingRouter);
+
+// ============================================
+// PAYMENT ROUTES
+// ============================================
+app.use("/api/payments", paymentRouter);
 
 // ============================================
 // SERVER INITIALIZATION

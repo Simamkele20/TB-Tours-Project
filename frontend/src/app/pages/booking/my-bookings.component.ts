@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
@@ -14,13 +14,30 @@ interface Tour {
 
 interface Booking {
   id: number;
+  userId: number;
+  tourId: number;
   bookingReference: string;
   tourDate: string;
   numberOfPassengers: number;
   totalPrice: number;
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
   paymentStatus: 'unpaid' | 'pending' | 'paid' | 'failed' | 'refunded';
+  paystackReference?: string;
+  paymentReference?: string;
+  transactionId?: string;
+  paymentDate?: string;
+  refundAmount?: number;
+  refundDate?: string;
+  specialRequests: string;
+  accommodationPreferences: string;
+  passengerDetails: any[];
+  notes?: string;
+  cancellationReason?: string;
+  cancellationDate?: string;
+  confirmationEmailSent: boolean;
+  reminderEmailSent: boolean;
   createdAt: string;
+  updatedAt: string;
   Tour: Tour;
 }
 
@@ -35,42 +52,15 @@ interface Booking {
         <p class="subtitle">View and manage your tour bookings</p>
       </header>
 
-      <div class="bookings-content">
-        <!-- Filters -->
-        <div class="filters-section">
-          <button
-            class="filter-btn"
-            [class.active]="activeFilter === 'all'"
-            (click)="setFilter('all')"
-          >
-            All Bookings ({{ getBookingCount('all') }})
-          </button>
-          <button
-            class="filter-btn"
-            [class.active]="activeFilter === 'pending'"
-            (click)="setFilter('pending')"
-          >
-            Pending ({{ getBookingCount('pending') }})
-          </button>
-          <button
-            class="filter-btn"
-            [class.active]="activeFilter === 'confirmed'"
-            (click)="setFilter('confirmed')"
-          >
-            Confirmed ({{ getBookingCount('confirmed') }})
-          </button>
-          <button
-            class="filter-btn"
-            [class.active]="activeFilter === 'completed'"
-            (click)="setFilter('completed')"
-          >
-            Completed ({{ getBookingCount('completed') }})
-          </button>
-        </div>
+      <!-- ERROR MESSAGE -->
+      <div *ngIf="errorMessage" style="background: rgba(244, 67, 54, 0.1); border: 1px solid rgba(244, 67, 54, 0.3); padding: 1rem; margin: 1rem 2rem; border-radius: 4px; color: #ef5350;">
+        <strong>ERROR:</strong> {{ errorMessage }}
+      </div>
 
+      <div class="bookings-content">
         <!-- Bookings List -->
         <div class="bookings-list">
-          <div class="booking-card" *ngFor="let booking of filteredBookings">
+          <div class="booking-card" *ngFor="let booking of bookings">
             <div class="booking-image">
               <img [src]="booking.Tour?.image" [alt]="booking.Tour?.title" />
             </div>
@@ -111,23 +101,10 @@ interface Booking {
                 <span class="price">R{{ booking.totalPrice | number: '1.0-2' }}</span>
               </div>
             </div>
-
-            <div class="booking-actions">
-              <button class="btn-primary" (click)="viewDetails(booking)">
-                View Details
-              </button>
-              <button
-                class="btn-danger"
-                *ngIf="canCancel(booking)"
-                (click)="cancelBooking(booking)"
-              >
-                Cancel
-              </button>
-            </div>
           </div>
 
-          <div class="no-bookings" *ngIf="filteredBookings.length === 0">
-            <p>No {{ activeFilter !== 'all' ? activeFilter : '' }} bookings found.</p>
+          <div class="no-bookings" *ngIf="bookings.length === 0">
+            <p>No bookings found.</p>
             <p>
               <a routerLink="/">Browse tours to create a new booking</a>
             </p>
@@ -170,35 +147,7 @@ interface Booking {
       padding: 2rem;
     }
 
-    .filters-section {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
 
-    .filter-btn {
-      padding: 0.75rem 1.5rem;
-      background: rgba(242, 177, 18, 0.1);
-      border: 1px solid rgba(242, 177, 18, 0.3);
-      border-radius: 4px;
-      color: #f2b112;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      font-size: 0.9rem;
-    }
-
-    .filter-btn:hover {
-      background: rgba(242, 177, 18, 0.2);
-      border-color: #f2b112;
-    }
-
-    .filter-btn.active {
-      background: #f2b112;
-      color: #0a1530;
-      border-color: #f2b112;
-    }
 
     .bookings-list {
       display: grid;
@@ -421,11 +370,6 @@ interface Booking {
       .booking-card {
         grid-template-columns: 150px 1fr;
       }
-
-      .booking-actions {
-        grid-column: 1 / -1;
-        flex-direction: row;
-      }
     }
 
     @media (max-width: 768px) {
@@ -453,60 +397,64 @@ interface Booking {
       .booking-info {
         grid-template-columns: 1fr;
       }
-
-      .filters-section {
-        flex-direction: column;
-      }
-
-      .filter-btn {
-        width: 100%;
-      }
     }
   `]
 })
 export class MyBookingsComponent implements OnInit {
   bookings: Booking[] = [];
-  filteredBookings: Booking[] = [];
-  activeFilter: 'all' | 'pending' | 'confirmed' | 'completed' = 'all';
   private apiBaseUrl = environment.apiBaseUrl;
+  errorMessage: string = '';
+  isLoading: boolean = true;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
+  ) {
+    console.log('[MY-BOOKINGS] Component constructed, apiBaseUrl:', this.apiBaseUrl);
+  }
 
   ngOnInit() {
+    console.log('[MY-BOOKINGS] ngOnInit called');
     this.loadBookings();
   }
 
   loadBookings() {
-    this.http.get<{ data: Booking[] }>(`${this.apiBaseUrl}/bookings`)
-      .subscribe({
-        next: (response) => {
-          this.bookings = response.data;
-          this.filterBookings();
-        },
-        error: (error) => {
-        }
-      });
+    const url = `${this.apiBaseUrl}/bookings`;
+    console.log('[MY-BOOKINGS] loadBookings() - Making request to:', url);
+
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.http.get<{ message: string; data: Booking[] }>(url).subscribe({
+      next: (response) => {
+        console.log('[MY-BOOKINGS] ✅ Response received, booking count:', response?.data?.length);
+        console.log('[MY-BOOKINGS] Full response:', response);
+
+        // Ensure we have an array
+        this.bookings = Array.isArray(response?.data) ? response.data : [];
+        console.log('[MY-BOOKINGS] Bookings assigned, total:', this.bookings.length);
+
+        // Log individual bookings for debugging
+        this.bookings.forEach((b, i) => {
+          console.log(`[MY-BOOKINGS] Booking ${i}:`, b.id, b.Tour?.title, b.status, b.paymentStatus);
+        });
+
+        this.isLoading = false;
+
+        // Force change detection
+        this.cdr.detectChanges();
+        console.log('[MY-BOOKINGS] Change detection triggered');
+      },
+      error: (error) => {
+        console.error('[MY-BOOKINGS] ❌ API error:', error);
+        this.errorMessage = `Failed to load bookings: ${error?.status} ${error?.statusText}`;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
-  setFilter(filter: 'all' | 'pending' | 'confirmed' | 'completed') {
-    this.activeFilter = filter;
-    this.filterBookings();
-  }
 
-  filterBookings() {
-    if (this.activeFilter === 'all') {
-      this.filteredBookings = this.bookings;
-    } else {
-      this.filteredBookings = this.bookings.filter(b => b.status === this.activeFilter);
-    }
-  }
-
-  getBookingCount(status: string): number {
-    if (status === 'all') {
-      return this.bookings.length;
-    }
-    return this.bookings.filter(b => b.status === status).length;
-  }
 
   formatDate(dateString: string): string {
     return new Date(dateString).toLocaleDateString('en-ZA', {
@@ -514,33 +462,5 @@ export class MyBookingsComponent implements OnInit {
       month: 'short',
       day: 'numeric'
     });
-  }
-
-  viewDetails(booking: Booking) {
-    // TODO: Navigate to booking details page or open modal
-  }
-
-  canCancel(booking: Booking): boolean {
-    return booking.status !== 'cancelled' && booking.status !== 'completed';
-  }
-
-  cancelBooking(booking: Booking) {
-    if (!confirm(`Cancel booking ${booking.bookingReference}? This action may affect any payments.`)) {
-      return;
-    }
-
-    const reason = prompt('Please provide a cancellation reason:');
-    if (!reason) return;
-
-    this.http.post(`${this.apiBaseUrl}/bookings/${booking.id}/cancel`, { cancellationReason: reason })
-      .subscribe({
-        next: () => {
-          alert('Booking cancelled successfully');
-          this.loadBookings();
-        },
-        error: (error) => {
-          alert('Failed to cancel booking');
-        }
-      });
   }
 }

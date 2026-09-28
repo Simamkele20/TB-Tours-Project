@@ -26,7 +26,14 @@ const env = {
   jwtExpiry: process.env.JWT_EXPIRY || "24h",
   verificationCodeExpiry: Number(process.env.VERIFICATION_CODE_EXPIRY || 15 * 60 * 1000),
   skipEmailVerification: String(process.env.SKIP_EMAIL_VERIFICATION || "false").toLowerCase() === "true",
-  adminEmails: []
+  adminEmails: [],
+  // Paystack Configuration
+  paystackSecretKey: process.env.PAYSTACK_SECRET_KEY || "",
+  paystackPublicKey: process.env.PAYSTACK_PUBLIC_KEY || "",
+  paystackCallbackUrl: (process.env.PAYSTACK_CALLBACK_URL || `${clientUrls[0]}/payment-callback`).trim(),
+  frontendUrl: process.env.FRONTEND_URL || clientUrls[0] || "http://localhost:4200",
+  // Testing & Debug
+  useMockPayment: process.env.USE_MOCK_PAYMENT === "true"
 };
 
 module.exports = { env };

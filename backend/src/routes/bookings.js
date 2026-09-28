@@ -6,6 +6,7 @@ const Booking = require("../models/Booking");
 const User = require("../models/User");
 const Destination = require("../models/Destination");
 const { sequelize } = require("../db/connect");
+const { env } = require("../config/env");
 
 const bookingRouter = express.Router();
 
@@ -18,6 +19,7 @@ const paystackAPI = axios.create({
   headers: {
     Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
   },
+  timeout: 10000, // 10 second timeout
 });
 
 /**
@@ -77,7 +79,7 @@ bookingRouter.get("/tours/:id", async (req, res) => {
  * POST /api/tours
  * Create a new tour (admin only)
  */
-bookingRouter.post("/tours", authMiddleware, adminMiddleware, async (req, res) => {
+bookingRouter.post("/tours", authMiddleware(env.jwtSecret), adminMiddleware, async (req, res) => {
   try {
     const {
       title,
@@ -147,7 +149,7 @@ bookingRouter.post("/tours", authMiddleware, adminMiddleware, async (req, res) =
  * PUT /api/tours/:id
  * Update a tour (admin only)
  */
-bookingRouter.put("/tours/:id", authMiddleware, adminMiddleware, async (req, res) => {
+bookingRouter.put("/tours/:id", authMiddleware(env.jwtSecret), adminMiddleware, async (req, res) => {
   try {
     const tour = await Tour.findByPk(req.params.id);
 
@@ -221,7 +223,7 @@ bookingRouter.put("/tours/:id", authMiddleware, adminMiddleware, async (req, res
  * DELETE /api/tours/:id
  * Delete a tour (admin only)
  */
-bookingRouter.delete("/tours/:id", authMiddleware, adminMiddleware, async (req, res) => {
+bookingRouter.delete("/tours/:id", authMiddleware(env.jwtSecret), adminMiddleware, async (req, res) => {
   try {
     const tour = await Tour.findByPk(req.params.id);
 
@@ -289,7 +291,7 @@ bookingRouter.get("/destinations/:id", async (req, res) => {
  * POST /api/destinations
  * Create a new destination (admin only)
  */
-bookingRouter.post("/destinations", authMiddleware, adminMiddleware, async (req, res) => {
+bookingRouter.post("/destinations", authMiddleware(env.jwtSecret), adminMiddleware, async (req, res) => {
   try {
     const {
       title,
@@ -347,7 +349,7 @@ bookingRouter.post("/destinations", authMiddleware, adminMiddleware, async (req,
  * PUT /api/destinations/:id
  * Update a destination (admin only)
  */
-bookingRouter.put("/destinations/:id", authMiddleware, adminMiddleware, async (req, res) => {
+bookingRouter.put("/destinations/:id", authMiddleware(env.jwtSecret), adminMiddleware, async (req, res) => {
   try {
     const destination = await Destination.findByPk(req.params.id);
 
@@ -408,7 +410,7 @@ bookingRouter.put("/destinations/:id", authMiddleware, adminMiddleware, async (r
  * DELETE /api/destinations/:id
  * Delete a destination (admin only)
  */
-bookingRouter.delete("/destinations/:id", authMiddleware, adminMiddleware, async (req, res) => {
+bookingRouter.delete("/destinations/:id", authMiddleware(env.jwtSecret), adminMiddleware, async (req, res) => {
   try {
     const destination = await Destination.findByPk(req.params.id);
 
@@ -433,7 +435,8 @@ bookingRouter.delete("/destinations/:id", authMiddleware, adminMiddleware, async
  * POST /api/bookings
  * Create new booking and initialize Paystack payment
  */
-bookingRouter.post("/bookings", authMiddleware, async (req, res) => {
+bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) => {
+  console.log('[BOOKING] Request received');
   const transaction = await sequelize.transaction();
   try {
     const {
@@ -445,16 +448,21 @@ bookingRouter.post("/bookings", authMiddleware, async (req, res) => {
       passengerDetails,
     } = req.body;
 
+    console.log('[BOOKING] Request body:', { tourId, tourDate, numberOfPassengers });
+
     // Validation
     if (!tourId || !tourDate || !numberOfPassengers) {
+      console.log('[BOOKING] Validation failed');
       return res.status(400).json({
         error: "Missing required fields: tourId, tourDate, numberOfPassengers",
       });
     }
 
     // Get tour
+    console.log('[BOOKING] Fetching tour ID:', tourId);
     const tour = await Tour.findByPk(tourId);
     if (!tour) {
+      console.log('[BOOKING] Tour not found');
       return res.status(404).json({ error: "Tour not found" });
     }
 
@@ -470,7 +478,10 @@ bookingRouter.post("/bookings", authMiddleware, async (req, res) => {
       ? parseFloat(tour.pricePerPerson) * numberOfPassengers
       : parseFloat(tour.price);
 
+    console.log('[BOOKING] Total price:', totalPrice);
+
     // Create booking with pending payment status
+    console.log('[BOOKING] Creating booking record...');
     const booking = await Booking.create(
       {
         userId: req.user.id,
@@ -489,20 +500,50 @@ bookingRouter.post("/bookings", authMiddleware, async (req, res) => {
       { transaction }
     );
 
+    console.log('[BOOKING] Booking created:', booking.id);
+
     // Initialize Paystack payment
     try {
-      const paystackResponse = await paystackAPI.post("/transaction/initialize", {
-        email: req.user.email,
-        amount: Math.round(totalPrice * 100), // Convert to kobo
-        metadata: {
-          userId: req.user.id,
-          tourId,
-          tourDate,
-          numberOfPassengers,
-          bookingId: booking.id,
-          bookingReference: booking.bookingReference,
-        },
-      });
+      console.log('[BOOKING] Calling Paystack API...');
+      console.log('[BOOKING] USE_MOCK_PAYMENT env:', process.env.USE_MOCK_PAYMENT);
+      
+      let paystackResponse;
+      
+      // For testing, allow mock payment response
+      const useMockPayment = process.env.USE_MOCK_PAYMENT === 'true';
+      console.log('[BOOKING] useMockPayment resolved to:', useMockPayment);
+      
+      if (useMockPayment) {
+        console.log('[BOOKING] Using MOCK Paystack response for testing');
+        paystackResponse = {
+          data: {
+            status: true,
+            message: 'Authorization URL created',
+            data: {
+              authorization_url: `https://checkout.paystack.com/mock-${booking.id}`,
+              access_code: `mock-${booking.id}`,
+              reference: `MOCK-${booking.bookingReference}`,
+            }
+          }
+        };
+      } else {
+        // Get environment config for callback URL - Paystack will automatically add ?reference={ref}&trxref={ref}
+        const callbackUrl = `${env.frontendUrl}/payment-callback`;
+        
+        paystackResponse = await paystackAPI.post("/transaction/initialize", {
+          email: req.user.email,
+          amount: Math.round(totalPrice * 100), // Convert to kobo
+          metadata: {
+            userId: req.user.id,
+            tourId,
+            tourDate,
+            numberOfPassengers,
+            bookingId: booking.id,
+            bookingReference: booking.bookingReference,
+          },
+          callback_url: callbackUrl,
+        });
+      }
 
       if (!paystackResponse.data.status) {
         throw new Error("Failed to initialize Paystack payment");
@@ -528,14 +569,14 @@ bookingRouter.post("/bookings", authMiddleware, async (req, res) => {
       });
     } catch (paystackError) {
       await transaction.rollback();
-      console.error("[PAYSTACK INIT ERROR]", paystackError.message);
+      console.error("[PAYSTACK INIT ERROR]", paystackError.message, paystackError.code);
       return res.status(500).json({
         error: "Failed to initialize payment: " + paystackError.message,
       });
     }
   } catch (error) {
     await transaction.rollback();
-    console.error("[CREATE BOOKING ERROR]", error);
+    console.error("[CREATE BOOKING ERROR]", error.message);
     return res.status(500).json({ error: "Failed to create booking" });
   }
 });
@@ -617,7 +658,7 @@ bookingRouter.post(
  * GET /api/bookings
  * Get current user's bookings
  */
-bookingRouter.get("/bookings", authMiddleware, async (req, res) => {
+bookingRouter.get("/bookings", authMiddleware(env.jwtSecret), async (req, res) => {
   try {
     const bookings = await Booking.findAll({
       where: { userId: req.user.id },
@@ -644,7 +685,7 @@ bookingRouter.get("/bookings", authMiddleware, async (req, res) => {
  * GET /api/bookings/:id
  * Get booking details
  */
-bookingRouter.get("/bookings/:id", authMiddleware, async (req, res) => {
+bookingRouter.get("/bookings/:id", authMiddleware(env.jwtSecret), async (req, res) => {
   try {
     const booking = await Booking.findByPk(req.params.id, {
       include: [
@@ -686,7 +727,7 @@ bookingRouter.get("/bookings/:id", authMiddleware, async (req, res) => {
  * PUT /api/bookings/:id
  * Update booking (before confirmation only)
  */
-bookingRouter.put("/bookings/:id", authMiddleware, async (req, res) => {
+bookingRouter.put("/bookings/:id", authMiddleware(env.jwtSecret), async (req, res) => {
   try {
     const booking = await Booking.findByPk(req.params.id);
 
@@ -734,7 +775,7 @@ bookingRouter.put("/bookings/:id", authMiddleware, async (req, res) => {
  * POST /api/bookings/:id/cancel
  * Cancel booking and refund payment
  */
-bookingRouter.post("/bookings/:id/cancel", authMiddleware, async (req, res) => {
+bookingRouter.post("/bookings/:id/cancel", authMiddleware(env.jwtSecret), async (req, res) => {
   const transaction = await sequelize.transaction();
   try {
     const booking = await Booking.findByPk(req.params.id);

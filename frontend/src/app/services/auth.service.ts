@@ -233,7 +233,13 @@ export class AuthService {
    * Get token from storage
    */
   getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    const token = localStorage.getItem(this.TOKEN_KEY);
+    if (token) {
+      console.log('[AUTH-SERVICE] getToken() called - token found:', token.substring(0, 20) + '...');
+    } else {
+      console.log('[AUTH-SERVICE] getToken() called - NO token found');
+    }
+    return token;
   }
 
   /**

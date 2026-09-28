@@ -54,6 +54,31 @@ const Booking = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    paymentReference: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      comment: "Unique payment reference for Paystack transaction"
+    },
+    transactionId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      comment: "Paystack transaction ID after successful payment"
+    },
+    paymentDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      comment: "Date when payment was completed"
+    },
+    refundAmount: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
+      comment: "Amount refunded if applicable"
+    },
+    refundDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      comment: "Date when refund was processed"
+    },
     specialRequests: {
       type: DataTypes.TEXT,
       allowNull: true,

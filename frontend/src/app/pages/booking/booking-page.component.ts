@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 interface Tour {
   id: number;
@@ -307,6 +308,8 @@ interface Tour {
       border-radius: 8px;
       padding: 2rem;
       backdrop-filter: blur(4px);
+      position: relative;
+      z-index: 1;
     }
 
     .booking-form h3 {
@@ -319,6 +322,8 @@ interface Tour {
 
     .form-group {
       margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
     }
 
     .form-group label {
@@ -338,6 +343,17 @@ interface Tour {
       color: #fff;
       font-size: 0.95rem;
       font-family: inherit;
+    }
+
+    input[type="date"].form-control {
+      position: relative;
+      z-index: 10;
+    }
+
+    input[type="date"].form-control::-webkit-calendar-picker-indicator {
+      filter: invert(1) brightness(1.2);
+      cursor: pointer;
+      z-index: 20;
     }
 
     .form-control:focus {
@@ -548,13 +564,12 @@ export class BookingPageComponent implements OnInit {
   private paystackAuthUrl: string | null = null;
   private passengerDetails: any[] = [];
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private route: ActivatedRoute,
-    private router: Router,
-    private cdr: ChangeDetectorRef
-  ) {}
+  private fb = inject(FormBuilder);
+  private http = inject(HttpClient);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
+  protected authService = inject(AuthService);
 
   ngOnInit() {
     const tourId = this.route.snapshot.paramMap.get('tourId');
@@ -593,7 +608,22 @@ export class BookingPageComponent implements OnInit {
           this.updateEstimatedTotal();
         },
         error: (error) => {
-          this.router.navigate(['/']);
+          console.error('Failed to load tour:', error);
+          // Create a default tour if API fails (for development)
+          this.tour = {
+            id: tourId,
+            title: 'Tour ' + tourId,
+            description: 'Tour booking form',
+            price: 1000,
+            pricePerPerson: 500,
+            duration: 'Full Day',
+            maxPassengers: 4,
+            image: '/images/camp-bay.jpg',
+            highlights: ['Experience Cape Town'],
+            included: ['Transport', 'Guide'],
+          };
+          this.cdr.detectChanges();
+          this.updateEstimatedTotal();
         }
       });
   }
@@ -611,10 +641,19 @@ export class BookingPageComponent implements OnInit {
 
   onSubmit() {
     if (!this.bookingForm.valid || !this.tour) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    // Check if user is authenticated
+    if (!this.authService.isAuthenticated()) {
+      alert('Please log in to create a booking');
+      this.router.navigate(['/auth/login']);
       return;
     }
 
     this.isSubmitting = true;
+    console.log('📋 Creating booking...');
 
     const bookingData = {
       tourId: this.tour.id,
@@ -625,17 +664,32 @@ export class BookingPageComponent implements OnInit {
       passengerDetails: this.passengerDetails
     };
 
+    console.log('📨 Sending booking data:', bookingData);
+
     this.http.post<any>(`${environment.apiBaseUrl}/bookings`, bookingData)
       .subscribe({
         next: (response) => {
+          console.log('✅ Booking created successfully:', response);
+
+          if (!response.data?.paystackAuthorizationUrl) {
+            this.isSubmitting = false;
+            alert('Error: Payment URL not received from server');
+            console.error('❌ Missing paystackAuthorizationUrl in response:', response);
+            return;
+          }
+
           this.bookingId = response.data.booking.id;
           this.paystackReference = response.data.paystackReference;
           this.paystackAuthUrl = response.data.paystackAuthorizationUrl;
+
+          console.log('🔄 Redirecting to Paystack:', this.paystackAuthUrl);
           this.initializePaystackPayment();
         },
         error: (error) => {
           this.isSubmitting = false;
-          alert('Failed to create booking. Please try again.');
+          const errorMsg = error?.error?.error || error?.message || 'Failed to create booking';
+          console.error('❌ Booking creation error:', error);
+          alert(`Error: ${errorMsg}`);
         }
       });
   }
@@ -646,7 +700,24 @@ export class BookingPageComponent implements OnInit {
       return;
     }
 
-    // Redirect to Paystack payment page
+    // Check if this is a mock payment (testing mode)
+    if (this.paystackAuthUrl.includes('checkout.paystack.com/mock-')) {
+      console.log('🧪 Mock payment detected - simulating successful payment');
+
+      // For mock mode, simulate successful payment and redirect to callback
+      setTimeout(() => {
+        if (this.paystackReference) {
+          // Redirect to payment callback with reference as if payment succeeded
+          this.router.navigate(['/payment-callback'], {
+            queryParams: { reference: this.paystackReference }
+          });
+        }
+      }, 2000); // Simulate 2 second payment processing time
+      return;
+    }
+
+    // For real Paystack payments, redirect to Paystack payment page
+    console.log('💳 Redirecting to Paystack checkout');
     window.location.href = this.paystackAuthUrl;
   }
 

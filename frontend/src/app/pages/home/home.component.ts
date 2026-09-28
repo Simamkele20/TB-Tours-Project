@@ -39,7 +39,7 @@ import { finalize } from "rxjs";
           </div>
           <figure class="about-image">
             <img
-              src="/images/About.jpg"
+              src="/images/About TB TOURS.jpg"
               alt="TB Tours about section image"
               loading="lazy" />
           </figure>
@@ -144,6 +144,24 @@ import { finalize } from "rxjs";
       </div>
     </section>
 
+    <!-- PARTNERS & ACCREDITATIONS SECTION -->
+    <section id="partners" class="section partners-section">
+      <div class="container">
+        <div class="section-header">
+          <i class="bi bi-shield-check partners-icon" aria-hidden="true"></i>
+          <p class="kicker">Partners & Accreditations</p>
+        </div>
+
+        <div class="partners-grid">
+          <div class="partner-card" *ngFor="let partner of partners()">
+            <div class="partner-logo-wrapper">
+              <img [src]="partner.logo" [alt]="partner.name" class="partner-logo" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CONTACT SECTION -->
     <section id="contact" class="section contact-section">
       <div class="container">
@@ -209,6 +227,7 @@ import { finalize } from "rxjs";
 })
 export class HomePageComponent implements OnInit {
   readonly heroConfig = computed(() => SITE_CONTENT["home"].hero);
+  readonly partners = computed(() => SITE_CONTENT["home"].partners || []);
   readonly SITE_SERVICES = SITE_SERVICES;
 
   private bookingApi = inject(BookingApiService);
