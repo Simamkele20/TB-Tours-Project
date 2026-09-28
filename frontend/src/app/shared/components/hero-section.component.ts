@@ -1,6 +1,5 @@
 import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { RouterModule } from "@angular/router";
 
 export interface HeroConfig {
   eyebrow: string;
@@ -8,6 +7,7 @@ export interface HeroConfig {
   accent: string;
   description: string;
   image?: string;
+  video?: string;
   showPhone?: boolean;
   bookButtonLabel?: string;
   hideButton?: boolean;
@@ -16,9 +16,12 @@ export interface HeroConfig {
 @Component({
   selector: "app-hero-section",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule],
   template: `
-    <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [class.hero-couriers]="isCouriers" [class.hero-left]="alignLeft" [style.backgroundImage]="getBackgroundImage()">
+    <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [style.backgroundImage]="getBackgroundImage()">
+      <video *ngIf="showPhone() && config?.video" class="hero-video" autoplay muted loop playsinline>
+        <source [src]="config.video" type="video/mp4">
+      </video>
       <div class="container hero-content">
         <p class="eyebrow">{{ config.eyebrow }}</p>
         <h1>
@@ -36,9 +39,6 @@ export interface HeroConfig {
           <a href="#destinations" class="btn btn-outline-light">
             Explore Destinations
           </a>
-          <a routerLink="/couriers" class="btn btn-outline-gold">
-            Courier Service
-          </a>
         </div>
 
         <p class="hero-trust" *ngIf="showPhone()">Private · Professional · Personal</p>
@@ -55,8 +55,6 @@ export class HeroSectionComponent {
   @Input() config!: HeroConfig;
   @Input() showPhone: () => boolean = () => false;
   @Input() isDestination: boolean = false;
-  @Input() alignLeft: boolean = false;
-  @Input() isCouriers: boolean = false;
 
   getBackgroundImage(): string {
     // Only apply background image for destination pages (not home)
