@@ -9,11 +9,7 @@ const env = {
   nodeEnv: process.env.NODE_ENV || "development",
   clientUrl: clientUrls[0] || "http://localhost:4200",
   clientUrls,
-  smtpHost: (process.env.SMTP_HOST || "").trim(),
-  smtpPort: Number(process.env.SMTP_PORT || 587),
-  smtpUser: (process.env.SMTP_USER || "").trim(),
-  smtpPass: (process.env.SMTP_PASS || "").replace(/\s+/g, ""),
-  smtpSecure: String(process.env.SMTP_SECURE || "false").toLowerCase() === "true",
+  mailgunApiKey: (process.env.MAILGUN_API_KEY || "").trim(),
   mailgunDomain: (process.env.MAILGUN_DOMAIN || "sandboxf1e866405b11426296207bac0d2f4cca.mailgun.org").trim(),
   contactToEmail: (process.env.CONTACT_TO_EMAIL || "info@tb-tours.co.za").trim(),
   // MySQL Configuration

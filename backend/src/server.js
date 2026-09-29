@@ -45,7 +45,7 @@ const mailgunDomain = env.mailgunDomain;
 const contactMessages = [];
 
 if (!mailgunClient) {
-  console.warn("[STARTUP] Email service not configured. Set SMTP_PASS environment variable to enable emails.");
+  console.warn("[STARTUP] Email service not configured. Set MAILGUN_API_KEY environment variable to enable emails.");
 }
 
 const normalizeOrigin = (value) => String(value || "").trim().replace(/\/+$/, "").toLowerCase();
