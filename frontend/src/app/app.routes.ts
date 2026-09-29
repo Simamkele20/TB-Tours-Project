@@ -4,6 +4,7 @@ import { AboutStoryPageComponent } from './pages/about/about-story.component';
 import { DestinationDetailComponent } from './pages/destinations/destinations-detail.component';
 import { ContactPageComponent } from './pages/contact/contact.component';
 import { ToursPageComponent } from './pages/tours/tours.component';
+import { CouriersComponent } from './pages/couriers/couriers.component';
 import { LoginComponent } from './pages/auth/login.component';
 import { RegisterComponent } from './pages/auth/register.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password.component';
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'story', component: AboutStoryPageComponent },
   { path: 'tours', component: ToursPageComponent },
+  { path: 'couriers', component: CouriersComponent },
   { path: 'destinations/:slug', component: DestinationDetailComponent },
   { path: 'contact', component: ContactPageComponent },
   // Auth routes
