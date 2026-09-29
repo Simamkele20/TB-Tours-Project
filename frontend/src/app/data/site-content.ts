@@ -1007,20 +1007,44 @@ export interface CourierVehicle {
 
 export const COURIERS_VEHICLES: CourierVehicle[] = [
   {
-    name: "Sedan",
+    name: "Express Delivery",
     seats: 4,
     features: ["Air conditioning", "Comfortable seating", "Professional driver"],
-    image: "images/sedan.jpg",
-    capacity: "4 passengers",
-    specs: "Luxury sedan for comfort"
+    image: "images/Del 1.jpg",
+    capacity: "Small parcels & documents",
+    specs: "Fast, efficient delivery for urgent items"
   },
   {
-    name: "Minibus",
+    name: "Standard Delivery",
     seats: 8,
     features: ["Spacious interior", "Air conditioning", "Luggage space"],
-    image: "images/minibus.jpg",
-    capacity: "8 passengers",
-    specs: "Spacious minibus for groups"
+    image: "images/Del 2.jpg",
+    capacity: "Medium packages",
+    specs: "Reliable service for standard deliveries"
+  },
+  {
+    name: "Premium Delivery",
+    seats: 4,
+    features: ["Air conditioning", "Comfortable seating", "Professional driver"],
+    image: "images/Del 3.jpg",
+    capacity: "Large packages",
+    specs: "Professional delivery for bulk items"
+  },
+  {
+    name: "Corporate Delivery",
+    seats: 8,
+    features: ["Spacious interior", "Air conditioning", "Luggage space"],
+    image: "images/Del 4.jpg",
+    capacity: "Business deliveries",
+    specs: "Dedicated service for corporate clients"
+  },
+  {
+    name: "Multi-Stop Delivery",
+    seats: 4,
+    features: ["Air conditioning", "Comfortable seating", "Professional driver"],
+    image: "images/Del 5.jpg",
+    capacity: "Multiple deliveries",
+    specs: "Efficient multi-stop delivery routes"
   }
 ];
 
@@ -1034,41 +1058,68 @@ export interface CourierService {
 
 export const COURIERS_PAGE_CONTENT = {
   hero: {
-    eyebrow: "Professional Delivery",
-    title: "Courier",
-    accent: "Services",
-    description: "Fast, reliable and secure courier services across Cape Town and the Winelands.",
-    image: "images/courier.jpg"
+    eyebrow: "Delivery Services",
+    title: "TB TOURS ",
+    accent: "COURIER",
+    description: "Fast. Reliable. Door-to-Door. Need to send a parcel, document or package? TB Tours Courier provides reliable door-to-door delivery services for individuals and businesses.",
+    image: "images/Del 2.jpg"
   },
-  tagline: "We deliver excellence",
+  tagline: "We offer convenient local deliveries with a professional and personal service.",
   services: [
     {
       number: "01",
-      title: "Same-Day Delivery",
-      description: "Fast and reliable same-day courier services",
+      title: "Same-Day Deliveries",
+      description: "Send documents and parcels across your local area with convenient same-day delivery.",
       icon: "📦"
     },
     {
       number: "02",
-      title: "Scheduled Delivery",
-      description: "Plan ahead with our scheduled delivery options",
-      icon: "📅"
+      title: "Door-to-Door Delivery",
+      description: "We collect your parcel from your chosen location and deliver it directly to the recipient.",
+      icon: "🚐"
+    },
+    {
+      number: "03",
+      title: "Business Deliveries",
+      description: "Reliable delivery support for small businesses, offices, guesthouses and other businesses.",
+      icon: "🏢"
+    },
+    {
+      number: "04",
+      title: "Documents & Small Parcels",
+      description: "Ideal for important documents, packages, personal items and other suitable deliveries.",
+      icon: "📄"
+    },
+    {
+      number: "05",
+      title: "Courier Service",
+      description: "Complete courier solutions for your delivery needs.",
+      icon: "🚚"
     }
   ],
   pricing: [
-    { tier: "Local", distance: "Within 5km", rate: "R50", price: "R50" },
-    { tier: "Regional", distance: "5-50km", rate: "R200", price: "R200" }
+    { tier: "0–5 km", distance: "0–5 km", rate: "R60", price: "R60" },
+    { tier: "5–10 km", distance: "5–10 km", rate: "R80", price: "R80" },
+    { tier: "10–15 km", distance: "10–15 km", rate: "R100", price: "R100" },
+    { tier: "15–20 km", distance: "15–20 km", rate: "R120", price: "R120" },
+    { tier: "20–30 km", distance: "20–30 km", rate: "R150", price: "R150" },
+    { tier: "30–40 km", distance: "30–40 km", rate: "R180", price: "R180" },
+    { tier: "40–50 km", distance: "40–50 km", rate: "R220", price: "R220" },
+    { tier: "Over 50 km", distance: "Over 50 km", rate: "Contact for quote", price: "Contact for quote" }
   ],
   whyChoose: [
-    "Professional drivers",
-    "Insured packages",
-    "Real-time tracking",
-    "24/7 service"
+    "Reliable service",
+    "Door-to-door delivery",
+    "Same-day delivery options",
+    "Competitive pricing",
+    "Professional service",
+    "Ideal for individuals and businesses"
   ],
   steps: [
-    { number: "01", title: "Book", description: "Request a courier" },
-    { number: "02", title: "Confirm", description: "We confirm pickup" },
-    { number: "03", title: "Deliver", description: "Fast delivery" }
+    { number: "01", title: "Request a Quote", description: "Contact us with your pickup location, delivery location and parcel details." },
+    { number: "02", title: "Confirm Your Booking", description: "We'll confirm the price and delivery details with you." },
+    { number: "03", title: "We Collect", description: "We collect your parcel from the agreed pickup location." },
+    { number: "04", title: "We Deliver", description: "Your parcel is delivered directly to the recipient." }
   ]
 };
 

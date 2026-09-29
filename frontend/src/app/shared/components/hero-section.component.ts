@@ -19,7 +19,7 @@ export interface HeroConfig {
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [style.backgroundImage]="getBackgroundImage()">
+    <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [class.hero-couriers]="isCouriers" [style.backgroundImage]="getBackgroundImage()">
       <video *ngIf="showPhone() && config?.video" class="hero-video" autoplay muted loop playsinline>
         <source [src]="config.video" type="video/mp4">
       </video>
