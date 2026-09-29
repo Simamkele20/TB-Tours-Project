@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 
 export interface HeroConfig {
   eyebrow: string;
@@ -16,7 +17,7 @@ export interface HeroConfig {
 @Component({
   selector: "app-hero-section",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   template: `
     <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [style.backgroundImage]="getBackgroundImage()">
       <video *ngIf="showPhone() && config?.video" class="hero-video" autoplay muted loop playsinline>
@@ -39,7 +40,7 @@ export interface HeroConfig {
           <a href="#destinations" class="btn btn-outline-light">
             Explore Destinations
           </a>
-          <a href="#services" class="btn btn-outline-light">
+          <a routerLink="/couriers" class="btn btn-outline-light">
             Courier Service
           </a>
         </div>
