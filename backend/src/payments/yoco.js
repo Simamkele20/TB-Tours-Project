@@ -34,7 +34,7 @@ if (SHOULD_USE_MOCK) {
 const yocoAPI = axios.create({
   baseURL: YOCO_BASE_URL,
   headers: {
-    'X-API-Key': YOCO_SECRET_KEY,
+    'Authorization': `Bearer ${YOCO_SECRET_KEY}`,
     'Content-Type': 'application/json'
   },
   // Allow self-signed certificates for development
@@ -57,19 +57,28 @@ const yocoAPI = axios.create({
  */
 async function createCheckout(checkoutData) {
   try {
+    console.log('\n[YOCO] ========================================');
     console.log('[YOCO] Creating checkout with data:', {
       amount: checkoutData.amount,
       currency: checkoutData.currency,
       email: checkoutData.email,
       reference: checkoutData.reference
     });
+    
+    // Log mock mode decision
+    console.log('[YOCO] Mock mode check:', {
+      SHOULD_USE_MOCK,
+      IS_TEST_CREDENTIALS,
+      USE_YOCO_MOCK,
+      NODE_ENV,
+      YOCO_SECRET_KEY_PREFIX: YOCO_SECRET_KEY?.substring(0, 15),
+      YOCO_PUBLIC_KEY_PREFIX: YOCO_PUBLIC_KEY?.substring(0, 15)
+    });
 
     // MOCK MODE FOR DEVELOPMENT AND TEST CREDENTIALS
     if (SHOULD_USE_MOCK) {
-      console.log('[YOCO] 🎭 MOCK: Returning simulated checkout response');
+      console.log('[YOCO] 🎭 MOCK MODE ACTIVE - Returning simulated response');
       const checkoutId = 'cht_test_' + Date.now();
-      // This URL format simulates what Yoco's API returns
-      // In testing with test credentials, this would redirect to Yoco's test checkout page
       return {
         success: true,
         data: {
@@ -81,6 +90,8 @@ async function createCheckout(checkoutData) {
         }
       };
     }
+    
+    console.log('[YOCO] 🌐 LIVE MODE - Calling real Yoco API...');
 
     // Real Yoco API call with all required fields
     console.log('[YOCO] Calling real Yoco API with request payload:', {
