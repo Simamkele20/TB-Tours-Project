@@ -50,12 +50,8 @@ interface Tour {
                 <span class="price">R{{ getExtraPersonRate(tour.pricePerPerson || tour.price) | number: '1.0-2' }}</span>
               </div>
               <div class="estimated-total" *ngIf="bookingForm.get('numberOfPassengers')?.value > 3">
-                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                  <label style="font-size: 0.95rem; color: #ccc;">Estimated total for {{ bookingForm.get('numberOfPassengers')?.value }} {{ bookingForm.get('numberOfPassengers')?.value === 1 ? 'person' : 'people' }}:</label>
-                  <div class="calculation-breakdown">
-                    R{{ (tour.pricePerPerson || tour.price) | number: '1.0-2' }} + ({{ bookingForm.get('numberOfPassengers')?.value - 3 }} × R{{ getExtraPersonRate(tour.pricePerPerson || tour.price) | number: '1.0-2' }}) = <strong style="color: #f2b112;">R{{ estimatedTotal | number: '1.0-2' }}</strong>
-                  </div>
-                </div>
+                <label>Estimated total for {{ bookingForm.get('numberOfPassengers')?.value }} {{ bookingForm.get('numberOfPassengers')?.value === 1 ? 'person' : 'people' }}:</label>
+                <span class="total">R{{ estimatedTotal | number: '1.0-2' }}</span>
               </div>
             </div>
           </div>
@@ -240,36 +236,23 @@ interface Tour {
 
     .estimated-total {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
       margin-top: 1rem;
       padding-top: 1rem;
       border-top: 1px solid rgba(242, 177, 18, 0.2);
-      font-size: 1.1rem;
-      font-weight: 600;
+      font-size: 1rem;
     }
 
     .estimated-total label {
-      margin-bottom: 0.5rem;
-      color: #fff;
-    }
-
-    .calculation-breakdown {
-      margin: 0.75rem 0;
-      padding: 0.75rem;
-      background: rgba(242, 177, 18, 0.05);
-      border-left: 3px solid #f2b112;
-      font-size: 1rem;
-      font-weight: normal;
-      color: #ddd;
-      border-radius: 4px;
-      line-height: 1.5;
+      color: #ccc;
+      font-weight: 500;
     }
 
     .total {
       color: #f2b112;
       font-size: 1.2rem;
       font-weight: 600;
-      align-self: flex-end;
     }
 
     .booking-form {
@@ -589,7 +572,9 @@ export class BookingPageComponent implements OnInit {
       return;
     }
     const passengers = this.bookingForm.get('numberOfPassengers')?.value || 1;
-    const basePrice = this.tour.pricePerPerson || this.tour.price;
+    const basePrice = parseFloat((this.tour.pricePerPerson || this.tour.price).toString());
+    
+    console.log(`[BOOKING] Calculating total - passengers: ${passengers}, basePrice: ${basePrice}`);
     
     // Tiered pricing:
     // 1-3 people: flat rate (base price)
@@ -601,6 +586,7 @@ export class BookingPageComponent implements OnInit {
       const extraPersonRate = this.getExtraPersonRate(basePrice);
       const extraPeople = passengers - 3;
       this.estimatedTotal = basePrice + (extraPersonRate * extraPeople);
+      console.log(`[BOOKING] 4+ calculation: ${basePrice} + (${extraPeople} × ${extraPersonRate}) = ${this.estimatedTotal}`);
     }
     
     this.cdr.detectChanges();
@@ -608,15 +594,28 @@ export class BookingPageComponent implements OnInit {
 
   getExtraPersonRate(tourPrice: number): number {
     // Define extra person rates for 4+ people
+    const price = parseFloat(tourPrice.toString());
     const extraPersonRates: { [key: number]: number } = {
-      650: 350,      // 650 service: extra person R350 (1-3 flat R650, 4th person +R350)
-      2000: 600,     // 2000 service: extra person R600 (1-3 flat R2000, 4th person +R600)
-      2500: 800,     // 2500 service: extra person R800 (1-3 flat R2500, 4th person +R800)
-      3500: 800      // 3500 service: extra person R800 (1-3 flat R3500, 4th person +R800)
+      650: 350,      // 650 service: extra person R350
+      2000: 600,     // 2000 service: extra person R600
+      2500: 800,     // 2500 service: extra person R800
+      3500: 800      // 3500 service: extra person R800
     };
     
-    // Return the extra person rate if defined, otherwise use 50% of base price
-    return extraPersonRates[tourPrice] || Math.floor(tourPrice * 0.5);
+    // Try exact match first
+    if (extraPersonRates[price]) {
+      return extraPersonRates[price];
+    }
+    
+    // Try rounded match
+    const rounded = Math.round(price);
+    if (extraPersonRates[rounded]) {
+      return extraPersonRates[rounded];
+    }
+    
+    // Fallback to 50% of base price
+    console.log(`[BOOKING] Using fallback rate for price: ${price}`);
+    return Math.round(price * 0.5);
   }
 
   onSubmit() {
