@@ -28,6 +28,20 @@ const env = {
   paystackPublicKey: process.env.PAYSTACK_PUBLIC_KEY || "",
   paystackCallbackUrl: (process.env.PAYSTACK_CALLBACK_URL || `${clientUrls[0]}/payment-callback`).trim(),
   frontendUrl: process.env.FRONTEND_URL || clientUrls[0] || "http://localhost:4200",
+  
+  // ========================================
+  // PAYSTACK CONFIGURATION DISABLED
+  // Migration in progress to Yoco payment gateway
+  // ========================================
+  // paystackSecretKey: process.env.PAYSTACK_SECRET_KEY || "",
+  // paystackPublicKey: process.env.PAYSTACK_PUBLIC_KEY || "",
+  // paystackCallbackUrl: (process.env.PAYSTACK_CALLBACK_URL || `${clientUrls[0]}/payment-callback`).trim(),
+  
+  // Yoco Configuration (NEW)
+  yocoPublicKey: process.env.YOCO_PUBLIC_KEY || "",
+  yocoSecretKey: process.env.YOCO_SECRET_KEY || "",
+  yocoRedirectUrl: (process.env.YOCO_REDIRECT_URL || `${clientUrls[0]}/payment-confirmation`).trim(),
+  
   // Testing & Debug
   useMockPayment: process.env.USE_MOCK_PAYMENT === "true"
 };

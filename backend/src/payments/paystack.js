@@ -1,3 +1,12 @@
+/**
+ * DEPRECATED: Paystack Integration
+ * This module has been disabled and is being replaced with Yoco payment gateway
+ * See: backend/src/payments/yoco.js for the new implementation
+ * 
+ * All Paystack-related code has been commented out below
+ */
+
+/*
 const axios = require('axios');
 
 const PAYSTACK_BASE_URL = 'https://api.paystack.co';
@@ -23,7 +32,7 @@ const paystackAPI = axios.create({
  * @param {string} paymentData.reference - Unique reference for the booking
  * @param {Object} paymentData.metadata - Additional metadata (booking details, customer info, etc.)
  * @returns {Promise<Object>} Response with authorization_url and access_code
- */
+ * /
 async function initializePayment(paymentData) {
   try {
     const response = await paystackAPI.post('/transaction/initialize', {
@@ -55,7 +64,7 @@ async function initializePayment(paymentData) {
  * Verify a payment transaction
  * @param {string} reference - Payment reference to verify
  * @returns {Promise<Object>} Transaction details
- */
+ * /
 async function verifyPayment(reference) {
   try {
     const response = await paystackAPI.get(`/transaction/verify/${reference}`);
@@ -91,7 +100,7 @@ async function verifyPayment(reference) {
  * @param {number} planData.amount - Amount in cents
  * @param {string} planData.interval - Billing interval (monthly, quarterly, biannually, annually)
  * @returns {Promise<Object>} Created plan details
- */
+ * /
 async function createPaymentPlan(planData) {
   try {
     const response = await paystackAPI.post('/plan', {
@@ -119,7 +128,7 @@ async function createPaymentPlan(planData) {
  * @param {string} email - Customer email
  * @param {Object} customerData - Optional customer details
  * @returns {Promise<Object>} Customer details
- */
+ * /
 async function getOrCreateCustomer(email, customerData = {}) {
   try {
     const response = await paystackAPI.post('/customer', {
@@ -154,7 +163,7 @@ async function getOrCreateCustomer(email, customerData = {}) {
  * @param {string} authorizationCode - Customer authorization code
  * @param {Object} chargeData - Charge details
  * @returns {Promise<Object>} Charge response
- */
+ * /
 async function chargeAuthorization(authorizationCode, chargeData) {
   try {
     const response = await paystackAPI.post('/transaction/charge_authorization', {
@@ -181,7 +190,7 @@ async function chargeAuthorization(authorizationCode, chargeData) {
  * Get transaction details
  * @param {string} reference - Transaction reference
  * @returns {Promise<Object>} Transaction details
- */
+ * /
 async function getTransaction(reference) {
   try {
     const response = await paystackAPI.get(`/transaction/${reference}`);
@@ -204,7 +213,7 @@ async function getTransaction(reference) {
  * @param {string} body - Raw request body
  * @param {string} signature - Signature from headers
  * @returns {boolean} True if signature is valid
- */
+ * /
 function verifyWebhookSignature(body, signature) {
   const crypto = require('crypto');
   const hash = crypto
@@ -224,3 +233,4 @@ module.exports = {
   getTransaction,
   verifyWebhookSignature
 };
+*/

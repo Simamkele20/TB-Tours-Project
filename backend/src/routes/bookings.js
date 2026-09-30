@@ -502,78 +502,22 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
 
     console.log('[BOOKING] Booking created:', booking.id);
 
-    // Initialize Paystack payment
-    try {
-      console.log('[BOOKING] Calling Paystack API...');
-      console.log('[BOOKING] USE_MOCK_PAYMENT env:', process.env.USE_MOCK_PAYMENT);
-      
-      let paystackResponse;
-      
-      // For testing, allow mock payment response
-      const useMockPayment = process.env.USE_MOCK_PAYMENT === 'true';
-      console.log('[BOOKING] useMockPayment resolved to:', useMockPayment);
-      
-      if (useMockPayment) {
-        console.log('[BOOKING] Using MOCK Paystack response for testing');
-        paystackResponse = {
-          data: {
-            status: true,
-            message: 'Authorization URL created',
-            data: {
-              authorization_url: `https://checkout.paystack.com/mock-${booking.id}`,
-              access_code: `mock-${booking.id}`,
-              reference: `MOCK-${booking.bookingReference}`,
-            }
-          }
-        };
-      } else {
-        // Get environment config for callback URL - Paystack will automatically add ?reference={ref}&trxref={ref}
-        const callbackUrl = `${env.frontendUrl}/payment-callback`;
-        
-        paystackResponse = await paystackAPI.post("/transaction/initialize", {
-          email: req.user.email,
-          amount: Math.round(totalPrice * 100), // Convert to kobo
-          metadata: {
-            userId: req.user.id,
-            tourId,
-            tourDate,
-            numberOfPassengers,
-            bookingId: booking.id,
-            bookingReference: booking.bookingReference,
-          },
-          callback_url: callbackUrl,
-        });
+    await transaction.commit();
+
+    console.log(
+      `[BOOKING CREATED] Reference: ${booking.bookingReference}, User: ${req.user.email}, Amount: R${totalPrice}`
+    );
+
+    return res.status(201).json({
+      success: true,
+      message: "Booking created, proceed to payment",
+      data: {
+        booking,
+        bookingId: booking.id,
+        bookingReference: booking.bookingReference,
+        totalPrice
       }
-
-      if (!paystackResponse.data.status) {
-        throw new Error("Failed to initialize Paystack payment");
-      }
-
-      // Store Paystack reference temporarily
-      booking.paystackReference = paystackResponse.data.data.reference;
-      await booking.save({ transaction });
-
-      await transaction.commit();
-
-      console.log(
-        `[BOOKING CREATED] Reference: ${booking.bookingReference}, Paystack Ref: ${paystackResponse.data.data.reference}, User: ${req.user.email}, Amount: R${totalPrice}`
-      );
-
-      return res.status(201).json({
-        message: "Booking created, proceed to payment",
-        data: {
-          booking,
-          paystackAuthorizationUrl: paystackResponse.data.data.authorization_url,
-          paystackReference: paystackResponse.data.data.reference,
-        },
-      });
-    } catch (paystackError) {
-      await transaction.rollback();
-      console.error("[PAYSTACK INIT ERROR]", paystackError.message, paystackError.code);
-      return res.status(500).json({
-        error: "Failed to initialize payment: " + paystackError.message,
-      });
-    }
+    });
   } catch (error) {
     await transaction.rollback();
     console.error("[CREATE BOOKING ERROR]", error.message);
