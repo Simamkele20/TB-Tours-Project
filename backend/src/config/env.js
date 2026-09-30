@@ -11,7 +11,9 @@ const env = {
   mailgunApiKey: (process.env.MAILGUN_API_KEY || "").trim(),
   mailgunDomain: (process.env.MAILGUN_DOMAIN || "sandboxf1e866405b11426296207bac0d2f4cca.mailgun.org").trim(),
   contactToEmail: (process.env.CONTACT_TO_EMAIL || "info@tb-tours.co.za").trim(),
-  // MySQL Configuration
+  // Database Configuration (PostgreSQL for Render, MySQL for local development)
+  databaseUrl: process.env.DATABASE_URL || "",
+  // MySQL Configuration (local development fallback)
   mysqlHost: (process.env.MYSQL_HOST || "localhost").trim(),
   mysqlUser: (process.env.MYSQL_USER || "root").trim(),
   mysqlPassword: (process.env.MYSQL_PASSWORD || "").trim(),
