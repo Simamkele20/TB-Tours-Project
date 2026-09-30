@@ -68,7 +68,6 @@ async function createCheckout(checkoutData) {
     // Log mock mode decision
     console.log('[YOCO] Mock mode check:', {
       SHOULD_USE_MOCK,
-      IS_TEST_CREDENTIALS,
       USE_YOCO_MOCK,
       NODE_ENV,
       YOCO_SECRET_KEY_PREFIX: YOCO_SECRET_KEY?.substring(0, 15),
