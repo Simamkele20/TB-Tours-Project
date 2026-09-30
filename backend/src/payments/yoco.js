@@ -4,7 +4,14 @@ const YOCO_BASE_URL = 'https://api.yoco.com/v1';
 const YOCO_SECRET_KEY = process.env.YOCO_SECRET_KEY;
 const YOCO_PUBLIC_KEY = process.env.YOCO_PUBLIC_KEY;
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const USE_YOCO_MOCK = process.env.USE_YOCO_MOCK !== 'false'; // Default to true in dev
+const USE_YOCO_MOCK = process.env.USE_YOCO_MOCK !== 'false'; // Default to true
+
+// Determine if we should use mock mode:
+// - If USE_YOCO_MOCK=false is explicitly set, use real API
+// - If using test credentials (pk_test_* or sk_test_*), use mock mode
+// - Otherwise use real API
+const IS_TEST_CREDENTIALS = YOCO_PUBLIC_KEY?.startsWith('pk_test_') || YOCO_SECRET_KEY?.startsWith('sk_test_');
+const SHOULD_USE_MOCK = USE_YOCO_MOCK && (NODE_ENV === 'development' || IS_TEST_CREDENTIALS);
 
 if (!YOCO_SECRET_KEY) {
   console.warn('[YOCO] WARNING: YOCO_SECRET_KEY environment variable is not set');
@@ -18,8 +25,10 @@ if (!YOCO_PUBLIC_KEY) {
   console.log('[YOCO] Public key configured:', YOCO_PUBLIC_KEY.substring(0, 15) + '...');
 }
 
-if (NODE_ENV === 'development' && USE_YOCO_MOCK) {
-  console.log('[YOCO] ⚠️  MOCK MODE ENABLED - Using simulated Yoco responses for testing');
+if (SHOULD_USE_MOCK) {
+  console.log('[YOCO] ✅ MOCK MODE ENABLED - Using simulated Yoco responses (test credentials detected)');
+} else {
+  console.log('[YOCO] ⚠️  LIVE MODE - Using real Yoco API (live credentials detected)');
 }
 
 const yocoAPI = axios.create({
@@ -55,12 +64,12 @@ async function createCheckout(checkoutData) {
       reference: checkoutData.reference
     });
 
-    // MOCK MODE FOR DEVELOPMENT
-    if (NODE_ENV === 'development' && USE_YOCO_MOCK) {
-      console.log('[YOCO] 🎭 MOCK: Returning simulated checkout response with real Yoco redirect');
+    // MOCK MODE FOR DEVELOPMENT AND TEST CREDENTIALS
+    if (SHOULD_USE_MOCK) {
+      console.log('[YOCO] 🎭 MOCK: Returning simulated checkout response');
       const checkoutId = 'cht_test_' + Date.now();
       // This URL format simulates what Yoco's API returns
-      // In production with real credentials, this would redirect to Yoco's actual hosted payment page
+      // In testing with test credentials, this would redirect to Yoco's test checkout page
       return {
         success: true,
         data: {
@@ -73,10 +82,25 @@ async function createCheckout(checkoutData) {
       };
     }
 
+    // Real Yoco API call with all required fields
+    console.log('[YOCO] Calling real Yoco API with request payload:', {
+      amount: checkoutData.amount,
+      currency: checkoutData.currency || 'ZAR',
+      description: checkoutData.reference || 'TB Tours Booking Payment',
+      email: checkoutData.email,
+      successUrl: checkoutData.successUrl,
+      cancelUrl: checkoutData.cancelUrl,
+      metadata: checkoutData.metadata
+    });
+
     const response = await yocoAPI.post('/checkouts', {
       amount: checkoutData.amount, // Amount in cents
       currency: checkoutData.currency || 'ZAR',
-      description: checkoutData.reference || 'TB Tours Booking Payment'
+      description: checkoutData.reference || 'TB Tours Booking Payment',
+      email: checkoutData.email,
+      successUrl: checkoutData.successUrl,
+      cancelUrl: checkoutData.cancelUrl,
+      metadata: checkoutData.metadata || {}
     });
 
     console.log('[YOCO] Checkout session created:', response.data.id);
@@ -152,8 +176,8 @@ async function getPayment(checkoutId) {
   try {
     console.log('[YOCO] Getting payment details for checkout:', checkoutId);
 
-    // MOCK MODE FOR DEVELOPMENT
-    if (NODE_ENV === 'development' && USE_YOCO_MOCK) {
+    // MOCK MODE FOR DEVELOPMENT AND TEST CREDENTIALS
+    if (SHOULD_USE_MOCK) {
       console.log('[YOCO] 🎭 MOCK: Returning simulated payment status (pending)');
       return {
         success: true,
