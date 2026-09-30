@@ -28,13 +28,15 @@ if (SHOULD_USE_MOCK) {
   console.log('[YOCO] 🌐 REAL API MODE - Using actual Yoco API with your credentials');
 }
 
-// Create Basic Auth header: Base64 encode "secret_key:" (with colon, empty password)
-const basicAuthHeader = Buffer.from(`${YOCO_SECRET_KEY}:`).toString('base64');
+// Create Authorization header: Yoco uses Bearer token with secret key
+console.log('[YOCO] Auth Setup:');
+console.log('[YOCO] - Secret key:', YOCO_SECRET_KEY?.substring(0, 20) + '...');
+console.log('[YOCO] - Using Bearer token authentication (sk_test_... or sk_live_...)');
 
 const yocoAPI = axios.create({
   baseURL: YOCO_BASE_URL,
   headers: {
-    'Authorization': `Basic ${basicAuthHeader}`,
+    'Authorization': `Bearer ${YOCO_SECRET_KEY}`,
     'Content-Type': 'application/json'
   },
   // Allow self-signed certificates for development
@@ -314,10 +316,47 @@ async function handleWebhookEvent(event) {
   }
 }
 
+/**
+ * Test Yoco API authentication
+ * @returns {Promise<Object>} Test result
+ */
+async function testAuthentication() {
+  try {
+    console.log('[YOCO TEST] Testing API credentials...');
+    
+    // Try a simple API call to verify authentication
+    const response = await yocoAPI.get('/checkout-options', {
+      params: {
+        limit: 1
+      }
+    });
+    
+    console.log('[YOCO TEST] ✅ Authentication successful!');
+    console.log('[YOCO TEST] Response status:', response.status);
+    return {
+      success: true,
+      message: 'API credentials are valid',
+      status: response.status,
+      data: response.data
+    };
+  } catch (error) {
+    console.error('[YOCO TEST] ❌ Authentication failed');
+    console.error('[YOCO TEST] Error status:', error.response?.status);
+    console.error('[YOCO TEST] Error message:', error.response?.data?.detail || error.message);
+    return {
+      success: false,
+      error: error.response?.data?.detail || error.message,
+      status: error.response?.status,
+      suggestion: 'Check that YOCO_SECRET_KEY is valid and matches your Yoco dashboard'
+    };
+  }
+}
+
 module.exports = {
   createCheckout,
   getCheckout,
   getPayment,
   verifyWebhookSignature,
-  handleWebhookEvent
+  handleWebhookEvent,
+  testAuthentication
 };

@@ -627,4 +627,37 @@ router.post('/yoco/webhook', express.raw({ type: 'application/json' }), async (r
   }
 });
 
+/**
+ * GET /api/payments/yoco/test
+ * Test Yoco API authentication
+ */
+router.get('/yoco/test', async (req, res) => {
+  try {
+    console.log('[YOCO TEST] Testing credentials...');
+    const result = await yoco.testAuthentication();
+    
+    if (result.success) {
+      return res.json({
+        success: true,
+        message: result.message,
+        status: result.status
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        error: result.error,
+        status: result.status,
+        suggestion: result.suggestion
+      });
+    }
+  } catch (error) {
+    console.error('[YOCO TEST] Error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Test request failed',
+      message: error.message
+    });
+  }
+});
+
 module.exports = router;
