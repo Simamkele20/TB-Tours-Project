@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const YOCO_BASE_URL = 'https://api.yoco.com/v1';
+const YOCO_BASE_URL = 'https://payments.yoco.com/api';
 const YOCO_SECRET_KEY = process.env.YOCO_SECRET_KEY;
 const YOCO_PUBLIC_KEY = process.env.YOCO_PUBLIC_KEY;
 const NODE_ENV = process.env.NODE_ENV || 'development';
