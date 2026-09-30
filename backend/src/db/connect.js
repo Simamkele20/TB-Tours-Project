@@ -2,13 +2,30 @@ const { Sequelize } = require('sequelize');
 const path = require('path');
 const { env } = require('../config/env');
 
-// Use SQLite for development, MySQL for production
-const isProduction = process.env.NODE_ENV === 'production';
+// Database selection logic:
+// 1. DATABASE_URL (PostgreSQL on Render) - Production
+// 2. MySQL credentials - Fallback production
+// 3. SQLite - Development
 
 let sequelize;
 
-if (isProduction) {
-  // Production: Use MySQL
+if (env.databaseUrl) {
+  // Production with PostgreSQL (Render deployment)
+  sequelize = new Sequelize(env.databaseUrl, {
+    dialect: 'postgres',
+    logging: false,
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+    },
+    dialectOptions: {
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+    },
+  });
+} else if (process.env.NODE_ENV === 'production') {
+  // Production: Use MySQL fallback
   sequelize = new Sequelize(env.mysqlDatabase, env.mysqlUser, env.mysqlPassword, {
     host: env.mysqlHost,
     dialect: 'mysql',
@@ -46,8 +63,15 @@ const connectDB = async () => {
     Booking.belongsTo(Tour, { foreignKey: 'tourId' });
 
     await sequelize.authenticate();
-    const dbType = isProduction ? 'MySQL' : 'SQLite';
-    console.log(`[DB] Connected successfully (${dbType})`);
+    
+    // Determine which database is being used
+    let dbType = 'SQLite';
+    if (env.databaseUrl) {
+      dbType = 'PostgreSQL (remote)';
+    } else if (process.env.NODE_ENV === 'production') {
+      dbType = `MySQL (${env.mysqlDatabase})`;
+    }
+    console.log(`[DB] Connected successfully to ${dbType}`);
     
     // Sync models with database
     await sequelize.sync({ alter: false });
