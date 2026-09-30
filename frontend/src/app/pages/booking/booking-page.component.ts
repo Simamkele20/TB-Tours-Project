@@ -50,7 +50,10 @@ interface Tour {
                 <span class="price">R{{ getExtraPersonRate(tour.pricePerPerson || tour.price) | number: '1.0-2' }}</span>
               </div>
               <div class="estimated-total" *ngIf="bookingForm.get('numberOfPassengers')?.value > 3">
-                <label>Estimated total:</label>
+                <label>Estimated total ({{ bookingForm.get('numberOfPassengers')?.value }} {{ bookingForm.get('numberOfPassengers')?.value === 1 ? 'person' : 'people' }}):</label>
+                <div class="calculation-breakdown">
+                  <small>R{{ (tour.pricePerPerson || tour.price) | number: '1.0-2' }} + ({{ bookingForm.get('numberOfPassengers')?.value - 3 }} × R{{ getExtraPersonRate(tour.pricePerPerson || tour.price) | number: '1.0-2' }})</small>
+                </div>
                 <span class="total">R{{ estimatedTotal | number: '1.0-2' }}</span>
               </div>
             </div>
@@ -236,7 +239,7 @@ interface Tour {
 
     .estimated-total {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       margin-top: 1rem;
       padding-top: 1rem;
       border-top: 1px solid rgba(242, 177, 18, 0.2);
@@ -244,9 +247,23 @@ interface Tour {
       font-weight: 600;
     }
 
+    .estimated-total label {
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .calculation-breakdown {
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: normal;
+      color: #aaa;
+    }
+
     .total {
       color: #f2b112;
       font-size: 1.2rem;
+      font-weight: 600;
+      align-self: flex-end;
     }
 
     .booking-form {
