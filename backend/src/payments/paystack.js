@@ -1,12 +1,18 @@
 /**
- * DEPRECATED: Paystack Integration
- * This module has been disabled and is being replaced with Yoco payment gateway
- * See: backend/src/payments/yoco.js for the new implementation
+ * ⚠️ DEPRECATED: Paystack Integration
  * 
- * All Paystack-related code has been commented out below
+ * This module is NO LONGER IN USE.
+ * All payment processing has been migrated to Yoco.
+ * 
+ * File kept for historical reference only.
+ * Do not use or modify.
+ * 
+ * See: backend/src/payments/yoco.js for current payment gateway implementation
+ * See: backend/src/routes/payments.js for active payment endpoints
  */
 
-/*
+// This file is deprecated and should not be used
+throw new Error('Paystack module is deprecated. Use Yoco payment gateway instead. See backend/src/payments/yoco.js');
 const axios = require('axios');
 
 const PAYSTACK_BASE_URL = 'https://api.paystack.co';

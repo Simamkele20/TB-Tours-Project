@@ -48,12 +48,31 @@ const yocoAPI = axios.create({
 
 // Add request interceptor to log headers being sent
 yocoAPI.interceptors.request.use(config => {
+  const authHeader = config.headers['Authorization'];
   console.log('[YOCO API] Request being sent:');
   console.log('[YOCO API] - URL:', config.baseURL + config.url);
   console.log('[YOCO API] - Method:', config.method);
-  console.log('[YOCO API] - Auth header:', config.headers['Authorization']?.substring(0, 30) + '...');
+  console.log('[YOCO API] - Auth header prefix:', authHeader?.substring(0, 15));
+  console.log('[YOCO API] - Auth header length:', authHeader?.length);
+  console.log('[YOCO API] - Full secret key used:', YOCO_SECRET_KEY);
+  console.log('[YOCO API] - Full auth header:', authHeader);
   return config;
 }, error => Promise.reject(error));
+
+// Add response interceptor to capture error details
+yocoAPI.interceptors.response.use(
+  response => response,
+  error => {
+    console.error('[YOCO API] Response interceptor caught error:');
+    console.error('[YOCO API] - Status:', error.response?.status);
+    console.error('[YOCO API] - Status text:', error.response?.statusText);
+    console.error('[YOCO API] - Error type:', error.response?.data?.type);
+    console.error('[YOCO API] - Error detail:', error.response?.data?.detail);
+    console.error('[YOCO API] - Error code:', error.response?.data?.code);
+    console.error('[YOCO API] - Full response:', JSON.stringify(error.response?.data, null, 2));
+    return Promise.reject(error);
+  }
+);
 
 /**
  * Create a Yoco checkout session
@@ -327,43 +346,86 @@ async function handleWebhookEvent(event) {
 }
 
 /**
- * Test Yoco API authentication
- * @returns {Promise<Object>} Test result
+ * Test Yoco API authentication - Diagnostic mode
+ * @returns {Promise<Object>} Test result with diagnostics
  */
 async function testAuthentication() {
   try {
-    console.log('[YOCO TEST] Testing API credentials with a test checkout...');
+    // Diagnostic info
+    console.log('\n[YOCO TEST] ========================================');
+    console.log('[YOCO TEST] DIAGNOSTIC INFORMATION');
+    console.log('[YOCO TEST] ========================================');
+    console.log('[YOCO TEST] Secret Key Set:', !!YOCO_SECRET_KEY);
+    console.log('[YOCO TEST] Secret Key Length:', YOCO_SECRET_KEY?.length);
+    console.log('[YOCO TEST] Secret Key Prefix:', YOCO_SECRET_KEY?.substring(0, 15) + '...');
+    console.log('[YOCO TEST] Is Test Key:', YOCO_SECRET_KEY?.startsWith('sk_test_'));
+    console.log('[YOCO TEST] Is Live Key:', YOCO_SECRET_KEY?.startsWith('sk_live_'));
+    console.log('[YOCO TEST] Public Key Set:', !!YOCO_PUBLIC_KEY);
+    console.log('[YOCO TEST] Public Key Prefix:', YOCO_PUBLIC_KEY?.substring(0, 15) + '...');
+    console.log('[YOCO TEST] Mock Mode:', SHOULD_USE_MOCK);
+    console.log('[YOCO TEST] Base URL:', YOCO_BASE_URL);
+    console.log('[YOCO TEST] ========================================\n');
     
     // Try creating a test checkout to verify authentication
     const testCheckoutData = {
-      amount: 100, // R1.00 for testing
+      amount: 200, // R2.00 minimum for Yoco
       currency: 'ZAR',
-      description: 'Authentication test',
+      description: 'TB Tours - Authentication test',
       email: 'test@example.com',
       successUrl: 'https://example.com/success',
       cancelUrl: 'https://example.com/cancel'
     };
     
+    console.log('[YOCO TEST] Sending test checkout request...');
     const response = await yocoAPI.post('/checkouts', testCheckoutData);
     
     console.log('[YOCO TEST] ✅ Authentication successful!');
     console.log('[YOCO TEST] Checkout created:', response.data.id);
     return {
       success: true,
-      message: 'API credentials are valid',
+      message: 'API credentials are valid - Authentication successful!',
       status: response.status,
-      checkoutId: response.data.id
+      checkoutId: response.data.id,
+      diagnostics: {
+        keyType: YOCO_SECRET_KEY?.startsWith('sk_test_') ? 'Test Key' : YOCO_SECRET_KEY?.startsWith('sk_live_') ? 'Live Key' : 'Unknown',
+        keyLength: YOCO_SECRET_KEY?.length,
+        mockMode: SHOULD_USE_MOCK
+      }
     };
   } catch (error) {
-    console.error('[YOCO TEST] ❌ Authentication failed');
-    console.error('[YOCO TEST] Error status:', error.response?.status);
-    console.error('[YOCO TEST] Error detail:', error.response?.data?.detail || error.message);
-    console.error('[YOCO TEST] Full response:', error.response?.data);
+    console.error('\n[YOCO TEST] ❌ Authentication failed');
+    console.error('[YOCO TEST] Error Code:', error.response?.data?.code);
+    console.error('[YOCO TEST] Error Detail:', error.response?.data?.detail);
+    console.error('[YOCO TEST] HTTP Status:', error.response?.status);
+    console.error('[YOCO TEST] Request was to:', error.config?.baseURL + error.config?.url);
+    
+    // Provide diagnostic suggestions
+    let suggestion = '';
+    if (error.response?.status === 401) {
+      suggestion = 'Your credentials are being rejected by Yoco API. Possible causes:\n' +
+        '1. Test account not fully activated - check Yoco dashboard\n' +
+        '2. Keys need to be regenerated - try generating new test keys\n' +
+        '3. Keys have been disabled - verify they show as Active in dashboard\n' +
+        '4. Account needs email verification - check your Yoco account\n' +
+        '5. Try using LIVE keys if your domains are verified (they should unlock automatically)';
+    } else if (error.response?.status === 403) {
+      suggestion = 'Authorization header missing or incorrect. Check Bearer token format.';
+    }
+    
+    console.error('[YOCO TEST] Suggestion:', suggestion);
+    console.error('[YOCO TEST] ========================================\n');
+    
     return {
       success: false,
       error: error.response?.data?.detail || error.message,
       status: error.response?.status,
-      suggestion: 'Verify YOCO_SECRET_KEY matches your Yoco dashboard exactly (copy-paste to avoid typos)'
+      diagnostics: {
+        keyType: YOCO_SECRET_KEY?.startsWith('sk_test_') ? 'Test Key' : YOCO_SECRET_KEY?.startsWith('sk_live_') ? 'Live Key' : 'Unknown',
+        keyLength: YOCO_SECRET_KEY?.length,
+        mockMode: SHOULD_USE_MOCK,
+        requestUrl: error.config?.baseURL + error.config?.url
+      },
+      suggestion
     };
   }
 }
