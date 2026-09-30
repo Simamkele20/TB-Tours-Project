@@ -201,51 +201,51 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     sectionSubtitle: "Choose from our curated tours and experiences. Each journey is tailored to your preferences.",
     cards: [
       {
-        title: "Table Mountain",
-        description: "See Cape Town from above.",
+        title: "Airport Transfers",
+        description: "Punctual, private arrivals and departures with a calm, professional welcome.",
         image: "images/Image(13).jpg",
-        price: "R150pp",
-        duration: "Half Day",
+        price: "R650",
+        duration: "1-2 Hours",
         ctaLabel: "Book Now",
         ctaLink: "/booking/1",
         tourId: 1
       },
       {
-        title: "Cape Peninsula",
-        description: "Where the mountains meet the Atlantic.",
+        title: "Cape Peninsula Tours",
+        description: "The full coastal arc • Chapman's Peak, Cape Point and Boulders Beach.",
         image: "images/Image(19).jpg",
-        price: "R200pp",
+        price: "R1800pp",
         duration: "Full Day",
         ctaLabel: "Book Now",
         ctaLink: "/booking/2",
         tourId: 2
       },
       {
-        title: "Boulders Beach",
-        description: "Meet Cape Town's famous penguins.",
-        image: "images/Image(18).jpg",
-        price: "R120pp",
-        duration: "Half Day",
+        title: "Cape Town City Tours",
+        description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.",
+        image: "images/Image(13).jpg",
+        price: "R1500pp",
+        duration: "Full Day",
         ctaLabel: "Book Now",
         ctaLink: "/booking/3",
         tourId: 3
       },
       {
-        title: "Cape Winelands",
-        description: "Slow afternoons among vineyards and estates.",
+        title: "Winelands Tours",
+        description: "Slow afternoons among vineyards and estates in Stellenbosch and Franschhoek.",
         image: "images/franschhoek.jpg",
-        price: "R250pp",
+        price: "R1500pp",
         duration: "Full Day",
         ctaLabel: "Book Now",
         ctaLink: "/booking/4",
         tourId: 4
       },
       {
-        title: "Private Chauffeur Services",
-        description: "A discreet driver at your disposal, by the hour or by the day.",
+        title: "Full-Day Private Tour",
+        description: "A full day of private tour with flexible itinerary shaped around your interests.",
         image: "images/hermanus.jpg",
-        price: "R200/hr",
-        duration: "Flexible",
+        price: "R2000pp",
+        duration: "Full Day",
         ctaLabel: "Book Now",
         ctaLink: "/booking/5",
         tourId: 5
@@ -254,7 +254,84 @@ export const SITE_CONTENT: Record<string, PageContent> = {
         title: "Custom Day Tours",
         description: "An itinerary shaped entirely around your interests and your time.",
         image: "images/kirstenbosch.jpg",
-        price: "R250pp",
+        price: "R2000pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/6",
+        tourId: 6
+      }
+    ],
+    trustStrip: ["Private", "Professional", "Personal", "Local insight"],
+    ctaTitle: "Ready for this adventure?",
+    ctaText: "Request a quote and let us customize your journey"
+  },
+
+  tours: {
+    hero: {
+      eyebrow: "TOURS",
+      title: "Our ",
+      accent: "Services",
+      description: "From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.",
+      image: "images/camp-bay.jpg"
+    },
+    sectionTitle: "Travel your way",
+    sectionSubtitle: "Choose from our curated tours and experiences. Each journey is tailored to your preferences.",
+    cards: [
+      {
+        title: "Airport Transfers",
+        description: "Punctual, private arrivals and departures with a calm, professional welcome.",
+        image: "images/Image(13).jpg",
+        price: "R650",
+        duration: "1-2 Hours",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/1",
+        tourId: 1
+      },
+      {
+        title: "Cape Peninsula Tours",
+        description: "The full coastal arc • Chapman's Peak, Cape Point and Boulders Beach.",
+        image: "images/Image(19).jpg",
+        price: "R1800pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/2",
+        tourId: 2
+      },
+      {
+        title: "Cape Town City Tours",
+        description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.",
+        image: "images/Image(13).jpg",
+        price: "R1500pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/3",
+        tourId: 3
+      },
+      {
+        title: "Winelands Tours",
+        description: "Slow afternoons among vineyards and estates in Stellenbosch and Franschhoek.",
+        image: "images/franschhoek.jpg",
+        price: "R1500pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/4",
+        tourId: 4
+      },
+      {
+        title: "Full-Day Private Tour",
+        description: "A full day of private tour with flexible itinerary shaped around your interests.",
+        image: "images/hermanus.jpg",
+        price: "R2000pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/5",
+        tourId: 5
+      },
+      {
+        title: "Custom Day Tours",
+        description: "An itinerary shaped entirely around your interests and your time.",
+        image: "images/kirstenbosch.jpg",
+        price: "R2000pp",
         duration: "Full Day",
         ctaLabel: "Book Now",
         ctaLink: "/booking/6",

@@ -60,10 +60,6 @@ interface Booking {
         <!-- Bookings List -->
         <div class="bookings-list">
           <div class="booking-card" *ngFor="let booking of bookings">
-            <div class="booking-image">
-              <img [src]="booking.Tour?.image" [alt]="booking.Tour?.title" />
-            </div>
-
             <div class="booking-details">
               <h3>{{ booking.Tour?.title }}</h3>
 
@@ -155,7 +151,7 @@ interface Booking {
 
     .booking-card {
       display: grid;
-      grid-template-columns: 200px 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
       align-items: center;
       background: rgba(10, 21, 48, 0.5);
@@ -169,19 +165,6 @@ interface Booking {
     .booking-card:hover {
       border-color: #f2b112;
       box-shadow: 0 4px 12px rgba(242, 177, 18, 0.1);
-    }
-
-    .booking-image {
-      width: 100%;
-      height: 150px;
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .booking-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
 
     .booking-details h3 {

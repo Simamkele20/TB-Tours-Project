@@ -34,23 +34,22 @@ interface Tour {
       <div class="booking-content" *ngIf="tour">
         <!-- Tour Summary -->
         <div class="tour-summary">
-          <img [src]="tour.image" [alt]="tour.title" class="tour-image" />
           <div class="tour-info">
             <h2>{{ tour.title }}</h2>
             <p class="duration">{{ tour.duration }}</p>
             <p class="description">{{ tour.description | slice: 0: 200 }}...</p>
 
             <div class="price-section">
-              <div class="price-item" *ngIf="tour.pricePerPerson">
-                <label>Price per person:</label>
-                <span class="price">R{{ tour.pricePerPerson | number: '1.0-2' }}</span>
+              <div class="price-item">
+                <label>Price per person (1-3 people):</label>
+                <span class="price">R{{ (tour.pricePerPerson || tour.price) | number: '1.0-2' }}</span>
               </div>
-              <div class="price-item" *ngIf="!tour.pricePerPerson">
-                <label>Price per booking:</label>
-                <span class="price">R{{ tour.price | number: '1.0-2' }}</span>
+              <div class="price-item" *ngIf="bookingForm.get('numberOfPassengers')?.value > 3">
+                <label>Extra person rate (4+ people):</label>
+                <span class="price">R{{ getExtraPersonRate(tour.pricePerPerson || tour.price) | number: '1.0-2' }}</span>
               </div>
               <div class="estimated-total">
-                <label>Estimated total:</label>
+                <label>Estimated total ({{ bookingForm.get('numberOfPassengers')?.value }} {{ bookingForm.get('numberOfPassengers')?.value === 1 ? 'person' : 'people' }}):</label>
                 <span class="total">R{{ estimatedTotal | number: '1.0-2' }}</span>
               </div>
             </div>
@@ -84,11 +83,10 @@ interface Tour {
               type="number"
               formControlName="numberOfPassengers"
               min="1"
-              [max]="tour.maxPassengers"
               class="form-control"
             />
             <span class="error" *ngIf="isFieldInvalid('numberOfPassengers')">
-              Please enter 1-{{ tour.maxPassengers }} passengers
+              Please enter at least 1 passenger
             </span>
           </div>
 
@@ -114,54 +112,6 @@ interface Tour {
               class="form-control"
               rows="3"
             ></textarea>
-          </div>
-
-          <!-- Passenger Details (if multi-passenger) -->
-          <div class="form-section" *ngIf="bookingForm.get('numberOfPassengers')?.value > 1">
-            <h3>Passenger Information</h3>
-            <p class="info-text">Please provide details for each passenger:</p>
-
-            <div class="passengers-list">
-              <div
-                class="passenger-card"
-                *ngFor="let i of getPassengerIndices()"
-              >
-                <h4>Passenger {{ i + 1 }}</h4>
-                <div class="form-group">
-                  <label [for]="'passenger-' + i + '-name'">Full Name *</label>
-                  <input
-                    [id]="'passenger-' + i + '-name'"
-                    type="text"
-                    [value]="getPassengerName(i)"
-                    (change)="setPassengerName(i, $event)"
-                    class="form-control"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label [for]="'passenger-' + i + '-email'">Email *</label>
-                  <input
-                    [id]="'passenger-' + i + '-email'"
-                    type="email"
-                    [value]="getPassengerEmail(i)"
-                    (change)="setPassengerEmail(i, $event)"
-                    class="form-control"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label [for]="'passenger-' + i + '-phone'">Phone *</label>
-                  <input
-                    [id]="'passenger-' + i + '-phone'"
-                    type="tel"
-                    [value]="getPassengerPhone(i)"
-                    (change)="setPassengerPhone(i, $event)"
-                    class="form-control"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
           </div>
 
           <!-- Payment Section -->
@@ -243,13 +193,7 @@ interface Tour {
       top: 140px;
     }
 
-    .tour-image {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-    }
+
 
     .tour-info h2 {
       margin: 0 0 0.5rem 0;
@@ -375,47 +319,7 @@ interface Tour {
       margin-top: 0.25rem;
     }
 
-    .form-section {
-      background: rgba(242, 177, 18, 0.05);
-      border: 1px solid rgba(242, 177, 18, 0.2);
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin: 2rem 0;
-    }
 
-    .form-section h3 {
-      margin: 0 0 0.5rem 0;
-      color: #f2b112;
-    }
-
-    .info-text {
-      color: #b3c1d8;
-      font-size: 0.9rem;
-      margin: 0 0 1rem 0;
-    }
-
-    .passengers-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1rem;
-    }
-
-    .passenger-card {
-      background: rgba(10, 21, 48, 0.3);
-      border: 1px solid rgba(242, 177, 18, 0.2);
-      border-radius: 6px;
-      padding: 1rem;
-    }
-
-    .passenger-card h4 {
-      margin: 0 0 1rem 0;
-      color: #f2b112;
-      font-size: 1rem;
-    }
-
-    .passenger-card .form-group {
-      margin-bottom: 1rem;
-    }
 
     .payment-section {
       margin-top: 2rem;
@@ -635,10 +539,34 @@ export class BookingPageComponent implements OnInit {
       return;
     }
     const passengers = this.bookingForm.get('numberOfPassengers')?.value || 1;
-    this.estimatedTotal = this.tour.pricePerPerson
-      ? this.tour.pricePerPerson * passengers
-      : this.tour.price;
+    const basePrice = this.tour.pricePerPerson || this.tour.price;
+    
+    // Tiered pricing:
+    // 1-3 people: flat rate (base price)
+    // 4+ people: base price + (extra person price × extra people beyond 3)
+    if (passengers <= 3) {
+      this.estimatedTotal = basePrice;
+    } else {
+      // For 4+ people: base price + (extra person rate × number of extra people)
+      const extraPersonRate = this.getExtraPersonRate(basePrice);
+      const extraPeople = passengers - 3;
+      this.estimatedTotal = basePrice + (extraPersonRate * extraPeople);
+    }
+    
     this.cdr.detectChanges();
+  }
+
+  getExtraPersonRate(tourPrice: number): number {
+    // Define extra person rates for 4+ people
+    const extraPersonRates: { [key: number]: number } = {
+      650: 350,      // 650 service: extra person R350 (1-3 flat R650, 4th person +R350)
+      2000: 600,     // 2000 service: extra person R600 (1-3 flat R2000, 4th person +R600)
+      2500: 800,     // 2500 service: extra person R800 (1-3 flat R2500, 4th person +R800)
+      3500: 800      // 3500 service: extra person R800 (1-3 flat R3500, 4th person +R800)
+    };
+    
+    // Return the extra person rate if defined, otherwise use 50% of base price
+    return extraPersonRates[tourPrice] || Math.floor(tourPrice * 0.5);
   }
 
   onSubmit() {
@@ -806,43 +734,7 @@ export class BookingPageComponent implements OnInit {
     return !!(field && field.invalid && (field.dirty || field.touched));
   }
 
-  getPassengerIndices(): number[] {
-    const count = this.bookingForm.get('numberOfPassengers')?.value || 1;
-    return Array.from({ length: count - 1 }, (_, i) => i);
-  }
 
-  getPassengerName(index: number): string {
-    return this.passengerDetails[index]?.name || '';
-  }
-
-  setPassengerName(index: number, event: any) {
-    if (!this.passengerDetails[index]) {
-      this.passengerDetails[index] = {};
-    }
-    this.passengerDetails[index].name = event.target.value;
-  }
-
-  getPassengerEmail(index: number): string {
-    return this.passengerDetails[index]?.email || '';
-  }
-
-  setPassengerEmail(index: number, event: any) {
-    if (!this.passengerDetails[index]) {
-      this.passengerDetails[index] = {};
-    }
-    this.passengerDetails[index].email = event.target.value;
-  }
-
-  getPassengerPhone(index: number): string {
-    return this.passengerDetails[index]?.phone || '';
-  }
-
-  setPassengerPhone(index: number, event: any) {
-    if (!this.passengerDetails[index]) {
-      this.passengerDetails[index] = {};
-    }
-    this.passengerDetails[index].phone = event.target.value;
-  }
 
   scrollToBookingButton() {
     const button = document.querySelector('.btn-submit') as HTMLElement;
