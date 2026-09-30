@@ -4,6 +4,7 @@ export interface HeroBlock {
   accent: string;
   description: string;
   image?: string;
+  video?: string;
 }
 
 export interface FeatureCard {
@@ -15,12 +16,21 @@ export interface FeatureCard {
   duration?: string;
   passengers?: string;
   bags?: string;
+  price?: string;
   ctaLabel?: string;
   ctaLink?: string;
+  tourId?: number;
+}
+
+export interface Partner {
+  name: string;
+  logo: string;
+  url?: string;
 }
 
 export interface PageContent {
   hero: HeroBlock;
+  partners?: Partner[];
   sectionTitle: string;
   sectionSubtitle: string;
   cards: FeatureCard[];
@@ -61,6 +71,12 @@ export const SITE_CONTENT: Record<string, PageContent> = {
         "Private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands.",
       image: "images/camp-bay.jpg"
     },
+    partners: [
+      {
+        name: "Tourism Board",
+        logo: "/images/Partner.jpg"
+      }
+    ],
     sectionTitle: "Travel your way.",
     sectionSubtitle: "From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.",
     cards: [
@@ -98,12 +114,6 @@ export const SITE_CONTENT: Record<string, PageContent> = {
         title: "Custom Day Tours",
         description: "An itinerary shaped entirely around your interests and your time.",
         image: "images/kirstenbosch.jpg",
-        ctaLabel: "Learn more"
-      },
-      {
-        title: "Courier Service",
-        description: "Fast and reliable door-to-door delivery services.",
-        image: "images/Del 2.jpg",
         ctaLabel: "Learn more"
       }
     ],
@@ -177,6 +187,83 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     trustStrip: ["WhatsApp first", "Direct line", "Flexible timing", "Personal support"],
     ctaTitle: "Your Cape Town journey starts here.",
     ctaText: "Airport transfer, private tour or custom day out - let's plan it together by email."
+  },
+
+  services: {
+    hero: {
+      eyebrow: "SERVICES",
+      title: "Travel your ",
+      accent: "way",
+      description: "From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.",
+      image: "images/camp-bay.jpg"
+    },
+    sectionTitle: "Travel your way",
+    sectionSubtitle: "Choose from our curated tours and experiences. Each journey is tailored to your preferences.",
+    cards: [
+      {
+        title: "Table Mountain",
+        description: "See Cape Town from above.",
+        image: "images/Image(13).jpg",
+        price: "R150pp",
+        duration: "Half Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/1",
+        tourId: 1
+      },
+      {
+        title: "Cape Peninsula",
+        description: "Where the mountains meet the Atlantic.",
+        image: "images/Image(19).jpg",
+        price: "R200pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/2",
+        tourId: 2
+      },
+      {
+        title: "Boulders Beach",
+        description: "Meet Cape Town's famous penguins.",
+        image: "images/Image(18).jpg",
+        price: "R120pp",
+        duration: "Half Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/3",
+        tourId: 3
+      },
+      {
+        title: "Cape Winelands",
+        description: "Slow afternoons among vineyards and estates.",
+        image: "images/franschhoek.jpg",
+        price: "R250pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/4",
+        tourId: 4
+      },
+      {
+        title: "Private Chauffeur Services",
+        description: "A discreet driver at your disposal, by the hour or by the day.",
+        image: "images/hermanus.jpg",
+        price: "R200/hr",
+        duration: "Flexible",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/5",
+        tourId: 5
+      },
+      {
+        title: "Custom Day Tours",
+        description: "An itinerary shaped entirely around your interests and your time.",
+        image: "images/kirstenbosch.jpg",
+        price: "R250pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/6",
+        tourId: 6
+      }
+    ],
+    trustStrip: ["Private", "Professional", "Personal", "Local insight"],
+    ctaTitle: "Ready for this adventure?",
+    ctaText: "Request a quote and let us customize your journey"
   }
 };
 
@@ -184,7 +271,10 @@ export interface ServiceCard {
   number: string;
   title: string;
   description: string;
+  price?: number;
   ctaLabel: string;
+  tourId?: number;
+  ctaLink?: string;
 }
 
 export const SITE_SERVICES: ServiceCard[] = [
@@ -192,43 +282,55 @@ export const SITE_SERVICES: ServiceCard[] = [
     number: "01",
     title: "Airport Transfers",
     description: "Punctual, private arrivals and departures with a calm, professional welcome.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 650,
+    ctaLabel: "BOOK",
+    tourId: 1,
+    ctaLink: "/booking/1"
   },
   {
     number: "02",
     title: "Cape Peninsula Tours",
     description: "The full coastal arc • Chapman's Peak, Cape Point and Boulders Beach.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 2500,
+    ctaLabel: "BOOK",
+    tourId: 2,
+    ctaLink: "/booking/2"
   },
   {
     number: "03",
     title: "Cape Town City Tours",
     description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 2000,
+    ctaLabel: "BOOK",
+    tourId: 3,
+    ctaLink: "/booking/3"
   },
   {
     number: "04",
     title: "Winelands Tours",
     description: "Stellenbosch and Franschhoek estates at an unhurried pace.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 2500,
+    ctaLabel: "BOOK",
+    tourId: 4,
+    ctaLink: "/booking/4"
   },
   {
     number: "05",
-    title: "Private Chauffeur Services",
-    description: "A discreet driver at your disposal, by the hour or by the day.",
-    ctaLabel: "REQUEST A QUOTE"
+    title: "Full-Day Private Tour",
+    description: "A full day of private tour with flexible itinerary shaped around your interests.",
+    price: 3500,
+    ctaLabel: "BOOK",
+    tourId: 5,
+    ctaLink: "/booking/5"
   },
   {
     number: "06",
     title: "Custom Day Tours",
     description: "An itinerary shaped entirely around your interests and your time.",
-    ctaLabel: "REQUEST A QUOTE"
-  },
-  {
-    number: "07",
-    title: "Courier Service",
-    description: "Fast and reliable door-to-door delivery services across Cape Town.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 2500,
+    ctaLabel: "BOOK",
+    tourId: 6,
+    ctaLink: "/booking/6"
   }
 ];
 
@@ -827,30 +929,131 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
   }
 };
 
-// Courier-related interfaces and data
-export interface CourierService {
-  icon: string;
+// Terms & Conditions Content
+export interface TermsSection {
+  number: string;
   title: string;
-  description: string;
+  content: string[];
 }
 
-export interface PricingTier {
-  distance: string;
-  price: string;
+export const TERMS_CONTENT: TermsSection[] = [
+  {
+    number: "1",
+    title: "Acceptance of Terms",
+    content: [
+      "By booking and using TB Tours services, you agree to these Terms & Conditions.",
+      "Please read all terms carefully before booking."
+    ]
+  },
+  {
+    number: "2",
+    title: "Bookings and Cancellations",
+    content: [
+      "Bookings must be made in advance.",
+      "Cancellations made 48 hours before the tour date receive a full refund.",
+      "Cancellations within 48 hours are subject to a 50% charge."
+    ]
+  }
+];
+
+// FAQs Content
+export interface FAQItem {
+  question: string;
+  answer: string;
 }
 
-export interface CourierStep {
-  number: number;
-  title: string;
-  description: string;
+export interface FAQsPageContent {
+  hero: {
+    eyebrow: string;
+    title: string;
+    accent: string;
+    description: string;
+    image: string;
+  };
+  faqs: FAQItem[];
+  closing: string;
 }
 
+export const FAQS_PAGE_CONTENT: FAQsPageContent = {
+  hero: {
+    eyebrow: "Questions?",
+    title: "Frequently Asked",
+    accent: "Questions",
+    description: "Find answers to common questions about booking tours and our services.",
+    image: "images/faq.jpg"
+  },
+  faqs: [
+    {
+      question: "How do I book a tour?",
+      answer: "You can book through our website or contact us directly for personalized assistance."
+    },
+    {
+      question: "What is your cancellation policy?",
+      answer: "Full refund for cancellations 48 hours before the tour date. 50% charge for cancellations within 48 hours."
+    }
+  ],
+  closing: "Didn't find your answer? Contact us for more help!"
+};
+
+// Couriers Page Content
 export interface CourierVehicle {
-  id: number;
   name: string;
-  capacity: string;
-  specs: string;
-  image: string;
+  seats: number;
+  features: string[];
+  image?: string;
+  capacity?: string;
+  specs?: string;
+}
+
+export const COURIERS_VEHICLES: CourierVehicle[] = [
+  {
+    name: "Express Delivery",
+    seats: 4,
+    features: ["Air conditioning", "Comfortable seating", "Professional driver"],
+    image: "images/Del 1.jpg",
+    capacity: "Small parcels & documents",
+    specs: "Fast, efficient delivery for urgent items"
+  },
+  {
+    name: "Standard Delivery",
+    seats: 8,
+    features: ["Spacious interior", "Air conditioning", "Luggage space"],
+    image: "images/Del 2.jpg",
+    capacity: "Medium packages",
+    specs: "Reliable service for standard deliveries"
+  },
+  {
+    name: "Premium Delivery",
+    seats: 4,
+    features: ["Air conditioning", "Comfortable seating", "Professional driver"],
+    image: "images/Del 3.jpg",
+    capacity: "Large packages",
+    specs: "Professional delivery for bulk items"
+  },
+  {
+    name: "Corporate Delivery",
+    seats: 8,
+    features: ["Spacious interior", "Air conditioning", "Luggage space"],
+    image: "images/Del 4.jpg",
+    capacity: "Business deliveries",
+    specs: "Dedicated service for corporate clients"
+  },
+  {
+    name: "Multi-Stop Delivery",
+    seats: 4,
+    features: ["Air conditioning", "Comfortable seating", "Professional driver"],
+    image: "images/Del 5.jpg",
+    capacity: "Multiple deliveries",
+    specs: "Efficient multi-stop delivery routes"
+  }
+];
+
+export interface CourierService {
+  number: string;
+  title: string;
+  description: string;
+  icon?: string;
+  price?: string;
 }
 
 export const COURIERS_PAGE_CONTENT = {
@@ -864,40 +1067,45 @@ export const COURIERS_PAGE_CONTENT = {
   tagline: "We offer convenient local deliveries with a professional and personal service.",
   services: [
     {
-      icon: "📦",
+      number: "01",
       title: "Same-Day Deliveries",
-      description: "Send documents and parcels across your local area with convenient same-day delivery."
+      description: "Send documents and parcels across your local area with convenient same-day delivery.",
+      icon: "📦"
     },
     {
-      icon: "🚐",
+      number: "02",
       title: "Door-to-Door Delivery",
-      description: "We collect your parcel from your chosen location and deliver it directly to the recipient."
+      description: "We collect your parcel from your chosen location and deliver it directly to the recipient.",
+      icon: "🚐"
     },
     {
-      icon: "🏢",
+      number: "03",
       title: "Business Deliveries",
-      description: "Reliable delivery support for small businesses, offices, guesthouses and other businesses."
+      description: "Reliable delivery support for small businesses, offices, guesthouses and other businesses.",
+      icon: "🏢"
     },
     {
-      icon: "📄",
+      number: "04",
       title: "Documents & Small Parcels",
-      description: "Ideal for important documents, packages, personal items and other suitable deliveries."
+      description: "Ideal for important documents, packages, personal items and other suitable deliveries.",
+      icon: "📄"
     },
     {
-      icon: "🚚",
+      number: "05",
       title: "Courier Service",
-      description: "Complete courier solutions for your delivery needs."
+      description: "Complete courier solutions for your delivery needs.",
+      icon: "🚚"
     }
   ],
   pricing: [
-    { distance: "0–5 km", price: "R60" },
-    { distance: "5–10 km", price: "R80" },
-    { distance: "10–15 km", price: "R100" },
-    { distance: "15–20 km", price: "R120" },
-    { distance: "20–30 km", price: "R150" },
-    { distance: "30–40 km", price: "R180" },
-    { distance: "40–50 km", price: "R220" },
-    { distance: "Over 50 km", price: "Contact for quote" }
+    { tier: "0–5 km", distance: "0–5 km", rate: "R60", price: "R60" },
+    { tier: "5–10 km", distance: "5–10 km", rate: "R80", price: "R80" },
+    { tier: "10–15 km", distance: "10–15 km", rate: "R100", price: "R100" },
+    { tier: "15–20 km", distance: "15–20 km", rate: "R120", price: "R120" },
+    { tier: "20–30 km", distance: "20–30 km", rate: "R150", price: "R150" },
+    { tier: "30–40 km", distance: "30–40 km", rate: "R180", price: "R180" },
+    { tier: "40–50 km", distance: "40–50 km", rate: "R220", price: "R220" },
+    { tier: "Over 50 km", distance: "Over 50 km", rate: "Contact for quote", price: "Contact for quote" }
   ],
   whyChoose: [
     "Reliable service",
@@ -908,362 +1116,37 @@ export const COURIERS_PAGE_CONTENT = {
     "Ideal for individuals and businesses"
   ],
   steps: [
-    { number: 1, title: "Request a Quote", description: "Contact us with your pickup location, delivery location and parcel details." },
-    { number: 2, title: "Confirm Your Booking", description: "We'll confirm the price and delivery details with you." },
-    { number: 3, title: "We Collect", description: "We collect your parcel from the agreed pickup location." },
-    { number: 4, title: "We Deliver", description: "Your parcel is delivered directly to the recipient." }
+    { number: "01", title: "Request a Quote", description: "Contact us with your pickup location, delivery location and parcel details." },
+    { number: "02", title: "Confirm Your Booking", description: "We'll confirm the price and delivery details with you." },
+    { number: "03", title: "We Collect", description: "We collect your parcel from the agreed pickup location." },
+    { number: "04", title: "We Deliver", description: "Your parcel is delivered directly to the recipient." }
   ]
 };
 
-export const COURIERS_VEHICLES: CourierVehicle[] = [
-  {
-    id: 1,
-    name: "Express Delivery",
-    capacity: "Small parcels & documents",
-    specs: "Fast, efficient delivery for urgent items",
-    image: "images/Del 1.jpg"
-  },
-  {
-    id: 2,
-    name: "Standard Delivery",
-    capacity: "Medium packages",
-    specs: "Reliable service for standard deliveries",
-    image: "images/Del 2.jpg"
-  },
-  {
-    id: 3,
-    name: "Premium Delivery",
-    capacity: "Large packages",
-    specs: "Professional delivery for bulk items",
-    image: "images/Del 3.jpg"
-  },
-  {
-    id: 4,
-    name: "Corporate Delivery",
-    capacity: "Business deliveries",
-    specs: "Dedicated service for corporate clients",
-    image: "images/Del 4.jpg"
-  },
-  {
-    id: 5,
-    name: "Multi-Stop Delivery",
-    capacity: "Multiple deliveries",
-    specs: "Efficient multi-stop delivery routes",
-    image: "images/Del 5.jpg"
-  }
-];
-
-export interface TermsSection {
-  number: number;
-  title: string;
-  content: string[];
-}
-
-export const TERMS_CONTENT: TermsSection[] = [
-  {
-    number: 1,
-    title: "Services",
-    content: [
-      "TB Tours provides private transport, airport transfers, chauffeur services, sightseeing tours, wine tours, and other transport-related services within Cape Town and surrounding areas."
-    ]
-  },
-  {
-    number: 2,
-    title: "Bookings",
-    content: [
-      "All bookings are subject to availability and are confirmed only after acceptance by TB Tours. Customers are responsible for providing accurate booking details."
-    ]
-  },
-  {
-    number: 3,
-    title: "Payments",
-    content: [
-      "Payment may be required in advance to secure your booking. Any outstanding balance must be paid before or at the start of the service unless otherwise agreed."
-    ]
-  },
-  {
-    number: 4,
-    title: "Cancellations and Refunds",
-    content: [
-      "• Cancellations made more than 48 hours before the scheduled service may qualify for a refund.",
-      "• Cancellations made within 48 hours may be subject to cancellation fees.",
-      "• No-shows are non-refundable."
-    ]
-  },
-  {
-    number: 5,
-    title: "Customer Responsibilities",
-    content: [
-      "Customers must:",
-      "• Provide accurate booking information.",
-      "• Arrive at the agreed pickup location on time.",
-      "• Treat our vehicles and staff with respect.",
-      "• Follow all safety instructions and wear seat belts where provided."
-    ]
-  },
-  {
-    number: 6,
-    title: "Vehicle Damage",
-    content: [
-      "Customers may be held responsible for any damage caused to a TB Tours vehicle through negligence or intentional misconduct."
-    ]
-  },
-  {
-    number: 7,
-    title: "Delays",
-    content: [
-      "TB Tours will make every effort to arrive on time. However, we are not liable for delays caused by traffic, weather, road closures, vehicle breakdowns, accidents, or other events beyond our reasonable control."
-    ]
-  },
-  {
-    number: 8,
-    title: "Personal Belongings",
-    content: [
-      "Passengers are responsible for their personal belongings. While we will do our best to assist in recovering lost property, TB Tours accepts no responsibility for items left in our vehicles."
-    ]
-  },
-  {
-    number: 9,
-    title: "Right to Refuse Service",
-    content: [
-      "TB Tours reserves the right to refuse or terminate a service if a passenger behaves in a threatening, abusive, violent, intoxicated, or unlawful manner that may endanger the driver, other passengers, or the vehicle."
-    ]
-  },
-  {
-    number: 10,
-    title: "Limitation of Liability",
-    content: [
-      "To the fullest extent permitted by law, TB Tours shall not be liable for indirect, incidental, or consequential losses arising from the use of our services."
-    ]
-  },
-  {
-    number: 11,
-    title: "Privacy",
-    content: [
-      "Personal information collected during bookings will be used only to provide our services, communicate with customers, and comply with legal obligations. We respect your privacy and handle your information responsibly."
-    ]
-  },
-  {
-    number: 12,
-    title: "Changes to These Terms",
-    content: [
-      "TB Tours reserves the right to update these Terms & Conditions at any time. Any changes will be published on this website and become effective upon posting."
-    ]
-  },
-  {
-    number: 13,
-    title: "Governing Law",
-    content: [
-      "These Terms & Conditions are governed by the laws of the Republic of South Africa."
-    ]
-  }
-];
-
+// Booking Policy Content
 export interface BookingPolicySection {
-  number: number;
+  number: string;
   title: string;
   content: string[];
 }
 
 export const BOOKING_POLICY_CONTENT: BookingPolicySection[] = [
   {
-    number: 1,
-    title: "Booking Policy",
+    number: "1",
+    title: "How to Book",
     content: [
-      "All bookings are subject to availability and are confirmed only after confirmation from TB Tours. We recommend booking in advance, especially during weekends, public holidays, and peak tourist seasons."
+      "Visit our website and select your preferred tour",
+      "Choose your date and number of participants",
+      "Complete payment to confirm your booking"
     ]
   },
   {
-    number: 2,
-    title: "Payment Policy",
+    number: "2",
+    title: "Cancellation and Refunds",
     content: [
-      "Payment may be required to secure your booking. The remaining balance, if applicable, must be paid before or at the start of the service unless otherwise agreed."
-    ]
-  },
-  {
-    number: 3,
-    title: "Cancellation Policy",
-    content: [
-      "• Cancellations made more than 48 hours before the scheduled service may qualify for a refund, subject to any non-refundable costs.",
-      "• Cancellations made within 48 hours of the booking may incur cancellation charges.",
-      "• No-shows are non-refundable."
-    ]
-  },
-  {
-    number: 4,
-    title: "Changes to Bookings",
-    content: [
-      "We will do our best to accommodate changes to bookings. However, changes are subject to vehicle and driver availability."
-    ]
-  },
-  {
-    number: 5,
-    title: "Waiting Time",
-    content: [
-      "For airport pickups, complimentary waiting time is provided for delayed flights where flight details have been supplied in advance. Additional waiting time for other services may result in extra charges."
-    ]
-  },
-  {
-    number: 6,
-    title: "Passenger Responsibility",
-    content: [
-      "Passengers are expected to treat our vehicles and drivers with respect. TB Tours reserves the right to refuse service to anyone whose behaviour is unsafe, abusive, or illegal."
-    ]
-  },
-  {
-    number: 7,
-    title: "Safety",
-    content: [
-      "Your safety is our priority. All passengers must wear seat belts where provided and follow the driver's safety instructions throughout the journey."
-    ]
-  },
-  {
-    number: 8,
-    title: "Personal Belongings",
-    content: [
-      "While every effort will be made to return lost items, TB Tours is not responsible for personal belongings left in our vehicles."
-    ]
-  },
-  {
-    number: 9,
-    title: "Delays",
-    content: [
-      "Although we always aim to arrive on time, TB Tours cannot be held responsible for delays caused by traffic, weather conditions, road closures, accidents, or other circumstances beyond our control."
-    ]
-  },
-  {
-    number: 10,
-    title: "Privacy",
-    content: [
-      "Any personal information collected during bookings is used only to provide our services and communicate with customers. We do not sell or share your personal information with third parties except where required by law."
-    ]
-  },
-  {
-    number: 11,
-    title: "Contact",
-    content: [
-      "For booking enquiries, cancellations, or assistance, please contact TB Tours using the details provided on our Contact page.",
-      "",
-      "Thank you for choosing TB Tours. We are committed to providing safe, reliable, professional, and friendly transport and tour services throughout Cape Town and the surrounding areas."
+      "Cancel up to 48 hours before for full refund",
+      "Cancellations within 48 hours are subject to 50% charge",
+      "No-shows are non-refundable"
     ]
   }
 ];
-
-export interface FAQ {
-  question: string;
-  answer: string;
-}
-
-export const FAQS: FAQ[] = [
-  {
-    question: "How do I book a tour or transfer?",
-    answer: "You can book directly through our website contact form, by phone (073 448 3958), WhatsApp, or by emailing info@tb-tours.co.za. We'll confirm availability and pricing with you promptly."
-  },
-  {
-    question: "What are your delivery timeframes?",
-    answer: "For same-day courier services, deliveries are typically completed within 2-4 hours depending on distance. For tours and transfers, timing depends on the specific itinerary and distance."
-  },
-  {
-    question: "Do you operate on weekends and public holidays?",
-    answer: "Yes, we offer services on weekends and public holidays. Please contact us in advance for bookings on these days as availability may vary."
-  },
-  {
-    question: "Can I cancel or modify my booking?",
-    answer: "Cancellations made more than 48 hours before your booking may qualify for a refund. Cancellations within 48 hours may be subject to fees. Please contact us as soon as possible to discuss modifications."
-  },
-  {
-    question: "What if my parcel is damaged?",
-    answer: "We handle all parcels with care. Please report any damage immediately. We will work with you to document the issue and resolve it appropriately."
-  },
-  {
-    question: "Do you offer corporate/bulk delivery discounts?",
-    answer: "Yes, we offer competitive pricing for businesses and regular clients. Contact us directly at info@tb-tours.co.za or 073 448 3958 for a customized quote."
-  },
-  {
-    question: "What payment methods do you accept?",
-    answer: "We accept cash, bank transfer, and major credit/debit cards. Payment terms can be arranged for corporate clients. Contact us for details."
-  },
-  {
-    question: "Is my personal information secure?",
-    answer: "Yes, we protect all personal information according to our privacy policy. Your data is used only for service delivery and communication purposes."
-  }
-];
-
-export interface FAQPageContent {
-  hero: HeroBlock;
-  faqs: FAQ[];
-  closing: string;
-}
-
-export const FAQS_PAGE_CONTENT: FAQPageContent = {
-  hero: {
-    eyebrow: "Support",
-    title: "Frequently Asked ",
-    accent: "Questions",
-    description: "Find answers to common questions about TB Tours services, bookings, payments and more.",
-    image: "images/camp-bay.jpg"
-  },
-  faqs: [
-    {
-      question: "What does TB Tours offer?",
-      answer: "TB Tours provides premium private tours, airport transfers and personalised travel experiences across Cape Town and the Western Cape."
-    },
-    {
-      question: "Are your tours private?",
-      answer: "Yes. Our tours are designed to provide a private and personalised experience, allowing you to explore Cape Town at your own pace."
-    },
-    {
-      question: "Can I customise my itinerary?",
-      answer: "Absolutely. We can tailor your experience around your interests, available time and preferred destinations."
-    },
-    {
-      question: "Do you offer airport transfers?",
-      answer: "Yes. We offer private airport transfers to and from Cape Town International Airport, with a focus on comfort, punctuality and a seamless arrival or departure."
-    },
-    {
-      question: "Which destinations do you cover?",
-      answer: "We operate across Cape Town and surrounding areas, including the Cape Town CBD, Blouberg, Melkbosstrand, Table View, Durbanville, Stellenbosch and other popular Western Cape destinations."
-    },
-    {
-      question: "Can you arrange a complete Cape Town experience?",
-      answer: "Yes. We can combine airport transfers, private tours and multiple destinations to create a seamless travel experience throughout your stay."
-    },
-    {
-      question: "Do you cater for couples, families and groups?",
-      answer: "Yes. We welcome couples, families, private groups and corporate travellers. We can recommend suitable options based on your group size and requirements."
-    },
-    {
-      question: "How do I reserve a tour?",
-      answer: "Simply contact TB Tours with your preferred date, number of guests and desired experience. We will check availability and provide a personalised quotation."
-    },
-    {
-      question: "How far in advance should I book?",
-      answer: "We recommend booking in advance to secure your preferred date and itinerary, particularly during peak travel seasons."
-    },
-    {
-      question: "What is included in my tour?",
-      answer: "Your quotation will clearly outline what is included. Depending on the experience, this may include private transportation, collection and drop-off, and the agreed itinerary."
-    },
-    {
-      question: "Do you provide personalised travel recommendations?",
-      answer: "Yes. If you're visiting Cape Town for the first time, we can recommend destinations and experiences that suit your interests and available time."
-    },
-    {
-      question: "Do you offer courier services?",
-      answer: "Yes. TB Tours also provides a professional courier and delivery service for suitable items within our service areas."
-    },
-    {
-      question: "How do I receive a quotation?",
-      answer: "Send us your requirements via WhatsApp, phone or our website. Our team will provide a personalised quotation based on your journey or experience."
-    },
-    {
-      question: "Why choose TB Tours?",
-      answer: "At TB Tours, we focus on comfort, reliability, personal service and memorable experiences. Our goal is to make every journey effortless from the moment you arrive in Cape Town."
-    },
-    {
-      question: "Where can I contact TB Tours?",
-      answer: "Our team is available via WhatsApp, phone and our website to assist with bookings, enquiries and personalised travel arrangements."
-    }
-  ],
-  closing: "TB Tours — Discover Cape Town. Travel in Comfort. Experience More."
-};

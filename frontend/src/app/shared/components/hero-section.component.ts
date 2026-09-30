@@ -8,6 +8,7 @@ export interface HeroConfig {
   accent: string;
   description: string;
   image?: string;
+  video?: string;
   showPhone?: boolean;
   bookButtonLabel?: string;
   hideButton?: boolean;
@@ -18,7 +19,10 @@ export interface HeroConfig {
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [class.hero-couriers]="isCouriers" [class.hero-left]="alignLeft" [style.backgroundImage]="getBackgroundImage()">
+    <section class="hero" [class.hero-home]="showPhone()" [class.hero-destination]="isDestination" [class.hero-couriers]="isCouriers" [style.backgroundImage]="getBackgroundImage()">
+      <video *ngIf="showPhone() && config?.video" class="hero-video" autoplay muted loop playsinline>
+        <source [src]="config.video" type="video/mp4">
+      </video>
       <div class="container hero-content">
         <p class="eyebrow">{{ config.eyebrow }}</p>
         <h1>
@@ -30,13 +34,13 @@ export interface HeroConfig {
         <p class="description">{{ config.description }}</p>
 
         <div class="hero-actions" *ngIf="showPhone()">
-          <a href="#contact" class="btn btn-outline-gold">
-            Plan Your Journey
+          <a href="#services" class="btn btn-outline-gold">
+            Book Now
           </a>
           <a href="#destinations" class="btn btn-outline-light">
             Explore Destinations
           </a>
-          <a routerLink="/couriers" class="btn btn-outline-gold">
+          <a routerLink="/couriers" class="btn btn-outline-light">
             Courier Service
           </a>
         </div>

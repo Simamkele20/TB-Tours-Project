@@ -169,7 +169,6 @@ export class ContactPageComponent implements OnInit {
           });
         },
         error: (err) => {
-          console.error("Contact form error:", err);
           this.showToast("Failed to send message right now. Please call us on 073 448 3958.", "error");
         }
       });

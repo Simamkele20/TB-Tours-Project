@@ -1,13 +1,16 @@
-import { Component, HostListener, OnInit, inject } from '@angular/core';
+import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { environment } from '../environments/environment';
 import { SeoService } from './services/seo.service';
 import { GoogleAnalyticsService } from './services/google-analytics.service';
+import { AuthService } from './services/auth.service';
 import { DESTINATIONS_DETAIL } from './data/site-content';
 import { filter } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { ToastContainerComponent } from './shared/toast-container.component';
 
 @Component({
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, CommonModule, ToastContainerComponent],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
@@ -18,26 +21,28 @@ export class App implements OnInit {
   private seoService = inject(SeoService);
   private router = inject(Router);
   private googleAnalytics = inject(GoogleAnalyticsService);
+  public authService = inject(AuthService);
+
+  private userMenuOpen = signal(false);
 
   ngOnInit(): void {
     // Set initial SEO tags based on current route
     this.updateSeoForCurrentRoute();
 
-    // Track previous path to detect route changes vs hash changes
-    let previousPath = this.router.url.split('#')[0];
-
-    // Update SEO tags on route change and scroll to top only if path changed
+    // Update SEO tags on route change
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      const currentPath = this.router.url.split('#')[0];
-      
-      // Only scroll to top if the path changed (not just the hash)
-      if (currentPath !== previousPath) {
+    ).subscribe((event: any) => {
+      // Routes that should scroll to top
+      const scrollToTopRoutes = ['/auth/login', '/auth/register', '/auth/forgot-password', '/booking'];
+      const shouldScrollToTop = scrollToTopRoutes.some(route => event.urlAfterRedirects.startsWith(route));
+
+      if (shouldScrollToTop) {
+        // Scroll to top for auth and booking pages
         window.scrollTo(0, 0);
-        previousPath = currentPath;
       }
-      
+      // For other pages, let anchor navigation work naturally
+
       this.updateSeoForCurrentRoute();
     });
   }
@@ -146,5 +151,32 @@ export class App implements OnInit {
   scrollToTop(): void {
     window.scrollTo(0, 0);
     this.mobileMenuOpen = false;
+  }
+
+  isUserMenuOpen(): boolean {
+    return this.userMenuOpen();
+  }
+
+  toggleUserMenu(): void {
+    this.userMenuOpen.update(value => !value);
+  }
+
+  closeUserMenu(): void {
+    this.userMenuOpen.set(false);
+  }
+
+  isAdminDashboard(): boolean {
+    return this.router.url.includes('/admin');
+  }
+
+  isAuthorizedManager(): boolean {
+    const AUTHORIZED_MANAGER_EMAIL = 'princetancu06@gmail.com';
+    return this.authService.currentUser()?.email?.toLowerCase() === AUTHORIZED_MANAGER_EMAIL;
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.userMenuOpen.set(false);
+    this.router.navigate(['/']);
   }
 }

@@ -1,0 +1,302 @@
+<div class="admin-container">
+  <header class="admin-header">
+    <h1>Admin Dashboard</h1>
+    <p class="subtitle">System Management & Analytics</p>
+  </header>
+
+  <div class="admin-content">
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+      <button class="tab-btn" [class.active]="activeTab === 'overview'" (click)="activeTab = 'overview'">
+        📊 Overview
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'bookings'" (click)="activeTab = 'bookings'">
+        📅 Bookings
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'users'" (click)="activeTab = 'users'">
+        👥 Users
+      </button>
+    </div>
+
+    <!-- OVERVIEW TAB -->
+    <div *ngIf="activeTab === 'overview'">
+      <!-- Date Filter Section -->
+      <div class="filter-section">
+        <h3>Filter by Date Range</h3>
+        <div class="filter-buttons">
+          <button
+            class="filter-btn"
+            [class.active]="dateRange === 'day'"
+            (click)="onDateRangeChange('day')">
+            📅 Day
+          </button>
+          <button
+            class="filter-btn"
+            [class.active]="dateRange === 'week'"
+            (click)="onDateRangeChange('week')">
+            📆 Week
+          </button>
+          <button
+            class="filter-btn"
+            [class.active]="dateRange === 'month'"
+            (click)="onDateRangeChange('month')">
+            📋 Month
+          </button>
+          <button
+            class="filter-btn"
+            [class.active]="dateRange === 'year'"
+            (click)="onDateRangeChange('year')">
+            📊 Year
+          </button>
+          <button
+            class="filter-btn"
+            [class.active]="dateRange === 'all'"
+            (click)="onDateRangeChange('all')">
+            🌍 All Time
+          </button>
+        </div>
+      </div>
+
+      <!-- User Analytics Section -->
+      <section class="analytics-section" *ngIf="analytics">
+        <h2>System Analytics - Users</h2>
+        <div class="analytics-grid">
+          <div class="stat-card">
+            <div class="stat-value">{{ analytics.users.total || 0 }}</div>
+            <div class="stat-label">Total Users</div>
+          </div>
+          <div class="stat-card verified">
+            <div class="stat-value">{{ analytics.users.verified || 0 }}</div>
+            <div class="stat-label">Verified Users</div>
+          </div>
+          <div class="stat-card warning">
+            <div class="stat-value">{{ analytics.users.unverified || 0 }}</div>
+            <div class="stat-label">Unverified</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Booking Analytics Section -->
+      <section class="analytics-section" *ngIf="bookingAnalytics">
+        <h2>System Analytics - Bookings</h2>
+        <div class="analytics-grid">
+          <div class="stat-card">
+            <div class="stat-value">{{ bookingAnalytics.bookings.total || 0 }}</div>
+            <div class="stat-label">Total Bookings</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">{{ bookingAnalytics.bookings.confirmed || 0 }}</div>
+            <div class="stat-label">Confirmed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">{{ bookingAnalytics.bookings.completed || 0 }}</div>
+            <div class="stat-label">Completed</div>
+          </div>
+          <div class="stat-card warning">
+            <div class="stat-value">{{ bookingAnalytics.bookings.cancelled || 0 }}</div>
+            <div class="stat-label">Cancelled</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">{{ bookingAnalytics.payment.paid || 0 }}</div>
+            <div class="stat-label">Paid</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">{{ formatCurrency(bookingAnalytics.payment.totalRevenue || 0) }}</div>
+            <div class="stat-label">Total Revenue</div>
+          </div>
+        </div>
+
+        <!-- Top Tours Section -->
+        <div class="top-tours" *ngIf="bookingAnalytics.topTours && bookingAnalytics.topTours.length > 0">
+          <h3>Top Performing Tours</h3>
+          <table class="tours-table">
+            <thead>
+              <tr>
+                <th>Tour Title</th>
+                <th>Bookings</th>
+                <th>Revenue</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tour of bookingAnalytics.topTours">
+                <td>{{ tour.title }}</td>
+                <td>{{ tour.bookingCount }}</td>
+                <td>{{ formatCurrency(tour.totalRevenue) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- BOOKINGS TAB -->
+    <div *ngIf="activeTab === 'bookings'">
+      <section class="bookings-section">
+        <h2>Bookings Management</h2>
+
+        <div class="bookings-controls">
+          <input
+            type="text"
+            placeholder="Search by reference, email, or tour..."
+            class="search-input"
+            [(ngModel)]="bookingSearchQuery"
+            (keyup)="filterBookings()"
+          />
+          <select class="filter-select" [(ngModel)]="bookingStatusFilter" (change)="filterBookings()">
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <select class="filter-select" [(ngModel)]="paymentStatusFilter" (change)="filterBookings()">
+            <option value="">All Payment Status</option>
+            <option value="paid">Paid</option>
+            <option value="unpaid">Unpaid</option>
+            <option value="pending">Pending Payment</option>
+            <option value="refunded">Refunded</option>
+          </select>
+        </div>
+
+        <div class="bookings-table-wrapper">
+          <table class="bookings-table" *ngIf="filteredBookings.length > 0">
+            <thead>
+              <tr>
+                <th>Reference</th>
+                <th>Customer</th>
+                <th>Tour</th>
+                <th>Date</th>
+                <th>Passengers</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Booked</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let booking of filteredBookings">
+                <td class="bold">{{ booking.bookingReference }}</td>
+                <td>
+                  <div class="user-info">
+                    <span class="name">{{ booking.User?.firstName }} {{ booking.User?.lastName }}</span>
+                    <span class="email">{{ booking.User?.email }}</span>
+                  </div>
+                </td>
+                <td>{{ booking.Tour?.title }}</td>
+                <td>{{ formatDate(booking.tourDate) }}</td>
+                <td class="center">{{ booking.numberOfPassengers }}</td>
+                <td class="bold">{{ formatCurrency(booking.totalPrice) }}</td>
+                <td>
+                  <span class="badge" [ngClass]="'status-' + booking.status">
+                    {{ booking.status }}
+                  </span>
+                </td>
+                <td>
+                  <span class="badge" [ngClass]="'payment-' + booking.paymentStatus">
+                    {{ booking.paymentStatus }}
+                  </span>
+                </td>
+                <td>{{ formatDate(booking.createdAt) }}</td>
+                <td class="actions">
+                  <button class="btn-small cancel-btn" (click)="cancelBooking(booking)" [disabled]="booking.status === 'cancelled' || booking.status === 'completed'">Cancel</button>
+                  <button class="btn-small done-btn" (click)="markBookingDone(booking)" [disabled]="booking.status === 'cancelled' || booking.status === 'completed'">Done</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="no-bookings" *ngIf="filteredBookings.length === 0">
+            <p>No bookings found</p>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" *ngIf="bookingTotalPages > 1">
+          <button
+            class="btn-pagination"
+            (click)="previousBookingPage()"
+            [disabled]="bookingCurrentPage === 1"
+          >
+            Previous
+          </button>
+          <span class="page-info">Page {{ bookingCurrentPage }} of {{ bookingTotalPages }}</span>
+          <button
+            class="btn-pagination"
+            (click)="nextBookingPage()"
+            [disabled]="bookingCurrentPage === bookingTotalPages"
+          >
+            Next
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- USERS TAB -->
+    <div *ngIf="activeTab === 'users'">
+      <section class="users-section">
+        <h2>User Management & Details</h2>
+
+        <div class="users-controls">
+          <input
+            type="text"
+            placeholder="Search users..."
+            class="search-input"
+            [(ngModel)]="searchQuery"
+            (keyup)="filterUsers()"
+          />
+        </div>
+
+        <div class="users-table-wrapper">
+          <table class="users-table" *ngIf="filteredUsers.length > 0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Joined</th>
+                <th>Last Updated</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of filteredUsers">
+                <td class="bold">{{ user.firstName }} {{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <span class="status" [ngClass]="user.verified ? 'verified' : 'unverified'">
+                    {{ user.verified ? 'Verified' : 'Unverified' }}
+                  </span>
+                </td>
+                <td>{{ formatDate(user.createdAt) }}</td>
+                <td>{{ formatDate(user.updatedAt || user.createdAt) }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="no-users" *ngIf="filteredUsers.length === 0">
+            <p>No users found</p>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" *ngIf="totalPages > 1">
+          <button
+            class="btn-pagination"
+            (click)="previousPage()"
+            [disabled]="currentPage === 1"
+          >
+            Previous
+          </button>
+          <span class="page-info">Page {{ currentPage }} of {{ totalPages }}</span>
+          <button
+            class="btn-pagination"
+            (click)="nextPage()"
+            [disabled]="currentPage === totalPages"
+          >
+            Next
+          </button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

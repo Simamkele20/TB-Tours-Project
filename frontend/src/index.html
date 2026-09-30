@@ -95,13 +95,38 @@
   <meta name="theme-color" content="#1a1a1a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
 
+  <!-- Performance & Analytics Initialization -->
+  <script>
+    // Ensure performance API is available
+    if (typeof performance !== 'undefined' && performance.timing) {
+      // Initialize performance marks
+      try {
+        if (typeof performance.mark === 'function') {
+          performance.mark('page-start');
+        }
+      } catch (e) {
+        // Silently fail if performance marks are not available
+      }
+    }
+
+    // Suppress Google Analytics Web Vitals errors
+    window.addEventListener('error', function(event) {
+      if (event.message && event.message.includes('startTime')) {
+        event.preventDefault();
+      }
+    }, true);
+  </script>
+
   <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YP5P63DQF2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-YP5P63DQF2');
+    gtag('config', 'G-YP5P63DQF2', {
+      'allow_google_signals': false,
+      'anonymize_ip': true
+    });
   </script>
 </head>
 <body>

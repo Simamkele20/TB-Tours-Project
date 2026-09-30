@@ -6,6 +6,7 @@ const clientUrls = rawClientUrls
 
 const env = {
   port: Number(process.env.PORT || 4000),
+  nodeEnv: process.env.NODE_ENV || "development",
   clientUrl: clientUrls[0] || "http://localhost:4200",
   clientUrls,
   mailgunApiKey: (process.env.MAILGUN_API_KEY || "").trim(),

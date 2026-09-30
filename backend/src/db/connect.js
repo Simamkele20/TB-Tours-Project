@@ -49,11 +49,22 @@ if (env.databaseUrl) {
 
 const connectDB = async () => {
   try {
+    // Determine which database is being used (for logging)
+    let dbType = 'SQLite';
+    if (env.databaseUrl) {
+      dbType = 'PostgreSQL (remote)';
+    } else if (process.env.NODE_ENV === 'production') {
+      dbType = `MySQL (${env.mysqlDatabase})`;
+    }
+    console.log(`[DB] Attempting to connect to ${dbType}...`);
+    
     // Import models to register them
+    console.log('[DB] Loading models...');
     const User = require('../models/User');
     const Tour = require('../models/Tour');
     const Booking = require('../models/Booking');
     const Destination = require('../models/Destination');
+    console.log('[DB] Models loaded successfully');
 
     // Set up model associations
     User.hasMany(Booking, { foreignKey: 'userId' });
@@ -61,26 +72,22 @@ const connectDB = async () => {
 
     Tour.hasMany(Booking, { foreignKey: 'tourId' });
     Booking.belongsTo(Tour, { foreignKey: 'tourId' });
+    console.log('[DB] Model associations set up');
 
+    console.log('[DB] Authenticating database connection...');
     await sequelize.authenticate();
-    
-    // Determine which database is being used
-    let dbType = 'SQLite';
-    if (env.databaseUrl) {
-      dbType = 'PostgreSQL (remote)';
-    } else if (process.env.NODE_ENV === 'production') {
-      dbType = `MySQL (${env.mysqlDatabase})`;
-    }
     console.log(`[DB] Connected successfully to ${dbType}`);
     
     // Sync models with database
+    console.log('[DB] Synchronizing models...');
     await sequelize.sync({ alter: false });
     console.log('[DB] Models synchronized');
     
     return sequelize;
   } catch (error) {
     console.error('[DB Connection Error]', error.message);
-    throw new Error('Database connection failed');
+    console.error('[DB Connection Error Stack]', error.stack);
+    throw error;
   }
 };
 
