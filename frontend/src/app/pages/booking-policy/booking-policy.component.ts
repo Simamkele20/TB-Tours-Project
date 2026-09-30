@@ -10,7 +10,8 @@ import { BOOKING_POLICY_CONTENT } from "../../data/site-content";
   template: `
     <app-hero-section
       [config]="heroConfig()"
-      [showPhone]="() => false">
+      [showPhone]="() => false"
+      [alignLeft]="true">
     </app-hero-section>
 
     <section class="policy-section section container">

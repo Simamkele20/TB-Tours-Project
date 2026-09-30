@@ -3,7 +3,8 @@ export interface HeroBlock {
   title: string;
   accent: string;
   description: string;
-  image: string;
+  image?: string;
+  video?: string;
 }
 
 export interface FeatureCard {
@@ -15,18 +16,49 @@ export interface FeatureCard {
   duration?: string;
   passengers?: string;
   bags?: string;
+  price?: string;
   ctaLabel?: string;
   ctaLink?: string;
+  tourId?: number;
+}
+
+export interface Partner {
+  name: string;
+  logo: string;
+  url?: string;
 }
 
 export interface PageContent {
   hero: HeroBlock;
+  partners?: Partner[];
   sectionTitle: string;
   sectionSubtitle: string;
   cards: FeatureCard[];
   trustStrip: string[];
   ctaTitle: string;
   ctaText: string;
+}
+
+export interface ItineraryStop {
+  time: string;
+  title: string;
+  description?: string;
+}
+
+export interface DestinationDetail {
+  title: string;
+  slug: string;
+  hero: HeroBlock;
+  description: string;
+  duration: string;
+  tourType: string;
+  itinerary: ItineraryStop[];
+  highlights: string[];
+  included: string[];
+  excluded: string[];
+  bestTime?: string;
+  customizeInfo?: string;
+  pleaseNote?: string;
 }
 
 export const SITE_CONTENT: Record<string, PageContent> = {
@@ -39,6 +71,12 @@ export const SITE_CONTENT: Record<string, PageContent> = {
         "Private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands.",
       image: "images/camp-bay.jpg"
     },
+    partners: [
+      {
+        name: "Tourism Board",
+        logo: "/images/Partner.jpg"
+      }
+    ],
     sectionTitle: "Travel your way.",
     sectionSubtitle: "From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.",
     cards: [
@@ -89,8 +127,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       title: "TB Tours ",
       accent: "(Pty) Ltd",
       description:
-        "A Cape Town-based private tour, airport transfer and chauffeur company.",
-      image: "images/franschhoek.jpg"
+        "A Cape Town-based private tour, airport transfer and chauffeur company."
     },
     sectionTitle: "About",
     sectionSubtitle: "TB Tours (Pty)Ltd offers private tours, airport transfers and chauffeur services across Cape Town and the Cape Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.\n\nThe company grew out of one person's time on the road - a story of entrepreneurship, service, and genuine care for every journey.",
@@ -105,7 +142,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
 
   destinations: {
     hero: {
-      eyebrow: "Destinations",
+      eyebrow: "TOUR",
       title: "Where we will ",
       accent: "take you",
       description:
@@ -115,14 +152,16 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     sectionTitle: "",
     sectionSubtitle: "",
     cards: [
-      { title: "Cape Point", description: "Cape Peninsula", image: "images/tsisikama.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
-      { title: "Chapman's Peak Drive", description: "Atlantic Coast", image: "images/camp-bay.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
-      { title: "Boulders Beach", description: "Simon's Town", image: "images/hermanus.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
-      { title: "Bo-Kaap", description: "Cape Town City", image: "images/DEst.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
-      { title: "V&A Waterfront", description: "Cape Town City", image: "images/franschhoek.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
-      { title: "Kirstenbosch", description: "Table Mountain", image: "images/camp-bay.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
-      { title: "Cape Winelands", description: "Stellenbosch & Franschhoek", image: "images/franschhoek.jpg", ctaLabel: "Enquire", ctaLink: "/contact" },
-      { title: "Aquila Game Reserve", description: "Meet the Big Five in their natural habitat.", image: "images/Game Reserve.jpg", ctaLabel: "Enquire", ctaLink: "/contact" }
+      { title: "Cape Agulhas Day Tour", description: "Southernmost Tip of Africa", image: "images/destinations/cape-agulhas.jpg", ctaLabel: "View Details", ctaLink: "/destinations/cape-agulhas" },
+      { title: "Bo-Kaap & Cape Town City Tour", description: "Culture, History & Iconic Cape Town", image: "images/destinations/bo-kaap.jpg", ctaLabel: "View Details", ctaLink: "/destinations/bo-kaap" },
+      { title: "Cape Town Highlights Tour", description: "Discover the Best of Cape Town", image: "images/destinations/cape-town-highlights.jpg", ctaLabel: "View Details", ctaLink: "/destinations/cape-town-highlights" },
+      { title: "Cape Winelands Tour", description: "Stellenbosch & Franschhoek", image: "images/destinations/cape-winelands.jpg", ctaLabel: "View Details", ctaLink: "/destinations/cape-winelands" },
+      { title: "Cape Peninsula Tour", description: "Cape Point • Cape of Good Hope • Boulder's Beach", image: "images/destinations/cape-peninsula.jpg", ctaLabel: "View Details", ctaLink: "/destinations/cape-peninsula" },
+      { title: "Hermanus Whale Coast Tour", description: "Scenic Coastal Drive & Hermanus", image: "images/destinations/hermanus.jpg", ctaLabel: "View Details", ctaLink: "/destinations/hermanus" },
+      { title: "Aquila Safari Experience", description: "African Wildlife Adventure", image: "images/destinations/aquila-safari.jpg", ctaLabel: "View Details", ctaLink: "/destinations/aquila-safari" },
+      { title: "Constantia Wine & Scenic Tour", description: "Cape Town's Historic Wine Valley", image: "images/destinations/constantia-wine.jpg", ctaLabel: "View Details", ctaLink: "/destinations/constantia-wine" },
+      { title: "Cape West Coast Tour", description: "Discover the Wild Beauty of the West Coast", image: "images/destinations/cape-west-coast.jpg", ctaLabel: "View Details", ctaLink: "/destinations/cape-west-coast" },
+      { title: "Garden Route Experience", description: "South Africa's Beautiful Garden Route", image: "images/destinations/garden-route.jpg", ctaLabel: "View Details", ctaLink: "/destinations/garden-route" }
     ],
     trustStrip: [],
     ctaTitle: "",
@@ -148,6 +187,83 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     trustStrip: ["WhatsApp first", "Direct line", "Flexible timing", "Personal support"],
     ctaTitle: "Your Cape Town journey starts here.",
     ctaText: "Airport transfer, private tour or custom day out - let's plan it together by email."
+  },
+
+  services: {
+    hero: {
+      eyebrow: "SERVICES",
+      title: "Travel your ",
+      accent: "way",
+      description: "From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.",
+      image: "images/camp-bay.jpg"
+    },
+    sectionTitle: "Travel your way",
+    sectionSubtitle: "Choose from our curated tours and experiences. Each journey is tailored to your preferences.",
+    cards: [
+      {
+        title: "Table Mountain",
+        description: "See Cape Town from above.",
+        image: "images/Image(13).jpg",
+        price: "R150pp",
+        duration: "Half Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/1",
+        tourId: 1
+      },
+      {
+        title: "Cape Peninsula",
+        description: "Where the mountains meet the Atlantic.",
+        image: "images/Image(19).jpg",
+        price: "R200pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/2",
+        tourId: 2
+      },
+      {
+        title: "Boulders Beach",
+        description: "Meet Cape Town's famous penguins.",
+        image: "images/Image(18).jpg",
+        price: "R120pp",
+        duration: "Half Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/3",
+        tourId: 3
+      },
+      {
+        title: "Cape Winelands",
+        description: "Slow afternoons among vineyards and estates.",
+        image: "images/franschhoek.jpg",
+        price: "R250pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/4",
+        tourId: 4
+      },
+      {
+        title: "Private Chauffeur Services",
+        description: "A discreet driver at your disposal, by the hour or by the day.",
+        image: "images/hermanus.jpg",
+        price: "R200/hr",
+        duration: "Flexible",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/5",
+        tourId: 5
+      },
+      {
+        title: "Custom Day Tours",
+        description: "An itinerary shaped entirely around your interests and your time.",
+        image: "images/kirstenbosch.jpg",
+        price: "R250pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/6",
+        tourId: 6
+      }
+    ],
+    trustStrip: ["Private", "Professional", "Personal", "Local insight"],
+    ctaTitle: "Ready for this adventure?",
+    ctaText: "Request a quote and let us customize your journey"
   }
 };
 
@@ -155,7 +271,10 @@ export interface ServiceCard {
   number: string;
   title: string;
   description: string;
+  price?: number;
   ctaLabel: string;
+  tourId?: number;
+  ctaLink?: string;
 }
 
 export const SITE_SERVICES: ServiceCard[] = [
@@ -163,37 +282,55 @@ export const SITE_SERVICES: ServiceCard[] = [
     number: "01",
     title: "Airport Transfers",
     description: "Punctual, private arrivals and departures with a calm, professional welcome.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 650,
+    ctaLabel: "BOOK",
+    tourId: 1,
+    ctaLink: "/booking/1"
   },
   {
     number: "02",
     title: "Cape Peninsula Tours",
     description: "The full coastal arc • Chapman's Peak, Cape Point and Boulders Beach.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 2500,
+    ctaLabel: "BOOK",
+    tourId: 2,
+    ctaLink: "/booking/2"
   },
   {
     number: "03",
     title: "Cape Town City Tours",
     description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 2000,
+    ctaLabel: "BOOK",
+    tourId: 3,
+    ctaLink: "/booking/3"
   },
   {
     number: "04",
     title: "Winelands Tours",
     description: "Stellenbosch and Franschhoek estates at an unhurried pace.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 2500,
+    ctaLabel: "BOOK",
+    tourId: 4,
+    ctaLink: "/booking/4"
   },
   {
     number: "05",
-    title: "Private Chauffeur Services",
-    description: "A discreet driver at your disposal, by the hour or by the day.",
-    ctaLabel: "REQUEST A QUOTE"
+    title: "Full-Day Private Tour",
+    description: "A full day of private tour with flexible itinerary shaped around your interests.",
+    price: 3500,
+    ctaLabel: "BOOK",
+    tourId: 5,
+    ctaLink: "/booking/5"
   },
   {
     number: "06",
     title: "Custom Day Tours",
     description: "An itinerary shaped entirely around your interests and your time.",
-    ctaLabel: "REQUEST A QUOTE"
+    price: 2500,
+    ctaLabel: "BOOK",
+    tourId: 6,
+    ctaLink: "/booking/6"
   }
 ];
 
@@ -242,5 +379,774 @@ export const GOOGLE_REVIEWS: GoogleReview[] = [
     text: "Excellent service very good driver.The car is very clean and tidy",
     date: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000),
     reviewCount: 1
+  }
+];
+
+export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
+  "cape-agulhas": {
+    title: "Cape Agulhas Day Tour",
+    slug: "cape-agulhas",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Cape Agulhas ",
+      accent: "Day Tour",
+      description: "Visit the Southernmost Tip of Africa where the Atlantic and Indian Oceans meet.",
+      image: "images/destinations/Cape Agulhas.jpg"
+    },
+    description: "Take an unforgettable journey from Cape Town to Cape Agulhas, where the Atlantic and Indian Oceans meet. Enjoy beautiful coastal scenery, charming seaside towns and the iconic Cape Agulhas lighthouse.",
+    duration: "Full Day",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "07:00", title: "Pickup from your hotel or accommodation in Cape Town" },
+      { time: "08:30", title: "Scenic drive through the Overberg region" },
+      { time: "09:30", title: "Stop in Caledon or surrounding area for a short break" },
+      { time: "11:00", title: "Arrive in Cape Agulhas" },
+      { time: "11:15", title: "Visit the Southernmost Tip of Africa" },
+      { time: "12:00", title: "Explore the coastline and enjoy photo opportunities" },
+      { time: "12:30", title: "Visit the historic Cape Agulhas Lighthouse" },
+      { time: "13:15", title: "Lunch in the area (own cost)" },
+      { time: "14:15", title: "Explore the coastal village and surrounding scenery" },
+      { time: "15:00", title: "Begin the scenic return journey to Cape Town" },
+      { time: "18:00–19:00", title: "Drop-off at your accommodation" }
+    ],
+    highlights: [
+      "Southernmost Tip of Africa",
+      "Cape Agulhas coastline",
+      "Cape Agulhas Lighthouse",
+      "Overberg scenery",
+      "Beautiful coastal views",
+      "Scenic photo stops",
+      "Charming seaside surroundings"
+    ],
+    included: [
+      "Private transportation",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water"
+    ],
+    excluded: [
+      "Meals and drinks",
+      "Lighthouse entrance fees, if applicable",
+      "Personal expenses",
+      "Optional activities"
+    ],
+    pleaseNote: "Travel times may vary depending on traffic, weather and road conditions. The itinerary can also be adjusted according to your preferred departure time and interests."
+  },
+
+  "bo-kaap": {
+    title: "Bo-Kaap & Cape Town City Tour",
+    slug: "bo-kaap",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Bo-Kaap & Cape Town ",
+      accent: "City Tour",
+      description: "Culture, History & Iconic Cape Town in one unforgettable journey.",
+      image: "images/destinations/Image (9).jpg"
+    },
+    description: "Discover the colourful streets, historic landmarks and beautiful viewpoints that make Cape Town one of South Africa's most exciting cities.",
+    duration: "±4–5 Hours",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "09:00", title: "Pickup from your accommodation" },
+      { time: "09:30", title: "Explore the colourful Bo-Kaap" },
+      { time: "10:00", title: "Cape Town CBD" },
+      { time: "10:30", title: "Company's Garden" },
+      { time: "11:00", title: "Greenmarket Square" },
+      { time: "11:30", title: "Explore the historic city centre" },
+      { time: "12:00", title: "Signal Hill viewpoint" },
+      { time: "13:00", title: "Lunch or coffee stop (own cost)" },
+      { time: "14:00", title: "Return to your accommodation" }
+    ],
+    highlights: [
+      "Bo-Kaap",
+      "Cape Town CBD",
+      "Company's Garden",
+      "Greenmarket Square",
+      "Historic city centre",
+      "Signal Hill",
+      "City viewpoints"
+    ],
+    included: [
+      "Private transportation",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water"
+    ],
+    excluded: [
+      "Meals and drinks",
+      "Attraction entrance fees",
+      "Personal expenses",
+      "Optional activities"
+    ]
+  },
+
+  "cape-town-highlights": {
+    title: "Cape Town Highlights Tour",
+    slug: "cape-town-highlights",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Cape Town ",
+      accent: "Highlights Tour",
+      description: "Experience the highlights of Cape Town on a private and comfortable journey.",
+      image: "images/destinations/Image (5).jpg"
+    },
+    description: "Experience the highlights of Cape Town on a private and comfortable tour designed to showcase some of the city's most iconic destinations.",
+    duration: "±6–7 Hours",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "09:00", title: "Pickup from your hotel or accommodation" },
+      { time: "09:30", title: "Visit the colourful Bo-Kaap and enjoy a photo stop" },
+      { time: "10:00", title: "Explore Cape Town CBD and Company's Garden" },
+      { time: "10:45", title: "Table Mountain area and scenic viewpoints" },
+      { time: "12:00", title: "Camps Bay" },
+      { time: "12:30", title: "Clifton" },
+      { time: "13:00", title: "Lunch stop (own cost)" },
+      { time: "14:00", title: "Sea Point and Mouille Point" },
+      { time: "14:45", title: "Signal Hill viewpoint" },
+      { time: "15:30", title: "Return to your accommodation" }
+    ],
+    highlights: [
+      "Bo-Kaap",
+      "Table Mountain area",
+      "Company's Garden",
+      "Camps Bay",
+      "Clifton",
+      "Sea Point",
+      "Signal Hill",
+      "Cape Town City Centre"
+    ],
+    included: [
+      "Private transportation",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water"
+    ],
+    excluded: [
+      "Attraction entrance fees",
+      "Meals and drinks",
+      "Personal expenses",
+      "Optional activities"
+    ]
+  },
+
+  "cape-winelands": {
+    title: "Cape Winelands Tour",
+    slug: "cape-winelands",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Cape ",
+      accent: "Winelands Tour",
+      description: "Stellenbosch & Franschhoek - Experience vineyards, historic towns and mountain scenery.",
+      image: "images/destinations/Image (20).jpg"
+    },
+    description: "Experience the beauty of the Cape Winelands with a private journey through vineyards, historic towns and spectacular mountain scenery.",
+    duration: "±8 Hours",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "09:00", title: "Pickup from your hotel or accommodation" },
+      { time: "10:00", title: "Arrive in Stellenbosch" },
+      { time: "10:15", title: "Explore Stellenbosch town" },
+      { time: "11:00", title: "Visit a wine estate and enjoy an optional wine tasting" },
+      { time: "12:30", title: "Scenic drive through the Cape Winelands" },
+      { time: "13:00", title: "Lunch at a wine estate or in Franschhoek (own cost)" },
+      { time: "14:15", title: "Explore Franschhoek village" },
+      { time: "14:45", title: "Optional second wine tasting" },
+      { time: "15:45", title: "Begin the scenic journey back to Cape Town" },
+      { time: "17:00", title: "Drop-off at your accommodation" }
+    ],
+    highlights: [
+      "Stellenbosch",
+      "Franschhoek",
+      "Vineyards",
+      "Wine estates",
+      "Mountain scenery",
+      "Wine tasting opportunities",
+      "Scenic photo stops"
+    ],
+    included: [
+      "Private transportation",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water"
+    ],
+    excluded: [
+      "Wine tasting fees",
+      "Meals and drinks",
+      "Personal expenses",
+      "Optional activities"
+    ]
+  },
+
+  "camps-bay": {
+    title: "Cape Town Beach Escape",
+    slug: "camps-bay",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Cape Town ",
+      accent: "Beach Escape",
+      description: "Experience Cape Town's Famous Beaches & Coastal Scenery",
+      image: "images/destinations/Image (31).jpg"
+    },
+    description: "Discover the beauty of Cape Town's Atlantic Seaboard on a relaxing private tour with TB Tours. Enjoy breathtaking ocean views, beautiful beaches, mountain scenery and some of Cape Town's most iconic coastal locations.",
+    duration: "4–5 Hours",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "08:30", title: "Pickup from your accommodation" },
+      { time: "09:00", title: "Camps Bay Beach" },
+      { time: "09:45", title: "Clifton Beaches" },
+      { time: "10:30", title: "Sea Point Promenade" },
+      { time: "11:00", title: "Hout Bay, Chapman's Peak, Noordhoek" },
+      { time: "12:30", title: "Lunch stop (own cost)" },
+      { time: "13:30", title: "Cape Point and Cape of Good Hope" },
+      { time: "14:30", title: "Boulder's Beach penguin area (optional entrance fee)" },
+      { time: "15:30", title: "Return to Cape Town" }
+    ],
+    highlights: [
+      "Camps Bay Beach",
+      "Clifton Beaches",
+      "Sea Point Promenade",
+      "Bantry Bay",
+      "Maiden's Cove"
+    ],
+    included: [
+      "Private transportation",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water"
+    ],
+    excluded: [
+      "Meals and drinks",
+      "Personal expenses",
+      "Optional activities"
+    ],
+    customizeInfo: "Enjoy a private, comfortable journey with TB Tours, with convenient pickup and drop-off from your accommodation or agreed location in Cape Town. Perfect for couples, families, solo travellers, groups, first-time visitors to Cape Town and photography lovers.",
+    bestTime: "Experience beautiful beaches, mountain and ocean views, amazing photo opportunities, scenic coastal drives and relaxed Cape Town atmosphere."
+  },
+
+  "cape-peninsula": {
+    title: "Cape Point and Cape Peninsula Tour",
+    slug: "cape-peninsula",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Cape Point & ",
+      accent: "Cape Peninsula Tour",
+      description: "Where two oceans meet - Explore Cape Point and Cape of Good Hope",
+      image: "images/destinations/Image (30).jpg"
+    },
+    description: "Experience the iconic Cape Peninsula with a private tour showcasing Cape Point, Cape of Good Hope, and Boulder's Beach penguins.",
+    duration: "5–6 Hours",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "09:00", title: "Pickup from your accommodation" },
+      { time: "10:00", title: "Chapman's Peak scenic drive" },
+      { time: "11:00", title: "Cape Point Nature Reserve" },
+      { time: "11:30", title: "Cape Point and Cape of Good Hope viewpoints" },
+      { time: "12:30", title: "Lunch stop (own cost)" },
+      { time: "13:30", title: "Simon's Town" },
+      { time: "14:00", title: "Boulder's Beach penguin area (optional entrance fee)" },
+      { time: "15:00", title: "Return to Cape Town" }
+    ],
+    highlights: [
+      "Cape Point Nature Reserve",
+      "Cape of Good Hope",
+      "Chapman's Peak Drive",
+      "Boulder's Beach Penguins",
+      "Simon's Town",
+      "Dramatic coastal scenery"
+    ],
+    included: [
+      "Private transportation",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water"
+    ],
+    excluded: [
+      "Attraction entrance fees",
+      "Meals and drinks",
+      "Personal expenses",
+      "Optional activities"
+    ]
+  },
+
+  "hermanus": {
+    title: "Hermanus Whale Coast Tour",
+    slug: "hermanus",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Hermanus ",
+      accent: "Whale Coast Tour",
+      description: "Scenic Coastal Drive & Hermanus - Experience the spectacular Whale Coast.",
+      image: "images/destinations/Image (7).jpg"
+    },
+    description: "Escape Cape Town for a spectacular journey along the Whale Coast and discover the charming coastal town of Hermanus.",
+    duration: "±8–9 Hours",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "08:00", title: "Pickup from your accommodation" },
+      { time: "09:00", title: "Scenic coastal drive" },
+      { time: "10:00", title: "Betty's Bay area and photo stop" },
+      { time: "11:30", title: "Arrive in Hermanus" },
+      { time: "12:00", title: "Explore Hermanus waterfront" },
+      { time: "13:00", title: "Lunch (own cost)" },
+      { time: "14:00", title: "Coastal walk and whale-watching viewpoints" },
+      { time: "15:30", title: "Begin return journey" },
+      { time: "17:00", title: "Drop-off in Cape Town" }
+    ],
+    highlights: [
+      "Scenic coastal routes",
+      "Betty's Bay",
+      "Hermanus",
+      "Ocean views",
+      "Whale-watching viewpoints",
+      "Hermanus waterfront",
+      "Coastal photo stops"
+    ],
+    included: [
+      "Private transportation",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water"
+    ],
+    excluded: [
+      "Meals and drinks",
+      "Whale-watching boat trips",
+      "Entrance fees",
+      "Personal expenses"
+    ],
+    pleaseNote: "Whale sightings are seasonal and cannot be guaranteed. Boat trips are subject to availability and weather conditions."
+  },
+
+  "aquila-safari": {
+    title: "Aquila Safari Experience",
+    slug: "aquila-safari",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Aquila ",
+      accent: "Safari Experience",
+      description: "An Unforgettable African Wildlife Adventure at Aquila Private Game Reserve.",
+      image: "images/destinations/Image (10).jpg"
+    },
+    description: "Leave Cape Town behind and experience the beauty of the South African wilderness with a private trip to Aquila Private Game Reserve.",
+    duration: "Full Day",
+    tourType: "Private Transportation",
+    itinerary: [
+      { time: "06:30", title: "Pickup from your accommodation" },
+      { time: "08:30", title: "Arrive at Aquila Private Game Reserve" },
+      { time: "09:00", title: "Safari/game-drive experience (subject to booking)" },
+      { time: "12:00", title: "Lunch (depending on package selected)" },
+      { time: "13:30", title: "Free time and relaxation" },
+      { time: "15:00", title: "Depart Aquila" },
+      { time: "17:00", title: "Scenic return journey to Cape Town" },
+      { time: "18:00", title: "Drop-off at your accommodation" }
+    ],
+    highlights: [
+      "Aquila Private Game Reserve",
+      "African wildlife",
+      "Safari experience",
+      "Game drive",
+      "Scenic landscapes",
+      "Full-day adventure"
+    ],
+    included: [
+      "Private transportation from Cape Town",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water"
+    ],
+    excluded: [
+      "Safari/game-drive fees",
+      "Meals unless included in selected package",
+      "Personal expenses",
+      "Optional activities"
+    ],
+    pleaseNote: "Safari activities and availability are subject to the reserve's operating schedule and the package selected."
+  },
+
+  "constantia-wine": {
+    title: "Constantia Wine & Scenic Tour",
+    slug: "constantia-wine",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Constantia Wine & ",
+      accent: "Scenic Tour",
+      description: "Cape Town's Historic Wine Valley - Discover Constantia's vineyards and scenic beauty.",
+      image: "images/destinations/Wine Valley.jpg"
+    },
+    description: "Discover the beauty of Constantia, one of Cape Town's most scenic and historic wine regions. Enjoy peaceful vineyards, mountain views, beautiful estates and the relaxed atmosphere of Cape Town's southern suburbs.",
+    duration: "±5–6 Hours",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "09:00", title: "Pickup from your hotel or accommodation" },
+      { time: "09:30", title: "Scenic drive through the Constantia Valley" },
+      { time: "10:00", title: "Visit a historic Constantia wine estate" },
+      { time: "10:30", title: "Optional wine tasting (own cost)" },
+      { time: "11:45", title: "Scenic drive through the Constantia wine region" },
+      { time: "12:15", title: "Visit a second estate or scenic viewpoint" },
+      { time: "13:00", title: "Lunch at a wine estate or nearby restaurant (own cost)" },
+      { time: "14:15", title: "Relax and enjoy the Constantia surroundings" },
+      { time: "15:00", title: "Begin return journey" },
+      { time: "15:30", title: "Optional photo stop along the route" },
+      { time: "16:00", title: "Drop-off at your accommodation" }
+    ],
+    highlights: [
+      "Constantia Valley",
+      "Historic wine estates",
+      "Vineyard scenery",
+      "Mountain views",
+      "Wine tasting opportunities",
+      "Scenic photo stops",
+      "Relaxed Cape Town experience"
+    ],
+    included: [
+      "Private transportation",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water"
+    ],
+    excluded: [
+      "Wine tasting fees",
+      "Meals and drinks",
+      "Estate entrance fees where applicable",
+      "Personal expenses",
+      "Optional activities"
+    ],
+    customizeInfo: "Make your Constantia experience your own. Choose your preferred departure time, wine estates and additional stops."
+  },
+
+  "cape-west-coast": {
+    title: "Cape West Coast Tour",
+    slug: "cape-west-coast",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Cape ",
+      accent: "West Coast Tour",
+      description: "Discover the Wild Beauty of the West Coast - Langebaan, beaches and coastal villages.",
+      image: "images/destinations/Image (4).jpg"
+    },
+    description: "Escape the city and experience the peaceful beauty of South Africa's West Coast. Enjoy spectacular ocean views, charming coastal towns, natural landscapes and delicious local experiences on a private journey with TB Tours.",
+    duration: "Full Day",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "08:00", title: "Pickup from your hotel or accommodation in Cape Town" },
+      { time: "09:30", title: "Scenic drive along the West Coast" },
+      { time: "10:30", title: "Stop in the coastal town of Langebaan" },
+      { time: "11:00", title: "Explore Langebaan Lagoon and enjoy beautiful photo opportunities" },
+      { time: "12:00", title: "Continue towards the West Coast National Park area" },
+      { time: "13:00", title: "Lunch stop (own cost)" },
+      { time: "14:00", title: "Explore the surrounding coastal scenery and viewpoints" },
+      { time: "15:00", title: "Visit a local West Coast town or coastal viewpoint" },
+      { time: "16:00", title: "Begin the scenic journey back to Cape Town" },
+      { time: "18:00", title: "Drop-off at your accommodation" }
+    ],
+    highlights: [
+      "Langebaan",
+      "Langebaan Lagoon",
+      "West Coast coastline",
+      "Scenic viewpoints",
+      "Coastal villages",
+      "Beautiful photo opportunities",
+      "Relaxed West Coast atmosphere"
+    ],
+    included: [
+      "Private transportation",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water"
+    ],
+    excluded: [
+      "National park entrance fees",
+      "Meals and drinks",
+      "Personal expenses",
+      "Optional activities"
+    ],
+    bestTime: "The West Coast is particularly famous for its colourful wildflowers during the spring flower season. Seasonal attractions and conditions may vary.",
+    customizeInfo: "Want to spend more time at the beach, visit additional coastal destinations or add a special experience? Let TB Tours customise your West Coast journey around your schedule."
+  },
+
+  "garden-route": {
+    title: "Garden Route Experience",
+    slug: "garden-route",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Garden Route ",
+      accent: "Experience",
+      description: "Discover South Africa's Beautiful Garden Route - A 3-5 day journey through coastal beauty.",
+      image: "images/destinations/Image (8).jpg"
+    },
+    description: "Embark on an unforgettable journey from Cape Town through the spectacular Garden Route. Experience beautiful coastlines, forests, lagoons, charming towns and some of South Africa's most scenic destinations.",
+    duration: "3–5 Days",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "Day 1: 07:00", title: "Pickup from accommodation - Journey to Mossel Bay" },
+      { time: "Day 1: 15:00", title: "Arrive in Mossel Bay - Explore and check in" },
+      { time: "Day 2: 08:00", title: "Breakfast - Depart for Knysna" },
+      { time: "Day 2: 14:00", title: "Arrive in Knysna - Visit Waterfront and explore" },
+      { time: "Day 3: 09:00", title: "Visit Knysna Heads and travel to Plettenberg Bay" },
+      { time: "Day 3: 14:00", title: "Visit coastal viewpoints and nature experiences" },
+      { time: "Day 4: 09:30", title: "Journey through Garden Route to Tsitsikamma" },
+      { time: "Day 4: 13:30", title: "Visit Storms River Mouth area" },
+      { time: "Day 5: 09:00", title: "Begin return journey to Cape Town" },
+      { time: "Day 5: 18:00–19:00", title: "Drop-off at your accommodation" }
+    ],
+    highlights: [
+      "Mossel Bay",
+      "Wilderness",
+      "Knysna",
+      "Knysna Heads",
+      "Plettenberg Bay",
+      "Tsitsikamma",
+      "Storms River",
+      "Garden Route coastline",
+      "Forests and scenic landscapes",
+      "Beautiful photo opportunities"
+    ],
+    included: [
+      "Private transportation",
+      "Hotel/accommodation pickup and drop-off",
+      "Comfortable vehicle",
+      "Professional driver",
+      "Bottled water",
+      "Private travel throughout the itinerary"
+    ],
+    excluded: [
+      "Accommodation",
+      "Meals and drinks",
+      "National park entrance fees",
+      "Activities and excursions",
+      "Personal expenses"
+    ],
+    customizeInfo: "Your Garden Route experience can be customised according to your preferred number of days, accommodation, activities and destinations. Contact TB Tours for a personalised Garden Route quote."
+  }
+};
+
+// Terms & Conditions Content
+export interface TermsSection {
+  number: string;
+  title: string;
+  content: string[];
+}
+
+export const TERMS_CONTENT: TermsSection[] = [
+  {
+    number: "1",
+    title: "Acceptance of Terms",
+    content: [
+      "By booking and using TB Tours services, you agree to these Terms & Conditions.",
+      "Please read all terms carefully before booking."
+    ]
+  },
+  {
+    number: "2",
+    title: "Bookings and Cancellations",
+    content: [
+      "Bookings must be made in advance.",
+      "Cancellations made 48 hours before the tour date receive a full refund.",
+      "Cancellations within 48 hours are subject to a 50% charge."
+    ]
+  }
+];
+
+// FAQs Content
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface FAQsPageContent {
+  hero: {
+    eyebrow: string;
+    title: string;
+    accent: string;
+    description: string;
+    image: string;
+  };
+  faqs: FAQItem[];
+  closing: string;
+}
+
+export const FAQS_PAGE_CONTENT: FAQsPageContent = {
+  hero: {
+    eyebrow: "Questions?",
+    title: "Frequently Asked",
+    accent: "Questions",
+    description: "Find answers to common questions about booking tours and our services.",
+    image: "images/faq.jpg"
+  },
+  faqs: [
+    {
+      question: "How do I book a tour?",
+      answer: "You can book through our website or contact us directly for personalized assistance."
+    },
+    {
+      question: "What is your cancellation policy?",
+      answer: "Full refund for cancellations 48 hours before the tour date. 50% charge for cancellations within 48 hours."
+    }
+  ],
+  closing: "Didn't find your answer? Contact us for more help!"
+};
+
+// Couriers Page Content
+export interface CourierVehicle {
+  name: string;
+  seats: number;
+  features: string[];
+  image?: string;
+  capacity?: string;
+  specs?: string;
+}
+
+export const COURIERS_VEHICLES: CourierVehicle[] = [
+  {
+    name: "Express Delivery",
+    seats: 4,
+    features: ["Air conditioning", "Comfortable seating", "Professional driver"],
+    image: "images/Del 1.jpg",
+    capacity: "Small parcels & documents",
+    specs: "Fast, efficient delivery for urgent items"
+  },
+  {
+    name: "Standard Delivery",
+    seats: 8,
+    features: ["Spacious interior", "Air conditioning", "Luggage space"],
+    image: "images/Del 2.jpg",
+    capacity: "Medium packages",
+    specs: "Reliable service for standard deliveries"
+  },
+  {
+    name: "Premium Delivery",
+    seats: 4,
+    features: ["Air conditioning", "Comfortable seating", "Professional driver"],
+    image: "images/Del 3.jpg",
+    capacity: "Large packages",
+    specs: "Professional delivery for bulk items"
+  },
+  {
+    name: "Corporate Delivery",
+    seats: 8,
+    features: ["Spacious interior", "Air conditioning", "Luggage space"],
+    image: "images/Del 4.jpg",
+    capacity: "Business deliveries",
+    specs: "Dedicated service for corporate clients"
+  },
+  {
+    name: "Multi-Stop Delivery",
+    seats: 4,
+    features: ["Air conditioning", "Comfortable seating", "Professional driver"],
+    image: "images/Del 5.jpg",
+    capacity: "Multiple deliveries",
+    specs: "Efficient multi-stop delivery routes"
+  }
+];
+
+export interface CourierService {
+  number: string;
+  title: string;
+  description: string;
+  icon?: string;
+  price?: string;
+}
+
+export const COURIERS_PAGE_CONTENT = {
+  hero: {
+    eyebrow: "Delivery Services",
+    title: "TB TOURS ",
+    accent: "COURIER",
+    description: "Fast. Reliable. Door-to-Door. Need to send a parcel, document or package? TB Tours Courier provides reliable door-to-door delivery services for individuals and businesses.",
+    image: "images/Del 2.jpg"
+  },
+  tagline: "We offer convenient local deliveries with a professional and personal service.",
+  services: [
+    {
+      number: "01",
+      title: "Same-Day Deliveries",
+      description: "Send documents and parcels across your local area with convenient same-day delivery.",
+      icon: "📦"
+    },
+    {
+      number: "02",
+      title: "Door-to-Door Delivery",
+      description: "We collect your parcel from your chosen location and deliver it directly to the recipient.",
+      icon: "🚐"
+    },
+    {
+      number: "03",
+      title: "Business Deliveries",
+      description: "Reliable delivery support for small businesses, offices, guesthouses and other businesses.",
+      icon: "🏢"
+    },
+    {
+      number: "04",
+      title: "Documents & Small Parcels",
+      description: "Ideal for important documents, packages, personal items and other suitable deliveries.",
+      icon: "📄"
+    },
+    {
+      number: "05",
+      title: "Courier Service",
+      description: "Complete courier solutions for your delivery needs.",
+      icon: "🚚"
+    }
+  ],
+  pricing: [
+    { tier: "0–5 km", distance: "0–5 km", rate: "R60", price: "R60" },
+    { tier: "5–10 km", distance: "5–10 km", rate: "R80", price: "R80" },
+    { tier: "10–15 km", distance: "10–15 km", rate: "R100", price: "R100" },
+    { tier: "15–20 km", distance: "15–20 km", rate: "R120", price: "R120" },
+    { tier: "20–30 km", distance: "20–30 km", rate: "R150", price: "R150" },
+    { tier: "30–40 km", distance: "30–40 km", rate: "R180", price: "R180" },
+    { tier: "40–50 km", distance: "40–50 km", rate: "R220", price: "R220" },
+    { tier: "Over 50 km", distance: "Over 50 km", rate: "Contact for quote", price: "Contact for quote" }
+  ],
+  whyChoose: [
+    "Reliable service",
+    "Door-to-door delivery",
+    "Same-day delivery options",
+    "Competitive pricing",
+    "Professional service",
+    "Ideal for individuals and businesses"
+  ],
+  steps: [
+    { number: "01", title: "Request a Quote", description: "Contact us with your pickup location, delivery location and parcel details." },
+    { number: "02", title: "Confirm Your Booking", description: "We'll confirm the price and delivery details with you." },
+    { number: "03", title: "We Collect", description: "We collect your parcel from the agreed pickup location." },
+    { number: "04", title: "We Deliver", description: "Your parcel is delivered directly to the recipient." }
+  ]
+};
+
+// Booking Policy Content
+export interface BookingPolicySection {
+  number: string;
+  title: string;
+  content: string[];
+}
+
+export const BOOKING_POLICY_CONTENT: BookingPolicySection[] = [
+  {
+    number: "1",
+    title: "How to Book",
+    content: [
+      "Visit our website and select your preferred tour",
+      "Choose your date and number of participants",
+      "Complete payment to confirm your booking"
+    ]
+  },
+  {
+    number: "2",
+    title: "Cancellation and Refunds",
+    content: [
+      "Cancel up to 48 hours before for full refund",
+      "Cancellations within 48 hours are subject to 50% charge",
+      "No-shows are non-refundable"
+    ]
   }
 ];

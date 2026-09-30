@@ -177,6 +177,14 @@ h2 {
       color: #ffc94d;
     }
   }
+
+  // Destination cards layout
+  .destinations-layout & {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
 }
 
 // ==========================================
@@ -205,6 +213,7 @@ h2 {
 // CARD BODY
 // ==========================================
 
+// Card body
 .card-body {
   padding: clamp(1.5rem, 3vw, 2rem);
   position: relative;
@@ -220,6 +229,13 @@ h2 {
     padding: 0;
     border-left: 3px solid #f2b112;
     padding-left: 1.5rem;
+  }
+
+  .destinations-layout & {
+    padding: clamp(1.5rem, 3vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 }
 
@@ -263,6 +279,15 @@ p {
   margin: 1rem 0;
   font-size: 0.85rem;
   color: #f2b112;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.card-meta-row .price {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #ffc94d;
+  margin-left: auto;
 }
 
 small {
@@ -299,6 +324,96 @@ a.card-link {
     &::after {
       transform: translateX(4px);
     }
+  }
+}
+
+// Services and tours layout - make card links look like gold buttons
+.services-layout .card-link,
+.tours-layout .card-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1.2rem;
+  background: linear-gradient(135deg, #f2b112 0%, #ffc94d 100%);
+  border: 2px solid #f2b112;
+  border-radius: 4px;
+  color: #0f1419 !important;
+  font-weight: 900;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+  width: fit-content;
+  z-index: 10;
+
+  &::after {
+    content: '';
+    display: none;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, #ffc94d 0%, #ffdd66 100%);
+    border-color: #ffdd66;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(242, 177, 18, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #f2b112;
+    outline-offset: 2px;
+  }
+}
+
+// Destinations layout - make card links look like prominent buttons
+.destinations-layout .card-link {
+  display: inline-block;
+  padding: 0.9rem 1.8rem;
+  margin-top: auto;
+  margin-bottom: 0;
+  background: linear-gradient(135deg, rgba(242, 177, 18, 0.25) 0%, rgba(242, 177, 18, 0.1) 100%);
+  border: 2px solid #f2b112;
+  border-radius: 6px;
+  color: #f2b112 !important;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+  width: fit-content;
+  z-index: 10;
+
+  &::after {
+    content: '';
+    display: none;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, #f2b112 0%, #ffc94d 100%);
+    color: #0f1419 !important;
+    border-color: #ffc94d;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(242, 177, 18, 0.35);
+    font-weight: 900;
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #f2b112;
+    outline-offset: 2px;
   }
 }
 
@@ -361,6 +476,14 @@ a.card-link {
   .card-body.services-layout,
   .card-body.tours-layout {
     padding-left: 1rem;
+  }
+
+  // Enhance destination card link on mobile
+  .destinations-layout .card-link {
+    padding: 1rem 1.5rem;
+    font-size: 0.8rem;
+    border-width: 2px;
+    margin-top: 1rem;
   }
 }
 
