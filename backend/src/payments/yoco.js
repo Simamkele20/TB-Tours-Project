@@ -28,10 +28,13 @@ if (SHOULD_USE_MOCK) {
   console.log('[YOCO] 🌐 REAL API MODE - Using actual Yoco API with your credentials');
 }
 
+// Create Basic Auth header: Base64 encode "secret_key:" (with colon, empty password)
+const basicAuthHeader = Buffer.from(`${YOCO_SECRET_KEY}:`).toString('base64');
+
 const yocoAPI = axios.create({
   baseURL: YOCO_BASE_URL,
   headers: {
-    'Authorization': `Bearer ${YOCO_SECRET_KEY}`,
+    'Authorization': `Basic ${basicAuthHeader}`,
     'Content-Type': 'application/json'
   },
   // Allow self-signed certificates for development
