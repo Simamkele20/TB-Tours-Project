@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
+import { YocoService } from '../../services/yoco.service';
+import { ToastService } from '../../services/toast.service';
 
 interface Tour {
   id: number;
@@ -165,13 +167,13 @@ interface Tour {
           <!-- Payment Section -->
           <div class="payment-section">
             <h3>Payment</h3>
-            <p class="payment-info">You will be redirected to Paystack to complete your secure payment.</p>
+            <p class="payment-info">You will be redirected to Yoco to complete your secure payment.</p>
             <button
               type="submit"
               class="btn-submit"
               [disabled]="isSubmitting"
             >
-              {{ isSubmitting ? 'Redirecting to Paystack...' : 'Pay & Confirm Booking' }}
+              {{ isSubmitting ? 'Redirecting to payment...' : 'Pay & Confirm Booking' }}
             </button>
           </div>
 
@@ -558,10 +560,8 @@ export class BookingPageComponent implements OnInit {
   isSubmitting = false;
   todayDate = '';
 
-  private paystackPublicKey = environment.paystackPublicKey;
+  private yocoRedirectUrl: string | null = null;
   private bookingId: number | null = null;
-  private paystackReference: string | null = null;
-  private paystackAuthUrl: string | null = null;
   private passengerDetails: any[] = [];
 
   private fb = inject(FormBuilder);
@@ -569,6 +569,8 @@ export class BookingPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
+  private yocoService = inject(YocoService);
+  private toastService = inject(ToastService);
   protected authService = inject(AuthService);
 
   ngOnInit() {
@@ -641,18 +643,19 @@ export class BookingPageComponent implements OnInit {
 
   onSubmit() {
     if (!this.bookingForm.valid || !this.tour) {
-      alert('Please fill in all required fields');
+      this.toastService.error('Please fill in all required fields');
       return;
     }
 
     // Check if user is authenticated
     if (!this.authService.isAuthenticated()) {
-      alert('Please log in to create a booking');
+      this.toastService.error('Please log in to create a booking');
       this.router.navigate(['/auth/login']);
       return;
     }
 
     this.isSubmitting = true;
+    this.toastService.info('Creating your booking...');
     console.log('📋 Creating booking...');
 
     const bookingData = {
@@ -671,58 +674,131 @@ export class BookingPageComponent implements OnInit {
         next: (response) => {
           console.log('✅ Booking created successfully:', response);
 
-          if (!response.data?.paystackAuthorizationUrl) {
+          // Get booking data
+          const booking = response.data?.booking;
+          if (!booking || !booking.id) {
             this.isSubmitting = false;
-            alert('Error: Payment URL not received from server');
-            console.error('❌ Missing paystackAuthorizationUrl in response:', response);
+            this.toastService.error('Error: Booking ID not received from server');
+            console.error('❌ Missing booking ID in response:', response);
             return;
           }
 
-          this.bookingId = response.data.booking.id;
-          this.paystackReference = response.data.paystackReference;
-          this.paystackAuthUrl = response.data.paystackAuthorizationUrl;
+          this.bookingId = booking.id;
+          this.toastService.success('Booking created! Redirecting to payment...');
 
-          console.log('🔄 Redirecting to Paystack:', this.paystackAuthUrl);
-          this.initializePaystackPayment();
+          // Get user details from auth service
+          const userEmail = this.authService.currentUser()?.email || booking.email;
+          const firstName = this.authService.currentUser()?.firstName || booking.firstName || 'Customer';
+          const lastName = this.authService.currentUser()?.lastName || booking.lastName || '';
+
+          // Proceed to Yoco payment
+          console.log('🔄 Initiating Yoco payment for booking:', booking.id);
+          this.initiateYocoPayment(booking.id, userEmail, this.estimatedTotal, firstName, lastName);
         },
         error: (error) => {
           this.isSubmitting = false;
           const errorMsg = error?.error?.error || error?.message || 'Failed to create booking';
           console.error('❌ Booking creation error:', error);
-          alert(`Error: ${errorMsg}`);
+          this.toastService.error(`Booking Error: ${errorMsg}`);
         }
       });
   }
 
-  initializePaystackPayment() {
-    if (!this.paystackAuthUrl) {
+  /**
+   * Initiate Yoco payment for the booking
+   */
+  initiateYocoPayment(bookingId: number, email: string, amount: number, firstName: string, lastName: string) {
+    // Validate required fields
+    if (!email || !firstName || !lastName || !amount) {
       this.isSubmitting = false;
+      this.toastService.error('Missing required payment information');
+      console.error('❌ Missing payment fields:', { email, firstName, lastName, amount });
       return;
     }
 
-    // Check if this is a mock payment (testing mode)
-    if (this.paystackAuthUrl.includes('checkout.paystack.com/mock-')) {
-      console.log('🧪 Mock payment detected - simulating successful payment');
+    this.toastService.info('Preparing payment session...');
+    console.log('🔄 Calling Yoco checkout endpoint with data:', {
+      bookingId: `${bookingId} (${typeof bookingId})`,
+      email,
+      amount: `${amount} (${typeof amount})`,
+      firstName,
+      lastName
+    });
 
-      // For mock mode, simulate successful payment and redirect to callback
-      setTimeout(() => {
-        if (this.paystackReference) {
-          // Redirect to payment callback with reference as if payment succeeded
-          this.router.navigate(['/payment-callback'], {
-            queryParams: { reference: this.paystackReference }
-          });
+    this.yocoService.createCheckout({
+      bookingId: Number(bookingId),
+      email,
+      amount: Number(amount),
+      firstName,
+      lastName
+    }).subscribe({
+      next: (response) => {
+        console.log('✅ Yoco checkout created:', response);
+
+        if (response.success && response.data?.redirectUrl) {
+          this.yocoRedirectUrl = response.data.redirectUrl;
+          console.log('🔄 Redirecting to Yoco checkout:', this.yocoRedirectUrl);
+          this.toastService.info('Redirecting to payment page...');
+          this.redirectToYocoCheckout();
+        } else {
+          this.isSubmitting = false;
+          this.toastService.error('Could not create payment session');
+          console.error('❌ Invalid checkout response:', response);
         }
-      }, 2000); // Simulate 2 second payment processing time
-      return;
-    }
+      },
+      error: (error) => {
+        this.isSubmitting = false;
 
-    // For real Paystack payments, redirect to Paystack payment page
-    console.log('💳 Redirecting to Paystack checkout');
-    window.location.href = this.paystackAuthUrl;
+        // Extract error message from various response formats
+        let errorMsg = 'Failed to create payment session';
+
+        if (error?.error?.details) {
+          errorMsg = error.error.details;
+        } else if (error?.error?.error) {
+          errorMsg = error.error.error;
+        } else if (error?.error?.errors && Array.isArray(error.error.errors)) {
+          errorMsg = error.error.errors.map((e: any) => e.msg).join(', ');
+        } else if (error?.message) {
+          errorMsg = error.message;
+        }
+
+        console.error('❌ Yoco checkout error:', error);
+        console.error('❌ Full error details:', error.error);
+        console.error('❌ Status code:', error.status);
+        this.toastService.error(`Payment Error: ${errorMsg}`);
+      }
+    });
   }
 
-  async handlePaymentSubmit() {
-    // This method is no longer needed with Paystack as payment is handled via redirect
+  /**
+   * Redirect to Yoco checkout page
+   */
+  redirectToYocoCheckout() {
+    if (!this.yocoRedirectUrl) {
+      this.isSubmitting = false;
+      this.toastService.error('No redirect URL provided');
+      return;
+    }
+
+    console.log('💳 Redirecting to Yoco hosted checkout');
+    // Redirect to Yoco's hosted payment page
+    window.location.href = this.yocoRedirectUrl;
+  }
+
+  /**
+   * Reset the booking form for new submission
+   */
+  resetBookingForm() {
+    this.bookingForm.reset({
+      tourDate: '',
+      numberOfPassengers: 1,
+      specialRequests: '',
+      accommodationPreferences: ''
+    });
+    this.passengerDetails = [];
+    this.isSubmitting = false;
+    this.bookingId = null;
+    this.yocoRedirectUrl = null;
   }
 
   isFieldInvalid(fieldName: string): boolean {

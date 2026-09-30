@@ -7,9 +7,10 @@ import { AuthService } from './services/auth.service';
 import { DESTINATIONS_DETAIL } from './data/site-content';
 import { filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { ToastContainerComponent } from './shared/toast-container.component';
 
 @Component({
-  imports: [RouterOutlet, RouterLink, CommonModule],
+  imports: [RouterOutlet, RouterLink, CommonModule, ToastContainerComponent],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',

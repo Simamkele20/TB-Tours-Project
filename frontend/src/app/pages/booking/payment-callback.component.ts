@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { YocoService } from '../../services/yoco.service';
 
 interface PaymentResult {
   success: boolean;
@@ -374,11 +375,21 @@ export class PaymentCallbackComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
+  private yocoService = inject(YocoService);
   private apiUrl = `${environment.apiUrl}`;
 
   ngOnInit() {
-    // Get reference from query params
+    // Get reference/checkoutId from query params
     this.route.queryParams.subscribe(params => {
+      // Check for Yoco checkoutId first
+      const checkoutId = params['checkoutId'];
+      if (checkoutId) {
+        console.log('🎯 Yoco checkout ID detected:', checkoutId);
+        this.verifyYocoPayment(checkoutId);
+        return;
+      }
+
+      // Fall back to Paystack reference for backward compatibility
       let reference = params['reference'];
       const trxref = params['trxref'];
       const status = params['status'];
@@ -392,7 +403,8 @@ export class PaymentCallbackComponent implements OnInit {
         this.paymentStatus = 'cancelled';
         this.cdr.detectChanges();
       } else if (reference) {
-        this.verifyPayment(reference);
+        console.log('🎯 Paystack reference detected:', reference);
+        this.verifyPaystackPayment(reference);
       } else {
         this.paymentStatus = 'failed';
         this.errorMessage = 'No payment reference provided';
@@ -401,28 +413,73 @@ export class PaymentCallbackComponent implements OnInit {
     });
   }
 
-  verifyPayment(reference: string) {
-    console.log('🔍 Verifying payment with reference:', reference);
+  /**
+   * Verify Yoco payment
+   */
+  verifyYocoPayment(checkoutId: string) {
+    console.log('🔍 Verifying Yoco payment with checkout ID:', checkoutId);
+
+    this.yocoService.verifyPayment(checkoutId).subscribe({
+      next: (response) => {
+        console.log('✅ Yoco payment verification response:', response);
+
+        if (response.success && response.data) {
+          this.paymentData = response.data;
+          if (response.data.status === 'succeeded') {
+            this.paymentStatus = 'success';
+            console.log('✅ Yoco payment successful');
+          } else if (response.data.status === 'failed') {
+            this.paymentStatus = 'failed';
+            this.errorMessage = 'Your Yoco payment was declined. Please try again.';
+            console.log('❌ Yoco payment failed');
+          } else {
+            this.paymentStatus = 'failed';
+            this.errorMessage = `Payment status: ${response.data.status}`;
+            console.log('⏳ Yoco payment pending');
+          }
+        } else {
+          this.paymentStatus = 'failed';
+          this.errorMessage = response.error || 'Payment verification failed';
+          this.paymentReference = checkoutId;
+          console.log('❌ Yoco payment verification failed:', response.error);
+        }
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('❌ Yoco payment verification error:', error);
+        this.paymentStatus = 'failed';
+        this.errorMessage = error?.error?.error || 'Failed to verify Yoco payment. Please try again.';
+        this.paymentReference = checkoutId;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  /**
+   * Verify Paystack payment (backward compatibility)
+   */
+  verifyPaystackPayment(reference: string) {
+    console.log('🔍 Verifying Paystack payment with reference:', reference);
 
     this.http.get<PaymentResult>(`${this.apiUrl}/payments/verify/${reference}`)
       .subscribe({
         next: (response) => {
-          console.log('✅ Payment verification response:', response);
+          console.log('✅ Paystack payment verification response:', response);
 
           if (response.success && response.data) {
             this.paymentData = response.data;
             this.paymentStatus = 'success';
-            console.log('✅ Payment successful');
+            console.log('✅ Paystack payment successful');
           } else {
             this.paymentStatus = 'failed';
             this.errorMessage = response.error || 'Payment verification failed';
             this.paymentReference = reference;
-            console.log('❌ Payment verification failed:', response.error);
+            console.log('❌ Paystack payment verification failed:', response.error);
           }
           this.cdr.detectChanges();
         },
         error: (error) => {
-          console.error('❌ Payment verification error:', error);
+          console.error('❌ Paystack payment verification error:', error);
           this.paymentStatus = 'failed';
           this.errorMessage = error?.error?.error || 'Failed to verify payment. Please try again.';
           this.paymentReference = reference;
