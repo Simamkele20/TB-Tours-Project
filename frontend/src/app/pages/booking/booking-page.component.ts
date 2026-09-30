@@ -49,8 +49,8 @@ interface Tour {
                 <label>Extra person rate (4+ people):</label>
                 <span class="price">R{{ getExtraPersonRate(tour.pricePerPerson || tour.price) | number: '1.0-2' }}</span>
               </div>
-              <div class="estimated-total">
-                <label>Estimated total ({{ bookingForm.get('numberOfPassengers')?.value }} {{ bookingForm.get('numberOfPassengers')?.value === 1 ? 'person' : 'people' }}):</label>
+              <div class="estimated-total" *ngIf="bookingForm.get('numberOfPassengers')?.value > 3">
+                <label>Estimated total:</label>
                 <span class="total">R{{ estimatedTotal | number: '1.0-2' }}</span>
               </div>
             </div>
