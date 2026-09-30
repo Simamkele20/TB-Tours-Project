@@ -466,13 +466,6 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
       return res.status(404).json({ error: "Tour not found" });
     }
 
-    // Validate passenger count
-    if (numberOfPassengers > tour.maxPassengers) {
-      return res.status(400).json({
-        error: `Maximum ${tour.maxPassengers} passengers allowed for this tour`,
-      });
-    }
-
     // Calculate total price
     const totalPrice = tour.pricePerPerson
       ? parseFloat(tour.pricePerPerson) * numberOfPassengers
