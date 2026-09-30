@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
 import { YocoService } from '../../services/yoco.service';
 import { ToastService } from '../../services/toast.service';
+import { TourSelectionService } from '../../services/tour-selection.service';
 
 interface Tour {
   id: number;
@@ -476,6 +477,7 @@ export class BookingPageComponent implements OnInit {
   private yocoService = inject(YocoService);
   private toastService = inject(ToastService);
   protected authService = inject(AuthService);
+  private tourSelectionService = inject(TourSelectionService);
 
   ngOnInit() {
     const tourId = this.route.snapshot.paramMap.get('tourId');
@@ -505,33 +507,58 @@ export class BookingPageComponent implements OnInit {
   }
 
   loadTour(tourId: number) {
-    const url = `${environment.apiBaseUrl}/tours/${tourId}`;
-    this.http.get<{ data: Tour }>(url)
-      .subscribe({
-        next: (response) => {
-          this.tour = response.data;
-          this.cdr.detectChanges();
-          this.updateEstimatedTotal();
-        },
-        error: (error) => {
-          console.error('Failed to load tour:', error);
-          // Create a default tour if API fails (for development)
-          this.tour = {
-            id: tourId,
-            title: 'Tour ' + tourId,
-            description: 'Tour booking form',
-            price: 1000,
-            pricePerPerson: 500,
-            duration: 'Full Day',
-            maxPassengers: 4,
-            image: '/images/camp-bay.jpg',
-            highlights: ['Experience Cape Town'],
-            included: ['Transport', 'Guide'],
-          };
-          this.cdr.detectChanges();
-          this.updateEstimatedTotal();
-        }
-      });
+    // First, check if tour was selected from service card (hardcoded data)
+    const selectedTour = this.tourSelectionService.getSelectedTour();
+    
+    if (selectedTour && selectedTour.id === tourId) {
+      console.log('[BOOKING PAGE] Using selected tour from service:', selectedTour.title);
+      // Use the hardcoded tour data from selection service
+      this.tour = {
+        id: selectedTour.id,
+        title: selectedTour.title,
+        description: selectedTour.description,
+        price: selectedTour.price,
+        pricePerPerson: selectedTour.price,
+        duration: '1-2 hours',
+        maxPassengers: 6,
+        image: '/images/camp-bay.jpg',
+        highlights: selectedTour.highlights || ['Experience Cape Town'],
+        included: selectedTour.included || ['Transport', 'Guide']
+      };
+      this.cdr.detectChanges();
+      this.updateEstimatedTotal();
+    } else {
+      // Fall back to API if no selected tour or ID mismatch
+      console.log('[BOOKING PAGE] Loading tour from API for ID:', tourId);
+      const url = `${environment.apiBaseUrl}/tours/${tourId}`;
+      this.http.get<{ data: Tour }>(url)
+        .subscribe({
+          next: (response) => {
+            console.log('[BOOKING PAGE] ✓ Tour loaded from API:', response.data.title);
+            this.tour = response.data;
+            this.cdr.detectChanges();
+            this.updateEstimatedTotal();
+          },
+          error: (error) => {
+            console.error('[BOOKING PAGE] Failed to load tour:', error);
+            // Create a default tour if API fails (for development)
+            this.tour = {
+              id: tourId,
+              title: 'Tour ' + tourId,
+              description: 'Tour booking form',
+              price: 1000,
+              pricePerPerson: 500,
+              duration: 'Full Day',
+              maxPassengers: 4,
+              image: '/images/camp-bay.jpg',
+              highlights: ['Experience Cape Town'],
+              included: ['Transport', 'Guide'],
+            };
+            this.cdr.detectChanges();
+            this.updateEstimatedTotal();
+          }
+        });
+    }
   }
 
   updateEstimatedTotal() {

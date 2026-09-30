@@ -5,6 +5,7 @@ import { HeroSectionComponent } from "../../shared/components/hero-section.compo
 import { TimeAgoPipe } from "../../shared/pipes/time-ago.pipe";
 import { ContactFormComponent } from "../shared/contact-form.component";
 import { BookingApiService } from "../../booking/booking-api.service";
+import { TourSelectionService } from "../../services/tour-selection.service";
 import { SITE_CONTENT, GOOGLE_REVIEWS, SITE_SERVICES } from "../../data/site-content";
 import { finalize } from "rxjs";
 
@@ -99,7 +100,7 @@ import { finalize } from "rxjs";
               <h3>{{ service.title }}</h3>
               <p>{{ service.description }}</p>
               <div class="service-price">From R{{ service.price }}</div>
-              <a [routerLink]="service.ctaLink" class="service-cta">{{ service.ctaLabel }}</a>
+              <a (click)="onBookService(service)" class="service-cta" style="cursor: pointer;">{{ service.ctaLabel }}</a>
             </div>
           </div>
 
@@ -232,6 +233,8 @@ export class HomePageComponent implements OnInit {
 
   private bookingApi = inject(BookingApiService);
   private route = inject(ActivatedRoute);
+  private tourSelectionService = inject(TourSelectionService);
+  private router = inject(Router);
 
   private reviewIndex = signal(0);
   private destinationIndex = signal(0);
@@ -494,6 +497,19 @@ export class HomePageComponent implements OnInit {
         }
       }, 100);
     }
+  }
+
+  onBookService(service: any): void {
+    // Store the selected tour data in the service
+    this.tourSelectionService.setSelectedTour({
+      id: service.tourId,
+      title: service.title,
+      description: service.description,
+      price: service.price
+    });
+    
+    // Navigate to booking page
+    this.router.navigate(['/booking', service.tourId]);
   }
 
   dismissToast() {
