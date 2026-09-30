@@ -4,14 +4,11 @@ const YOCO_BASE_URL = 'https://api.yoco.com/v1';
 const YOCO_SECRET_KEY = process.env.YOCO_SECRET_KEY;
 const YOCO_PUBLIC_KEY = process.env.YOCO_PUBLIC_KEY;
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const USE_YOCO_MOCK = process.env.USE_YOCO_MOCK !== 'false'; // Default to true
+const USE_YOCO_MOCK = process.env.USE_YOCO_MOCK === 'true'; // Default to false - use real API
 
 // Determine if we should use mock mode:
-// - If USE_YOCO_MOCK=false is explicitly set, use real API
-// - If using test credentials (pk_test_* or sk_test_*), use mock mode
-// - Otherwise use real API
-const IS_TEST_CREDENTIALS = YOCO_PUBLIC_KEY?.startsWith('pk_test_') || YOCO_SECRET_KEY?.startsWith('sk_test_');
-const SHOULD_USE_MOCK = USE_YOCO_MOCK && (NODE_ENV === 'development' || IS_TEST_CREDENTIALS);
+// - Only if USE_YOCO_MOCK is explicitly set to 'true'
+const SHOULD_USE_MOCK = USE_YOCO_MOCK;
 
 if (!YOCO_SECRET_KEY) {
   console.warn('[YOCO] WARNING: YOCO_SECRET_KEY environment variable is not set');
@@ -26,9 +23,9 @@ if (!YOCO_PUBLIC_KEY) {
 }
 
 if (SHOULD_USE_MOCK) {
-  console.log('[YOCO] ✅ MOCK MODE ENABLED - Using simulated Yoco responses (test credentials detected)');
+  console.log('[YOCO] 🎭 MOCK MODE ENABLED (explicitly set via USE_YOCO_MOCK=true)');
 } else {
-  console.log('[YOCO] ⚠️  LIVE MODE - Using real Yoco API (live credentials detected)');
+  console.log('[YOCO] 🌐 REAL API MODE - Using actual Yoco API with your credentials');
 }
 
 const yocoAPI = axios.create({
@@ -128,16 +125,22 @@ async function createCheckout(checkoutData) {
       }
     };
   } catch (error) {
-    console.error('[YOCO] Checkout creation error:', error.message);
-    console.error('[YOCO] Error response:', JSON.stringify(error.response?.data, null, 2));
+    console.error('[YOCO] ❌ CHECKOUT CREATION FAILED');
+    console.error('[YOCO] Error message:', error.message);
     console.error('[YOCO] Error status:', error.response?.status);
-    console.error('[YOCO] Full error:', JSON.stringify({
+    console.error('[YOCO] Error response data:', JSON.stringify(error.response?.data, null, 2));
+    console.error('[YOCO] Error response headers:', JSON.stringify(error.response?.headers, null, 2));
+    console.error('[YOCO] Full error:', {
       message: error.message,
       status: error.response?.status,
       statusText: error.response?.statusText,
       data: error.response?.data,
-      headers: error.response?.headers
-    }, null, 2));
+      config: {
+        method: error.config?.method,
+        url: error.config?.url,
+        baseURL: error.config?.baseURL
+      }
+    });
     return {
       success: false,
       error: error.response?.data?.message || error.message || 'Failed to create checkout session'
