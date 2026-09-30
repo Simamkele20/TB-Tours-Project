@@ -22,7 +22,6 @@ interface Booking {
   totalPrice: number;
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
   paymentStatus: 'unpaid' | 'pending' | 'paid' | 'failed' | 'refunded';
-  paystackReference?: string;
   paymentReference?: string;
   transactionId?: string;
   paymentDate?: string;
