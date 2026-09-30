@@ -347,11 +347,11 @@ const yoco = require('../payments/yoco');
 router.post(
   '/yoco/checkout',
   [
-    body('bookingId').trim().not().isEmpty().withMessage('bookingId is required'),
-    body('email').trim().isEmail().withMessage('email must be a valid email address'),
-    body('amount').trim().not().isEmpty().withMessage('amount is required'),
-    body('firstName').trim().not().isEmpty().withMessage('firstName is required'),
-    body('lastName').trim().not().isEmpty().withMessage('lastName is required')
+    body('bookingId').notEmpty().withMessage('bookingId is required'),
+    body('email').isEmail().withMessage('email must be a valid email address'),
+    body('amount').notEmpty().withMessage('amount is required'),
+    body('firstName').notEmpty().trim().withMessage('firstName is required'),
+    body('lastName').notEmpty().trim().withMessage('lastName is required')
   ],
   async (req, res) => {
     console.log('\n========================================');
