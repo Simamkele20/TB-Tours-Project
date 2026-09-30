@@ -58,7 +58,6 @@ import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from "@angula
 export class ContactFormComponent implements OnChanges {
   @Input() isSending = false;
   @Input() requestedService = "";
-  @Input() requestedDestination = "";
   @Output() formSubmitted = new EventEmitter<any>();
 
   form: FormGroup;
@@ -77,13 +76,6 @@ export class ContactFormComponent implements OnChanges {
       // Pre-fill the message with the requested service
       const serviceMessage = `I'm interested in requesting: ${this.requestedService}`;
       this.form.patchValue({ message: serviceMessage });
-      this.form.get('message')?.markAsTouched();
-    }
-
-    if (changes['requestedDestination'] && this.requestedDestination) {
-      // Pre-fill the message with the requested destination
-      const destinationMessage = `I'm interested in the ${this.requestedDestination} tour`;
-      this.form.patchValue({ message: destinationMessage });
       this.form.get('message')?.markAsTouched();
     }
   }

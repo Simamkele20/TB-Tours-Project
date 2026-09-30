@@ -1,16 +1,15 @@
 import { Component, signal, AfterViewInit, NgZone, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   template: `
     <nav class="navbar">
       <div class="navbar-container">
         <!-- Logo -->
-        <div class="navbar-brand" (click)="navigateTo(''); closeMobileMenu()" style="cursor: pointer;">
+        <div class="navbar-brand" (click)="navigateTo(null, 'home'); closeMobileMenu()" style="cursor: pointer;">
           <span class="brand-logo">TB</span>
           <span class="brand-text">Tours</span>
         </div>
@@ -24,14 +23,15 @@ import { Router, RouterLink } from '@angular/router';
 
         <!-- Navigation Menu -->
         <ul class="navbar-menu" [class.open]="mobileMenuOpen()">
-          <li><a [routerLink]="['']" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'home'">Home</a></li>
-          <li><a [routerLink]="['/story']" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'about'">About</a></li>
-          <li><a [routerLink]="['/contact']" fragment="faqs" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'faqs'">FAQs</a></li>
-          <li><a [routerLink]="['/contact']" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'contact'">Contact</a></li>
+          <li><a href="#home" (click)="navigateTo($event, 'home'); closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'home'">Home</a></li>
+          <li><a href="#about" (click)="navigateTo($event, 'about'); closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'about'">About</a></li>
+          <li><a href="#destinations" (click)="navigateTo($event, 'destinations'); closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'destinations'">Destinations</a></li>
+          <li><a href="#services" (click)="navigateTo($event, 'services'); closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'services'">Services</a></li>
+          <li><a href="#contact" (click)="navigateTo($event, 'contact'); closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'contact'">Contact</a></li>
         </ul>
 
         <!-- CTA Button -->
-        <button class="navbar-cta" (click)="navigateTo('/tours'); closeMobileMenu()">Book Now</button>
+        <button class="navbar-cta" (click)="navigateTo(null, 'contact'); closeMobileMenu()">Book Now</button>
       </div>
     </nav>
   `,
@@ -41,9 +41,8 @@ export class NavbarComponent implements AfterViewInit {
   mobileMenuOpen = signal(false);
   currentPage = signal('home');
 
-  private sections = ['home', 'about', 'faqs', 'contact'];
+  private sections = ['home', 'about', 'destinations', 'services', 'contact'];
   private ngZone = inject(NgZone);
-  private router = inject(Router);
 
   ngAfterViewInit(): void {
     if (typeof window === 'undefined') return;
@@ -105,8 +104,11 @@ export class NavbarComponent implements AfterViewInit {
     this.mobileMenuOpen.set(false);
   }
 
-  navigateTo(path: string): void {
-    this.currentPage.set(path === '' ? 'home' : path.substring(1));
-    this.router.navigate([path]);
+  navigateTo(event: Event | null, page: string): void {
+    if (event) {
+      event.preventDefault();
+    }
+    this.currentPage.set(page);
+    window.location.hash = `#${page}`;
   }
 }

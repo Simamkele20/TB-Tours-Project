@@ -30,40 +30,10 @@
         <a href="#about" (click)="closeMobileMenu()">About</a>
         <a href="#destinations" (click)="closeMobileMenu()">Destinations</a>
         <a href="#services" (click)="closeMobileMenu()">Services</a>
-        <a routerLink="/couriers" (click)="scrollToTop(); closeMobileMenu()">Couriers</a>
-        <a href="#faqs" (click)="closeMobileMenu()">FAQs</a>
         <a href="#contact" (click)="closeMobileMenu()">Contact</a>
       </nav>
 
-      <!-- User Menu or Auth Links -->
-      @if (authService.isAuthenticated()) {
-        <div class="user-menu">
-          <button class="user-menu-toggle" (click)="toggleUserMenu()" [attr.aria-expanded]="isUserMenuOpen()">
-            <i class="bi bi-person-circle" aria-hidden="true"></i>
-            <span class="user-name">{{ authService.currentUser()?.firstName }} {{ authService.currentUser()?.lastName }}</span>
-            <i class="bi bi-chevron-down dropdown-icon" aria-hidden="true"></i>
-          </button>
-          @if (isUserMenuOpen()) {
-            <div class="user-menu-dropdown">
-              <div class="user-email-header">{{ authService.currentUser()?.email }}</div>
-              @if (!authService.isAdmin()) {
-                <a routerLink="/my-bookings" (click)="closeUserMenu()">My Bookings</a>
-              }
-              @if (authService.isAdmin()) {
-                <a routerLink="/admin" (click)="closeUserMenu()">Admin Dashboard</a>
-              }
-              @if (isAuthorizedManager()) {
-                <a routerLink="/admin/management" (click)="closeUserMenu()">Management</a>
-              }
-              <button class="logout-btn" (click)="logout()">Logout</button>
-            </div>
-          }
-        </div>
-      } @else {
-        <div class="auth-links-header">
-          <a routerLink="/auth/login" class="btn btn-primary" (click)="closeMobileMenu()">Login</a>
-        </div>
-      }
+      <a href="#contact" class="btn btn-primary header-book-now" (click)="closeMobileMenu()">Book now</a>
     </div>
   </header>
 
@@ -71,8 +41,8 @@
     <router-outlet></router-outlet>
   </main>
 
-  <!-- WhatsApp Button (hidden on admin dashboard) -->
-  <a *ngIf="!isAdminDashboard()" href="https://wa.me/27734483958?text=Hi%20TB%20Tours%2C%20I%20would%20like%20to%20inquire%20about%20your%20services" target="_blank" rel="noopener noreferrer" class="whatsapp-button" aria-label="Contact us on WhatsApp" title="Chat with us on WhatsApp">
+  <!-- WhatsApp Button -->
+  <a href="https://wa.me/27734483958?text=Hi%20TB%20Tours%2C%20I%20would%20like%20to%20inquire%20about%20your%20services" target="_blank" rel="noopener noreferrer" class="whatsapp-button" aria-label="Contact us on WhatsApp" title="Chat with us on WhatsApp">
     <i class="bi bi-whatsapp" aria-hidden="true"></i>
   </a>
 
@@ -91,9 +61,6 @@
         <a href="#destinations">Destinations</a>
         <a href="#reviews">Reviews</a>
         <a href="#contact">Contact</a>
-        <a routerLink="/couriers" (click)="scrollToTop()">Couriers</a>
-        <a routerLink="/terms" (click)="scrollToTop()">Terms & Conditions</a>
-        <a routerLink="/booking-policy" (click)="scrollToTop()">Booking Policy</a>
       </div>
       <div class="footer-contact">
         <h3>Contact</h3>
@@ -117,7 +84,4 @@
       <p class="footer-tagline">Private Tours · Transfers · Chauffeur</p>
     </div>
   </footer>
-
-  <!-- Toast Notifications -->
-  <app-toast-container></app-toast-container>
 }

@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
-import { Component, computed, signal, inject, ViewChild, HostListener, OnInit } from "@angular/core";
-import { RouterModule, Router, ActivatedRoute } from "@angular/router";
+import { Component, computed, signal, inject, ViewChild, HostListener } from "@angular/core";
+import { RouterModule } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { TimeAgoPipe } from "../../shared/pipes/time-ago.pipe";
 import { ContactFormComponent } from "../shared/contact-form.component";
@@ -25,24 +25,19 @@ import { finalize } from "rxjs";
     <section id="about" class="section about-section">
       <div class="container">
         <div class="about-content">
-          <div class="about-text">
-            <p class="kicker">About TB Tours</p>
-            <h2>Personal, professional and local</h2>
-            <p class="about-description">
-              TB Tours (Pty)Ltd offers private tours, airport transfers and chauffeur services across Cape Town and the Cape
-              Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.
-            </p>
-            <p class="about-description">
-              The company grew out of one person's time on the road - a story of entrepreneurship, service, and genuine care for every journey.
-            </p>
-            <a routerLink="/story" class="read-story-link">Read Thabang's Story</a>
-          </div>
-          <figure class="about-image">
-            <img
-              src="/images/About TB TOURS.jpg"
-              alt="TB Tours about section image"
-              loading="lazy" />
-          </figure>
+          <p class="kicker">About TB Tours</p>
+          <h2>Personal, professional and local</h2>
+          <p class="about-description">
+            TB Tours (Pty)Ltd offers private tours, airport transfers and chauffeur services across Cape Town and the Cape
+            Winelands. Journeys are arranged personally by Thabang, with an emphasis on comfort, safety and local knowledge.
+          </p>
+          <p class="about-description">
+            The company grew out of one person's time on the road - a story of entrepreneurship, service, and genuine care for every journey.
+          </p>
+          <a routerLink="/story" class="read-story-link">Read Thabang's Story</a>
+        </div>
+        <div class="about-image">
+          <img src="/images/About.jpg" alt="Cape Town scenic view" loading="lazy" />
         </div>
       </div>
     </section>
@@ -68,7 +63,6 @@ import { finalize } from "rxjs";
               <div class="destination-content">
                 <h3>{{ destination.title }}</h3>
                 <p>{{ destination.description }}</p>
-                <a [routerLink]="['/destinations', destination.slug]" class="view-details-link">View Details</a>
               </div>
             </div>
           </div>
@@ -98,8 +92,7 @@ import { finalize } from "rxjs";
               <div class="service-number">{{ service.number }}</div>
               <h3>{{ service.title }}</h3>
               <p>{{ service.description }}</p>
-              <div class="service-price">From R{{ service.price }}</div>
-              <a [routerLink]="service.ctaLink" class="service-cta">{{ service.ctaLabel }}</a>
+              <button class="service-cta" (click)="requestService(service.title)">{{ service.ctaLabel }}</button>
             </div>
           </div>
 
@@ -140,24 +133,6 @@ import { finalize } from "rxjs";
           <button class="review-nav review-next" (click)="nextReviews()" aria-label="Next reviews">
             <span>›</span>
           </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- PARTNERS & ACCREDITATIONS SECTION -->
-    <section id="partners" class="section partners-section">
-      <div class="container">
-        <div class="section-header">
-          <i class="bi bi-shield-check partners-icon" aria-hidden="true"></i>
-          <p class="kicker">Partners & Accreditations</p>
-        </div>
-
-        <div class="partners-grid">
-          <div class="partner-card" *ngFor="let partner of partners()">
-            <div class="partner-logo-wrapper">
-              <img [src]="partner.logo" [alt]="partner.name" class="partner-logo" loading="lazy" />
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -210,7 +185,7 @@ import { finalize } from "rxjs";
             <h3>Get in touch</h3>
             <p class="form-intro">Connect with us to book your journey or ask any questions.</p>
 
-            <app-contact-form #contactForm [isSending]="isSending()" [requestedService]="requestedService()" [requestedDestination]="destinationName()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
+            <app-contact-form #contactForm [isSending]="isSending()" [requestedService]="requestedService()" (formSubmitted)="onContactFormSubmit($event)"></app-contact-form>
 
             <div *ngIf="toastMessage()" [class]="'toast toast-' + toastType()">
               <p>{{ toastMessage() }}</p>
@@ -225,13 +200,11 @@ import { finalize } from "rxjs";
   `,
   styleUrls: ["./home.component.scss"]
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent {
   readonly heroConfig = computed(() => SITE_CONTENT["home"].hero);
-  readonly partners = computed(() => SITE_CONTENT["home"].partners || []);
   readonly SITE_SERVICES = SITE_SERVICES;
 
   private bookingApi = inject(BookingApiService);
-  private route = inject(ActivatedRoute);
 
   private reviewIndex = signal(0);
   private destinationIndex = signal(0);
@@ -241,7 +214,6 @@ export class HomePageComponent implements OnInit {
   readonly toastMessage = signal("");
   readonly toastType = signal<"success" | "error" | "info">("info");
   readonly requestedService = signal<string>("");
-  readonly destinationName = signal<string>("");
 
   @ViewChild("contactForm") contactForm?: ContactFormComponent;
 
@@ -289,74 +261,47 @@ export class HomePageComponent implements OnInit {
     {
       title: "Table Mountain",
       description: "See Cape Town from above.",
-      image: "/images/Image (13).jpg",
-      slug: "cape-town-highlights"
+      image: "/images/Image (13).jpg"
     },
     {
       title: "Camps Bay Beach",
       description: "Golden sands and mountain views.",
-      image: "/images/Image (6).jpg",
-      slug: "camps-bay"
+      image: "/images/Image (6).jpg"
     },
     {
       title: "Cape Point",
       description: "Where two oceans meet.",
-      image: "/images/Image (19).jpg",
-      slug: "cape-peninsula"
+      image: "/images/Image (19).jpg"
     },
     {
       title: "Boulders Beach",
       description: "Meet Cape Town's famous penguins.",
-      image: "/images/Image (18).jpg",
-      slug: "cape-peninsula"
+      image: "/images/Image (18).jpg"
     },
     {
       title: "Bo-Kaap",
       description: "Cape Town City",
-      image: "/images/DEst.jpg",
-      slug: "bo-kaap"
+      image: "/images/DEst.jpg"
     },
     {
       title: "Hermanus",
       description: "Whale watching and coastal beauty.",
-      image: "/images/Image (10).jpg",
-      slug: "hermanus"
+      image: "/images/Image (10).jpg"
     },
     {
       title: "Tsitsikama",
       description: "Ancient forests and dramatic cliffs.",
-      image: "/images/Image (11).jpg",
-      slug: "garden-route"
+      image: "/images/Image (11).jpg"
     },
     {
       title: "Cape Winelands",
       description: "Slow afternoons among vineyards and estates.",
-      image: "/images/Image (3).jpg",
-      slug: "cape-winelands"
+      image: "/images/Image (3).jpg"
     },
     {
       title: "Aquila Game Reserve",
       description: "Meet the Big Five in their natural habitat.",
-      image: "/images/Game Reserve.jpg",
-      slug: "aquila-safari"
-    },
-    {
-      title: "Cape Agulhas",
-      description: "Where the Atlantic and Indian Oceans meet.",
-      image: "/images/destinations/Cape Agulhas.jpg",
-      slug: "cape-agulhas"
-    },
-    {
-      title: "Constantia Wine Valley",
-      description: "Historic vineyards and mountain views.",
-      image: "/images/destinations/Wine Valley.jpg",
-      slug: "constantia-wine"
-    },
-    {
-      title: "West Coast",
-      description: "Scenic coastal drives and wildflowers.",
-      image: "/images/destinations/cape-west-coast.jpg",
-      slug: "cape-west-coast"
+      image: "/images/Game Reserve.jpg"
     }
   ];
 
@@ -372,27 +317,6 @@ export class HomePageComponent implements OnInit {
         this.isMobile.set(window.innerWidth <= 620);
       });
     }
-  }
-
-  ngOnInit(): void {
-    // Listen for query params (destination from detail page)
-    this.route.queryParams.subscribe(params => {
-      if (params['destination']) {
-        this.destinationName.set(params['destination']);
-      }
-    });
-
-    // Listen for fragment changes to scroll to contact
-    this.route.fragment.subscribe(fragment => {
-      if (fragment === 'contact' && typeof window !== 'undefined') {
-        setTimeout(() => {
-          const contactElement = document.getElementById('contact');
-          if (contactElement) {
-            contactElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 100);
-      }
-    });
   }
 
   nextReviews() {
