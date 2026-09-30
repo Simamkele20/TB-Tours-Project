@@ -376,7 +376,7 @@ export class PaymentCallbackComponent implements OnInit {
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   private yocoService = inject(YocoService);
-  private apiUrl = `${environment.apiUrl}`;
+  private apiUrl = `${environment.apiBaseUrl}`;
 
   ngOnInit() {
     // Get reference/checkoutId from query params
