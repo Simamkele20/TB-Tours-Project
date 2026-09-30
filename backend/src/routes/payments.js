@@ -87,7 +87,7 @@ router.post(
         currency: 'ZAR',
         email,
         reference,
-        successUrl: `${process.env.FRONTEND_URL}/payment-success?checkoutId={checkoutId}`,
+        successUrl: `${process.env.FRONTEND_URL}/payment-success`,
         cancelUrl: `${process.env.FRONTEND_URL}/payment-cancelled`,
         metadata: {
           bookingId: bookingIdNum,
