@@ -38,7 +38,7 @@ export interface YocoPaymentStatusResponse {
   providedIn: 'root'
 })
 export class YocoService {
-  private apiUrl = `${environment.apiUrl}/payments`;
+  private apiUrl = `${environment.apiBaseUrl}/payments`;
   private paymentStatus = new BehaviorSubject<string>('idle');
   paymentStatus$ = this.paymentStatus.asObservable();
 

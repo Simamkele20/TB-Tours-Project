@@ -389,27 +389,9 @@ export class PaymentCallbackComponent implements OnInit {
         return;
       }
 
-      // Fall back to Paystack reference for backward compatibility
-      let reference = params['reference'];
-      const trxref = params['trxref'];
-      const status = params['status'];
-
-      // Handle Paystack response: use trxref if reference is invalid or contains template
-      if (!reference || reference.includes('{TRANSACTION_REF}')) {
-        reference = trxref;
-      }
-
-      if (status === 'cancelled') {
-        this.paymentStatus = 'cancelled';
-        this.cdr.detectChanges();
-      } else if (reference) {
-        console.log('🎯 Paystack reference detected:', reference);
-        this.verifyPaystackPayment(reference);
-      } else {
-        this.paymentStatus = 'failed';
-        this.errorMessage = 'No payment reference provided';
-        this.cdr.detectChanges();
-      }
+      this.paymentStatus = 'failed';
+      this.errorMessage = 'No payment reference provided';
+      this.cdr.detectChanges();
     });
   }
 
@@ -456,38 +438,8 @@ export class PaymentCallbackComponent implements OnInit {
   }
 
   /**
-   * Verify Paystack payment (backward compatibility)
+   * Retry payment - redirect to bookings
    */
-  verifyPaystackPayment(reference: string) {
-    console.log('🔍 Verifying Paystack payment with reference:', reference);
-
-    this.http.get<PaymentResult>(`${this.apiUrl}/payments/verify/${reference}`)
-      .subscribe({
-        next: (response) => {
-          console.log('✅ Paystack payment verification response:', response);
-
-          if (response.success && response.data) {
-            this.paymentData = response.data;
-            this.paymentStatus = 'success';
-            console.log('✅ Paystack payment successful');
-          } else {
-            this.paymentStatus = 'failed';
-            this.errorMessage = response.error || 'Payment verification failed';
-            this.paymentReference = reference;
-            console.log('❌ Paystack payment verification failed:', response.error);
-          }
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          console.error('❌ Paystack payment verification error:', error);
-          this.paymentStatus = 'failed';
-          this.errorMessage = error?.error?.error || 'Failed to verify payment. Please try again.';
-          this.paymentReference = reference;
-          this.cdr.detectChanges();
-        }
-      });
-  }
-
   retryPayment() {
     // Redirect to bookings page where user can retry
     this.router.navigate(['/my-bookings']);
