@@ -31,6 +31,7 @@ if (SHOULD_USE_MOCK) {
 // Create Authorization header: Yoco uses Bearer token with secret key
 console.log('[YOCO] Auth Setup:');
 console.log('[YOCO] - Secret key:', YOCO_SECRET_KEY?.substring(0, 20) + '...');
+console.log('[YOCO] - Secret key length:', YOCO_SECRET_KEY?.length);
 console.log('[YOCO] - Using Bearer token authentication (sk_test_... or sk_live_...)');
 
 const yocoAPI = axios.create({
@@ -44,6 +45,15 @@ const yocoAPI = axios.create({
     rejectUnauthorized: false 
   })
 });
+
+// Add request interceptor to log headers being sent
+yocoAPI.interceptors.request.use(config => {
+  console.log('[YOCO API] Request being sent:');
+  console.log('[YOCO API] - URL:', config.baseURL + config.url);
+  console.log('[YOCO API] - Method:', config.method);
+  console.log('[YOCO API] - Auth header:', config.headers['Authorization']?.substring(0, 30) + '...');
+  return config;
+}, error => Promise.reject(error));
 
 /**
  * Create a Yoco checkout session
@@ -322,32 +332,38 @@ async function handleWebhookEvent(event) {
  */
 async function testAuthentication() {
   try {
-    console.log('[YOCO TEST] Testing API credentials...');
+    console.log('[YOCO TEST] Testing API credentials with a test checkout...');
     
-    // Try a simple API call to verify authentication
-    const response = await yocoAPI.get('/checkout-options', {
-      params: {
-        limit: 1
-      }
-    });
+    // Try creating a test checkout to verify authentication
+    const testCheckoutData = {
+      amount: 100, // R1.00 for testing
+      currency: 'ZAR',
+      description: 'Authentication test',
+      email: 'test@example.com',
+      successUrl: 'https://example.com/success',
+      cancelUrl: 'https://example.com/cancel'
+    };
+    
+    const response = await yocoAPI.post('/checkouts', testCheckoutData);
     
     console.log('[YOCO TEST] ✅ Authentication successful!');
-    console.log('[YOCO TEST] Response status:', response.status);
+    console.log('[YOCO TEST] Checkout created:', response.data.id);
     return {
       success: true,
       message: 'API credentials are valid',
       status: response.status,
-      data: response.data
+      checkoutId: response.data.id
     };
   } catch (error) {
     console.error('[YOCO TEST] ❌ Authentication failed');
     console.error('[YOCO TEST] Error status:', error.response?.status);
-    console.error('[YOCO TEST] Error message:', error.response?.data?.detail || error.message);
+    console.error('[YOCO TEST] Error detail:', error.response?.data?.detail || error.message);
+    console.error('[YOCO TEST] Full response:', error.response?.data);
     return {
       success: false,
       error: error.response?.data?.detail || error.message,
       status: error.response?.status,
-      suggestion: 'Check that YOCO_SECRET_KEY is valid and matches your Yoco dashboard'
+      suggestion: 'Verify YOCO_SECRET_KEY matches your Yoco dashboard exactly (copy-paste to avoid typos)'
     };
   }
 }
