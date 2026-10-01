@@ -360,7 +360,13 @@ export class HomePageComponent implements OnInit {
     }
   ];
 
-  readonly displayedDestinations = computed(() => {
+  rea,
+    {
+      title: "Shark Cage Diving",
+      description: "Experience sharks in their natural ocean environment",
+      image: "/images/shark cage.jpg",
+      slug: "shark-cage-diving"
+    }donly displayedDestinations = computed(() => {
     const index = this.destinationIndex();
     const itemsPerPage = this.getDestinationsPerPage();
     return this.destinationCards.slice(index, index + itemsPerPage);
