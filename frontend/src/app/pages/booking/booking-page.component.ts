@@ -554,7 +554,7 @@ export class BookingPageComponent implements OnInit {
   loadTour(tourId: number) {
     // First, check if tour was selected from service card (hardcoded data)
     const selectedTour = this.tourSelectionService.getSelectedTour();
-    
+
     if (selectedTour && selectedTour.id === tourId) {
       console.log('[BOOKING PAGE] Using selected tour from service:', selectedTour.title);
       // Use the hardcoded tour data from selection service
@@ -612,9 +612,9 @@ export class BookingPageComponent implements OnInit {
     }
     const passengers = this.bookingForm.get('numberOfPassengers')?.value || 1;
     const basePrice = parseFloat((this.tour.pricePerPerson || this.tour.price).toString());
-    
+
     console.log(`[BOOKING] Calculating total - passengers: ${passengers}, basePrice: ${basePrice}`);
-    
+
     // Tiered pricing:
     // 1-3 people: flat rate (base price)
     // 4+ people: base price + (extra person price × extra people beyond 3)
@@ -627,7 +627,7 @@ export class BookingPageComponent implements OnInit {
       this.estimatedTotal = basePrice + (extraPersonRate * extraPeople);
       console.log(`[BOOKING] 4+ calculation: ${basePrice} + (${extraPeople} × ${extraPersonRate}) = ${this.estimatedTotal}`);
     }
-    
+
     this.cdr.detectChanges();
   }
 
@@ -640,18 +640,18 @@ export class BookingPageComponent implements OnInit {
       2500: 800,     // 2500 service: extra person R800
       3500: 800      // 3500 service: extra person R800
     };
-    
+
     // Try exact match first
     if (extraPersonRates[price]) {
       return extraPersonRates[price];
     }
-    
+
     // Try rounded match
     const rounded = Math.round(price);
     if (extraPersonRates[rounded]) {
       return extraPersonRates[rounded];
     }
-    
+
     // Fallback to 50% of base price
     console.log(`[BOOKING] Using fallback rate for price: ${price}`);
     return Math.round(price * 0.5);

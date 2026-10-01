@@ -507,8 +507,8 @@ export class HomePageComponent implements OnInit {
 
   onBookService(service: any): void {
     // Extract numeric price from string like "R650" or use as-is if already numeric
-    const numericPrice = typeof service.price === 'string' 
-      ? parseInt(service.price.replace(/[^\d]/g, ''), 10) 
+    const numericPrice = typeof service.price === 'string'
+      ? parseInt(service.price.replace(/[^\d]/g, ''), 10)
       : service.price;
 
     // Store the selected tour data in the service
@@ -520,7 +520,7 @@ export class HomePageComponent implements OnInit {
       highlights: service.highlights || ['Experience Cape Town'],
       included: service.included || ['Transport', 'Guide']
     });
-    
+
     // Navigate to booking page
     this.router.navigate(['/booking', service.tourId]);
   }
