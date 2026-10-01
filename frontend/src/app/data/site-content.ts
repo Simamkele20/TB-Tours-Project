@@ -1252,6 +1252,307 @@ export const COURIERS_PAGE_CONTENT = {
   ]
 };
 
+// Plan Your Stay Content
+interface TourPackage {
+  title: string;
+  price: string;
+  description: string;
+  duration: string;
+  passengers: string;
+  includes: string[];
+  suggestedItinerary: string[];
+  exclusions?: string;
+}
+
+interface WhyChooseItem {
+  title: string;
+  description: string;
+}
+
+interface PlanPageContent {
+  hero: HeroBlock;
+  introduction: string;
+  packages: TourPackage[];
+  customInfo: string;
+  customRequirements: string[];
+  addonsInfo: string;
+  addons: string[];
+  whyChoose: WhyChooseItem[];
+  importantInfo: string[];
+  contactCTA: string;
+}
+
+export const PLAN_PAGE_CONTENT: PlanPageContent = {
+  hero: {
+    eyebrow: "Your Journey, Our Priority",
+    title: "PLAN YOUR",
+    accent: "CAPE TOWN STAY",
+    description: "Personalised travel planning and transportation for your Cape Town holiday.",
+    image: "images/camp-bay.jpg"
+  },
+  introduction: "Make your Cape Town holiday easier with TB Tours. Instead of booking every transfer separately, let us help you arrange your transportation around your stay. Tell us your travel dates, number of passengers, accommodation and the places you would like to visit, and we can create a personalised travel plan for you. Whether you are visiting Cape Town for 2 days or 7 days, travelling as a couple, family, group or business traveller, TB Tours can help make getting around Cape Town simple and comfortable.",
+  packages: [
+    {
+      title: "2-DAY CAPE TOWN GETAWAY",
+      price: "FROM R3,200 PER VEHICLE",
+      description: "Perfect for a short Cape Town visit.",
+      duration: "2 Days",
+      passengers: "UP TO 4 PASSENGERS",
+      includes: [
+        "Cape Town International Airport pickup",
+        "Meet & greet",
+        "Private transfer to your accommodation",
+        "Cape Town sightseeing",
+        "One additional local transfer",
+        "Return transfer to the airport",
+        "Personal travel assistance"
+      ],
+      suggestedItinerary: [
+        "Day 1 – Airport arrival and Cape Town sightseeing",
+        "Day 2 – Flexible sightseeing or private experience and airport transfer"
+      ],
+      exclusions: "Entrance fees, meals and activities are excluded unless stated in your quotation."
+    },
+    {
+      title: "3-DAY CAPE TOWN EXPERIENCE",
+      price: "FROM R5,500 PER VEHICLE",
+      description: "Perfect for first-time visitors who want to experience the highlights of Cape Town.",
+      duration: "3 Days",
+      passengers: "UP TO 4 PASSENGERS",
+      includes: [
+        "Airport pickup",
+        "Hotel transfer",
+        "Cape Town sightseeing",
+        "Cape Peninsula experience",
+        "One additional local transfer",
+        "Private transportation",
+        "Airport return transfer",
+        "Personal itinerary assistance"
+      ],
+      suggestedItinerary: [
+        "Day 1 – Airport arrival and Cape Town",
+        "Day 2 – Cape Peninsula",
+        "Day 3 – Flexible experience and departure"
+      ],
+      exclusions: "Entrance fees, meals and activities are excluded unless stated in your quotation."
+    },
+    {
+      title: "5-DAY CAPE TOWN EXPLORER",
+      price: "FROM R9,500 PER VEHICLE",
+      description: "A great option for visitors who want more time to explore Cape Town.",
+      duration: "5 Days",
+      passengers: "UP TO 4 PASSENGERS",
+      includes: [
+        "Airport arrival transfer",
+        "Cape Town sightseeing",
+        "Cape Peninsula experience",
+        "Cape Winelands experience",
+        "One additional day of private transportation",
+        "Hotel transfers",
+        "Airport departure transfer",
+        "Personal itinerary assistance"
+      ],
+      suggestedItinerary: [
+        "Day 1 – Airport arrival and hotel transfer",
+        "Day 2 – Cape Town",
+        "Day 3 – Cape Peninsula",
+        "Day 4 – Cape Winelands",
+        "Day 5 – Flexible sightseeing and airport transfer"
+      ],
+      exclusions: "Entrance fees, meals, wine tasting fees and activities are excluded unless stated in your quotation."
+    },
+    {
+      title: "7-DAY CAPE TOWN DISCOVERY",
+      price: "FROM R13,500 PER VEHICLE",
+      description: "Designed for travellers who want to explore Cape Town and surrounding destinations at a relaxed pace.",
+      duration: "7 Days",
+      passengers: "UP TO 4 PASSENGERS",
+      includes: [
+        "Airport arrival transfer",
+        "Private transportation throughout selected days",
+        "Cape Town sightseeing",
+        "Cape Peninsula experience",
+        "Cape Winelands experience",
+        "One additional day trip",
+        "Hotel transfers",
+        "Airport departure transfer",
+        "Personal itinerary assistance"
+      ],
+      suggestedItinerary: [
+        "Day 1 – Airport arrival",
+        "Day 2 – Cape Town",
+        "Day 3 – Cape Peninsula",
+        "Day 4 – Cape Winelands",
+        "Day 5 – Flexible sightseeing",
+        "Day 6 – Day trip or custom experience",
+        "Day 7 – Airport departure"
+      ],
+      exclusions: "Entrance fees, meals, wine tasting fees and activities are excluded unless stated in your quotation."
+    },
+    {
+      title: "COUPLES CAPE TOWN ESCAPE",
+      price: "FROM R4,500 PER VEHICLE",
+      description: "Designed for couples looking for a private and relaxed Cape Town experience.",
+      duration: "Flexible",
+      passengers: "UP TO 2 PASSENGERS",
+      includes: [
+        "Airport transfer",
+        "Private transportation",
+        "Scenic Cape Town locations",
+        "Camps Bay",
+        "Clifton",
+        "Chapman's Peak",
+        "Sunset or scenic stop",
+        "Hotel transfers",
+        "Personal itinerary assistance"
+      ],
+      suggestedItinerary: [
+        "Perfect for anniversaries, honeymoons, birthdays and romantic getaways"
+      ],
+      exclusions: "Meals, entrance fees and activities are excluded unless stated in your quotation."
+    },
+    {
+      title: "FAMILY CAPE TOWN PACKAGE",
+      price: "FROM R6,500 PER VEHICLE",
+      description: "Designed for families who want comfortable private transportation throughout their stay.",
+      duration: "Flexible",
+      passengers: "UP TO 4 PASSENGERS",
+      includes: [
+        "Airport pickup and drop-off",
+        "Private vehicle",
+        "Hotel transfers",
+        "Cape Town sightseeing",
+        "Cape Peninsula experience",
+        "Flexible stops",
+        "Luggage assistance",
+        "Personal travel assistance"
+      ],
+      suggestedItinerary: [
+        "Family-friendly itineraries can be arranged according to your children's ages and interests"
+      ],
+      exclusions: "Entrance fees, meals and activities are excluded unless stated in your quotation."
+    },
+    {
+      title: "BUSINESS TRAVEL PACKAGE",
+      price: "FROM R2,500 PER DAY",
+      description: "Keep your business trip organised with private transportation.",
+      duration: "Per Day",
+      passengers: "FLEXIBLE",
+      includes: [
+        "Private chauffeur",
+        "Hotel pickup",
+        "Business meetings and appointments",
+        "Airport transfers",
+        "Restaurant transfers",
+        "Evening transportation",
+        "Flexible transportation during the booking period"
+      ],
+      suggestedItinerary: [
+        "Business travellers, Executives, Corporate clients, Conferences, Meetings, Events",
+        "Additional hours can be arranged at the applicable hourly rate"
+      ]
+    },
+    {
+      title: "PRIVATE CHAUFFEUR ADD-ON",
+      price: "FROM R450 PER HOUR",
+      description: "Add private chauffeur service to your Cape Town stay.",
+      duration: "Hourly",
+      passengers: "FLEXIBLE",
+      includes: [
+        "Shopping",
+        "Business meetings",
+        "Restaurants",
+        "Events",
+        "Weddings",
+        "Sightseeing",
+        "Flexible daily transportation"
+      ],
+      suggestedItinerary: [
+        "Minimum booking applies"
+      ]
+    },
+    {
+      title: "GROUP CAPE TOWN TRAVEL",
+      price: "FROM R5,500 PER VEHICLE",
+      description: "Travelling with family, friends or a larger group?",
+      duration: "Flexible",
+      passengers: "FLEXIBLE",
+      includes: [
+        "Family groups",
+        "Friends travelling together",
+        "Corporate groups",
+        "Wedding groups",
+        "Events",
+        "Airport transfers",
+        "Tours and day trips"
+      ],
+      suggestedItinerary: [
+        "Larger groups and vehicle requirements are quoted according to passenger numbers, luggage and itinerary"
+      ]
+    }
+  ],
+  customInfo: "Don't see a package that suits you? Create your own Cape Town travel plan with TB Tours.",
+  customRequirements: [
+    "Your arrival date",
+    "Departure date",
+    "Number of passengers",
+    "Number of bags",
+    "Accommodation location",
+    "Places you want to visit",
+    "Activities you are interested in",
+    "Required airport transfers",
+    "Any special requirements"
+  ],
+  addonsInfo: "Add these services to your package:",
+  addons: [
+    "Airport Meet & Greet",
+    "Private Airport Transfers",
+    "Chauffeur Service",
+    "Cape Peninsula",
+    "Cape Town City",
+    "Cape Winelands",
+    "Hermanus",
+    "Cape Agulhas",
+    "Garden Route",
+    "Shark Cage Diving Transfers",
+    "Restaurant Transfers",
+    "Event Transportation",
+    "Wedding Transportation",
+    "Corporate Transportation",
+    "Custom Day Trips"
+  ],
+  whyChoose: [
+    {
+      title: "PERSONAL SERVICE",
+      description: "You are not just another booking. We communicate with you before your trip, help you plan your transportation and remain available throughout your journey."
+    },
+    {
+      title: "PRIVATE TRANSPORTATION",
+      description: "Travel with your own private vehicle instead of sharing your journey with strangers."
+    },
+    {
+      title: "FLEXIBLE ITINERARIES",
+      description: "Your trip can be adjusted around your interests, schedule and accommodation."
+    },
+    {
+      title: "ONE COMPANY FOR YOUR JOURNEY",
+      description: "From airport arrival to sightseeing, chauffeur services and your return airport transfer, TB Tours can assist with your transportation needs."
+    }
+  ],
+  importantInfo: [
+    "Prices are starting prices and may change according to dates, route, passenger numbers, vehicle requirements and itinerary.",
+    "Prices are quoted per vehicle unless otherwise stated.",
+    "Entrance fees are not included unless specifically stated.",
+    "Meals are not included unless specifically stated.",
+    "Wine tasting fees are not included unless specifically stated.",
+    "Activities are not included unless specifically stated.",
+    "Larger groups can be accommodated subject to vehicle availability.",
+    "Overnight and long-distance travel is quoted separately.",
+    "Final pricing will be confirmed before booking."
+  ],
+  contactCTA: "Send us your travel dates, number of passengers and the places you would like to visit."
+};
+
 // Booking Policy Content
 export interface BookingPolicySection {
   number: string;
