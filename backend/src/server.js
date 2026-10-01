@@ -19,6 +19,15 @@ const {
   resetPasswordSchema,
 } = require("./validation");
 const { env } = require("./config/env");
+
+// Log configuration at startup
+console.log("[CONFIG] NODE_ENV:", env.nodeEnv);
+console.log("[CONFIG] DATABASE_URL present:", !!env.databaseUrl);
+if (env.databaseUrl) {
+  console.log("[CONFIG] DATABASE_URL:", env.databaseUrl.substring(0, 50) + "...");
+}
+console.log("[CONFIG] Port:", env.port);
+
 const { createMailgunClient } = require("./email/transport");
 const { buildContactEmailText } = require("./email/contactEmail");
 const {

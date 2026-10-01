@@ -93,6 +93,15 @@ import { DESTINATIONS_DETAIL } from "../../data/site-content";
             <p>{{ destination()!.pleaseNote }}</p>
           </div>
         </section>
+
+        <!-- CTA Section -->
+        <section class="section container destination-cta">
+          <div class="cta-content">
+            <h2>Ready to Book Your Adventure?</h2>
+            <p>Get a personalized quote or contact our team to customize this tour to your needs.</p>
+            <button class="btn btn-primary" (click)="getQuote()">Get a Quote</button>
+          </div>
+        </section>
       </section>
     </ng-container>
 
@@ -136,7 +145,7 @@ export class DestinationDetailComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
-  onBookNow(): void {
-    this.router.navigate(['/booking/1']);
+  getQuote(): void {
+    this.router.navigate(['/contact']);
   }
 }

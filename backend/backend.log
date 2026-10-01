@@ -2,11 +2,26 @@
 > tb-tours-api@1.0.0 start
 > node src/server.js
 
-◇ injected env (20) from .env.develop // tip: ⌁ auth for agents [www.vestauth.com]
-[MAILGUN] SSL verification disabled for development
-[MAILGUN] Client initialized successfully
+◇ injected env (19) from .env.develop // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+[CONFIG] NODE_ENV: development
+[CONFIG] DATABASE_URL present: false
+[CONFIG] Port: 4000
+[YOCO] Secret key configured: sk_test_2753e4a...
+[YOCO] Public key configured: pk_test_6f85e99...
+[YOCO] 🎭 MOCK MODE ENABLED (explicitly set via USE_YOCO_MOCK=true)
+[YOCO] Auth Setup:
+[YOCO] - Secret key: sk_test_2753e4a1lVxA...
+[YOCO] - Secret key length: 36
+[YOCO] - Using Bearer token authentication (sk_test_... or sk_live_...)
+[MAILGUN] Client initialized successfully with production domain
+[DB] Attempting to connect to SQLite...
+[DB] Loading models...
+[DB] Models loaded successfully
+[DB] Model associations set up
+[DB] Authenticating database connection...
 Executing (default): SELECT 1+1 AS result
-[DB] Connected successfully (SQLite)
+[DB] Connected successfully to SQLite
+[DB] Synchronizing models...
 Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='users';
 Executing (default): PRAGMA INDEX_LIST(`users`)
 Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_users_1`)

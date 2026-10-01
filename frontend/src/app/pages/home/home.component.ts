@@ -364,7 +364,7 @@ export class HomePageComponent implements OnInit {
     {
       title: "Shark Cage Diving",
       description: "Experience sharks in their natural ocean environment",
-      image: "/images/shark cage.jpg",
+      image: "/images/Shark Cage Diving.jpg",
       slug: "shark-cage-diving"
     }
   ];
@@ -506,12 +506,19 @@ export class HomePageComponent implements OnInit {
   }
 
   onBookService(service: any): void {
+    // Extract numeric price from string like "R650" or use as-is if already numeric
+    const numericPrice = typeof service.price === 'string' 
+      ? parseInt(service.price.replace(/[^\d]/g, ''), 10) 
+      : service.price;
+
     // Store the selected tour data in the service
     this.tourSelectionService.setSelectedTour({
       id: service.tourId,
       title: service.title,
       description: service.description,
-      price: service.price
+      price: numericPrice,
+      highlights: service.highlights || ['Experience Cape Town'],
+      included: service.included || ['Transport', 'Guide']
     });
     
     // Navigate to booking page

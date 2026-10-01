@@ -161,6 +161,7 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       { title: "Aquila Safari Experience", description: "African Wildlife Adventure", image: "images/destinations/aquila-safari.jpg", ctaLabel: "View Details", ctaLink: "/destinations/aquila-safari" },
       { title: "Constantia Wine & Scenic Tour", description: "Cape Town's Historic Wine Valley", image: "images/destinations/constantia-wine.jpg", ctaLabel: "View Details", ctaLink: "/destinations/constantia-wine" },
       { title: "Cape West Coast Tour", description: "Discover the Wild Beauty of the West Coast", image: "images/destinations/cape-west-coast.jpg", ctaLabel: "View Details", ctaLink: "/destinations/cape-west-coast" },
+      { title: "Shark Cage Diving", description: "Experience sharks in their natural ocean environment", image: "images/Shark Cage Diving.jpg", ctaLabel: "View Details", ctaLink: "/destinations/shark-cage-diving" },
       { title: "Garden Route Experience", description: "South Africa's Beautiful Garden Route", image: "images/destinations/garden-route.jpg", ctaLabel: "View Details", ctaLink: "/destinations/garden-route" }
     ],
     trustStrip: [],
@@ -201,51 +202,51 @@ export const SITE_CONTENT: Record<string, PageContent> = {
     sectionSubtitle: "Choose from our curated tours and experiences. Each journey is tailored to your preferences.",
     cards: [
       {
-        title: "Table Mountain",
-        description: "See Cape Town from above.",
+        title: "Airport Transfers",
+        description: "Punctual, private arrivals and departures with a calm, professional welcome.",
         image: "images/Image(13).jpg",
-        price: "R150pp",
-        duration: "Half Day",
+        price: "R650",
+        duration: "1-2 Hours",
         ctaLabel: "Book Now",
         ctaLink: "/booking/1",
         tourId: 1
       },
       {
-        title: "Cape Peninsula",
-        description: "Where the mountains meet the Atlantic.",
+        title: "Cape Peninsula Tours",
+        description: "The full coastal arc • Chapman's Peak, Cape Point and Boulders Beach.",
         image: "images/Image(19).jpg",
-        price: "R200pp",
+        price: "R1800pp",
         duration: "Full Day",
         ctaLabel: "Book Now",
         ctaLink: "/booking/2",
         tourId: 2
       },
       {
-        title: "Boulders Beach",
-        description: "Meet Cape Town's famous penguins.",
-        image: "images/Image(18).jpg",
-        price: "R120pp",
-        duration: "Half Day",
+        title: "Cape Town City Tours",
+        description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.",
+        image: "images/Image(13).jpg",
+        price: "R1500pp",
+        duration: "Full Day",
         ctaLabel: "Book Now",
         ctaLink: "/booking/3",
         tourId: 3
       },
       {
-        title: "Cape Winelands",
-        description: "Slow afternoons among vineyards and estates.",
+        title: "Winelands Tours",
+        description: "Slow afternoons among vineyards and estates in Stellenbosch and Franschhoek.",
         image: "images/franschhoek.jpg",
-        price: "R250pp",
+        price: "R1500pp",
         duration: "Full Day",
         ctaLabel: "Book Now",
         ctaLink: "/booking/4",
         tourId: 4
       },
       {
-        title: "Private Chauffeur Services",
-        description: "A discreet driver at your disposal, by the hour or by the day.",
+        title: "Full-Day Private Tour",
+        description: "A full day of private tour with flexible itinerary shaped around your interests.",
         image: "images/hermanus.jpg",
-        price: "R200/hr",
-        duration: "Flexible",
+        price: "R2000pp",
+        duration: "Full Day",
         ctaLabel: "Book Now",
         ctaLink: "/booking/5",
         tourId: 5
@@ -254,7 +255,84 @@ export const SITE_CONTENT: Record<string, PageContent> = {
         title: "Custom Day Tours",
         description: "An itinerary shaped entirely around your interests and your time.",
         image: "images/kirstenbosch.jpg",
-        price: "R250pp",
+        price: "R2000pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/6",
+        tourId: 6
+      }
+    ],
+    trustStrip: ["Private", "Professional", "Personal", "Local insight"],
+    ctaTitle: "Ready for this adventure?",
+    ctaText: "Request a quote and let us customize your journey"
+  },
+
+  tours: {
+    hero: {
+      eyebrow: "TOURS",
+      title: "Our ",
+      accent: "Services",
+      description: "From airport arrivals to private days exploring the Cape, TB Tours (Pty)Ltd makes every journey comfortable, personal and effortless.",
+      image: "images/camp-bay.jpg"
+    },
+    sectionTitle: "Travel your way",
+    sectionSubtitle: "Choose from our curated tours and experiences. Each journey is tailored to your preferences.",
+    cards: [
+      {
+        title: "Airport Transfers",
+        description: "Punctual, private arrivals and departures with a calm, professional welcome.",
+        image: "images/Image(13).jpg",
+        price: "R650",
+        duration: "1-2 Hours",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/1",
+        tourId: 1
+      },
+      {
+        title: "Cape Peninsula Tours",
+        description: "The full coastal arc • Chapman's Peak, Cape Point and Boulders Beach.",
+        image: "images/Image(19).jpg",
+        price: "R1800pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/2",
+        tourId: 2
+      },
+      {
+        title: "Cape Town City Tours",
+        description: "Table Mountain, Bo-Kaap, the V&A Waterfront and the city's stories.",
+        image: "images/Image(13).jpg",
+        price: "R1500pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/3",
+        tourId: 3
+      },
+      {
+        title: "Winelands Tours",
+        description: "Slow afternoons among vineyards and estates in Stellenbosch and Franschhoek.",
+        image: "images/franschhoek.jpg",
+        price: "R1500pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/4",
+        tourId: 4
+      },
+      {
+        title: "Full-Day Private Tour",
+        description: "A full day of private tour with flexible itinerary shaped around your interests.",
+        image: "images/hermanus.jpg",
+        price: "R2000pp",
+        duration: "Full Day",
+        ctaLabel: "Book Now",
+        ctaLink: "/booking/5",
+        tourId: 5
+      },
+      {
+        title: "Custom Day Tours",
+        description: "An itinerary shaped entirely around your interests and your time.",
+        image: "images/kirstenbosch.jpg",
+        price: "R2000pp",
         duration: "Full Day",
         ctaLabel: "Book Now",
         ctaLink: "/booking/6",
@@ -926,6 +1004,57 @@ export const DESTINATIONS_DETAIL: Record<string, DestinationDetail> = {
       "Personal expenses"
     ],
     customizeInfo: "Your Garden Route experience can be customised according to your preferred number of days, accommodation, activities and destinations. Contact TB Tours for a personalised Garden Route quote."
+  },
+
+  "shark-cage-diving": {
+    title: "Shark Cage Diving Day Tour",
+    slug: "shark-cage-diving",
+    hero: {
+      eyebrow: "TOUR",
+      title: "Shark Cage ",
+      accent: "Diving",
+      description: "Experience the thrill of seeing sharks up close in their natural ocean environment.",
+      image: "images/Shark Cage Diving.jpg"
+    },
+    description: "Experience the thrill of seeing sharks up close in their natural ocean environment with TB Tours. This full-day adventure includes hotel pickup, professional safety briefing, cage-diving experience, and all return transport. An unforgettable marine wildlife encounter.",
+    duration: "Full Day (11 hours)",
+    tourType: "Private Tour",
+    itinerary: [
+      { time: "06:00", title: "Cape Town Pickup - Pick-up from your hotel, guesthouse, or agreed meeting point" },
+      { time: "06:00–08:00", title: "Travel to Shark Diving Location - Comfortable journey through scenic Western Cape countryside" },
+      { time: "08:00", title: "Arrival & Breakfast - Arrive at shark-diving centre, check in and enjoy refreshments" },
+      { time: "09:00", title: "Safety Briefing - Professional safety briefing and instructions about cage-diving experience" },
+      { time: "09:30", title: "Boat Departure - Board the boat and head out onto the ocean in search of sharks" },
+      { time: "10:00", title: "Shark Cage Diving - Enter the cage for close-up experience with sharks in their natural environment" },
+      { time: "12:00", title: "Return to Shore - Return to harbour and enjoy time to freshen up and relax" },
+      { time: "12:30", title: "Lunch - Optional lunch stop at local restaurant or café" },
+      { time: "14:00", title: "Return Journey - Comfortable journey back towards Cape Town" },
+      { time: "16:00–17:00", title: "Cape Town Drop-Off - Drop-off at your hotel, guesthouse or agreed location" }
+    ],
+    highlights: [
+      "Close-up shark encounters",
+      "Professional safety briefing",
+      "Boat departure and ocean experience",
+      "Scenic Western Cape countryside",
+      "Unforgettable marine wildlife experience"
+    ],
+    included: [
+      "Private TB Tours transportation",
+      "Hotel/guesthouse pickup and drop-off",
+      "Shark diving operation",
+      "Professional guide and safety briefing",
+      "Breakfast and light refreshments",
+      "All safety equipment"
+    ],
+    excluded: [
+      "Optional lunch",
+      "Additional refreshments beyond breakfast",
+      "Personal expenses",
+      "Photography packages"
+    ],
+    bestTime: "All year round (conditions permitting)",
+    customizeInfo: "Group or private bookings available. Flexible pickup locations within Cape Town.",
+    pleaseNote: "The itinerary and times may change according to the shark-diving operator's schedule, weather, sea conditions and wildlife activity. Shark sightings cannot be guaranteed. Participants should be comfortable with water and confined spaces."
   }
 };
 
