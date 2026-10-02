@@ -80,7 +80,9 @@ const connectDB = async () => {
     
     // Sync models with database
     console.log('[DB] Synchronizing models...');
-    await sequelize.sync({ alter: true });
+    // Use alter: true for PostgreSQL (production), alter: false for SQLite (dev) due to limitations
+    const alterSchema = env.databaseUrl ? true : false;
+    await sequelize.sync({ alter: alterSchema });
     console.log('[DB] Models synchronized');
     
     return sequelize;
