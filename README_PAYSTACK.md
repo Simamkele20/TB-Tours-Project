@@ -393,7 +393,7 @@ All files are configured:
 
 
 
-## ADd new page 
+## you can use the one that is already workig in the services so add the packages on the db under tours to simplfy things
 
 PLAN YOUR CAPE TOWN STAY
 Your Journey, Our Priority

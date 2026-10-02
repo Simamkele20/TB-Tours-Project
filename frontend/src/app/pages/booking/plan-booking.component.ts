@@ -8,7 +8,22 @@ import { YocoService } from '../../services/yoco.service';
 import { ToastService } from '../../services/toast.service';
 import { HttpClient } from '@angular/common/http';
 
+interface Tour {
+  id: number;
+  title: string;
+  price: string;
+  pricePerPerson: string;
+  description: string;
+  shortDescription: string;
+  duration: string;
+  maxPassengers: number;
+  included: string[];
+  image: string;
+  tourType: string;
+}
+
 interface PlanPackage {
+  id?: number;
   title: string;
   price: string;
   description: string;
@@ -209,22 +224,34 @@ export class PlanBookingComponent implements OnInit {
   }
 
   private loadPackageData() {
-    const packageName = this.route.snapshot.queryParamMap.get('package');
-    const packagePrice = this.route.snapshot.queryParamMap.get('price');
-    const packageDesc = this.route.snapshot.queryParamMap.get('description') || '';
-    const packageDuration = this.route.snapshot.queryParamMap.get('duration') || '';
-    const packageCapacity = this.route.snapshot.queryParamMap.get('capacity') || '';
-
-    if (packageName) {
-      this.packageData.set({
-        title: packageName,
-        price: packagePrice || 'Contact for pricing',
-        description: packageDesc,
-        duration: packageDuration,
-        passengers: packageCapacity,
-        includes: []
-      });
+    const tourId = this.route.snapshot.queryParamMap.get('tourId');
+    
+    if (!tourId) {
+      this.toastService.show('Package information not found', 'error');
+      this.router.navigate(['/plan']);
+      return;
     }
+
+    // Load tour from backend
+    this.http.get(`${environment.apiBaseUrl}/bookings/tours/${tourId}`).subscribe({
+      next: (response: any) => {
+        const tour = response.data || response;
+        this.packageData.set({
+          id: tour.id,
+          title: tour.title,
+          price: tour.price ? `R${tour.price} PER VEHICLE` : 'Contact for pricing',
+          description: tour.description,
+          duration: tour.duration,
+          passengers: `UP TO ${tour.maxPassengers} PASSENGERS`,
+          includes: tour.included || tour.includes || []
+        });
+      },
+      error: (error) => {
+        console.error('Error loading package:', error);
+        this.toastService.show('Error loading package information', 'error');
+        this.router.navigate(['/plan']);
+      }
+    });
   }
 
   private initializeForm() {
@@ -256,20 +283,30 @@ export class PlanBookingComponent implements OnInit {
     }
 
     this.isSubmitting.set(true);
+    const tourId = this.packageData()?.id;
 
+    if (!tourId) {
+      this.toastService.show('Package information missing', 'error');
+      this.isSubmitting.set(false);
+      return;
+    }
+
+    // Map form data to /bookings endpoint format
     const bookingPayload = {
-      packageName: this.packageData()?.title,
-      packagePrice: this.packageData()?.price,
-      preferredDate: this.bookingForm.get('preferredDate')?.value,
+      tourId: tourId,
+      tourDate: this.bookingForm.get('preferredDate')?.value,
       numberOfPassengers: this.bookingForm.get('numberOfPassengers')?.value,
-      vehicle: this.bookingForm.get('vehicle')?.value,
-      specialRequests: this.bookingForm.get('specialRequests')?.value,
-      accommodation: this.bookingForm.get('accommodation')?.value,
-      type: 'plan-package-booking'
+      specialRequests: this.bookingForm.get('specialRequests')?.value + 
+        (this.bookingForm.get('vehicle')?.value ? `\nVehicle: ${this.bookingForm.get('vehicle')?.value}` : ''),
+      accommodationPreferences: {
+        vehicle: this.bookingForm.get('vehicle')?.value,
+        accommodation: this.bookingForm.get('accommodation')?.value
+      },
+      passengerDetails: []
     };
 
-    // First, create the plan booking
-    this.http.post(`${environment.apiBaseUrl}/plan-bookings`, bookingPayload).subscribe({
+    // Create booking using standard /bookings endpoint
+    this.http.post(`${environment.apiBaseUrl}/bookings`, bookingPayload).subscribe({
       next: (response: any) => {
         const bookingId = response.data?.bookingId || response.data?.booking?.id;
         

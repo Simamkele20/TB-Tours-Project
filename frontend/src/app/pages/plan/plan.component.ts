@@ -1,9 +1,23 @@
-import { Component, computed, inject, signal } from "@angular/core";
+import { Component, computed, inject, signal, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../environments/environment";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { TourSelectionService } from "../../services/tour-selection.service";
 import { PLAN_PAGE_CONTENT } from "../../data/site-content";
+
+interface Tour {
+  id: number;
+  title: string;
+  price: string;
+  pricePerPerson: string;
+  description: string;
+  duration: string;
+  maxPassengers: number;
+  included: string[];
+  tourType: string;
+}
 
 interface TourPackage {
   title: string;
@@ -38,7 +52,7 @@ interface TourPackage {
       <div class="container">
         <h2 class="section-title">CURATED TRAVEL PACKAGES</h2>
         <div class="packages-grid">
-          <div class="package-card" *ngFor="let pkg of PLAN_PAGE_CONTENT.packages">
+          <div class="package-card" *ngFor="let pkg of packages()">
             <div class="package-header">
               <h3>{{ pkg.title }}</h3>
               <p class="package-price">{{ pkg.price }}</p>
@@ -116,13 +130,48 @@ interface TourPackage {
   `,
   styleUrl: "./plan.component.scss"
 })
-export class PlanComponent {
+export class PlanComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly http = inject(HttpClient);
   private readonly tourSelectionService = inject(TourSelectionService);
 
   PLAN_PAGE_CONTENT = PLAN_PAGE_CONTENT;
-
+  packages = signal<any[]>([]);
   heroConfig = computed(() => PLAN_PAGE_CONTENT.hero);
+
+  ngOnInit() {
+    this.loadPlanPackages();
+  }
+
+  private loadPlanPackages() {
+    // Load plan packages from API
+    this.http.get(`${environment.apiBaseUrl}/bookings/tours`).subscribe({
+      next: (response: any) => {
+        const allTours = response.data || response;
+        // Filter tours with tourType = 'plan-package'
+        const planPackages = allTours.filter((tour: Tour) => tour.tourType === 'plan-package');
+        
+        // Format tours for display
+        const formatted = planPackages.map((tour: Tour) => ({
+          id: tour.id,
+          title: tour.title,
+          price: tour.price ? `R${tour.price} PER VEHICLE` : 'Contact for pricing',
+          description: tour.description,
+          duration: tour.duration,
+          passengers: `UP TO ${tour.maxPassengers} PASSENGERS`,
+          includes: tour.included || [],
+          suggestedItinerary: [],
+          exclusions: tour.pricePerPerson ? `per person: R${tour.pricePerPerson}` : undefined
+        }));
+        
+        this.packages.set(formatted);
+      },
+      error: (error) => {
+        console.error('Error loading plan packages:', error);
+        this.packages.set([]);
+      }
+    });
+  }
 
   onPayPackage(pkg: any) {
     // Navigate to contact page for quote
@@ -135,15 +184,10 @@ export class PlanComponent {
   }
 
   onBookPackage(pkg: any) {
-    // Navigate to plan booking page with package info
+    // Navigate to plan booking page with tourId
     this.router.navigate(['/plan-booking'], {
       queryParams: {
-        package: pkg.title,
-        price: pkg.price,
-        description: pkg.description,
-        duration: pkg.duration,
-        capacity: pkg.passengers
+        tourId: pkg.id
       }
     });
   }
-}
