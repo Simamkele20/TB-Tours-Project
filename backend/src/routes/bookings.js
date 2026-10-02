@@ -31,16 +31,13 @@ const generateBookingReference = () => {
 
 /**
  * GET /api/tours
- * Get all active tours
+ * Get all active tours (includes all fields for plan packages)
  */
 bookingRouter.get("/tours", async (req, res) => {
   try {
     const tours = await Tour.findAll({
       where: { isActive: true },
       order: [["createdAt", "DESC"]],
-      attributes: {
-        exclude: ["itinerary", "included", "excluded"],
-      },
     });
 
     return res.json({
