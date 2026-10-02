@@ -146,6 +146,6 @@ export class DestinationDetailComponent implements OnInit {
   }
 
   getQuote(): void {
-    this.router.navigate(['/contact']);
+    this.router.navigate(['/'], { fragment: 'contact' });
   }
 }

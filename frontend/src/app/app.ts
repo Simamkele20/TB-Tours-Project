@@ -33,15 +33,21 @@ export class App implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      // Routes that should scroll to top
-      const scrollToTopRoutes = ['/auth/login', '/auth/register', '/auth/forgot-password', '/booking'];
-      const shouldScrollToTop = scrollToTopRoutes.some(route => event.urlAfterRedirects.startsWith(route));
-
-      if (shouldScrollToTop) {
-        // Scroll to top for auth and booking pages
+      // Check if there's a fragment (anchor) in the URL
+      const fragment = this.router.parseUrl(this.router.url).fragment;
+      
+      if (fragment) {
+        // Scroll to the element with the matching id
+        setTimeout(() => {
+          const element = document.getElementById(fragment);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      } else {
+        // Scroll to top for all navigations (always scroll to top on page load)
         window.scrollTo(0, 0);
       }
-      // For other pages, let anchor navigation work naturally
 
       this.updateSeoForCurrentRoute();
     });
