@@ -75,6 +75,14 @@ interface Vehicle {
                   <label>Capacity:</label>
                   <span class="capacity">{{ pkg.passengers }}</span>
                 </div>
+                <div class="price-item" *ngIf="bookingForm.get('numberOfPassengers')?.value > getPackageCapacity(pkg.passengers)">
+                  <label>Extra passenger rate (beyond capacity):</label>
+                  <span class="price">R700 per person</span>
+                </div>
+                <div class="estimated-total" *ngIf="bookingForm.get('numberOfPassengers')?.value > getPackageCapacity(pkg.passengers)">
+                  <label>Estimated total for {{ bookingForm.get('numberOfPassengers')?.value }} {{ bookingForm.get('numberOfPassengers')?.value === 1 ? 'person' : 'people' }}:</label>
+                  <span class="total">R{{ estimatedTotal() | number: '1.0-0' }}</span>
+                </div>
               </div>
 
               <div class="includes-section">
@@ -207,6 +215,7 @@ export class PlanBookingComponent implements OnInit {
   bookingForm!: FormGroup;
   todayDate = new Date().toISOString().split('T')[0];
   isSubmitting = signal(false);
+  estimatedTotal = signal(0);
 
   packageData = signal<PlanPackage | null>(null);
   currentUser = computed(() => this.authService.currentUser());
@@ -228,10 +237,10 @@ export class PlanBookingComponent implements OnInit {
       duration: "2 Days",
       passengers: "UP TO 4 PASSENGERS",
       includes: [
+        "Airport Transfers",
         "Professional driver",
-        "Vehicle rental",
-        "Guided tour of Table Mountain",
-        "Lunch on Day 1"
+        "Comfortable/Luxury vehicle",
+        "Private tour"
       ]
     },
     {
@@ -242,10 +251,10 @@ export class PlanBookingComponent implements OnInit {
       duration: "3 Days",
       passengers: "UP TO 4 PASSENGERS",
       includes: [
+        "Airport Transfers",
         "Professional driver",
-        "Vehicle rental",
-        "Guided tours",
-        "All meals included"
+        "Comfortable/Luxury vehicle",
+        "Private tour"
       ]
     },
     {
@@ -256,11 +265,10 @@ export class PlanBookingComponent implements OnInit {
       duration: "5 Days",
       passengers: "UP TO 4 PASSENGERS",
       includes: [
+        "Airport Transfers",
         "Professional driver",
-        "Vehicle rental",
-        "Guided tours",
-        "Accommodation",
-        "All meals"
+        "Comfortable/Luxury vehicle",
+        "Private tour"
       ]
     },
     {
@@ -271,12 +279,10 @@ export class PlanBookingComponent implements OnInit {
       duration: "7 Days",
       passengers: "UP TO 4 PASSENGERS",
       includes: [
+        "Airport Transfers",
         "Professional driver",
-        "Vehicle rental",
-        "Guided tours",
-        "Accommodation",
-        "All meals",
-        "Activity pass"
+        "Comfortable/Luxury vehicle",
+        "Private tour"
       ]
     },
     {
@@ -287,11 +293,10 @@ export class PlanBookingComponent implements OnInit {
       duration: "2 Days",
       passengers: "UP TO 2 PASSENGERS",
       includes: [
-        "Private driver",
-        "Vehicle rental",
-        "Romantic dinner",
-        "Sunset cruise",
-        "Champagne"
+        "Airport Transfers",
+        "Professional driver",
+        "Comfortable/Luxury vehicle",
+        "Private tour"
       ]
     },
     {
@@ -302,11 +307,10 @@ export class PlanBookingComponent implements OnInit {
       duration: "3 Days",
       passengers: "UP TO 4 PASSENGERS",
       includes: [
+        "Airport Transfers",
         "Professional driver",
-        "Vehicle rental",
-        "Family-friendly activities",
-        "Picnic lunch",
-        "Entertainment"
+        "Comfortable/Luxury vehicle",
+        "Private tour"
       ]
     },
     {
@@ -317,11 +321,10 @@ export class PlanBookingComponent implements OnInit {
       duration: "Custom",
       passengers: "UP TO 4 PASSENGERS",
       includes: [
+        "Airport Transfers",
         "Professional driver",
-        "Wi-Fi equipped vehicle",
-        "Airport transfers",
-        "Meeting coordination",
-        "Flexible scheduling"
+        "Comfortable/Luxury vehicle",
+        "Private tour"
       ]
     },
     {
@@ -332,11 +335,10 @@ export class PlanBookingComponent implements OnInit {
       duration: "3-7 Days",
       passengers: "UP TO 12 PASSENGERS",
       includes: [
-        "Multiple vehicles available",
-        "Professional drivers",
-        "Group coordination",
-        "Custom itineraries",
-        "Team-building activities"
+        "Airport Transfers",
+        "Professional driver",
+        "Comfortable/Luxury vehicle",
+        "Private tour"
       ]
     }
   ];
@@ -373,6 +375,14 @@ export class PlanBookingComponent implements OnInit {
       passengers: tour.passengers,
       includes: tour.includes || []
     });
+
+    // Update estimated total whenever passenger count changes
+    this.bookingForm.get('numberOfPassengers')?.valueChanges.subscribe(() => {
+      this.updateEstimatedTotal();
+    });
+
+    // Initial estimated total calculation
+    this.updateEstimatedTotal();
   }
 
   private initializeForm() {
@@ -383,6 +393,18 @@ export class PlanBookingComponent implements OnInit {
       specialRequests: [''],
       accommodation: ['']
     });
+  }
+
+  private updateEstimatedTotal() {
+    const pkg = this.packageData();
+    if (!pkg) return;
+
+    const basePrice = this.parsePrice(pkg.price);
+    const numberOfPassengers = this.bookingForm.get('numberOfPassengers')?.value || 1;
+    const capacity = this.getPackageCapacity(pkg.passengers);
+    const total = this.calculateTotalWithExtra(basePrice, numberOfPassengers, capacity);
+
+    this.estimatedTotal.set(total);
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -412,11 +434,17 @@ export class PlanBookingComponent implements OnInit {
       return;
     }
 
+    // Calculate total with extra passenger charges
+    const numberOfPassengers = this.bookingForm.get('numberOfPassengers')?.value;
+    const basePrice = this.parsePrice(this.packageData()?.price || '0');
+    const capacity = this.getPackageCapacity(this.packageData()?.passengers || '');
+    const totalAmount = this.calculateTotalWithExtra(basePrice, numberOfPassengers, capacity);
+
     // Map form data to /bookings endpoint format
     const bookingPayload = {
       tourId: tourId,
       tourDate: this.bookingForm.get('preferredDate')?.value,
-      numberOfPassengers: this.bookingForm.get('numberOfPassengers')?.value,
+      numberOfPassengers: numberOfPassengers,
       specialRequests: this.bookingForm.get('specialRequests')?.value + 
         (this.bookingForm.get('vehicle')?.value ? `\nVehicle: ${this.bookingForm.get('vehicle')?.value}` : ''),
       accommodationPreferences: {
@@ -435,7 +463,7 @@ export class PlanBookingComponent implements OnInit {
         const checkoutPayload = {
           bookingId: bookingId,
           email: user.email,
-          amount: this.parsePrice(this.packageData()?.price || '0'),
+          amount: totalAmount,
           firstName: user.firstName,
           lastName: user.lastName
         };
@@ -472,4 +500,27 @@ export class PlanBookingComponent implements OnInit {
     const cleanPrice = String(price).replace(/[^\d.]/g, '');
     return parseFloat(cleanPrice) || 0;
   }
+
+  getPackageCapacity(passengersText: string): number {
+    // Extract capacity from text like "UP TO 4 PASSENGERS"
+    const match = passengersText.match(/(\d+)/);
+    return match ? parseInt(match[1]) : 4; // Default to 4 if unable to parse
+  }
+
+  private calculateTotalWithExtra(basePrice: number, numberOfPassengers: number, capacity: number): number {
+    // R700 per additional passenger beyond capacity
+    const EXTRA_PASSENGER_RATE = 700;
+    
+    if (numberOfPassengers <= capacity) {
+      return basePrice;
+    }
+
+    const extraPassengers = numberOfPassengers - capacity;
+    const totalWithExtra = basePrice + (extraPassengers * EXTRA_PASSENGER_RATE);
+    
+    console.log(`[PLAN BOOKING] Base: R${basePrice}, Passengers: ${numberOfPassengers}, Capacity: ${capacity}, Extra: ${extraPassengers} × R${EXTRA_PASSENGER_RATE} = R${totalWithExtra}`);
+    
+    return totalWithExtra;
+  }
 }
+

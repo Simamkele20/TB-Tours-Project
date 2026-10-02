@@ -136,10 +136,10 @@ export class PlanComponent implements OnInit {
         duration: "2 Days",
         passengers: "UP TO 4 PASSENGERS",
         includes: [
+          "Airport Transfers",
           "Professional driver",
-          "Vehicle rental",
-          "Guided tour of Table Mountain",
-          "Lunch on Day 1"
+          "Comfortable/Luxury vehicle",
+          "Private tour"
         ],
         suggestedItinerary: [
           "Day 1: Table Mountain & City Bowl",
@@ -154,10 +154,10 @@ export class PlanComponent implements OnInit {
         duration: "3 Days",
         passengers: "UP TO 4 PASSENGERS",
         includes: [
+          "Airport Transfers",
           "Professional driver",
-          "Vehicle rental",
-          "Guided tours",
-          "All meals included"
+          "Comfortable/Luxury vehicle",
+          "Private tour"
         ],
         suggestedItinerary: [
           "Day 1: Table Mountain & City Bowl",
@@ -173,11 +173,10 @@ export class PlanComponent implements OnInit {
         duration: "5 Days",
         passengers: "UP TO 4 PASSENGERS",
         includes: [
+          "Airport Transfers",
           "Professional driver",
-          "Vehicle rental",
-          "Guided tours",
-          "Accommodation",
-          "All meals"
+          "Comfortable/Luxury vehicle",
+          "Private tour"
         ],
         suggestedItinerary: [
           "Day 1: Table Mountain & City Bowl",
@@ -195,12 +194,10 @@ export class PlanComponent implements OnInit {
         duration: "7 Days",
         passengers: "UP TO 4 PASSENGERS",
         includes: [
+          "Airport Transfers",
           "Professional driver",
-          "Vehicle rental",
-          "Guided tours",
-          "Accommodation",
-          "All meals",
-          "Activity pass"
+          "Comfortable/Luxury vehicle",
+          "Private tour"
         ],
         suggestedItinerary: [
           "Day 1: Arrival & Table Mountain",
@@ -220,11 +217,10 @@ export class PlanComponent implements OnInit {
         duration: "2 Days",
         passengers: "UP TO 2 PASSENGERS",
         includes: [
-          "Private driver",
-          "Vehicle rental",
-          "Romantic dinner",
-          "Sunset cruise",
-          "Champagne"
+          "Airport Transfers",
+          "Professional driver",
+          "Comfortable/Luxury vehicle",
+          "Private tour"
         ],
         suggestedItinerary: [
           "Day 1: Sunset at Table Mountain",
@@ -239,11 +235,10 @@ export class PlanComponent implements OnInit {
         duration: "3 Days",
         passengers: "UP TO 4 PASSENGERS",
         includes: [
+          "Airport Transfers",
           "Professional driver",
-          "Vehicle rental",
-          "Family-friendly activities",
-          "Picnic lunch",
-          "Entertainment"
+          "Comfortable/Luxury vehicle",
+          "Private tour"
         ],
         suggestedItinerary: [
           "Day 1: Two Oceans Aquarium & Boulders Beach",
@@ -259,11 +254,10 @@ export class PlanComponent implements OnInit {
         duration: "Custom",
         passengers: "UP TO 4 PASSENGERS",
         includes: [
+          "Airport Transfers",
           "Professional driver",
-          "Wi-Fi equipped vehicle",
-          "Airport transfers",
-          "Meeting coordination",
-          "Flexible scheduling"
+          "Comfortable/Luxury vehicle",
+          "Private tour"
         ],
         suggestedItinerary: [
           "Customized based on meetings",
@@ -279,11 +273,10 @@ export class PlanComponent implements OnInit {
         duration: "3-7 Days",
         passengers: "UP TO 12 PASSENGERS",
         includes: [
-          "Multiple vehicles available",
-          "Professional drivers",
-          "Group coordination",
-          "Custom itineraries",
-          "Team-building activities"
+          "Airport Transfers",
+          "Professional driver",
+          "Comfortable/Luxury vehicle",
+          "Private tour"
         ],
         suggestedItinerary: [
           "Day 1: Team Bonding Activities",
