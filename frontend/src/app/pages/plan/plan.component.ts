@@ -1,22 +1,7 @@
 import { Component, computed, inject, signal, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Router } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "../../../environments/environment";
-import { TourSelectionService } from "../../services/tour-selection.service";
 import { PLAN_PAGE_CONTENT } from "../../data/site-content";
-
-interface Tour {
-  id: number;
-  title: string;
-  price: string;
-  pricePerPerson: string;
-  description: string;
-  duration: string;
-  maxPassengers: number;
-  included: string[];
-  tourType: string;
-}
 
 interface TourPackage {
   title: string;
@@ -131,8 +116,6 @@ interface TourPackage {
 })
 export class PlanComponent implements OnInit {
   private readonly router = inject(Router);
-  private readonly http = inject(HttpClient);
-  private readonly tourSelectionService = inject(TourSelectionService);
 
   PLAN_PAGE_CONTENT = PLAN_PAGE_CONTENT;
   packages = signal<any[]>([]);
@@ -143,33 +126,175 @@ export class PlanComponent implements OnInit {
   }
 
   private loadPlanPackages() {
-    // Load plan packages from API
-    this.http.get(`${environment.apiBaseUrl}/tours`).subscribe({
-      next: (response: any) => {
-        const allTours = response.data || response;
-        // Filter tours with tourType = 'plan-package'
-        const planPackages = allTours.filter((tour: Tour) => tour.tourType === 'plan-package');
-        
-        // Format tours for display
-        const formatted = planPackages.map((tour: Tour) => ({
-          id: tour.id,
-          title: tour.title,
-          price: tour.price ? `R${tour.price} PER VEHICLE` : 'Contact for pricing',
-          description: tour.description,
-          duration: tour.duration,
-          passengers: `UP TO ${tour.maxPassengers} PASSENGERS`,
-          includes: tour.included || [],
-          suggestedItinerary: [],
-          exclusions: tour.pricePerPerson ? `per person: R${tour.pricePerPerson}` : undefined
-        }));
-        
-        this.packages.set(formatted);
+    // Hardcoded plan packages - no API calls needed
+    const staticPackages = [
+      {
+        id: 1,
+        title: "2-DAY CAPE TOWN GETAWAY",
+        price: "R3,200 PER VEHICLE",
+        description: "A quick escape to explore Cape Town's highlights",
+        duration: "2 Days",
+        passengers: "UP TO 4 PASSENGERS",
+        includes: [
+          "Professional driver",
+          "Vehicle rental",
+          "Guided tour of Table Mountain",
+          "Lunch on Day 1"
+        ],
+        suggestedItinerary: [
+          "Day 1: Table Mountain & City Bowl",
+          "Day 2: Cape Point & Coastal Drive"
+        ]
       },
-      error: (error) => {
-        console.error('Error loading plan packages:', error);
-        this.packages.set([]);
+      {
+        id: 2,
+        title: "3-DAY CAPE TOWN EXPERIENCE",
+        price: "R5,500 PER VEHICLE",
+        description: "Discover Cape Town's best attractions",
+        duration: "3 Days",
+        passengers: "UP TO 4 PASSENGERS",
+        includes: [
+          "Professional driver",
+          "Vehicle rental",
+          "Guided tours",
+          "All meals included"
+        ],
+        suggestedItinerary: [
+          "Day 1: Table Mountain & City Bowl",
+          "Day 2: Cape Point & Hermanus",
+          "Day 3: Winelands Tour"
+        ]
+      },
+      {
+        id: 3,
+        title: "5-DAY CAPE TOWN EXPLORER",
+        price: "R9,500 PER VEHICLE",
+        description: "In-depth exploration of Cape Town and surroundings",
+        duration: "5 Days",
+        passengers: "UP TO 4 PASSENGERS",
+        includes: [
+          "Professional driver",
+          "Vehicle rental",
+          "Guided tours",
+          "Accommodation",
+          "All meals"
+        ],
+        suggestedItinerary: [
+          "Day 1: Table Mountain & City Bowl",
+          "Day 2: Cape Point & Constantia Nek",
+          "Day 3: Winelands Experience",
+          "Day 4: Hermanus & De Kelders",
+          "Day 5: Penguins & Simonstown"
+        ]
+      },
+      {
+        id: 4,
+        title: "7-DAY CAPE TOWN DISCOVERY",
+        price: "R13,500 PER VEHICLE",
+        description: "The ultimate Cape Town experience",
+        duration: "7 Days",
+        passengers: "UP TO 4 PASSENGERS",
+        includes: [
+          "Professional driver",
+          "Vehicle rental",
+          "Guided tours",
+          "Accommodation",
+          "All meals",
+          "Activity pass"
+        ],
+        suggestedItinerary: [
+          "Day 1: Arrival & Table Mountain",
+          "Day 2: Cape Point & Coastal Drive",
+          "Day 3: Winelands Full Day",
+          "Day 4: Hermanus Whale Watching",
+          "Day 5: Franschhoek & Paarl",
+          "Day 6: Boulders Beach & Simonstown",
+          "Day 7: Free day or departure"
+        ]
+      },
+      {
+        id: 5,
+        title: "COUPLES CAPE TOWN ESCAPE",
+        price: "R4,500 PER VEHICLE",
+        description: "Romantic getaway for two",
+        duration: "2 Days",
+        passengers: "UP TO 2 PASSENGERS",
+        includes: [
+          "Private driver",
+          "Vehicle rental",
+          "Romantic dinner",
+          "Sunset cruise",
+          "Champagne"
+        ],
+        suggestedItinerary: [
+          "Day 1: Sunset at Table Mountain",
+          "Day 2: Romantic Lunch & Wine Tasting"
+        ]
+      },
+      {
+        id: 6,
+        title: "FAMILY CAPE TOWN PACKAGE",
+        price: "R6,500 PER VEHICLE",
+        description: "Fun activities for the whole family",
+        duration: "3 Days",
+        passengers: "UP TO 4 PASSENGERS",
+        includes: [
+          "Professional driver",
+          "Vehicle rental",
+          "Family-friendly activities",
+          "Picnic lunch",
+          "Entertainment"
+        ],
+        suggestedItinerary: [
+          "Day 1: Two Oceans Aquarium & Boulders Beach",
+          "Day 2: Table Mountain & Picnic",
+          "Day 3: Ostrich Farm & Wine Estate"
+        ]
+      },
+      {
+        id: 7,
+        title: "BUSINESS TRAVEL PACKAGE",
+        price: "R2,500/DAY PER VEHICLE",
+        description: "Professional transport for business travelers",
+        duration: "Custom",
+        passengers: "UP TO 4 PASSENGERS",
+        includes: [
+          "Professional driver",
+          "Wi-Fi equipped vehicle",
+          "Airport transfers",
+          "Meeting coordination",
+          "Flexible scheduling"
+        ],
+        suggestedItinerary: [
+          "Customized based on meetings",
+          "Airport pickup & drop-off",
+          "City navigation support"
+        ]
+      },
+      {
+        id: 8,
+        title: "GROUP CAPE TOWN TRAVEL",
+        price: "R5,500 PER VEHICLE",
+        description: "Perfect for groups and corporate events",
+        duration: "3-7 Days",
+        passengers: "UP TO 12 PASSENGERS",
+        includes: [
+          "Multiple vehicles available",
+          "Professional drivers",
+          "Group coordination",
+          "Custom itineraries",
+          "Team-building activities"
+        ],
+        suggestedItinerary: [
+          "Day 1: Team Bonding Activities",
+          "Day 2: Adventure Activities",
+          "Day 3: Cultural & Wine Experience",
+          "Days 4-7: Customizable based on group"
+        ]
       }
-    });
+    ];
+
+    this.packages.set(staticPackages);
   }
 
   onPayPackage(pkg: any) {

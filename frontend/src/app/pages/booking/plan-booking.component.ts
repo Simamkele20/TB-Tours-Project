@@ -218,6 +218,129 @@ export class PlanBookingComponent implements OnInit {
     { id: 'hyundai-elantra', name: 'Hyundai Elantra (Up to 4 passengers)' }
   ];
 
+  // Static plan packages
+  private staticPackages = [
+    {
+      id: 1,
+      title: "2-DAY CAPE TOWN GETAWAY",
+      price: "3200",
+      description: "A quick escape to explore Cape Town's highlights",
+      duration: "2 Days",
+      passengers: "UP TO 4 PASSENGERS",
+      includes: [
+        "Professional driver",
+        "Vehicle rental",
+        "Guided tour of Table Mountain",
+        "Lunch on Day 1"
+      ]
+    },
+    {
+      id: 2,
+      title: "3-DAY CAPE TOWN EXPERIENCE",
+      price: "5500",
+      description: "Discover Cape Town's best attractions",
+      duration: "3 Days",
+      passengers: "UP TO 4 PASSENGERS",
+      includes: [
+        "Professional driver",
+        "Vehicle rental",
+        "Guided tours",
+        "All meals included"
+      ]
+    },
+    {
+      id: 3,
+      title: "5-DAY CAPE TOWN EXPLORER",
+      price: "9500",
+      description: "In-depth exploration of Cape Town and surroundings",
+      duration: "5 Days",
+      passengers: "UP TO 4 PASSENGERS",
+      includes: [
+        "Professional driver",
+        "Vehicle rental",
+        "Guided tours",
+        "Accommodation",
+        "All meals"
+      ]
+    },
+    {
+      id: 4,
+      title: "7-DAY CAPE TOWN DISCOVERY",
+      price: "13500",
+      description: "The ultimate Cape Town experience",
+      duration: "7 Days",
+      passengers: "UP TO 4 PASSENGERS",
+      includes: [
+        "Professional driver",
+        "Vehicle rental",
+        "Guided tours",
+        "Accommodation",
+        "All meals",
+        "Activity pass"
+      ]
+    },
+    {
+      id: 5,
+      title: "COUPLES CAPE TOWN ESCAPE",
+      price: "4500",
+      description: "Romantic getaway for two",
+      duration: "2 Days",
+      passengers: "UP TO 2 PASSENGERS",
+      includes: [
+        "Private driver",
+        "Vehicle rental",
+        "Romantic dinner",
+        "Sunset cruise",
+        "Champagne"
+      ]
+    },
+    {
+      id: 6,
+      title: "FAMILY CAPE TOWN PACKAGE",
+      price: "6500",
+      description: "Fun activities for the whole family",
+      duration: "3 Days",
+      passengers: "UP TO 4 PASSENGERS",
+      includes: [
+        "Professional driver",
+        "Vehicle rental",
+        "Family-friendly activities",
+        "Picnic lunch",
+        "Entertainment"
+      ]
+    },
+    {
+      id: 7,
+      title: "BUSINESS TRAVEL PACKAGE",
+      price: "2500",
+      description: "Professional transport for business travelers",
+      duration: "Custom",
+      passengers: "UP TO 4 PASSENGERS",
+      includes: [
+        "Professional driver",
+        "Wi-Fi equipped vehicle",
+        "Airport transfers",
+        "Meeting coordination",
+        "Flexible scheduling"
+      ]
+    },
+    {
+      id: 8,
+      title: "GROUP CAPE TOWN TRAVEL",
+      price: "5500",
+      description: "Perfect for groups and corporate events",
+      duration: "3-7 Days",
+      passengers: "UP TO 12 PASSENGERS",
+      includes: [
+        "Multiple vehicles available",
+        "Professional drivers",
+        "Group coordination",
+        "Custom itineraries",
+        "Team-building activities"
+      ]
+    }
+  ];
+
   ngOnInit() {
     this.initializeForm();
     this.loadPackageData();
@@ -232,25 +355,23 @@ export class PlanBookingComponent implements OnInit {
       return;
     }
 
-    // Load tour from backend
-    this.http.get(`${environment.apiBaseUrl}/tours/${tourId}`).subscribe({
-      next: (response: any) => {
-        const tour = response.data || response;
-        this.packageData.set({
-          id: tour.id,
-          title: tour.title,
-          price: tour.price ? `R${tour.price} PER VEHICLE` : 'Contact for pricing',
-          description: tour.description,
-          duration: tour.duration,
-          passengers: `UP TO ${tour.maxPassengers} PASSENGERS`,
-          includes: tour.included || tour.includes || []
-        });
-      },
-      error: (error) => {
-        console.error('Error loading package:', error);
-        this.toastService.show('Error loading package information', 'error');
-        this.router.navigate(['/plan']);
-      }
+    // Get package from static data
+    const tour = this.staticPackages.find(pkg => pkg.id === parseInt(tourId));
+    
+    if (!tour) {
+      this.toastService.show('Package not found', 'error');
+      this.router.navigate(['/plan']);
+      return;
+    }
+
+    this.packageData.set({
+      id: tour.id,
+      title: tour.title,
+      price: tour.price ? `R${tour.price} PER VEHICLE` : 'Contact for pricing',
+      description: tour.description,
+      duration: tour.duration,
+      passengers: tour.passengers,
+      includes: tour.includes || []
     });
   }
 
