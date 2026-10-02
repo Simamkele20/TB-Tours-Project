@@ -80,7 +80,7 @@ const connectDB = async () => {
     
     // Sync models with database
     console.log('[DB] Synchronizing models...');
-    await sequelize.sync({ alter: false });
+    await sequelize.sync({ alter: true });
     console.log('[DB] Models synchronized');
     
     return sequelize;
