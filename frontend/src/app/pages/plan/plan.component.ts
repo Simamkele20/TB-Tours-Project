@@ -2,11 +2,8 @@ import { Component, computed, inject, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Router } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
-import { ContactFormComponent } from "../shared/contact-form.component";
-import { BookingApiService } from "../../booking/booking-api.service";
 import { TourSelectionService } from "../../services/tour-selection.service";
 import { PLAN_PAGE_CONTENT } from "../../data/site-content";
-import { finalize } from "rxjs";
 
 interface TourPackage {
   title: string;
@@ -22,7 +19,7 @@ interface TourPackage {
 @Component({
   selector: "app-plan",
   standalone: true,
-  imports: [CommonModule, RouterModule, HeroSectionComponent, ContactFormComponent],
+  imports: [CommonModule, RouterModule, HeroSectionComponent],
   template: `
     <!-- HERO SECTION WITH BACKGROUND IMAGE (Like Couriers) -->
     <section class="intro-image-section">
@@ -129,44 +126,14 @@ interface TourPackage {
         </ul>
       </div>
     </section>
-
-    <!-- CONTACT SECTION -->
-    <section class="section contact-cta-section">
-      <div class="container">
-        <div class="contact-content">
-          <h2>READY TO PLAN YOUR CAPE TOWN STAY?</h2>
-          <p>{{ PLAN_PAGE_CONTENT.contactCTA }}</p>
-        </div>
-
-        <div class="plan-form-wrapper">
-          <app-contact-form
-            [isSending]="isSending()"
-            [requestedService]="'Plan Your Stay'"
-            (formSubmitted)="onBookingFormSubmit($event)">
-          </app-contact-form>
-        </div>
-
-        <div *ngIf="toastMessage()" [class]="'toast toast-' + toastType()">
-          <p>{{ toastMessage() }}</p>
-          <button type="button" aria-label="Close" (click)="dismissToast()">
-            <i class="bi bi-x" aria-hidden="true"></i>
-          </button>
-        </div>
-      </div>
-    </section>
   `,
   styleUrl: "./plan.component.scss"
 })
 export class PlanComponent {
-  private readonly bookingApi = inject(BookingApiService);
   private readonly router = inject(Router);
   private readonly tourSelectionService = inject(TourSelectionService);
 
   PLAN_PAGE_CONTENT = PLAN_PAGE_CONTENT;
-
-  toastMessage = signal("");
-  toastType = signal<"success" | "error">("success");
-  isSending = signal(false);
 
   heroConfig = computed(() => PLAN_PAGE_CONTENT.hero);
 
@@ -191,36 +158,5 @@ export class PlanComponent {
         capacity: pkg.passengers
       }
     });
-  }
-
-  onBookingFormSubmit(formData: any) {
-    this.isSending.set(true);
-
-    const payload = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      message: formData.message,
-      type: "plan-booking"
-    };
-
-    this.bookingApi.sendContactMessage(payload)
-      .pipe(finalize(() => this.isSending.set(false)))
-      .subscribe({
-        next: () => {
-          this.toastMessage.set("Thank you! We've received your request. We'll contact you soon to plan your Cape Town stay.");
-          this.toastType.set("success");
-          setTimeout(() => this.dismissToast(), 5000);
-        },
-        error: () => {
-          this.toastMessage.set("Sorry, something went wrong. Please try again or contact us directly.");
-          this.toastType.set("error");
-          setTimeout(() => this.dismissToast(), 5000);
-        }
-      });
-  }
-
-  dismissToast() {
-    this.toastMessage.set("");
   }
 }

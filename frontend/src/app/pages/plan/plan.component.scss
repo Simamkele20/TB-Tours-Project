@@ -400,69 +400,6 @@
   }
 }
 
-.contact-cta-section {
-  padding: 4rem 2rem;
-
-  .contact-content {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 3rem;
-
-    h2 {
-      font-size: 1.8rem;
-      color: var(--text-primary);
-      margin: 0 0 1rem 0;
-    }
-
-    p {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--text-secondary);
-      margin: 0;
-    }
-  }
-
-  .plan-form-wrapper {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-}
-
-// Toast notifications
-.toast {
-  padding: 1rem;
-  border-radius: 4px;
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  p {
-    margin: 0;
-    flex: 1;
-  }
-
-  button {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0;
-    margin-left: 1rem;
-    color: inherit;
-  }
-
-  &.toast-success {
-    background: #d4edda;
-    color: #155724;
-  }
-
-  &.toast-error {
-    background: #f8d7da;
-    color: #721c24;
-  }
-}
-
 // Responsive
 @media (max-width: 768px) {
   .packages-section .packages-grid {
