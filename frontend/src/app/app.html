@@ -28,6 +28,7 @@
       <nav class="main-nav" [class.mobile-open]="isMobileMenuOpen()" aria-label="Primary navigation">
         <a href="#home" (click)="closeMobileMenu()">Home</a>
         <a href="#about" (click)="closeMobileMenu()">About</a>
+        <a routerLink="/plan" (click)="scrollToTop(); closeMobileMenu()">Plan</a>
         <a href="#destinations" (click)="closeMobileMenu()">Destinations</a>
         <a href="#services" (click)="closeMobileMenu()">Services</a>
         <a routerLink="/couriers" (click)="scrollToTop(); closeMobileMenu()">Couriers</a>
