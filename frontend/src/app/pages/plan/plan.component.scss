@@ -305,40 +305,6 @@
   }
 }
 
-.addons-section {
-  padding: 4rem 2rem;
-  background: #f9f9f9;
-
-  .addons-intro {
-    text-align: center;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--text-primary);
-    margin-bottom: 2rem;
-  }
-
-  .addons-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-
-    .addon-item {
-      padding: 1rem;
-      background: white;
-      border-radius: 4px;
-      font-size: 0.95rem;
-      color: var(--text-primary);
-      border-left: 3px solid var(--primary-color);
-
-      .addon-bullet {
-        color: var(--primary-color);
-        font-weight: bold;
-        margin-right: 0.5rem;
-      }
-    }
-  }
-}
-
 .why-section {
   padding: 4rem 2rem;
 

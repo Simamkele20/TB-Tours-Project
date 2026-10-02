@@ -89,19 +89,6 @@ interface TourPackage {
       </div>
     </section>
 
-    <!-- ADD-ONS SECTION -->
-    <section class="section addons-section">
-      <div class="container">
-        <h2 class="section-title">POPULAR ADD-ONS</h2>
-        <p class="addons-intro">{{ PLAN_PAGE_CONTENT.addonsInfo }}</p>
-        <div class="addons-grid">
-          <div class="addon-item" *ngFor="let addon of PLAN_PAGE_CONTENT.addons">
-            <span class="addon-bullet">•</span> {{ addon }}
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- WHY CHOOSE US SECTION -->
     <section class="section why-section">
       <div class="container">
