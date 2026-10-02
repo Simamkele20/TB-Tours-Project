@@ -296,6 +296,7 @@ adminRouter.get("/bookings", authMiddleware(env.jwtSecret), adminOnly, async (re
         {
           model: Tour,
           attributes: ["id", "title", "price"],
+          required: false,
         },
       ],
       order: [["createdAt", "DESC"]],
@@ -338,6 +339,7 @@ adminRouter.get("/bookings/:id", authMiddleware(env.jwtSecret), adminOnly, async
             "duration",
             "description",
           ],
+          required: false,
         },
       ],
     });

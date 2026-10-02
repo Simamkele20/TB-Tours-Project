@@ -681,6 +681,7 @@ bookingRouter.get("/bookings", authMiddleware(env.jwtSecret), async (req, res) =
         {
           model: Tour,
           attributes: ["id", "title", "duration", "image", "price"],
+          required: false,
         },
       ],
       order: [["tourDate", "DESC"]],
@@ -715,6 +716,7 @@ bookingRouter.get("/bookings/:id", authMiddleware(env.jwtSecret), async (req, re
             "description",
             "highlights",
           ],
+          required: false,
         },
       ],
     });
