@@ -34,6 +34,7 @@ export interface AuthResponse {
     firstName: string;
     lastName: string;
     email: string;
+    phone?: string;
     role: 'customer' | 'admin';
     verified: boolean;
   };
@@ -44,6 +45,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
+  phone?: string;
   role: 'customer' | 'admin';
   verified: boolean;
 }

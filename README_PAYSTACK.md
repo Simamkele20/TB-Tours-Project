@@ -390,3 +390,233 @@ All files are configured:
 
 *Paystack Integration by GitHub Copilot*  
 *September 28, 2024*
+
+
+
+## ADd new page 
+
+PLAN YOUR CAPE TOWN STAY
+Your Journey, Our Priority
+Make your Cape Town holiday easier with TB Tours.
+Instead of booking every transfer separately, let us help you arrange your transportation around your stay. Tell us your travel dates, number of passengers, accommodation and the places you would like to visit, and we can create a personalised travel plan for you.
+Whether you are visiting Cape Town for 2 days or 7 days, travelling as a couple, family, group or business traveller, TB Tours can help make getting around Cape Town simple and comfortable.
+━━━━━━━━━━━━━━━━━━
+2-DAY CAPE TOWN GETAWAY
+FROM R3,200 PER VEHICLE
+Perfect for a short Cape Town visit.
+INCLUDES:
+• Cape Town International Airport pickup
+• Meet & greet
+• Private transfer to your accommodation
+• Cape Town sightseeing
+• One additional local transfer
+• Return transfer to the airport
+• Personal travel assistance
+UP TO 4 PASSENGERS
+Suggested experience:
+Day 1 – Airport arrival and Cape Town sightseeing
+Day 2 – Flexible sightseeing or private experience and airport transfer
+Entrance fees, meals and activities are excluded unless stated in your quotation.
+━━━━━━━━━━━━━━━━━━
+3-DAY CAPE TOWN EXPERIENCE
+FROM R5,500 PER VEHICLE
+Perfect for first-time visitors who want to experience the highlights of Cape Town.
+INCLUDES:
+• Airport pickup
+• Hotel transfer
+• Cape Town sightseeing
+• Cape Peninsula experience
+• One additional local transfer
+• Private transportation
+• Airport return transfer
+• Personal itinerary assistance
+UP TO 4 PASSENGERS
+Suggested experience:
+Day 1 – Airport arrival and Cape Town
+Day 2 – Cape Peninsula
+Day 3 – Flexible experience and departure
+Entrance fees, meals and activities are excluded unless stated in your quotation.
+━━━━━━━━━━━━━━━━━━
+5-DAY CAPE TOWN EXPLORER
+FROM R9,500 PER VEHICLE
+A great option for visitors who want more time to explore Cape Town.
+INCLUDES:
+• Airport arrival transfer
+• Cape Town sightseeing
+• Cape Peninsula experience
+• Cape Winelands experience
+• One additional day of private transportation
+• Hotel transfers
+• Airport departure transfer
+• Personal itinerary assistance
+UP TO 4 PASSENGERS
+Suggested experience:
+Day 1 – Airport arrival and hotel transfer
+Day 2 – Cape Town
+Day 3 – Cape Peninsula
+Day 4 – Cape Winelands
+Day 5 – Flexible sightseeing and airport transfer
+Entrance fees, meals, wine tasting fees and activities are excluded unless stated in your quotation.
+━━━━━━━━━━━━━━━━━━
+7-DAY CAPE TOWN DISCOVERY
+FROM R13,500 PER VEHICLE
+Designed for travellers who want to explore Cape Town and surrounding destinations at a relaxed pace.
+INCLUDES:
+• Airport arrival transfer
+• Private transportation throughout selected days
+• Cape Town sightseeing
+• Cape Peninsula experience
+• Cape Winelands experience
+• One additional day trip
+• Hotel transfers
+• Airport departure transfer
+• Personal itinerary assistance
+UP TO 4 PASSENGERS
+Suggested experience:
+Day 1 – Airport arrival
+Day 2 – Cape Town
+Day 3 – Cape Peninsula
+Day 4 – Cape Winelands
+Day 5 – Flexible sightseeing
+Day 6 – Day trip or custom experience
+Day 7 – Airport departure
+Entrance fees, meals, wine tasting fees and activities are excluded unless stated in your quotation.
+━━━━━━━━━━━━━━━━━━
+COUPLES CAPE TOWN ESCAPE
+FROM R4,500 PER VEHICLE
+Designed for couples looking for a private and relaxed Cape Town experience.
+INCLUDES:
+• Airport transfer
+• Private transportation
+• Scenic Cape Town locations
+• Camps Bay
+• Clifton
+• Chapman’s Peak
+• Sunset or scenic stop
+• Hotel transfers
+• Personal itinerary assistance
+UP TO 2 PASSENGERS
+Perfect for anniversaries, honeymoons, birthdays and romantic getaways.
+Meals, entrance fees and activities are excluded unless stated in your quotation.
+━━━━━━━━━━━━━━━━━━
+FAMILY CAPE TOWN PACKAGE
+FROM R6,500 PER VEHICLE
+Designed for families who want comfortable private transportation throughout their stay.
+INCLUDES:
+• Airport pickup and drop-off
+• Private vehicle
+• Hotel transfers
+• Cape Town sightseeing
+• Cape Peninsula experience
+• Flexible stops
+• Luggage assistance
+• Personal travel assistance
+UP TO 4 PASSENGERS
+Family-friendly itineraries can be arranged according to your children's ages and interests.
+Entrance fees, meals and activities are excluded unless stated in your quotation.
+━━━━━━━━━━━━━━━━━━
+BUSINESS TRAVEL PACKAGE
+FROM R2,500 PER DAY
+Keep your business trip organised with private transportation.
+INCLUDES:
+• Private chauffeur
+• Hotel pickup
+• Business meetings and appointments
+• Airport transfers
+• Restaurant transfers
+• Evening transportation
+• Flexible transportation during the booking period
+IDEAL FOR:
+• Business travellers
+• Executives
+• Corporate clients
+• Conferences
+• Meetings
+• Events
+Additional hours can be arranged at the applicable hourly rate.
+━━━━━━━━━━━━━━━━━━
+PRIVATE CHAUFFEUR ADD-ON
+FROM R450 PER HOUR
+Add private chauffeur service to your Cape Town stay.
+Ideal for:
+• Shopping
+• Business meetings
+• Restaurants
+• Events
+• Weddings
+• Sightseeing
+• Flexible daily transportation
+Minimum booking applies.
+━━━━━━━━━━━━━━━━━━
+GROUP CAPE TOWN TRAVEL
+FROM R5,500 PER VEHICLE
+Travelling with family, friends or a larger group?
+TB Tours can arrange private group transportation for your Cape Town stay.
+AVAILABLE FOR:
+• Family groups
+• Friends travelling together
+• Corporate groups
+• Wedding groups
+• Events
+• Airport transfers
+• Tours and day trips
+Larger groups and vehicle requirements are quoted according to passenger numbers, luggage and itinerary.
+━━━━━━━━━━━━━━━━━━
+BUILD YOUR OWN CAPE TOWN STAY
+CUSTOM QUOTE
+Don't see a package that suits you?
+Create your own Cape Town travel plan with TB Tours.
+Tell us:
+• Your arrival date
+• Departure date
+• Number of passengers
+• Number of bags
+• Accommodation location
+• Places you want to visit
+• Activities you are interested in
+• Required airport transfers
+• Any special requirements
+We will help you create a personalised transportation plan based on your trip.
+━━━━━━━━━━━━━━━━━━
+POPULAR ADD-ONS
+Add these services to your package:
+• Airport Meet & Greet
+• Private Airport Transfers
+• Chauffeur Service
+• Cape Peninsula
+• Cape Town City
+• Cape Winelands
+• Hermanus
+• Cape Agulhas
+• Garden Route
+• Shark Cage Diving Transfers
+• Restaurant Transfers
+• Event Transportation
+• Wedding Transportation
+• Corporate Transportation
+• Custom Day Trips
+Activity and attraction entrance fees are not included unless specifically stated.
+━━━━━━━━━━━━━━━━━━
+WHAT MAKES TB TOURS DIFFERENT?
+PERSONAL SERVICE
+You are not just another booking.
+We communicate with you before your trip, help you plan your transportation and remain available throughout your journey.
+PRIVATE TRANSPORTATION
+Travel with your own private vehicle instead of sharing your journey with strangers.
+FLEXIBLE ITINERARIES
+Your trip can be adjusted around your interests, schedule and accommodation.
+ONE COMPANY FOR YOUR JOURNEY
+From airport arrival to sightseeing, chauffeur services and your return airport transfer, TB Tours can assist with your transportation needs.
+━━━━━━━━━━━━━━━━━━
+IMPORTANT INFORMATION
+• Prices are starting prices and may change according to dates, route, passenger numbers, vehicle requirements and itinerary.
+• Prices are quoted per vehicle unless otherwise stated.
+• Entrance fees are not included unless specifically stated.
+• Meals are not included unless specifically stated.
+• Wine tasting fees are not included unless specifically stated.
+• Activities are not included unless specifically stated.
+• Larger groups can be accommodated subject to vehicle availability.
+• Overnight and long-distance travel is quoted separately.
+• Final pricing will be confirmed before booking.
+━━━━━━━━━━━━━━━━━━
+READY TO PLAN YOUR CAPE TOWN STAY?

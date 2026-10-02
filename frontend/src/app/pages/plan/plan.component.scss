@@ -1,75 +1,99 @@
 .intro-image-section {
-  position: relative;
-  padding: 6rem 2rem;
+  background-image: linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.7)), url('/images/francesca-tirico-9G9vxsMzi18-unsplash.jpg');
   background-size: cover;
-  background-position: right center;
+  background-position: center;
   background-attachment: fixed;
-  min-height: 500px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-top: clamp(6rem, 15vw, 10rem);
+  min-height: 550px;
 
   .intro-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to right, rgba(10, 21, 48, 0.85), rgba(10, 21, 48, 0.3));
-    z-index: 1;
+    display: none;
   }
 
   .container {
-    position: relative;
-    z-index: 2;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: clamp(1rem, 7.5vw, 9rem) !important;
+    width: 100% !important;
+    max-width: 100%;
   }
 
   .intro-content {
+    text-align: left;
+    padding-left: 0;
+    padding-right: 2rem;
     max-width: 600px;
     margin: 0;
   }
 
   .intro-eyebrow {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--primary-color);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 0 0 1rem 0;
+    color: #f2b112 !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    text-align: left !important;
+    margin: 0 0 0.75rem 0 !important;
+    padding-bottom: 1rem !important;
+    border-bottom: 3px solid #f2b112 !important;
+    display: inline-block !important;
   }
 
   .intro-title {
-    font-size: 2.5rem;
+    color: #f2b112 !important;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    text-align: left !important;
+    margin: 1.5rem 0 1.5rem 0 !important;
     font-weight: 400;
-    line-height: 1.2;
-    color: white;
-    margin: 0 0 1rem 0;
-    letter-spacing: 1px;
-  }
+    line-height: 1.1;
+    letter-spacing: 0.05em;
 
-  .intro-accent {
-    color: var(--primary-color);
-    font-weight: 300;
-    display: block;
+    span {
+      color: #ffffff !important;
+    }
   }
 
   .intro-text {
+    text-align: left !important;
+    color: rgba(240, 244, 248, 0.85) !important;
     font-size: 1rem;
-    line-height: 1.8;
-    color: #ddd;
-    margin: 0;
+    line-height: 1.7;
+    margin: 0 !important;
   }
 
   @media (max-width: 768px) {
-    padding: 4rem 2rem;
+    justify-content: center;
+    align-items: center;
+    padding-top: clamp(4.5rem, 12vw, 7rem);
     min-height: auto;
     background-attachment: scroll;
 
-    .intro-title {
-      font-size: 1.8rem;
+    .container {
+      padding-left: 1rem !important;
     }
 
+    .intro-content {
+      text-align: center;
+      padding-right: 1rem;
+    }
+
+    .intro-eyebrow,
+    .intro-title,
     .intro-text {
-      font-size: 0.95rem;
+      text-align: center !important;
+    }
+
+    .intro-eyebrow {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .intro-title {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
     }
   }
 }
@@ -198,25 +222,25 @@
       border-left: 3px solid var(--primary-color);
     }
 
-    .package-pay-btn {
+    .package-book-btn {
       width: 100%;
-      padding: 0.75rem 1.5rem;
+      padding: 1rem 1.5rem;
       margin-top: 1.5rem;
-      background: var(--primary-color);
-      color: white;
+      background: #f2b112;
+      color: #0a1530;
       border: none;
       border-radius: 4px;
-      font-size: 1rem;
-      font-weight: 600;
+      font-size: 1.1rem;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
 
       &:hover {
-        background: #c4932d;
+        background: #e8a20a;
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        box-shadow: 0 6px 16px rgba(242, 177, 18, 0.4);
       }
 
       &:active {

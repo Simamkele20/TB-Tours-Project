@@ -24,21 +24,13 @@ interface TourPackage {
   standalone: true,
   imports: [CommonModule, RouterModule, HeroSectionComponent, ContactFormComponent],
   template: `
-    <!-- HERO SECTION -->
-    <app-hero-section
-      [config]="heroConfig()"
-      [showPhone]="() => false"
-      [isDestination]="false"
-      [isCouriers]="false">
-    </app-hero-section>
-
-    <!-- INTRO WITH IMAGE BACKGROUND SECTION -->
-    <section class="section intro-image-section" [style.backgroundImage]="'url(/images/francesca-tirico-9G9vxsMzi18-unsplash.jpg)'">
+    <!-- HERO SECTION WITH BACKGROUND IMAGE (Like Couriers) -->
+    <section class="intro-image-section">
       <div class="intro-overlay"></div>
       <div class="container">
         <div class="intro-content">
-          <p class="intro-eyebrow">Your Journey, Our Priority</p>
-          <h2 class="intro-title">PLAN YOUR<br><span class="intro-accent">CAPE TOWN STAY</span></h2>
+          <p class="intro-eyebrow">YOUR JOURNEY, OUR PRIORITY</p>
+          <h2 class="intro-title">PLAN YOUR<br><span>CAPE TOWN STAY</span></h2>
           <p class="intro-text">{{ PLAN_PAGE_CONTENT.introduction }}</p>
         </div>
       </div>
@@ -78,7 +70,7 @@ interface TourPackage {
               </ul>
             </div>
             <p class="package-note" *ngIf="pkg.exclusions">{{ pkg.exclusions }}</p>
-            <button class="package-pay-btn" (click)="onPayPackage(pkg)">GET A QUOTE</button>
+            <button class="package-book-btn" (click)="onBookPackage(pkg)">BOOK NOW</button>
           </div>
         </div>
       </div>
@@ -184,6 +176,19 @@ export class PlanComponent {
       queryParams: { 
         package: pkg.title,
         price: pkg.price 
+      }
+    });
+  }
+
+  onBookPackage(pkg: any) {
+    // Navigate to plan booking page with package info
+    this.router.navigate(['/plan-booking'], {
+      queryParams: {
+        package: pkg.title,
+        price: pkg.price,
+        description: pkg.description,
+        duration: pkg.duration,
+        capacity: pkg.passengers
       }
     });
   }
