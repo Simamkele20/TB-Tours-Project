@@ -32,11 +32,6 @@ interface PlanPackage {
   includes: string[];
 }
 
-interface Vehicle {
-  id: string;
-  name: string;
-}
-
 @Component({
   selector: 'app-plan-booking',
   standalone: true,
@@ -144,24 +139,6 @@ interface Vehicle {
             </span>
           </div>
 
-          <!-- Vehicle Selection -->
-          <div class="form-group">
-            <label for="vehicle">Select Vehicle *</label>
-            <select
-              id="vehicle"
-              formControlName="vehicle"
-              class="form-control"
-            >
-              <option value="" disabled selected>Choose a vehicle</option>
-              <option *ngFor="let vehicle of vehicles" [value]="vehicle.id">
-                {{ vehicle.name }}
-              </option>
-            </select>
-            <span class="error" *ngIf="isFieldInvalid('vehicle')">
-              Please select a vehicle
-            </span>
-          </div>
-
           <!-- Special Requests -->
           <div class="form-group">
             <label for="specialRequests">Special Requests</label>
@@ -219,13 +196,6 @@ export class PlanBookingComponent implements OnInit {
 
   packageData = signal<PlanPackage | null>(null);
   currentUser = computed(() => this.authService.currentUser());
-
-  vehicles: Vehicle[] = [
-    { id: 'mercedes-vito', name: 'Mercedes Benz Vito Van (Up to 8 passengers)' },
-    { id: 'mercedes-c-class', name: 'Mercedes Benz C Class (Up to 4 passengers)' },
-    { id: 'honda-ballade', name: 'Honda Ballade (Up to 4 passengers)' },
-    { id: 'hyundai-elantra', name: 'Hyundai Elantra (Up to 4 passengers)' }
-  ];
 
   // Static plan packages
   private staticPackages = [
@@ -389,7 +359,6 @@ export class PlanBookingComponent implements OnInit {
     this.bookingForm = this.formBuilder.group({
       preferredDate: ['', Validators.required],
       numberOfPassengers: ['1', [Validators.required, Validators.min(1)]],
-      vehicle: ['', Validators.required],
       specialRequests: [''],
       accommodation: ['']
     });
@@ -445,10 +414,8 @@ export class PlanBookingComponent implements OnInit {
       tourId: tourId,
       tourDate: this.bookingForm.get('preferredDate')?.value,
       numberOfPassengers: numberOfPassengers,
-      specialRequests: this.bookingForm.get('specialRequests')?.value + 
-        (this.bookingForm.get('vehicle')?.value ? `\nVehicle: ${this.bookingForm.get('vehicle')?.value}` : ''),
+      specialRequests: this.bookingForm.get('specialRequests')?.value,
       accommodationPreferences: {
-        vehicle: this.bookingForm.get('vehicle')?.value,
         accommodation: this.bookingForm.get('accommodation')?.value
       },
       passengerDetails: []
