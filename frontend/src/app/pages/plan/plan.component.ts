@@ -32,18 +32,16 @@ interface TourPackage {
       [isCouriers]="false">
     </app-hero-section>
 
-    <!-- INTRODUCTION SECTION -->
-    <section class="section intro-section">
+    <!-- INTRO WITH IMAGE BACKGROUND SECTION -->
+    <section class="section intro-image-section" [style.backgroundImage]="'url(/images/francesca-tirico-9G9vxsMzi18-unsplash.jpg)'">
+      <div class="intro-overlay"></div>
       <div class="container">
         <div class="intro-content">
+          <p class="intro-eyebrow">Your Journey, Our Priority</p>
+          <h2 class="intro-title">PLAN YOUR<br><span class="intro-accent">CAPE TOWN STAY</span></h2>
           <p class="intro-text">{{ PLAN_PAGE_CONTENT.introduction }}</p>
         </div>
       </div>
-    </section>
-
-    <!-- IMAGE SECTION -->
-    <section class="section image-section">
-      <img src="/images/francesca-tirico-9G9vxsMzi18-unsplash.jpg" alt="Plan Your Cape Town Stay" class="section-image" />
     </section>
 
     <!-- PACKAGES SECTION -->
