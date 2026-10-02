@@ -20,10 +20,6 @@ const Booking = sequelize.define(
     tourId: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      references: {
-        model: "tours",
-        key: "id",
-      },
     },
     bookingReference: {
       type: DataTypes.STRING,
