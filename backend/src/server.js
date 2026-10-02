@@ -133,7 +133,7 @@ app.post("/api/contact", async (req, res) => {
 
   try {
     await mailgunClient.messages.create(mailgunDomain, {
-      from: "TB Tours (Pty)Ltd <bookings@tb-tours.co.za>",
+      from: "TB Tours (Pty)Ltd <info@tb-tours.co.za>",
       to: [env.contactToEmail],
       replyTo: contactMessage.email,
       subject: `TB Tours (Pty)Ltd Contact: ${contactMessage.name}`,
@@ -231,7 +231,7 @@ app.post("/api/auth/register", async (req, res) => {
     if (mailgunClient) {
       try {
         await mailgunClient.messages.create(mailgunDomain, {
-          from: "TB Tours (Pty)Ltd <bookings@tb-tours.co.za>",
+          from: "TB Tours (Pty)Ltd <info@tb-tours.co.za>",
           to: [normalizedEmail],
           subject: "Verify your TB Tours account",
           text: buildVerificationEmailText(normalizedEmail, verificationCode),
@@ -434,7 +434,7 @@ app.post("/api/auth/forgot-password", async (req, res) => {
     if (mailgunClient) {
       try {
         await mailgunClient.messages.create(mailgunDomain, {
-          from: "TB Tours (Pty)Ltd <bookings@tb-tours.co.za>",
+          from: "TB Tours (Pty)Ltd <info@tb-tours.co.za>",
           to: [normalizedEmail],
           subject: "Reset your TB Tours password",
           text: buildPasswordResetEmailText(normalizedEmail, resetCode),
