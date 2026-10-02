@@ -144,7 +144,7 @@ export class PlanComponent implements OnInit {
 
   private loadPlanPackages() {
     // Load plan packages from API
-    this.http.get(`${environment.apiBaseUrl}/bookings/tours`).subscribe({
+    this.http.get(`${environment.apiBaseUrl}/tours`).subscribe({
       next: (response: any) => {
         const allTours = response.data || response;
         // Filter tours with tourType = 'plan-package'

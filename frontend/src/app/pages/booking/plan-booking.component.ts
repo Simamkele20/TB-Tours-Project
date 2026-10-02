@@ -233,7 +233,7 @@ export class PlanBookingComponent implements OnInit {
     }
 
     // Load tour from backend
-    this.http.get(`${environment.apiBaseUrl}/bookings/tours/${tourId}`).subscribe({
+    this.http.get(`${environment.apiBaseUrl}/tours/${tourId}`).subscribe({
       next: (response: any) => {
         const tour = response.data || response;
         this.packageData.set({
