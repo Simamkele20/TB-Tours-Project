@@ -3,7 +3,6 @@ import { CommonModule } from "@angular/common";
 import { RouterModule, Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
-import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { TourSelectionService } from "../../services/tour-selection.service";
 import { PLAN_PAGE_CONTENT } from "../../data/site-content";
 
@@ -33,7 +32,7 @@ interface TourPackage {
 @Component({
   selector: "app-plan",
   standalone: true,
-  imports: [CommonModule, RouterModule, HeroSectionComponent],
+  imports: [CommonModule, RouterModule],
   template: `
     <!-- HERO SECTION WITH BACKGROUND IMAGE (Like Couriers) -->
     <section class="intro-image-section">
@@ -191,3 +190,4 @@ export class PlanComponent implements OnInit {
       }
     });
   }
+}
