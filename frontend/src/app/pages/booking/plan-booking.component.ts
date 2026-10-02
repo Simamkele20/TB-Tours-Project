@@ -320,7 +320,7 @@ export class PlanBookingComponent implements OnInit {
 
   private loadPackageData() {
     const tourId = this.route.snapshot.queryParamMap.get('tourId');
-    
+
     if (!tourId) {
       this.toastService.show('Package information not found', 'error');
       this.router.navigate(['/plan']);
@@ -329,7 +329,7 @@ export class PlanBookingComponent implements OnInit {
 
     // Get package from static data
     const tour = this.staticPackages.find(pkg => pkg.id === parseInt(tourId));
-    
+
     if (!tour) {
       this.toastService.show('Package not found', 'error');
       this.router.navigate(['/plan']);
@@ -425,7 +425,7 @@ export class PlanBookingComponent implements OnInit {
     this.http.post(`${environment.apiBaseUrl}/bookings`, bookingPayload).subscribe({
       next: (response: any) => {
         const bookingId = response.data?.bookingId || response.data?.booking?.id;
-        
+
         // Then proceed to Yoco checkout
         const checkoutPayload = {
           bookingId: bookingId,
@@ -477,16 +477,16 @@ export class PlanBookingComponent implements OnInit {
   private calculateTotalWithExtra(basePrice: number, numberOfPassengers: number, capacity: number): number {
     // R700 per additional passenger beyond capacity
     const EXTRA_PASSENGER_RATE = 700;
-    
+
     if (numberOfPassengers <= capacity) {
       return basePrice;
     }
 
     const extraPassengers = numberOfPassengers - capacity;
     const totalWithExtra = basePrice + (extraPassengers * EXTRA_PASSENGER_RATE);
-    
+
     console.log(`[PLAN BOOKING] Base: R${basePrice}, Passengers: ${numberOfPassengers}, Capacity: ${capacity}, Extra: ${extraPassengers} × R${EXTRA_PASSENGER_RATE} = R${totalWithExtra}`);
-    
+
     return totalWithExtra;
   }
 }
