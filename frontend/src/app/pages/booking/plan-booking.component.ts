@@ -257,25 +257,53 @@ export class PlanBookingComponent implements OnInit {
 
     this.isSubmitting.set(true);
 
-    const payload = {
-      ...this.bookingForm.value,
-      fullName: `${user.firstName} ${user.lastName}`,
-      email: user.email,
-      phone: user.phone,
-      package: this.packageData()?.title,
+    const bookingPayload = {
+      userId: user.id,
+      tourId: null,
+      packageName: this.packageData()?.title,
+      packagePrice: this.packageData()?.price,
+      preferredDate: this.bookingForm.get('preferredDate')?.value,
+      numberOfPassengers: this.bookingForm.get('numberOfPassengers')?.value,
+      vehicle: this.bookingForm.get('vehicle')?.value,
+      specialRequests: this.bookingForm.get('specialRequests')?.value,
+      accommodation: this.bookingForm.get('accommodation')?.value,
       type: 'plan-package-booking'
     };
 
-    // Send to backend or email service
-    this.http.post(`${environment.apiBaseUrl}/send-contact-message`, payload).subscribe({
-      next: () => {
-        this.toastService.show('Booking request submitted! We will contact you shortly.', 'success');
-        setTimeout(() => {
-          this.router.navigate(['/plan']);
-        }, 2000);
+    // First, create the booking
+    this.http.post(`${environment.apiBaseUrl}/bookings`, bookingPayload).subscribe({
+      next: (response: any) => {
+        const bookingId = response.id || response.bookingId;
+        
+        // Then proceed to checkout
+        const checkoutPayload = {
+          bookingId: bookingId,
+          amount: this.packageData()?.price,
+          currency: 'ZAR'
+        };
+
+        this.http.post(`${environment.apiBaseUrl}/checkout`, checkoutPayload).subscribe({
+          next: (checkoutResponse: any) => {
+            this.toastService.show('Redirecting to payment...', 'success');
+            // Redirect to Yoco payment page if URL is provided
+            if (checkoutResponse.paymentUrl) {
+              window.location.href = checkoutResponse.paymentUrl;
+            } else {
+              setTimeout(() => {
+                this.router.navigate(['/plan']);
+              }, 2000);
+            }
+          },
+          error: (error) => {
+            console.error('Checkout error:', error);
+            this.toastService.show('Error initiating payment. Please try again.', 'error');
+            this.isSubmitting.set(false);
+          }
+        });
       },
-      error: () => {
-        this.toastService.show('Error submitting booking. Please try again.', 'error');
+      error: (error) => {
+        console.error('Booking error:', error);
+        this.toastService.show('Error creating booking. Please try again.', 'error');
         this.isSubmitting.set(false);
       }
     });
