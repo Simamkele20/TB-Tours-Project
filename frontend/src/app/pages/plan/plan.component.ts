@@ -4,6 +4,7 @@ import { RouterModule, Router } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { ContactFormComponent } from "../shared/contact-form.component";
 import { BookingApiService } from "../../booking/booking-api.service";
+import { TourSelectionService } from "../../services/tour-selection.service";
 import { PLAN_PAGE_CONTENT } from "../../data/site-content";
 import { finalize } from "rxjs";
 
@@ -40,6 +41,11 @@ interface TourPackage {
       </div>
     </section>
 
+    <!-- IMAGE SECTION -->
+    <section class="section image-section">
+      <img src="/images/francesca-tirico-9G9vxsMzi18-unsplash.jpg" alt="Plan Your Cape Town Stay" class="section-image" />
+    </section>
+
     <!-- PACKAGES SECTION -->
     <section class="section packages-section">
       <div class="container">
@@ -74,6 +80,7 @@ interface TourPackage {
               </ul>
             </div>
             <p class="package-note" *ngIf="pkg.exclusions">{{ pkg.exclusions }}</p>
+            <button class="package-pay-btn" (click)="onPayPackage(pkg)">GET A QUOTE</button>
           </div>
         </div>
       </div>
@@ -163,6 +170,7 @@ interface TourPackage {
 export class PlanComponent {
   private readonly bookingApi = inject(BookingApiService);
   private readonly router = inject(Router);
+  private readonly tourSelectionService = inject(TourSelectionService);
 
   PLAN_PAGE_CONTENT = PLAN_PAGE_CONTENT;
 
@@ -171,6 +179,16 @@ export class PlanComponent {
   isSending = signal(false);
 
   heroConfig = computed(() => PLAN_PAGE_CONTENT.hero);
+
+  onPayPackage(pkg: any) {
+    // Navigate to contact page for quote
+    this.router.navigate(['/contact'], { 
+      queryParams: { 
+        package: pkg.title,
+        price: pkg.price 
+      }
+    });
+  }
 
   onBookingFormSubmit(formData: any) {
     this.isSending.set(true);
