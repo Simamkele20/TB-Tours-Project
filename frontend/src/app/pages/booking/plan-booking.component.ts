@@ -274,7 +274,7 @@ export class PlanBookingComponent implements OnInit {
     this.http.post(`${environment.apiBaseUrl}/bookings`, bookingPayload).subscribe({
       next: (response: any) => {
         const bookingId = response.id || response.bookingId;
-        
+
         // Then proceed to checkout
         const checkoutPayload = {
           bookingId: bookingId,
