@@ -348,19 +348,17 @@
     margin: 2rem auto 0;
 
     li {
-      padding: 1rem 0 1rem 2.5rem;
+      padding: 1rem 0 1rem 1.75rem;
       font-size: 0.95rem;
       color: var(--text-primary);
       position: relative;
       line-height: 1.6;
-      display: flex;
-      align-items: flex-start;
 
       &:before {
         content: "•";
         position: absolute;
         left: 0;
-        top: 0.1rem;
+        top: 1rem;
         color: var(--primary-color);
         font-weight: bold;
         font-size: 1.2rem;
