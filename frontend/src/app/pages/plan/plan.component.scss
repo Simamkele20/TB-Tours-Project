@@ -115,6 +115,8 @@
     padding: 2rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
 
     &:hover {
       box-shadow: 0 4px 16px rgba(0,0,0,0.15);
@@ -225,7 +227,7 @@
     .package-book-btn {
       width: 100%;
       padding: 1rem 1.5rem;
-      margin-top: 1.5rem;
+      margin-top: auto;
       background: #f2b112;
       color: #0a1530;
       border: none;
