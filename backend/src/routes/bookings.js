@@ -519,6 +519,87 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
 });
 
 /**
+ * POST /api/plan-bookings
+ * Create booking for Plan packages (doesn't require tourId)
+ */
+bookingRouter.post("/plan-bookings", authMiddleware(env.jwtSecret), async (req, res) => {
+  console.log('[PLAN BOOKING] Request received');
+  const transaction = await sequelize.transaction();
+  try {
+    const {
+      packageName,
+      packagePrice,
+      preferredDate,
+      numberOfPassengers,
+      vehicle,
+      specialRequests,
+      accommodation,
+      type
+    } = req.body;
+
+    console.log('[PLAN BOOKING] Request body:', { packageName, packagePrice, numberOfPassengers, preferredDate });
+
+    // Validation
+    if (!packageName || !preferredDate || !numberOfPassengers) {
+      console.log('[PLAN BOOKING] Validation failed');
+      return res.status(400).json({
+        error: "Missing required fields: packageName, preferredDate, numberOfPassengers",
+      });
+    }
+
+    // Parse price (remove R or currency symbols if present)
+    let totalPrice = parseFloat(String(packagePrice).replace(/[^\d.]/g, '')) || 0;
+    if (totalPrice === 0) {
+      totalPrice = 0; // Contact for pricing
+    }
+
+    console.log('[PLAN BOOKING] Total price:', totalPrice);
+
+    // Create plan booking
+    console.log('[PLAN BOOKING] Creating booking record...');
+    const booking = await Booking.create(
+      {
+        userId: req.user.id,
+        tourId: null, // No specific tour for plan packages
+        bookingReference: generateBookingReference(),
+        tourDate: new Date(preferredDate),
+        numberOfPassengers,
+        totalPrice,
+        status: "pending",
+        paymentStatus: "unpaid",
+        specialRequests,
+        accommodationPreferences: { vehicle, accommodation },
+        notes: `Plan Package: ${packageName}`,
+      },
+      { transaction }
+    );
+
+    console.log('[PLAN BOOKING] Booking created:', booking.id);
+
+    await transaction.commit();
+
+    console.log(
+      `[PLAN BOOKING CREATED] Reference: ${booking.bookingReference}, User: ${req.user.email}, Package: ${packageName}, Amount: R${totalPrice}`
+    );
+
+    return res.status(201).json({
+      success: true,
+      message: "Plan booking created, proceed to payment",
+      data: {
+        booking,
+        bookingId: booking.id,
+        bookingReference: booking.bookingReference,
+        totalPrice
+      }
+    });
+  } catch (error) {
+    await transaction.rollback();
+    console.error("[CREATE PLAN BOOKING ERROR]", error.message);
+    return res.status(500).json({ error: "Failed to create plan booking" });
+  }
+});
+
+/**
  * POST /api/bookings/:id/confirm-payment
  * Confirm booking after successful Paystack payment
  */

@@ -258,8 +258,6 @@ export class PlanBookingComponent implements OnInit {
     this.isSubmitting.set(true);
 
     const bookingPayload = {
-      userId: user.id,
-      tourId: null,
       packageName: this.packageData()?.title,
       packagePrice: this.packageData()?.price,
       preferredDate: this.bookingForm.get('preferredDate')?.value,
@@ -270,24 +268,26 @@ export class PlanBookingComponent implements OnInit {
       type: 'plan-package-booking'
     };
 
-    // First, create the booking
-    this.http.post(`${environment.apiBaseUrl}/bookings`, bookingPayload).subscribe({
+    // First, create the plan booking
+    this.http.post(`${environment.apiBaseUrl}/plan-bookings`, bookingPayload).subscribe({
       next: (response: any) => {
-        const bookingId = response.id || response.bookingId;
-
-        // Then proceed to checkout
+        const bookingId = response.data?.bookingId || response.data?.booking?.id;
+        
+        // Then proceed to Yoco checkout
         const checkoutPayload = {
           bookingId: bookingId,
-          amount: this.packageData()?.price,
-          currency: 'ZAR'
+          email: user.email,
+          amount: this.parsePrice(this.packageData()?.price || '0'),
+          firstName: user.firstName,
+          lastName: user.lastName
         };
 
-        this.http.post(`${environment.apiBaseUrl}/checkout`, checkoutPayload).subscribe({
+        this.http.post(`${environment.apiBaseUrl}/payments/yoco/checkout`, checkoutPayload).subscribe({
           next: (checkoutResponse: any) => {
             this.toastService.show('Redirecting to payment...', 'success');
             // Redirect to Yoco payment page if URL is provided
-            if (checkoutResponse.paymentUrl) {
-              window.location.href = checkoutResponse.paymentUrl;
+            if (checkoutResponse.data?.redirectUrl) {
+              window.location.href = checkoutResponse.data.redirectUrl;
             } else {
               setTimeout(() => {
                 this.router.navigate(['/plan']);
@@ -307,5 +307,11 @@ export class PlanBookingComponent implements OnInit {
         this.isSubmitting.set(false);
       }
     });
+  }
+
+  private parsePrice(price: string | undefined): number {
+    if (!price) return 0;
+    const cleanPrice = String(price).replace(/[^\d.]/g, '');
+    return parseFloat(cleanPrice) || 0;
   }
 }
