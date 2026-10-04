@@ -142,6 +142,13 @@ import { finalize } from "rxjs";
             <span>›</span>
           </button>
         </div>
+
+        <!-- TrustBox widget - Review Collector -->
+        <div class="trustpilot-container" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e0e0e0;">
+          <div class="trustpilot-widget" data-locale="en-US" data-template-id="56278e9abfbbba0bdcd568bc" data-businessunit-id="6ac112e3445180b2bfc3712e" data-style-height="52px" data-style-width="100%" data-token="82c5a8a1-201b-4d5f-96d9-f962b4a70c5a">
+            <a href="https://www.trustpilot.com/review/tb-tours.co.za" target="_blank" rel="noopener">Trustpilot</a>
+          </div>
+        </div>
       </div>
     </section>
 
