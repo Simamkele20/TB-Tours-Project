@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, computed, signal, inject, ViewChild, HostListener, OnInit } from "@angular/core";
+import { Component, computed, signal, inject, ViewChild, HostListener, OnInit, AfterViewInit } from "@angular/core";
 import { RouterModule, Router, ActivatedRoute } from "@angular/router";
 import { HeroSectionComponent } from "../../shared/components/hero-section.component";
 import { TimeAgoPipe } from "../../shared/pipes/time-ago.pipe";
@@ -166,7 +166,15 @@ import { finalize } from "rxjs";
               <img [src]="partner.logo" [alt]="partner.name" class="partner-logo" loading="lazy" />
             </div>
           </div>
+          <!-- TourHQ Banner -->
+          <div class="partner-card">
+            <div class="partner-logo-wrapper tourhq-banner-container d-flex">
+              <div id="thq_banner" data-banner-id="10" style="display:inline-block;"></div>
+            </div>
+          </div>
         </div>
+
+
       </div>
     </section>
 
@@ -233,7 +241,7 @@ import { finalize } from "rxjs";
   `,
   styleUrls: ["./home.component.scss"]
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, AfterViewInit {
   readonly heroConfig = computed(() => SITE_CONTENT["home"].hero);
   readonly partners = computed(() => SITE_CONTENT["home"].partners || []);
   readonly SITE_SERVICES = SITE_SERVICES;
@@ -409,6 +417,21 @@ export class HomePageComponent implements OnInit {
         }, 100);
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    // Load TourHQ Banner script
+    if (typeof window !== 'undefined' && !document.getElementById('tourhq-bnr')) {
+      const script = document.createElement('script');
+      script.id = 'tourhq-bnr';
+      script.src = 'https://www.tourhq.com/js/thqbanner.js';
+      script.async = true;
+
+      // Set the banner ID before loading the script
+      (window as any).thq_banner_id = 240469696;
+
+      document.body.appendChild(script);
+    }
   }
 
   nextReviews() {
