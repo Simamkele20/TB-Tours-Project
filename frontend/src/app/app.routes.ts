@@ -15,6 +15,9 @@ import { AdminManagementComponent } from './pages/admin/admin-management.compone
 import { BookingPageComponent } from './pages/booking/booking-page.component';
 import { MyBookingsComponent } from './pages/booking/my-bookings.component';
 import { PaymentCallbackComponent } from './pages/booking/payment-callback.component';
+import { FaqsComponent } from './pages/faqs/faqs.component';
+import { TermsComponent } from './pages/terms/terms.component';
+import { BookingPolicyComponent } from './pages/booking-policy/booking-policy.component';
 import { canActivateAuth } from './guards/auth.guard';
 import { canActivateAdmin } from './guards/admin.guard';
 
@@ -27,6 +30,9 @@ export const routes: Routes = [
   { path: 'couriers', component: CouriersComponent },
   { path: 'destinations/:slug', component: DestinationDetailComponent },
   { path: 'contact', component: ContactPageComponent },
+  { path: 'faqs', component: FaqsComponent },
+  { path: 'terms', component: TermsComponent },
+  { path: 'booking-policy', component: BookingPolicyComponent },
   // Auth routes
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/register', component: RegisterComponent },

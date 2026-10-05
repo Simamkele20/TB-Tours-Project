@@ -27,7 +27,7 @@ import { Router, RouterLink } from '@angular/router';
           <li><a [routerLink]="['']" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'home'">Home</a></li>
           <li><a [routerLink]="['/story']" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'about'">About</a></li>
           <li><a [routerLink]="['/plan']" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'plan'">Plan</a></li>
-          <li><a [routerLink]="['/contact']" fragment="faqs" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'faqs'">FAQs</a></li>
+          <li><a [routerLink]="['/faqs']" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'faqs'">FAQs</a></li>
           <li><a [routerLink]="['/contact']" (click)="closeMobileMenu()" class="nav-link" [class.active]="currentPage() === 'contact'">Contact</a></li>
         </ul>
 

@@ -75,6 +75,10 @@ export const SITE_CONTENT: Record<string, PageContent> = {
       {
         name: "Tourism Board",
         logo: "/images/Partner.jpg"
+      },
+      {
+        name: "Tourism Partner",
+        logo: "/images/Partner 3.jpg"
       }
     ],
     sectionTitle: "Travel your way.",
@@ -1068,19 +1072,98 @@ export interface TermsSection {
 export const TERMS_CONTENT: TermsSection[] = [
   {
     number: "1",
-    title: "Acceptance of Terms",
+    title: "Services",
     content: [
-      "By booking and using TB Tours services, you agree to these Terms & Conditions.",
-      "Please read all terms carefully before booking."
+      "TB Tours provides private transport, airport transfers, chauffeur services, sightseeing tours, wine tours, and other transport-related services within Cape Town and surrounding areas."
     ]
   },
   {
     number: "2",
-    title: "Bookings and Cancellations",
+    title: "Bookings",
     content: [
-      "Bookings must be made in advance.",
-      "Cancellations made 48 hours before the tour date receive a full refund.",
-      "Cancellations within 48 hours are subject to a 50% charge."
+      "All bookings are subject to availability and are confirmed only after acceptance by TB Tours. Customers are responsible for providing accurate booking details."
+    ]
+  },
+  {
+    number: "3",
+    title: "Payments",
+    content: [
+      "Payment may be required in advance to secure your booking. Any outstanding balance must be paid before or at the start of the service unless otherwise agreed."
+    ]
+  },
+  {
+    number: "4",
+    title: "Cancellations and Refunds",
+    content: [
+      "Cancellations made more than 48 hours before the scheduled service may qualify for a refund.",
+      "Cancellations made within 48 hours may be subject to cancellation fees.",
+      "No-shows are non-refundable."
+    ]
+  },
+  {
+    number: "5",
+    title: "Customer Responsibilities",
+    content: [
+      "Customers must provide accurate booking information.",
+      "Arrive at the agreed pickup location on time.",
+      "Treat our vehicles and staff with respect.",
+      "Follow all safety instructions and wear seat belts where provided."
+    ]
+  },
+  {
+    number: "6",
+    title: "Vehicle Damage",
+    content: [
+      "Customers may be held responsible for any damage caused to a TB Tours vehicle through negligence or intentional misconduct."
+    ]
+  },
+  {
+    number: "7",
+    title: "Delays",
+    content: [
+      "TB Tours will make every effort to arrive on time. However, we are not liable for delays caused by traffic, weather, road closures, vehicle breakdowns, accidents, or other events beyond our reasonable control."
+    ]
+  },
+  {
+    number: "8",
+    title: "Personal Belongings",
+    content: [
+      "Passengers are responsible for their personal belongings. While we will do our best to assist in recovering lost property, TB Tours accepts no responsibility for items left in our vehicles."
+    ]
+  },
+  {
+    number: "9",
+    title: "Right to Refuse Service",
+    content: [
+      "TB Tours reserves the right to refuse or terminate a service if a passenger behaves in a threatening, abusive, violent, intoxicated, or unlawful manner that may endanger the driver, other passengers, or the vehicle."
+    ]
+  },
+  {
+    number: "10",
+    title: "Limitation of Liability",
+    content: [
+      "To the fullest extent permitted by law, TB Tours shall not be liable for indirect, incidental, or consequential losses arising from the use of our services."
+    ]
+  },
+  {
+    number: "11",
+    title: "Privacy",
+    content: [
+      "Personal information collected during bookings will be used only to provide our services, communicate with customers, and comply with legal obligations. We respect your privacy and handle your information responsibly."
+    ]
+  },
+  {
+    number: "12",
+    title: "Changes to These Terms",
+    content: [
+      "TB Tours reserves the right to update these Terms & Conditions at any time. Any changes will be published on this website and become effective upon posting."
+    ]
+  },
+  {
+    number: "13",
+    title: "Governing Law",
+    content: [
+      "These Terms & Conditions are governed by the laws of the Republic of South Africa."
     ]
   }
 ];
@@ -1113,15 +1196,67 @@ export const FAQS_PAGE_CONTENT: FAQsPageContent = {
   },
   faqs: [
     {
-      question: "How do I book a tour?",
-      answer: "You can book through our website or contact us directly for personalized assistance."
+      question: "What does TB Tours offer?",
+      answer: "TB Tours provides premium private tours, airport transfers and personalised travel experiences across Cape Town and the Western Cape."
     },
     {
-      question: "What is your cancellation policy?",
-      answer: "Full refund for cancellations 48 hours before the tour date. 50% charge for cancellations within 48 hours."
+      question: "Are your tours private?",
+      answer: "Yes. Our tours are designed to provide a private and personalised experience, allowing you to explore Cape Town at your own pace."
+    },
+    {
+      question: "Can I customise my itinerary?",
+      answer: "Absolutely. We can tailor your experience around your interests, available time and preferred destinations."
+    },
+    {
+      question: "Do you offer airport transfers?",
+      answer: "Yes. We offer private airport transfers to and from Cape Town International Airport, with a focus on comfort, punctuality and a seamless arrival or departure."
+    },
+    {
+      question: "Which destinations do you cover?",
+      answer: "We operate across Cape Town and surrounding areas, including the Cape Town CBD, Blouberg, Melkbosstrand, Table View, Durbanville, Stellenbosch and other popular Western Cape destinations."
+    },
+    {
+      question: "Can you arrange a complete Cape Town experience?",
+      answer: "Yes. We can combine airport transfers, private tours and multiple destinations to create a seamless travel experience throughout your stay."
+    },
+    {
+      question: "Do you cater for couples, families and groups?",
+      answer: "Yes. We welcome couples, families, private groups and corporate travellers. We can recommend suitable options based on your group size and requirements."
+    },
+    {
+      question: "How do I reserve a tour?",
+      answer: "Simply contact TB Tours with your preferred date, number of guests and desired experience. We will check availability and provide a personalised quotation."
+    },
+    {
+      question: "How far in advance should I book?",
+      answer: "We recommend booking in advance to secure your preferred date and itinerary, particularly during peak travel seasons."
+    },
+    {
+      question: "What is included in my tour?",
+      answer: "Your quotation will clearly outline what is included. Depending on the experience, this may include private transportation, collection and drop-off, and the agreed itinerary."
+    },
+    {
+      question: "Do you provide personalised travel recommendations?",
+      answer: "Yes. If you're visiting Cape Town for the first time, we can recommend destinations and experiences that suit your interests and available time."
+    },
+    {
+      question: "Do you offer courier services?",
+      answer: "Yes. TB Tours also provides a professional courier and delivery service for suitable items within our service areas."
+    },
+    {
+      question: "How do I receive a quotation?",
+      answer: "Send us your requirements via WhatsApp, phone or our website. Our team will provide a personalised quotation based on your journey or experience."
+    },
+    {
+      question: "Why choose TB Tours?",
+      answer: "At TB Tours, we focus on comfort, reliability, personal service and memorable experiences. Our goal is to make every journey effortless from the moment you arrive in Cape Town."
+    },
+    {
+      question: "Where can I contact TB Tours?",
+      answer: "Our team is available via WhatsApp, phone and our website to assist with bookings, enquiries and personalised travel arrangements."
     }
   ],
-  closing: "Didn't find your answer? Contact us for more help!"
+  closing: "TB Tours — Discover Cape Town. Travel in Comfort. Experience More."
 };
 
 // Couriers Page Content
@@ -1563,20 +1698,82 @@ export interface BookingPolicySection {
 export const BOOKING_POLICY_CONTENT: BookingPolicySection[] = [
   {
     number: "1",
-    title: "How to Book",
+    title: "Booking Policy",
     content: [
-      "Visit our website and select your preferred tour",
-      "Choose your date and number of participants",
-      "Complete payment to confirm your booking"
+      "All bookings are subject to availability and are confirmed only after confirmation from TB Tours. We recommend booking in advance, especially during weekends, public holidays, and peak tourist seasons."
     ]
   },
   {
     number: "2",
-    title: "Cancellation and Refunds",
+    title: "Payment Policy",
     content: [
-      "Cancel up to 48 hours before for full refund",
-      "Cancellations within 48 hours are subject to 50% charge",
-      "No-shows are non-refundable"
+      "Payment may be required to secure your booking. The remaining balance, if applicable, must be paid before or at the start of the service unless otherwise agreed."
+    ]
+  },
+  {
+    number: "3",
+    title: "Cancellation Policy",
+    content: [
+      "Cancellations made more than 48 hours before the scheduled service may qualify for a refund, subject to any non-refundable costs.",
+      "Cancellations made within 48 hours of the booking may incur cancellation charges.",
+      "No-shows are non-refundable."
+    ]
+  },
+  {
+    number: "4",
+    title: "Changes to Bookings",
+    content: [
+      "We will do our best to accommodate changes to bookings. However, changes are subject to vehicle and driver availability."
+    ]
+  },
+  {
+    number: "5",
+    title: "Waiting Time",
+    content: [
+      "For airport pickups, complimentary waiting time is provided for delayed flights where flight details have been supplied in advance. Additional waiting time for other services may result in extra charges."
+    ]
+  },
+  {
+    number: "6",
+    title: "Passenger Responsibility",
+    content: [
+      "Passengers are expected to treat our vehicles and drivers with respect. TB Tours reserves the right to refuse service to anyone whose behaviour is unsafe, abusive, or illegal."
+    ]
+  },
+  {
+    number: "7",
+    title: "Safety",
+    content: [
+      "Your safety is our priority. All passengers must wear seat belts where provided and follow the driver's safety instructions throughout the journey."
+    ]
+  },
+  {
+    number: "8",
+    title: "Personal Belongings",
+    content: [
+      "While every effort will be made to return lost items, TB Tours is not responsible for personal belongings left in our vehicles."
+    ]
+  },
+  {
+    number: "9",
+    title: "Delays",
+    content: [
+      "Although we always aim to arrive on time, TB Tours cannot be held responsible for delays caused by traffic, weather conditions, road closures, accidents, or other circumstances beyond our control."
+    ]
+  },
+  {
+    number: "10",
+    title: "Privacy",
+    content: [
+      "Any personal information collected during bookings is used only to provide our services and communicate with customers. We do not sell or share your personal information with third parties except where required by law."
+    ]
+  },
+  {
+    number: "11",
+    title: "Contact",
+    content: [
+      "For booking enquiries, cancellations, or assistance, please contact TB Tours using the details provided on our Contact page.",
+      "Thank you for choosing TB Tours. We are committed to providing safe, reliable, professional, and friendly transport and tour services throughout Cape Town and the surrounding areas."
     ]
   }
 ];

@@ -32,7 +32,7 @@
         <a href="#destinations" (click)="closeMobileMenu()">Destinations</a>
         <a href="#services" (click)="closeMobileMenu()">Services</a>
         <a routerLink="/couriers" (click)="scrollToTop(); closeMobileMenu()">Couriers</a>
-        <a href="#faqs" (click)="closeMobileMenu()">FAQs</a>
+        <a routerLink="/faqs" (click)="scrollToTop(); closeMobileMenu()">FAQs</a>
         <a href="#contact" (click)="closeMobileMenu()">Contact</a>
       </nav>
 
@@ -92,6 +92,7 @@
         <a href="#destinations">Destinations</a>
         <a href="#reviews">Reviews</a>
         <a href="#contact">Contact</a>
+        <a routerLink="/faqs" (click)="scrollToTop()">FAQs</a>
         <a routerLink="/couriers" (click)="scrollToTop()">Couriers</a>
         <a routerLink="/terms" (click)="scrollToTop()">Terms & Conditions</a>
         <a routerLink="/booking-policy" (click)="scrollToTop()">Booking Policy</a>

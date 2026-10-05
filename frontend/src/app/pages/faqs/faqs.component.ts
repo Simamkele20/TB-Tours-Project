@@ -42,8 +42,7 @@ interface FAQItem {
             <div
               class="faq-answer"
               [id]="'faq-answer-' + i"
-              [class.show]="activeFaqIndex() === i"
-              [@expandCollapse]="activeFaqIndex() === i ? 'expanded' : 'collapsed'">
+              [class.show]="activeFaqIndex() === i">
               <div class="answer-content">
                 {{ faq.answer }}
               </div>
