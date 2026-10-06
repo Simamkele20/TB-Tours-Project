@@ -149,7 +149,7 @@ export class PlanComponent implements OnInit {
       {
         id: 2,
         title: "3-DAY CAPE TOWN EXPERIENCE",
-        price: "R5,500 PER VEHICLE",
+        price: "R6,500 PER VEHICLE",
         description: "Discover Cape Town's best attractions",
         duration: "3 Days",
         passengers: "UP TO 4 PASSENGERS",
@@ -168,7 +168,7 @@ export class PlanComponent implements OnInit {
       {
         id: 3,
         title: "5-DAY CAPE TOWN EXPLORER",
-        price: "R9,500 PER VEHICLE",
+        price: "R10,500 PER VEHICLE",
         description: "In-depth exploration of Cape Town and surroundings",
         duration: "5 Days",
         passengers: "UP TO 4 PASSENGERS",
@@ -189,7 +189,7 @@ export class PlanComponent implements OnInit {
       {
         id: 4,
         title: "7-DAY CAPE TOWN DISCOVERY",
-        price: "R13,500 PER VEHICLE",
+        price: "R15,500 PER VEHICLE",
         description: "The ultimate Cape Town experience",
         duration: "7 Days",
         passengers: "UP TO 4 PASSENGERS",
@@ -249,7 +249,7 @@ export class PlanComponent implements OnInit {
       {
         id: 7,
         title: "BUSINESS TRAVEL PACKAGE",
-        price: "R2,500/DAY PER VEHICLE",
+        price: "R3,000/DAY PER VEHICLE",
         description: "Professional transport for business travelers",
         duration: "Custom",
         passengers: "UP TO 4 PASSENGERS",
@@ -268,7 +268,7 @@ export class PlanComponent implements OnInit {
       {
         id: 8,
         title: "GROUP CAPE TOWN TRAVEL",
-        price: "R5,500 PER VEHICLE",
+        price: "R8,500 PER VEHICLE",
         description: "Perfect for groups and corporate events",
         duration: "3-7 Days",
         passengers: "UP TO 12 PASSENGERS",
