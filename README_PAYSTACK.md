@@ -402,7 +402,7 @@ Instead of booking every transfer separately, let us help you arrange your trans
 Whether you are visiting Cape Town for 2 days or 7 days, travelling as a couple, family, group or business traveller, TB Tours can help make getting around Cape Town simple and comfortable.
 ━━━━━━━━━━━━━━━━━━
 2-DAY CAPE TOWN GETAWAY
-FROM R3,200 PER VEHICLE
+FROM R4,500 PER VEHICLE
 Perfect for a short Cape Town visit.
 INCLUDES:
 • Cape Town International Airport pickup
@@ -419,7 +419,7 @@ Day 2 – Flexible sightseeing or private experience and airport transfer
 Entrance fees, meals and activities are excluded unless stated in your quotation.
 ━━━━━━━━━━━━━━━━━━
 3-DAY CAPE TOWN EXPERIENCE
-FROM R5,500 PER VEHICLE
+FROM R6,500 PER VEHICLE
 Perfect for first-time visitors who want to experience the highlights of Cape Town.
 INCLUDES:
 • Airport pickup
@@ -438,7 +438,7 @@ Day 3 – Flexible experience and departure
 Entrance fees, meals and activities are excluded unless stated in your quotation.
 ━━━━━━━━━━━━━━━━━━
 5-DAY CAPE TOWN EXPLORER
-FROM R9,500 PER VEHICLE
+FROM R10,500 PER VEHICLE
 A great option for visitors who want more time to explore Cape Town.
 INCLUDES:
 • Airport arrival transfer
@@ -459,7 +459,7 @@ Day 5 – Flexible sightseeing and airport transfer
 Entrance fees, meals, wine tasting fees and activities are excluded unless stated in your quotation.
 ━━━━━━━━━━━━━━━━━━
 7-DAY CAPE TOWN DISCOVERY
-FROM R13,500 PER VEHICLE
+FROM R15,500 PER VEHICLE
 Designed for travellers who want to explore Cape Town and surrounding destinations at a relaxed pace.
 INCLUDES:
 • Airport arrival transfer
@@ -516,7 +516,7 @@ Family-friendly itineraries can be arranged according to your children's ages an
 Entrance fees, meals and activities are excluded unless stated in your quotation.
 ━━━━━━━━━━━━━━━━━━
 BUSINESS TRAVEL PACKAGE
-FROM R2,500 PER DAY
+FROM R3,000 PER DAY
 Keep your business trip organised with private transportation.
 INCLUDES:
 • Private chauffeur
@@ -549,7 +549,7 @@ Ideal for:
 Minimum booking applies.
 ━━━━━━━━━━━━━━━━━━
 GROUP CAPE TOWN TRAVEL
-FROM R5,500 PER VEHICLE
+FROM R8,500 PER VEHICLE
 Travelling with family, friends or a larger group?
 TB Tours can arrange private group transportation for your Cape Town stay.
 AVAILABLE FOR:

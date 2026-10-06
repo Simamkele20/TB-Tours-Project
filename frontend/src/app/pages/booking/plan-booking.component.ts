@@ -202,7 +202,7 @@ export class PlanBookingComponent implements OnInit {
     {
       id: 1,
       title: "2-DAY CAPE TOWN GETAWAY",
-      price: "3200",
+      price: "4500",
       description: "A quick escape to explore Cape Town's highlights",
       duration: "2 Days",
       passengers: "UP TO 4 PASSENGERS",
@@ -216,7 +216,7 @@ export class PlanBookingComponent implements OnInit {
     {
       id: 2,
       title: "3-DAY CAPE TOWN EXPERIENCE",
-      price: "5500",
+      price: "6500",
       description: "Discover Cape Town's best attractions",
       duration: "3 Days",
       passengers: "UP TO 4 PASSENGERS",
@@ -230,7 +230,7 @@ export class PlanBookingComponent implements OnInit {
     {
       id: 3,
       title: "5-DAY CAPE TOWN EXPLORER",
-      price: "9500",
+      price: "10500",
       description: "In-depth exploration of Cape Town and surroundings",
       duration: "5 Days",
       passengers: "UP TO 4 PASSENGERS",
@@ -244,7 +244,7 @@ export class PlanBookingComponent implements OnInit {
     {
       id: 4,
       title: "7-DAY CAPE TOWN DISCOVERY",
-      price: "13500",
+      price: "15500",
       description: "The ultimate Cape Town experience",
       duration: "7 Days",
       passengers: "UP TO 4 PASSENGERS",
@@ -286,7 +286,7 @@ export class PlanBookingComponent implements OnInit {
     {
       id: 7,
       title: "BUSINESS TRAVEL PACKAGE",
-      price: "2500",
+      price: "3000",
       description: "Professional transport for business travelers",
       duration: "Custom",
       passengers: "UP TO 4 PASSENGERS",
@@ -300,7 +300,7 @@ export class PlanBookingComponent implements OnInit {
     {
       id: 8,
       title: "GROUP CAPE TOWN TRAVEL",
-      price: "5500",
+      price: "8500",
       description: "Perfect for groups and corporate events",
       duration: "3-7 Days",
       passengers: "UP TO 12 PASSENGERS",
