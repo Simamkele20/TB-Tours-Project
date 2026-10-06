@@ -131,7 +131,7 @@ export class PlanComponent implements OnInit {
       {
         id: 1,
         title: "2-DAY CAPE TOWN GETAWAY",
-        price: "R3,200 PER VEHICLE",
+        price: "R4,500 PER VEHICLE",
         description: "A quick escape to explore Cape Town's highlights",
         duration: "2 Days",
         passengers: "UP TO 4 PASSENGERS",
@@ -292,10 +292,10 @@ export class PlanComponent implements OnInit {
 
   onPayPackage(pkg: any) {
     // Navigate to contact page for quote
-    this.router.navigate(['/contact'], { 
-      queryParams: { 
+    this.router.navigate(['/contact'], {
+      queryParams: {
         package: pkg.title,
-        price: pkg.price 
+        price: pkg.price
       }
     });
   }

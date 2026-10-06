@@ -202,7 +202,7 @@ export class PlanBookingComponent implements OnInit {
     {
       id: 1,
       title: "2-DAY CAPE TOWN GETAWAY",
-      price: "3200",
+      price: "4200",
       description: "A quick escape to explore Cape Town's highlights",
       duration: "2 Days",
       passengers: "UP TO 4 PASSENGERS",
