@@ -1429,7 +1429,7 @@ export const PLAN_PAGE_CONTENT: PlanPageContent = {
   packages: [
     {
       title: "2-DAY CAPE TOWN GETAWAY",
-      price: "FROM R3,200 PER VEHICLE",
+      price: "FROM R4,500 PER VEHICLE",
       description: "Perfect for a short Cape Town visit.",
       duration: "2 Days",
       passengers: "UP TO 4 PASSENGERS",
@@ -1450,7 +1450,7 @@ export const PLAN_PAGE_CONTENT: PlanPageContent = {
     },
     {
       title: "3-DAY CAPE TOWN EXPERIENCE",
-      price: "FROM R5,500 PER VEHICLE",
+      price: "FROM R6,500 PER VEHICLE",
       description: "Perfect for first-time visitors who want to experience the highlights of Cape Town.",
       duration: "3 Days",
       passengers: "UP TO 4 PASSENGERS",
@@ -1473,7 +1473,7 @@ export const PLAN_PAGE_CONTENT: PlanPageContent = {
     },
     {
       title: "5-DAY CAPE TOWN EXPLORER",
-      price: "FROM R9,500 PER VEHICLE",
+      price: "FROM R10,500 PER VEHICLE",
       description: "A great option for visitors who want more time to explore Cape Town.",
       duration: "5 Days",
       passengers: "UP TO 4 PASSENGERS",
@@ -1498,7 +1498,7 @@ export const PLAN_PAGE_CONTENT: PlanPageContent = {
     },
     {
       title: "7-DAY CAPE TOWN DISCOVERY",
-      price: "FROM R13,500 PER VEHICLE",
+      price: "FROM R15,500 PER VEHICLE",
       description: "Designed for travellers who want to explore Cape Town and surrounding destinations at a relaxed pace.",
       duration: "7 Days",
       passengers: "UP TO 4 PASSENGERS",
@@ -1569,7 +1569,7 @@ export const PLAN_PAGE_CONTENT: PlanPageContent = {
     },
     {
       title: "BUSINESS TRAVEL PACKAGE",
-      price: "FROM R2,500 PER DAY",
+      price: "FROM R3,000 PER DAY",
       description: "Keep your business trip organised with private transportation.",
       duration: "Per Day",
       passengers: "FLEXIBLE",
@@ -1608,7 +1608,7 @@ export const PLAN_PAGE_CONTENT: PlanPageContent = {
     },
     {
       title: "GROUP CAPE TOWN TRAVEL",
-      price: "FROM R5,500 PER VEHICLE",
+      price: "FROM R8,500 PER VEHICLE",
       description: "Travelling with family, friends or a larger group?",
       duration: "Flexible",
       passengers: "FLEXIBLE",
