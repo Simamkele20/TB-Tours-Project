@@ -1,108 +1,124 @@
-const { Sequelize } = require('sequelize');
-const path = require('path');
-const { env } = require('../config/env');
+const mongoose = require("mongoose");
+const { env } = require("../config/env");
 
-// Database selection logic:
-// 1. DATABASE_URL (PostgreSQL on Render) - Production
-// 2. MySQL credentials - Fallback production
-// 3. SQLite - Development
+const maskMongoUri = (value) => {
+  if (!value) return "";
+  try {
+    const parsed = new URL(value);
+    const host = parsed.hostname || "unknown-host";
+    const dbName = parsed.pathname ? parsed.pathname.replace(/^\//, "") : "unknown-db";
+    return `${parsed.protocol}//***:***@${host}/${dbName}`;
+  } catch (_error) {
+    return "[invalid MONGODB_URI]";
+  }
+};
 
-let sequelize;
+const getModels = () => ({
+  User: require("../models/User"),
+  Booking: require("../models/Booking"),
+  Tour: require("../models/Tour"),
+  Destination: require("../models/Destination"),
+});
 
-if (env.databaseUrl && !env.databaseConfigError) {
-  // Production with PostgreSQL (Render deployment)
-  sequelize = new Sequelize(env.databaseUrl, {
-    dialect: 'postgres',
-    logging: false,
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000,
-    },
-    dialectOptions: {
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-    },
-  });
-} else if (process.env.NODE_ENV === 'production') {
-  // Production: Use MySQL fallback
-  sequelize = new Sequelize(env.mysqlDatabase, env.mysqlUser, env.mysqlPassword, {
-    host: env.mysqlHost,
-    dialect: 'mysql',
-    logging: false,
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000,
-    },
-  });
-} else {
-  // Development: Use SQLite
-  const dbPath = path.join(__dirname, '../../data', 'tb-tours.db');
-  sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: dbPath,
-    logging: console.log, // Enable logging to see queries
-  });
-}
+const clearCollectionByTableName = async (tableName) => {
+  const normalized = String(tableName || "").toLowerCase();
+  const tableToModel = {
+    users: getModels().User,
+    bookings: getModels().Booking,
+    tours: getModels().Tour,
+    destinations: getModels().Destination,
+  };
+
+  const model = tableToModel[normalized];
+  if (!model) {
+    throw new Error(`Unsupported table in query: ${tableName}`);
+  }
+
+  const result = await model.deleteMany({});
+  return [{ deletedCount: result.deletedCount }, null];
+};
+
+const sequelize = {
+  // Compatibility shim for scripts that still call Sequelize-like APIs.
+  get models() {
+    return getModels();
+  },
+  async authenticate() {
+    if (mongoose.connection.readyState === 1) return true;
+    await connectDB();
+    return true;
+  },
+  async sync() {
+    // Mongoose manages schema at runtime; keep this as a no-op for compatibility.
+    return true;
+  },
+  async close() {
+    return mongoose.disconnect();
+  },
+  async query(statement) {
+    const sql = String(statement || "").trim().replace(/;$/, "");
+    const normalized = sql.toUpperCase();
+
+    if (normalized.startsWith("PRAGMA FOREIGN_KEYS")) {
+      return [[], null];
+    }
+
+    const deleteMatch = normalized.match(/^DELETE\s+FROM\s+([A-Z_][A-Z0-9_]*)$/);
+    if (deleteMatch) {
+      return clearCollectionByTableName(deleteMatch[1]);
+    }
+
+    throw new Error(`Unsupported raw query in MongoDB mode: ${statement}`);
+  },
+  transaction: async () => ({
+    async commit() {},
+    async rollback() {},
+  }),
+};
 
 const connectDB = async () => {
   try {
-    if (env.databaseConfigError) {
-      throw new Error(env.databaseConfigError);
+    if (mongoose.connection.readyState === 1) {
+      return mongoose.connection;
     }
 
-    // Determine which database is being used (for logging)
-    let dbType = 'SQLite';
-    if (env.databaseUrl && !env.databaseConfigError) {
-      dbType = 'PostgreSQL (remote)';
-    } else if (process.env.NODE_ENV === 'production') {
-      dbType = `MySQL (${env.mysqlDatabase})`;
+    if (!env.mongoUri) {
+      throw new Error("Missing MONGODB_URI. Set a MongoDB connection string in environment variables.");
     }
-    console.log(`[DB] Attempting to connect to ${dbType}...`);
-    
-    // Import models to register them
-    console.log('[DB] Loading models...');
-    const User = require('../models/User');
-    const Tour = require('../models/Tour');
-    const Booking = require('../models/Booking');
-    const Destination = require('../models/Destination');
-    console.log('[DB] Models loaded successfully');
 
-    // Set up model associations
-    User.hasMany(Booking, { foreignKey: 'userId' });
-    Booking.belongsTo(User, { foreignKey: 'userId' });
+    console.log("[DB] Attempting to connect to MongoDB...");
 
-    Tour.hasMany(Booking, { foreignKey: 'tourId' });
-    Booking.belongsTo(Tour, { foreignKey: 'tourId' });
-    console.log('[DB] Model associations set up');
+    await mongoose.connect(env.mongoUri, {
+      autoIndex: true,
+      serverSelectionTimeoutMS: 10000,
+    });
 
-    console.log('[DB] Authenticating database connection...');
-    await sequelize.authenticate();
-    console.log(`[DB] Connected successfully to ${dbType}`);
-    
-    // Sync models with database
-    console.log('[DB] Synchronizing models...');
-    // Use alter: true for PostgreSQL (production), alter: false for SQLite (dev) due to limitations
-    const alterSchema = env.databaseUrl ? true : false;
-    await sequelize.sync({ alter: alterSchema });
-    console.log('[DB] Models synchronized');
-    
-    return sequelize;
+    console.log(`[DB] Connected successfully to MongoDB (${mongoose.connection.name})`);
+    return mongoose.connection;
   } catch (error) {
-    console.error('[DB Connection Error]', error.message);
-    console.error('[DB Connection Error Stack]', error.stack);
+    console.error("[DB Connection Error]", error.message);
+    console.error("[DB Connection Error Stack]", error.stack);
+    console.error("[DB Connection Error] URI:", maskMongoUri(env.mongoUri));
+
+    if (String(error.message || "").includes("ECONNREFUSED")) {
+      console.error("[DB Connection Hint] MongoDB is not reachable at the configured host/port.");
+      console.error("[DB Connection Hint] Start local MongoDB or set MONGODB_URI to your Atlas connection string.");
+    }
+
+    if (String(error.message || "").includes("ENOTFOUND")) {
+      console.error("[DB Connection Hint] DNS resolution failed for your MongoDB host. Verify host/network/VPN settings.");
+    }
+
     throw error;
   }
 };
 
 const disconnectDB = async () => {
   try {
-    await sequelize.close();
-    console.log('[MySQL] Disconnected');
+    await mongoose.disconnect();
+    console.log("[DB] MongoDB disconnected");
   } catch (error) {
-    console.error('[MySQL Disconnect Error]', error.message);
+    console.error("[DB Disconnect Error]", error.message);
   }
 };
 

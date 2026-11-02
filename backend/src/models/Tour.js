@@ -1,101 +1,90 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../db/connect");
+const mongoose = require("mongoose");
+const { attachSequelizeLikeMethods } = require("./modelHelpers");
 
-const Tour = sequelize.define(
-  "Tour",
+const tourSchema = new mongoose.Schema(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     title: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: String,
+      required: true,
+      trim: true,
     },
     slug: {
-      type: DataTypes.STRING,
+      type: String,
       unique: true,
-      allowNull: false,
+      required: true,
+      trim: true,
     },
     description: {
-      type: DataTypes.TEXT,
-      allowNull: false,
+      type: String,
+      required: true,
     },
     shortDescription: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: String,
+      default: null,
     },
     price: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
+      type: Number,
+      required: true,
+      default: 0,
     },
     pricePerPerson: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: true, // If null, use price per booking
+      type: Number,
+      default: null,
     },
     duration: {
-      type: DataTypes.STRING, // e.g., "Full Day", "Half Day", "2 Days"
-      allowNull: false,
+      type: String,
+      required: true,
     },
     tourType: {
-      type: DataTypes.STRING,
-      allowNull: true, // e.g., "Private", "Group", "Self-drive"
+      type: String,
+      default: null,
     },
     maxPassengers: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: 6,
+      type: Number,
+      default: 6,
     },
     image: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: String,
+      default: null,
     },
     highlights: {
-      type: DataTypes.JSON,
-      allowNull: true, // Array of highlights
+      type: [mongoose.Schema.Types.Mixed],
+      default: [],
     },
     included: {
-      type: DataTypes.JSON,
-      allowNull: true, // Array of included items
+      type: [mongoose.Schema.Types.Mixed],
+      default: [],
     },
     excluded: {
-      type: DataTypes.JSON,
-      allowNull: true, // Array of excluded items
+      type: [mongoose.Schema.Types.Mixed],
+      default: [],
     },
     itinerary: {
-      type: DataTypes.JSON,
-      allowNull: true, // Array of stops with time, title, description
+      type: [mongoose.Schema.Types.Mixed],
+      default: [],
     },
     bestTime: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: String,
+      default: null,
     },
     customizeInfo: {
-      type: DataTypes.TEXT,
-      allowNull: true,
+      type: String,
+      default: null,
     },
     pleaseNote: {
-      type: DataTypes.TEXT,
-      allowNull: true,
+      type: String,
+      default: null,
     },
     isActive: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      type: Boolean,
+      default: true,
     },
   },
   {
     timestamps: true,
-    tableName: "tours",
   }
 );
 
-module.exports = Tour;
+attachSequelizeLikeMethods(tourSchema);
+
+module.exports = mongoose.models.Tour || mongoose.model("Tour", tourSchema);

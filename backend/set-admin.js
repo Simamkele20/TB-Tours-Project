@@ -9,9 +9,7 @@ async function setAdmin(email) {
     const User = sequelize.models.User;
     const normalizedEmail = email.toLowerCase();
     
-    const user = await User.findOne({ 
-      where: sequelize.where(sequelize.fn('LOWER', sequelize.col('email')), sequelize.fn('LOWER', normalizedEmail))
-    });
+    const user = await User.findOne({ email: normalizedEmail });
     
     if (!user) {
       console.log(`✗ User with email "${email}" not found`);

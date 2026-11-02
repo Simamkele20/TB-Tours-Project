@@ -3,8 +3,6 @@ const { authMiddleware } = require("../middleware/authMiddleware");
 const User = require("../models/User");
 const Booking = require("../models/Booking");
 const Tour = require("../models/Tour");
-const { sequelize } = require("../db/connect");
-const { Op } = require("sequelize");
 const { env } = require("../config/env");
 
 const adminRouter = express.Router();
@@ -56,8 +54,8 @@ adminRouter.get("/users", authMiddleware(env.jwtSecret), adminOnly, async (req, 
 
     const { count, rows } = await User.findAndCountAll({
       where: {
-        id: {
-          [Op.ne]: req.user.id, // Exclude current logged-in user
+        _id: {
+          $ne: req.user.id, // Exclude current logged-in user
         },
       },
       offset,
@@ -118,7 +116,7 @@ adminRouter.delete("/users/:id", authMiddleware(env.jwtSecret), adminOnly, async
     }
 
     // Prevent deleting yourself
-    if (req.user.id === parseInt(req.params.id)) {
+    if (String(req.user.id) === String(req.params.id)) {
       return res.status(400).json({ error: "Cannot delete your own account" });
     }
 
@@ -149,7 +147,7 @@ adminRouter.put("/users/:id", authMiddleware(env.jwtSecret), adminOnly, async (r
     }
 
     // Prevent changing your own role
-    if (req.user.id === parseInt(req.params.id) && role && role !== user.role) {
+    if (String(req.user.id) === String(req.params.id) && role && role !== user.role) {
       return res.status(400).json({ error: "Cannot change your own role" });
     }
 
@@ -177,8 +175,8 @@ adminRouter.get("/analytics", authMiddleware(env.jwtSecret), adminAccess, async 
   try {
     // Exclude current user from all counts
     const whereClause = {
-      id: {
-        [Op.ne]: req.user.id,
+      _id: {
+        $ne: req.user.id,
       },
     };
 
@@ -203,7 +201,7 @@ adminRouter.get("/analytics", authMiddleware(env.jwtSecret), adminAccess, async 
       where: {
         ...whereClause,
         createdAt: {
-          [Op.gte]: today,
+          $gte: today,
         },
       },
     });
@@ -216,7 +214,7 @@ adminRouter.get("/analytics", authMiddleware(env.jwtSecret), adminAccess, async 
       where: {
         ...whereClause,
         createdAt: {
-          [Op.gte]: thisMonth,
+          $gte: thisMonth,
         },
       },
     });
@@ -249,18 +247,21 @@ adminRouter.get("/analytics", authMiddleware(env.jwtSecret), adminAccess, async 
  */
 adminRouter.get("/stats", authMiddleware(env.jwtSecret), adminAccess, async (req, res) => {
   try {
-    const stats = await sequelize.query(`
-      SELECT 
-        COUNT(*) as total_users,
-        SUM(CASE WHEN verified = 1 THEN 1 ELSE 0 END) as verified_users,
-        SUM(CASE WHEN role = 'admin' THEN 1 ELSE 0 END) as admin_count,
-        SUM(CASE WHEN role = 'customer' THEN 1 ELSE 0 END) as customer_count
-      FROM users
-    `, { type: sequelize.QueryTypes.SELECT });
+    const [total_users, verified_users, admin_count, customer_count] = await Promise.all([
+      User.countDocuments({}),
+      User.countDocuments({ verified: true }),
+      User.countDocuments({ role: "admin" }),
+      User.countDocuments({ role: "customer" }),
+    ]);
 
     return res.json({
       message: "Stats retrieved successfully",
-      data: stats[0] || {},
+      data: {
+        total_users,
+        verified_users,
+        admin_count,
+        customer_count,
+      },
     });
   } catch (error) {
     console.error("[ADMIN STATS ERROR]", error);
@@ -431,11 +432,10 @@ adminRouter.get(
       });
 
       // Total revenue
-      const revenueResult = await sequelize.query(`
-        SELECT SUM(totalPrice) as totalRevenue 
-        FROM bookings 
-        WHERE paymentStatus = 'paid'
-      `, { type: sequelize.QueryTypes.SELECT });
+      const revenueResult = await Booking.aggregate([
+        { $match: { paymentStatus: "paid" } },
+        { $group: { _id: null, totalRevenue: { $sum: "$totalPrice" } } },
+      ]);
 
       const totalRevenue = revenueResult[0]?.totalRevenue || 0;
 
@@ -446,24 +446,47 @@ adminRouter.get(
       const bookingsThisMonth = await Booking.count({
         where: {
           createdAt: {
-            [Op.gte]: thisMonth,
+            $gte: thisMonth,
           },
         },
       });
 
       // Top tours
-      const topTours = await sequelize.query(`
-        SELECT 
-          t.id, 
-          t.title, 
-          COUNT(b.id) as bookingCount, 
-          SUM(b.totalPrice) as totalRevenue
-        FROM tours t
-        LEFT JOIN bookings b ON t.id = b.tourId
-        GROUP BY t.id, t.title
-        ORDER BY bookingCount DESC
-        LIMIT 5
-      `, { type: sequelize.QueryTypes.SELECT });
+      const topToursAgg = await Booking.aggregate([
+        { $match: { tourId: { $ne: null } } },
+        {
+          $group: {
+            _id: "$tourId",
+            bookingCount: { $sum: 1 },
+            totalRevenue: { $sum: "$totalPrice" },
+          },
+        },
+        { $sort: { bookingCount: -1 } },
+        { $limit: 5 },
+        {
+          $lookup: {
+            from: "tours",
+            localField: "_id",
+            foreignField: "_id",
+            as: "tour",
+          },
+        },
+        { $unwind: { path: "$tour", preserveNullAndEmptyArrays: true } },
+        {
+          $project: {
+            _id: 0,
+            id: { $toString: "$_id" },
+            title: "$tour.title",
+            bookingCount: 1,
+            totalRevenue: 1,
+          },
+        },
+      ]);
+
+      const topTours = topToursAgg.map((tour) => ({
+        ...tour,
+        title: tour.title || "Unknown Tour",
+      }));
 
       return res.json({
         message: "Booking analytics retrieved successfully",

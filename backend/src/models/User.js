@@ -1,59 +1,60 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../db/connect');
+const mongoose = require("mongoose");
+const { attachSequelizeLikeMethods } = require("./modelHelpers");
 
-const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  firstName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  lastName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: true,
+const userSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    passwordHash: {
+      type: String,
+      required: true,
+    },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationCode: {
+      type: String,
+      default: null,
+    },
+    verificationCodeExpiry: {
+      type: Date,
+      default: null,
+    },
+    role: {
+      type: String,
+      enum: ["customer", "admin"],
+      default: "customer",
+    },
+    resetCode: {
+      type: String,
+      default: null,
+    },
+    resetCodeExpiry: {
+      type: Date,
+      default: null,
     },
   },
-  passwordHash: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  verified: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  verificationCode: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  verificationCodeExpiry: {
-    type: DataTypes.DATE,
-    allowNull: true,
-  },
-  role: {
-    type: DataTypes.ENUM('customer', 'admin'),
-    defaultValue: 'customer',
-  },
-  resetCode: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  resetCodeExpiry: {
-    type: DataTypes.DATE,
-    allowNull: true,
-  },
-}, {
-  tableName: 'users',
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  }
+);
 
-module.exports = User;
+attachSequelizeLikeMethods(userSchema);
+
+module.exports = mongoose.models.User || mongoose.model("User", userSchema);

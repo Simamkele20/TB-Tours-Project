@@ -9,10 +9,10 @@ async function addUser(email, password, firstName, lastName) {
 
     const User = sequelize.models.User;
     
+    const normalizedEmail = email.toLowerCase();
+
     // Check if user already exists
-    const existingUser = await User.findOne({ 
-      where: sequelize.where(sequelize.fn('LOWER', sequelize.col('email')), sequelize.fn('LOWER', email))
-    });
+    const existingUser = await User.findOne({ email: normalizedEmail });
     
     if (existingUser) {
       console.log(`✗ User with email "${email}" already exists`);
@@ -23,7 +23,6 @@ async function addUser(email, password, firstName, lastName) {
     const passwordHash = await hashPassword(password);
     
     // Determine role based on email domain
-    const normalizedEmail = email.toLowerCase();
     const role = normalizedEmail.endsWith('@tb-tours.co.za') ? 'admin' : 'customer';
     
     // Create the user

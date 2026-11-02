@@ -1,67 +1,65 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../db/connect');
+const mongoose = require("mongoose");
+const { attachSequelizeLikeMethods } = require("./modelHelpers");
 
-const Destination = sequelize.define('Destination', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
+const destinationSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    shortDescription: {
+      type: String,
+      default: null,
+    },
+    duration: {
+      type: String,
+      default: null,
+    },
+    image: {
+      type: String,
+      default: null,
+    },
+    highlights: {
+      type: [mongoose.Schema.Types.Mixed],
+      default: [],
+    },
+    included: {
+      type: [mongoose.Schema.Types.Mixed],
+      default: [],
+    },
+    excluded: {
+      type: [mongoose.Schema.Types.Mixed],
+      default: [],
+    },
+    itinerary: {
+      type: [mongoose.Schema.Types.Mixed],
+      default: [],
+    },
+    bestTime: {
+      type: String,
+      default: null,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  slug: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  shortDescription: {
-    type: DataTypes.STRING,
-  },
-  duration: {
-    type: DataTypes.STRING,
-  },
-  image: {
-    type: DataTypes.STRING,
-  },
-  highlights: {
-    type: DataTypes.JSON,
-    defaultValue: [],
-  },
-  included: {
-    type: DataTypes.JSON,
-    defaultValue: [],
-  },
-  excluded: {
-    type: DataTypes.JSON,
-    defaultValue: [],
-  },
-  itinerary: {
-    type: DataTypes.JSON,
-    defaultValue: [],
-  },
-  bestTime: {
-    type: DataTypes.STRING,
-  },
-  isActive: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true,
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  updatedAt: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-}, {
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  }
+);
 
-module.exports = Destination;
+attachSequelizeLikeMethods(destinationSchema);
+
+module.exports = mongoose.models.Destination || mongoose.model("Destination", destinationSchema);

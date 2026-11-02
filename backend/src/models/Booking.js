@@ -1,125 +1,113 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../db/connect");
+const mongoose = require("mongoose");
+const { attachSequelizeLikeMethods } = require("./modelHelpers");
 
-const Booking = sequelize.define(
-  "Booking",
+const bookingSchema = new mongoose.Schema(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "users",
-        key: "id",
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     tourId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tour",
+      default: null,
     },
     bookingReference: {
-      type: DataTypes.STRING,
+      type: String,
       unique: true,
-      allowNull: false,
+      required: true,
+      trim: true,
     },
     tourDate: {
-      type: DataTypes.DATE,
-      allowNull: false,
+      type: Date,
+      required: true,
     },
     numberOfPassengers: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: Number,
+      required: true,
+      min: 1,
     },
     totalPrice: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
+      type: Number,
+      required: true,
+      default: 0,
     },
     status: {
-      type: DataTypes.ENUM("pending", "confirmed", "completed", "cancelled"),
-      defaultValue: "pending",
+      type: String,
+      enum: ["pending", "confirmed", "completed", "cancelled"],
+      default: "pending",
     },
     paymentStatus: {
-      type: DataTypes.ENUM("unpaid", "pending", "paid", "failed", "refunded"),
-      defaultValue: "unpaid",
+      type: String,
+      enum: ["unpaid", "pending", "paid", "failed", "refunded"],
+      default: "unpaid",
     },
     paystackReference: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: String,
+      default: null,
     },
     paymentReference: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      comment: "Unique payment reference for Paystack transaction"
+      type: String,
+      default: null,
     },
     transactionId: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      comment: "Paystack transaction ID after successful payment"
+      type: String,
+      default: null,
     },
     paymentDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      comment: "Date when payment was completed"
+      type: Date,
+      default: null,
     },
     refundAmount: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: true,
-      comment: "Amount refunded if applicable"
+      type: Number,
+      default: null,
     },
     refundDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      comment: "Date when refund was processed"
+      type: Date,
+      default: null,
     },
     specialRequests: {
-      type: DataTypes.TEXT,
-      allowNull: true,
+      type: String,
+      default: null,
     },
     accommodationPreferences: {
-      type: DataTypes.JSON,
-      allowNull: true, // JSON with accommodation details
+      type: mongoose.Schema.Types.Mixed,
+      default: null,
     },
     passengerDetails: {
-      type: DataTypes.JSON,
-      allowNull: true, // Array of passenger info: { name, email, phone, passportNumber }
+      type: mongoose.Schema.Types.Mixed,
+      default: null,
     },
     notes: {
-      type: DataTypes.TEXT,
-      allowNull: true,
+      type: String,
+      default: null,
     },
     cancellationReason: {
-      type: DataTypes.TEXT,
-      allowNull: true,
+      type: String,
+      default: null,
     },
     cancellationDate: {
-      type: DataTypes.DATE,
-      allowNull: true,
+      type: Date,
+      default: null,
     },
     confirmationEmailSent: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      type: Boolean,
+      default: false,
     },
     reminderEmailSent: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      type: Boolean,
+      default: false,
     },
   },
   {
     timestamps: true,
-    tableName: "bookings",
   }
 );
 
-module.exports = Booking;
+attachSequelizeLikeMethods(bookingSchema, {
+  User: "userId",
+  Tour: "tourId",
+});
+
+module.exports = mongoose.models.Booking || mongoose.model("Booking", bookingSchema);
