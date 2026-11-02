@@ -7,7 +7,7 @@ Professional transport and tour booking web app for TB Tours (Pty)Ltd.
 - **Node.js**: 26.4.0 (requires >=22)
 - **Angular**: 17+ (standalone components)
 - **Express**: 5.2.1
-- **MySQL**: with Sequelize ORM
+- **MongoDB**: with Mongoose ODM
 - **TypeScript**: strict mode
 - **SMTP**: Email notifications
 
@@ -16,7 +16,7 @@ Professional transport and tour booking web app for TB Tours (Pty)Ltd.
 ```
 ├── backend/              # Node.js/Express API
 │   ├── src/
-│   │   ├── models/      # Sequelize models (User, Booking, Tour, etc.)
+│   │   ├── models/      # Mongoose models (User, Booking, Tour, etc.)
 │   │   ├── routes/      # API routes (auth, admin, bookings)
 │   │   ├── auth/        # JWT, password hashing
 │   │   ├── email/       # Email templates
@@ -89,11 +89,8 @@ PORT=4000
 NODE_ENV=development
 CLIENT_URLS=http://localhost:4200
 
-# MySQL
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_password
-DB_NAME=tb_tours
+# MongoDB
+MONGODB_URI=mongodb://127.0.0.1:27017/tb_tours
 
 # JWT
 JWT_SECRET=your-secret-key-change-in-production
@@ -201,10 +198,7 @@ Configure `render.yaml` service with environment variables:
 
 ```env
 CLIENT_URLS=https://your-domain.com
-DB_HOST=your-mysql-host
-DB_USER=production_user
-DB_PASSWORD=<use-secure-password-from-env>
-DB_NAME=tb_tours_prod
+MONGODB_URI=<your-mongodb-connection-string>
 JWT_SECRET=<use-secure-secret-from-env>
 SMTP_USER=<your-production-email@example.com>
 SMTP_PASS=<use-app-password-from-env>
@@ -252,7 +246,7 @@ See [PHASE1_TESTING_GUIDE.md](./PHASE1_TESTING_GUIDE.md) for:
 - Consistent error handling
 - Input validation on all endpoints
 - Service-layer pattern
-- Sequelize ORM for database
+- Mongoose ODM for MongoDB
 
 ## Support
 

@@ -46,11 +46,8 @@ async function setupProduction() {
     
     // Admin email 1: princetancu06@gmail.com
     const managerEmail = 'princetancu06@gmail.com';
-    const manager = await sequelize.models.User.findOne({
-      where: sequelize.where(
-        sequelize.fn('LOWER', sequelize.col('email')),
-        sequelize.fn('LOWER', managerEmail)
-      )
+    const manager = await User.findOne({
+      email: managerEmail.toLowerCase(),
     });
 
     if (manager) {
@@ -67,14 +64,9 @@ async function setupProduction() {
     // Admin emails 2: All tb-tours.co.za domain
     const tbToursDomain = 'tb-tours.co.za';
     console.log(`  → Setting admin for @${tbToursDomain} domain...`);
-    
-    const { Op } = require('sequelize');
-    const tbToursUsers = await sequelize.models.User.findAll({
-      where: sequelize.where(
-        sequelize.fn('LOWER', sequelize.col('email')),
-        Op.like,
-        `%@${tbToursDomain.toLowerCase()}`
-      )
+
+    const tbToursUsers = await User.find({
+      email: { $regex: `@${tbToursDomain.replace('.', '\\.')}$`, $options: 'i' },
     });
 
     if (tbToursUsers.length > 0) {
@@ -95,7 +87,7 @@ async function setupProduction() {
     // ========================================
     console.log("\n[STEP 3] Summary...");
     
-    const allUsers = await sequelize.models.User.findAll();
+    const allUsers = await User.findAll();
     console.log(`  Total users in database: ${allUsers.length}`);
     
     const adminUsers = allUsers.filter(u => u.role === 'admin');
