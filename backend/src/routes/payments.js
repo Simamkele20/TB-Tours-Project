@@ -52,14 +52,13 @@ router.post(
       const { bookingId, email, amount, firstName, lastName } = req.body;
 
       // Convert types
-      const bookingIdNum = Number(bookingId);
       const amountNum = Number(amount);
 
-      if (isNaN(bookingIdNum) || bookingIdNum <= 0) {
+      if (!bookingId || typeof bookingId !== 'string') {
         return res.status(400).json({
           success: false,
           error: 'Validation error',
-          details: 'bookingId must be a positive number'
+          details: 'bookingId must be a valid booking id string'
         });
       }
 
@@ -72,7 +71,7 @@ router.post(
       }
 
       // Verify booking exists
-      const booking = await Booking.findByPk(bookingIdNum);
+      const booking = await Booking.findByPk(bookingId);
       if (!booking) {
         return res.status(404).json({
           success: false,
@@ -81,7 +80,7 @@ router.post(
       }
 
       // Create Yoco checkout session
-      const reference = `BK-${bookingIdNum}-${Date.now()}`;
+      const reference = `BK-${bookingId}-${Date.now()}`;
       const checkoutResult = await yoco.createCheckout({
         amount: Math.round(amountNum * 100), // Convert to cents
         currency: 'ZAR',
@@ -90,7 +89,7 @@ router.post(
         successUrl: `${process.env.FRONTEND_URL}/payment-success`,
         cancelUrl: `${process.env.FRONTEND_URL}/payment-cancelled`,
         metadata: {
-          bookingId: bookingIdNum,
+          bookingId,
           firstName,
           lastName,
           email,
@@ -181,7 +180,7 @@ router.get('/yoco/checkout/:checkoutId', async (req, res) => {
         }
       });
 
-      await booking.update({ UserId: user.id });
+      await booking.update({ userId: user.id });
     } else if (booking && paymentData.paymentStatus === 'failed') {
       await booking.update({
         paymentStatus: 'failed'
@@ -260,7 +259,7 @@ router.post('/yoco/webhook', express.raw({ type: 'application/json' }), async (r
               }
             });
 
-            await booking.update({ UserId: user.id });
+            await booking.update({ userId: user.id });
 
             console.log(`[YOCO] Payment successful for booking ${booking.id}`);
           }

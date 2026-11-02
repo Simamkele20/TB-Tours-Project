@@ -5,7 +5,6 @@ const Tour = require("../models/Tour");
 const Booking = require("../models/Booking");
 const User = require("../models/User");
 const Destination = require("../models/Destination");
-const { sequelize } = require("../db/connect");
 const { env } = require("../config/env");
 
 const bookingRouter = express.Router();
@@ -434,7 +433,6 @@ bookingRouter.delete("/destinations/:id", authMiddleware(env.jwtSecret), adminMi
  */
 bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) => {
   console.log('[BOOKING] Request received');
-  const transaction = await sequelize.transaction();
   try {
     const {
       tourId,
@@ -472,27 +470,22 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
 
     // Create booking with pending payment status
     console.log('[BOOKING] Creating booking record...');
-    const booking = await Booking.create(
-      {
-        userId: req.user.id,
-        tourId,
-        bookingReference: generateBookingReference(),
-        tourDate: new Date(tourDate),
-        numberOfPassengers,
-        totalPrice,
-        status: "pending",
-        paymentStatus: "pending",
-        paystackReference: null,
-        specialRequests,
-        accommodationPreferences,
-        passengerDetails,
-      },
-      { transaction }
-    );
+    const booking = await Booking.create({
+      userId: req.user.id,
+      tourId,
+      bookingReference: generateBookingReference(),
+      tourDate: new Date(tourDate),
+      numberOfPassengers,
+      totalPrice,
+      status: "pending",
+      paymentStatus: "pending",
+      paystackReference: null,
+      specialRequests,
+      accommodationPreferences,
+      passengerDetails,
+    });
 
     console.log('[BOOKING] Booking created:', booking.id);
-
-    await transaction.commit();
 
     console.log(
       `[BOOKING CREATED] Reference: ${booking.bookingReference}, User: ${req.user.email}, Amount: R${totalPrice}`
@@ -509,7 +502,6 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
       }
     });
   } catch (error) {
-    await transaction.rollback();
     console.error("[CREATE BOOKING ERROR]", error.message);
     return res.status(500).json({ error: "Failed to create booking" });
   }
@@ -521,7 +513,6 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
  */
 bookingRouter.post("/plan-bookings", authMiddleware(env.jwtSecret), async (req, res) => {
   console.log('[PLAN BOOKING] Request received');
-  const transaction = await sequelize.transaction();
   try {
     const {
       packageName,
@@ -554,26 +545,21 @@ bookingRouter.post("/plan-bookings", authMiddleware(env.jwtSecret), async (req, 
 
     // Create plan booking
     console.log('[PLAN BOOKING] Creating booking record...');
-    const booking = await Booking.create(
-      {
-        userId: req.user.id,
-        tourId: null, // No specific tour for plan packages
-        bookingReference: generateBookingReference(),
-        tourDate: new Date(preferredDate),
-        numberOfPassengers,
-        totalPrice,
-        status: "pending",
-        paymentStatus: "unpaid",
-        specialRequests,
-        accommodationPreferences: { vehicle, accommodation },
-        notes: `Plan Package: ${packageName}`,
-      },
-      { transaction }
-    );
+    const booking = await Booking.create({
+      userId: req.user.id,
+      tourId: null, // No specific tour for plan packages
+      bookingReference: generateBookingReference(),
+      tourDate: new Date(preferredDate),
+      numberOfPassengers,
+      totalPrice,
+      status: "pending",
+      paymentStatus: "unpaid",
+      specialRequests,
+      accommodationPreferences: { vehicle, accommodation },
+      notes: `Plan Package: ${packageName}`,
+    });
 
     console.log('[PLAN BOOKING] Booking created:', booking.id);
-
-    await transaction.commit();
 
     console.log(
       `[PLAN BOOKING CREATED] Reference: ${booking.bookingReference}, User: ${req.user.email}, Package: ${packageName}, Amount: R${totalPrice}`
@@ -590,7 +576,6 @@ bookingRouter.post("/plan-bookings", authMiddleware(env.jwtSecret), async (req, 
       }
     });
   } catch (error) {
-    await transaction.rollback();
     console.error("[CREATE PLAN BOOKING ERROR]", error.message);
     return res.status(500).json({ error: "Failed to create plan booking" });
   }
@@ -602,7 +587,7 @@ bookingRouter.post("/plan-bookings", authMiddleware(env.jwtSecret), async (req, 
  */
 bookingRouter.post(
   "/bookings/:id/confirm-payment",
-  authMiddleware,
+  authMiddleware(env.jwtSecret),
   async (req, res) => {
     try {
       const booking = await Booking.findByPk(req.params.id);
@@ -612,7 +597,7 @@ bookingRouter.post(
       }
 
       // Verify user owns booking
-      if (booking.userId !== req.user.id) {
+      if (String(booking.userId) !== String(req.user.id)) {
         return res.status(403).json({ error: "Unauthorized" });
       }
 
@@ -726,7 +711,7 @@ bookingRouter.get("/bookings/:id", authMiddleware(env.jwtSecret), async (req, re
     }
 
     // Verify user owns booking
-    if (booking.userId !== req.user.id) {
+    if (String(booking.userId) !== String(req.user.id)) {
       return res.status(403).json({ error: "Unauthorized" });
     }
 
@@ -753,7 +738,7 @@ bookingRouter.put("/bookings/:id", authMiddleware(env.jwtSecret), async (req, re
     }
 
     // Verify user owns booking
-    if (booking.userId !== req.user.id) {
+    if (String(booking.userId) !== String(req.user.id)) {
       return res.status(403).json({ error: "Unauthorized" });
     }
 
@@ -793,7 +778,6 @@ bookingRouter.put("/bookings/:id", authMiddleware(env.jwtSecret), async (req, re
  * Cancel booking and refund payment
  */
 bookingRouter.post("/bookings/:id/cancel", authMiddleware(env.jwtSecret), async (req, res) => {
-  const transaction = await sequelize.transaction();
   try {
     const booking = await Booking.findByPk(req.params.id);
 
@@ -802,7 +786,7 @@ bookingRouter.post("/bookings/:id/cancel", authMiddleware(env.jwtSecret), async 
     }
 
     // Verify user owns booking
-    if (booking.userId !== req.user.id) {
+    if (String(booking.userId) !== String(req.user.id)) {
       return res.status(403).json({ error: "Unauthorized" });
     }
 
@@ -850,8 +834,7 @@ bookingRouter.post("/bookings/:id/cancel", authMiddleware(env.jwtSecret), async 
     booking.cancellationReason = cancellationReason;
     booking.cancellationDate = new Date();
 
-    await booking.save({ transaction });
-    await transaction.commit();
+    await booking.save();
 
     console.log(
       `[BOOKING CANCELLED] Reference: ${booking.bookingReference}, User: ${req.user.email}`
@@ -862,7 +845,6 @@ bookingRouter.post("/bookings/:id/cancel", authMiddleware(env.jwtSecret), async 
       data: booking,
     });
   } catch (error) {
-    await transaction.rollback();
     console.error("[CANCEL BOOKING ERROR]", error);
     return res.status(500).json({ error: "Failed to cancel booking" });
   }

@@ -20,7 +20,7 @@ const {
 } = require("./validation");
 const { env } = require("./config/env");
 
-const maskDatabaseUrl = (value) => {
+const maskConnectionString = (value) => {
   if (!value) return "";
   try {
     const parsed = new URL(value);
@@ -28,18 +28,15 @@ const maskDatabaseUrl = (value) => {
     const dbName = parsed.pathname ? parsed.pathname.replace(/^\//, "") : "unknown-db";
     return `${parsed.protocol}//***:***@${host}/${dbName}`;
   } catch (_error) {
-    return "[invalid DATABASE_URL]";
+    return "[invalid MONGODB_URI]";
   }
 };
 
 // Log configuration at startup
 console.log("[CONFIG] NODE_ENV:", env.nodeEnv);
-console.log("[CONFIG] DATABASE_URL present:", !!env.databaseUrl);
-if (env.databaseUrl) {
-  console.log("[CONFIG] DATABASE_URL:", maskDatabaseUrl(env.databaseUrl));
-}
-if (env.databaseConfigError) {
-  console.error("[CONFIG ERROR]", env.databaseConfigError);
+console.log("[CONFIG] MONGODB_URI present:", !!env.mongoUri);
+if (env.mongoUri) {
+  console.log("[CONFIG] MONGODB_URI:", maskConnectionString(env.mongoUri));
 }
 console.log("[CONFIG] Port:", env.port);
 
@@ -51,7 +48,7 @@ const {
   buildPasswordResetEmailText,
   buildPasswordResetEmailHtml,
 } = require("./email/authEmails");
-const { connectDB, sequelize } = require("./db/connect");
+const { connectDB } = require("./db/connect");
 const User = require("./models/User");
 const Tour = require("./models/Tour");
 const Booking = require("./models/Booking");
@@ -67,6 +64,12 @@ const app = express();
 const mailgunClient = createMailgunClient(env);
 const mailgunDomain = env.mailgunDomain;
 const contactMessages = [];
+
+const escapeRegex = (value) => String(value || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const findUserByEmailCaseInsensitive = (email) => {
+  const normalized = String(email || "").trim();
+  return User.findOne({ email: { $regex: `^${escapeRegex(normalized)}$`, $options: "i" } });
+};
 
 if (!mailgunClient) {
   console.warn("[STARTUP] Email service not configured. Set MAILGUN_API_KEY environment variable to enable emails.");
@@ -200,9 +203,7 @@ app.post("/api/auth/register", async (req, res) => {
     const normalizedEmail = email.toLowerCase();
 
     // Check if user already exists (case-insensitive)
-    const existingUser = await User.findOne({ 
-      where: sequelize.where(sequelize.fn('LOWER', sequelize.col('email')), sequelize.fn('LOWER', normalizedEmail))
-    });
+    const existingUser = await findUserByEmailCaseInsensitive(normalizedEmail);
     if (existingUser) {
       // If email is unverified, delete it and allow re-registration
       if (!existingUser.verified) {
@@ -227,8 +228,8 @@ app.post("/api/auth/register", async (req, res) => {
       role = "admin";
     }
 
-    // ALL users require email verification before login
-    const verified = false;
+    const skipEmailVerification = env.skipEmailVerification;
+    const verified = skipEmailVerification;
 
     // Create user (with normalized email)
     const user = await User.create({
@@ -236,14 +237,14 @@ app.post("/api/auth/register", async (req, res) => {
       lastName,
       email: normalizedEmail,
       passwordHash,
-      verificationCode: verificationCode,
-      verificationCodeExpiry: verificationCodeExpiry,
+      verificationCode: verified ? null : verificationCode,
+      verificationCodeExpiry: verified ? null : verificationCodeExpiry,
       role,
       verified: verified,
     });
 
-    // Send verification email if mailgun is configured
-    if (mailgunClient) {
+    // Send verification email only when verification is required.
+    if (!verified && mailgunClient) {
       try {
         await mailgunClient.messages.create(mailgunDomain, {
           from: "TB Tours (Pty)Ltd <info@tb-tours.co.za>",
@@ -260,11 +261,13 @@ app.post("/api/auth/register", async (req, res) => {
         }
         console.log(`[DEBUG] Verification code for testing: ${verificationCode}`);
       }
-    } else {
+    } else if (!verified) {
       console.log(`[DEBUG] Verification code for testing: ${verificationCode}`);
     }
 
-    const message = "Registration successful. Please check your email to verify your account.";
+    const message = verified
+      ? "Registration successful. You can now log in."
+      : "Registration successful. Please check your email to verify your account.";
 
     return res.status(201).json({
       message,
@@ -299,9 +302,7 @@ app.post("/api/auth/verify-email", async (req, res) => {
     const { email, code } = result.data;
     const normalizedEmail = email.toLowerCase();
 
-    const user = await User.findOne({ 
-      where: sequelize.where(sequelize.fn('LOWER', sequelize.col('email')), sequelize.fn('LOWER', normalizedEmail))
-    });
+    const user = await findUserByEmailCaseInsensitive(normalizedEmail);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -361,9 +362,7 @@ app.post("/api/auth/login", async (req, res) => {
     const normalizedEmail = email.toLowerCase();
     console.log("[LOGIN] Validated email:", normalizedEmail);
 
-    const user = await User.findOne({ 
-      where: sequelize.where(sequelize.fn('LOWER', sequelize.col('email')), sequelize.fn('LOWER', normalizedEmail))
-    });
+    const user = await findUserByEmailCaseInsensitive(normalizedEmail);
     console.log("[LOGIN] User found:", !!user);
     if (!user) {
       return res.status(401).json({ error: "Invalid email or password" });
@@ -426,9 +425,7 @@ app.post("/api/auth/forgot-password", async (req, res) => {
     const { email } = result.data;
     const normalizedEmail = email.toLowerCase();
 
-    const user = await User.findOne({ 
-      where: sequelize.where(sequelize.fn('LOWER', sequelize.col('email')), sequelize.fn('LOWER', normalizedEmail))
-    });
+    const user = await findUserByEmailCaseInsensitive(normalizedEmail);
     if (!user) {
       // Return success even if user doesn't exist (security best practice)
       return res.json({
@@ -491,9 +488,7 @@ app.post("/api/auth/reset-password", async (req, res) => {
     const { email, code, newPassword } = result.data;
     const normalizedEmail = email.toLowerCase();
 
-    const user = await User.findOne({ 
-      where: sequelize.where(sequelize.fn('LOWER', sequelize.col('email')), sequelize.fn('LOWER', normalizedEmail))
-    });
+    const user = await findUserByEmailCaseInsensitive(normalizedEmail);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -579,7 +574,7 @@ app.use("/api/payments", paymentRouter);
 
 const startServer = async () => {
   try {
-    // Connect to MySQL
+    // Connect to MongoDB
     await connectDB();
 
     app.listen(env.port, () => {

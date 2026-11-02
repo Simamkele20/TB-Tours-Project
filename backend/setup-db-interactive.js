@@ -75,7 +75,7 @@ async function main() {
   require('dotenv').config({ path: selectedEnv });
 
   const { sequelize } = require('./src/db/connect');
-  const { Op } = require('sequelize');
+  const User = require('./src/models/User');
 
   try {
     await sequelize.authenticate();
@@ -107,12 +107,7 @@ async function main() {
     
     // Set princetancu06@gmail.com as admin
     const managerEmail = 'princetancu06@gmail.com';
-    const manager = await sequelize.models.User.findOne({
-      where: sequelize.where(
-        sequelize.fn('LOWER', sequelize.col('email')),
-        sequelize.fn('LOWER', managerEmail)
-      )
-    });
+    const manager = await User.findOne({ email: managerEmail.toLowerCase() });
 
     if (manager) {
       if (manager.role !== 'admin') {
@@ -130,12 +125,8 @@ async function main() {
     const tbToursDomain = 'tb-tours.co.za';
     console.log(`  → Finding users with @${tbToursDomain} domain...`);
     
-    const tbToursUsers = await sequelize.models.User.findAll({
-      where: sequelize.where(
-        sequelize.fn('LOWER', sequelize.col('email')),
-        Op.like,
-        `%@${tbToursDomain.toLowerCase()}`
-      )
+    const tbToursUsers = await User.find({
+      email: { $regex: `@${tbToursDomain.replace('.', '\\.')}$`, $options: 'i' },
     });
 
     if (tbToursUsers.length > 0) {
@@ -156,7 +147,7 @@ async function main() {
     // ========================================
     console.log('\n📋 SUMMARY\n');
     
-    const allUsers = await sequelize.models.User.findAll({
+    const allUsers = await User.findAll({
       attributes: ['email', 'firstName', 'lastName', 'role', 'verified']
     });
     

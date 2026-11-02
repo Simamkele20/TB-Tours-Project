@@ -8,13 +8,21 @@
 const fs = require('fs');
 const path = require('path');
 
-// Check which .env file to use
+// Default to development env. Use --env=production explicitly when needed.
+const envArg = process.argv.find(arg => arg.startsWith('--env='));
+const requestedEnv = envArg ? envArg.split('=')[1] : 'develop';
+
 let envFile = '.env.develop';
-if (fs.existsSync(path.join(__dirname, '.env.production'))) {
+if (requestedEnv === 'production') {
   envFile = '.env.production';
 }
 
 require('dotenv').config({ path: envFile });
+
+if (!fs.existsSync(path.join(__dirname, envFile))) {
+  console.error(`❌ ${envFile} not found`);
+  process.exit(1);
+}
 
 const { sequelize } = require('./src/db/connect');
 
