@@ -20,11 +20,26 @@ const {
 } = require("./validation");
 const { env } = require("./config/env");
 
+const maskDatabaseUrl = (value) => {
+  if (!value) return "";
+  try {
+    const parsed = new URL(value);
+    const host = parsed.hostname || "unknown-host";
+    const dbName = parsed.pathname ? parsed.pathname.replace(/^\//, "") : "unknown-db";
+    return `${parsed.protocol}//***:***@${host}/${dbName}`;
+  } catch (_error) {
+    return "[invalid DATABASE_URL]";
+  }
+};
+
 // Log configuration at startup
 console.log("[CONFIG] NODE_ENV:", env.nodeEnv);
 console.log("[CONFIG] DATABASE_URL present:", !!env.databaseUrl);
 if (env.databaseUrl) {
-  console.log("[CONFIG] DATABASE_URL:", env.databaseUrl.substring(0, 50) + "...");
+  console.log("[CONFIG] DATABASE_URL:", maskDatabaseUrl(env.databaseUrl));
+}
+if (env.databaseConfigError) {
+  console.error("[CONFIG ERROR]", env.databaseConfigError);
 }
 console.log("[CONFIG] Port:", env.port);
 

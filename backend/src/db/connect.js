@@ -9,7 +9,7 @@ const { env } = require('../config/env');
 
 let sequelize;
 
-if (env.databaseUrl) {
+if (env.databaseUrl && !env.databaseConfigError) {
   // Production with PostgreSQL (Render deployment)
   sequelize = new Sequelize(env.databaseUrl, {
     dialect: 'postgres',
@@ -49,9 +49,13 @@ if (env.databaseUrl) {
 
 const connectDB = async () => {
   try {
+    if (env.databaseConfigError) {
+      throw new Error(env.databaseConfigError);
+    }
+
     // Determine which database is being used (for logging)
     let dbType = 'SQLite';
-    if (env.databaseUrl) {
+    if (env.databaseUrl && !env.databaseConfigError) {
       dbType = 'PostgreSQL (remote)';
     } else if (process.env.NODE_ENV === 'production') {
       dbType = `MySQL (${env.mysqlDatabase})`;
