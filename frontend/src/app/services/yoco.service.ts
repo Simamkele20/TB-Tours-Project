@@ -149,7 +149,7 @@ export class YocoService {
    */
   redirectToCheckout(redirectUrl: string) {
     console.log('🔗 Redirecting to Yoco checkout...');
-    window.location.href = redirectUrl;
+    window.open(redirectUrl, '_blank', 'noopener,noreferrer');
   }
 
   /**

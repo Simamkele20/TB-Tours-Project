@@ -797,8 +797,8 @@ export class BookingPageComponent implements OnInit {
     }
 
     console.log('💳 Redirecting to Yoco hosted checkout');
-    // Redirect to Yoco's hosted payment page
-    window.location.href = this.yocoRedirectUrl;
+    // Open Yoco's hosted payment page in a new tab to keep the booking session in the current tab.
+    window.open(this.yocoRedirectUrl, '_blank', 'noopener,noreferrer');
   }
 
   /**
