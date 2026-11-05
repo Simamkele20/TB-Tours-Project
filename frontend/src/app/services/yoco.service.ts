@@ -4,7 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface YocoCheckoutRequest {
-  bookingId: number;
+  bookingId: string;
   email: string;
   amount: number;
   firstName: string;

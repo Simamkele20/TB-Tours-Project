@@ -466,11 +466,18 @@ export class PlanBookingComponent implements OnInit {
     // Create booking using standard /bookings endpoint
     this.http.post(`${environment.apiBaseUrl}/bookings`, bookingPayload).subscribe({
       next: (response: any) => {
-        const bookingId = response.data?.bookingId || response.data?.booking?.id;
+        const bookingId = response?.data?.bookingId || response?.data?.data?.bookingId || response?.data?.data?.booking?.id;
+
+        if (!bookingId) {
+          console.error('Missing bookingId in booking response:', response);
+          this.toastService.show('Booking created but no booking ID was returned. Please try again.', 'error');
+          this.isSubmitting.set(false);
+          return;
+        }
 
         // Then proceed to Yoco checkout
         const checkoutPayload = {
-          bookingId: bookingId,
+          bookingId: String(bookingId),
           email: user.email,
           amount: totalAmount,
           firstName: user.firstName,

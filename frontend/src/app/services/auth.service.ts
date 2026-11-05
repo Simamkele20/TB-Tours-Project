@@ -56,6 +56,9 @@ export interface User {
 export class AuthService {
   private apiBaseUrl = environment.apiBaseUrl;
   private readonly TOKEN_KEY = 'auth_token';
+  private readonly INACTIVITY_TIMEOUT_MS = 3 * 60 * 1000;
+  private inactivityTimerId: ReturnType<typeof setTimeout> | null = null;
+  private readonly activityEvents = ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'];
 
   // Signals for reactive state
   private userSignal = signal<User | null>(this.loadUserFromStorage());
@@ -72,6 +75,11 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
     this.validateTokenOnInit();
+    this.initializeSessionGuards();
+
+    if (this.isAuthenticated()) {
+      this.startInactivityTimer();
+    }
   }
 
   /**
@@ -146,6 +154,7 @@ export class AuthService {
       if (response.token) {
         this.setToken(response.token);
         this.userSignal.set(response.user);
+        this.startInactivityTimer();
       }
 
       return response;
@@ -221,13 +230,16 @@ export class AuthService {
     this.userSignal.set(null);
     this.tokenSignal.set(null);
     this.errorSignal.set(null);
+    this.clearInactivityTimer();
   }
 
   /**
    * Set token in storage and signal
    */
   private setToken(token: string): void {
-    localStorage.setItem(this.TOKEN_KEY, token);
+    // Session storage ensures token is cleared when browser/tab is closed.
+    sessionStorage.setItem(this.TOKEN_KEY, token);
+    localStorage.removeItem(this.TOKEN_KEY);
     this.tokenSignal.set(token);
   }
 
@@ -235,7 +247,16 @@ export class AuthService {
    * Get token from storage
    */
   getToken(): string | null {
-    const token = localStorage.getItem(this.TOKEN_KEY);
+    // Prefer session storage. Keep localStorage fallback for one-time migration.
+    const sessionToken = sessionStorage.getItem(this.TOKEN_KEY);
+    const localToken = localStorage.getItem(this.TOKEN_KEY);
+    const token = sessionToken || localToken;
+
+    if (!sessionToken && localToken) {
+      sessionStorage.setItem(this.TOKEN_KEY, localToken);
+      localStorage.removeItem(this.TOKEN_KEY);
+    }
+
     if (token) {
       console.log('[AUTH-SERVICE] getToken() called - token found:', token.substring(0, 20) + '...');
     } else {
@@ -248,7 +269,55 @@ export class AuthService {
    * Clear token from storage
    */
   private clearToken(): void {
+    sessionStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.TOKEN_KEY);
+  }
+
+  private initializeSessionGuards(): void {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return;
+    }
+
+    window.addEventListener('beforeunload', () => {
+      this.clearToken();
+      this.clearInactivityTimer();
+    });
+
+    this.activityEvents.forEach((eventName) => {
+      document.addEventListener(eventName, () => this.handleUserActivity(), { passive: true });
+    });
+  }
+
+  private handleUserActivity(): void {
+    if (!this.isAuthenticated()) {
+      return;
+    }
+
+    this.startInactivityTimer();
+  }
+
+  private startInactivityTimer(): void {
+    this.clearInactivityTimer();
+
+    this.inactivityTimerId = setTimeout(() => {
+      if (!this.isAuthenticated()) {
+        return;
+      }
+
+      this.logout();
+      if (typeof window !== 'undefined') {
+        window.location.href = '/auth/login';
+      }
+    }, this.INACTIVITY_TIMEOUT_MS);
+  }
+
+  private clearInactivityTimer(): void {
+    if (!this.inactivityTimerId) {
+      return;
+    }
+
+    clearTimeout(this.inactivityTimerId);
+    this.inactivityTimerId = null;
   }
 
   /**
