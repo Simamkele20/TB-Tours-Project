@@ -287,7 +287,13 @@ export class PlanComponent implements OnInit {
       }
     ];
 
-    this.packages.set(staticPackages);
+    const normalizedPackages = staticPackages.map((pkg) => ({
+      ...pkg,
+      price: pkg.price.startsWith("FROM ") ? pkg.price : `FROM ${pkg.price}`,
+      passengers: "UP TO 2 PASSENGERS",
+    }));
+
+    this.packages.set(normalizedPackages);
   }
 
   onPayPackage(pkg: any) {
