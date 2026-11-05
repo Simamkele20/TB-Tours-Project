@@ -24,6 +24,8 @@ interface Tour {
 
 interface PlanPackage {
   id?: number;
+  slug: string;
+  resolvedTourId?: string;
   title: string;
   price: string;
   description: string;
@@ -201,11 +203,12 @@ export class PlanBookingComponent implements OnInit {
   private staticPackages = [
     {
       id: 1,
+      slug: "2-day-cape-town-getaway",
       title: "2-DAY CAPE TOWN GETAWAY",
       price: "4500",
       description: "A quick escape to explore Cape Town's highlights",
       duration: "2 Days",
-      passengers: "UP TO 4 PASSENGERS",
+      passengers: "UP TO 2 PASSENGERS",
       includes: [
         "Airport Transfers",
         "Professional driver",
@@ -215,11 +218,12 @@ export class PlanBookingComponent implements OnInit {
     },
     {
       id: 2,
+      slug: "3-day-cape-town-experience",
       title: "3-DAY CAPE TOWN EXPERIENCE",
       price: "6500",
       description: "Discover Cape Town's best attractions",
       duration: "3 Days",
-      passengers: "UP TO 4 PASSENGERS",
+      passengers: "UP TO 2 PASSENGERS",
       includes: [
         "Airport Transfers",
         "Professional driver",
@@ -229,11 +233,12 @@ export class PlanBookingComponent implements OnInit {
     },
     {
       id: 3,
+      slug: "5-day-cape-town-explorer",
       title: "5-DAY CAPE TOWN EXPLORER",
       price: "10500",
       description: "In-depth exploration of Cape Town and surroundings",
       duration: "5 Days",
-      passengers: "UP TO 4 PASSENGERS",
+      passengers: "UP TO 2 PASSENGERS",
       includes: [
         "Airport Transfers",
         "Professional driver",
@@ -243,11 +248,12 @@ export class PlanBookingComponent implements OnInit {
     },
     {
       id: 4,
+      slug: "7-day-cape-town-discovery",
       title: "7-DAY CAPE TOWN DISCOVERY",
       price: "15500",
       description: "The ultimate Cape Town experience",
       duration: "7 Days",
-      passengers: "UP TO 4 PASSENGERS",
+      passengers: "UP TO 2 PASSENGERS",
       includes: [
         "Airport Transfers",
         "Professional driver",
@@ -257,6 +263,7 @@ export class PlanBookingComponent implements OnInit {
     },
     {
       id: 5,
+      slug: "couples-cape-town-escape",
       title: "COUPLES CAPE TOWN ESCAPE",
       price: "4500",
       description: "Romantic getaway for two",
@@ -271,11 +278,12 @@ export class PlanBookingComponent implements OnInit {
     },
     {
       id: 6,
+      slug: "family-cape-town-package",
       title: "FAMILY CAPE TOWN PACKAGE",
       price: "6500",
       description: "Fun activities for the whole family",
       duration: "3 Days",
-      passengers: "UP TO 4 PASSENGERS",
+      passengers: "UP TO 2 PASSENGERS",
       includes: [
         "Airport Transfers",
         "Professional driver",
@@ -285,11 +293,12 @@ export class PlanBookingComponent implements OnInit {
     },
     {
       id: 7,
+      slug: "business-travel-package",
       title: "BUSINESS TRAVEL PACKAGE",
       price: "3000",
       description: "Professional transport for business travelers",
       duration: "Custom",
-      passengers: "UP TO 4 PASSENGERS",
+      passengers: "UP TO 2 PASSENGERS",
       includes: [
         "Airport Transfers",
         "Professional driver",
@@ -299,11 +308,12 @@ export class PlanBookingComponent implements OnInit {
     },
     {
       id: 8,
+      slug: "group-cape-town-travel",
       title: "GROUP CAPE TOWN TRAVEL",
       price: "8500",
       description: "Perfect for groups and corporate events",
       duration: "3-7 Days",
-      passengers: "UP TO 12 PASSENGERS",
+      passengers: "UP TO 2 PASSENGERS",
       includes: [
         "Airport Transfers",
         "Professional driver",
@@ -319,16 +329,19 @@ export class PlanBookingComponent implements OnInit {
   }
 
   private loadPackageData() {
+    const tourSlug = this.route.snapshot.queryParamMap.get('tourSlug');
     const tourId = this.route.snapshot.queryParamMap.get('tourId');
 
-    if (!tourId) {
+    if (!tourSlug && !tourId) {
       this.toastService.show('Package information not found', 'error');
       this.router.navigate(['/plan']);
       return;
     }
 
-    // Get package from static data
-    const tour = this.staticPackages.find(pkg => pkg.id === parseInt(tourId));
+    // Prefer slug (stable), fallback to legacy numeric id.
+    const tour = tourSlug
+      ? this.staticPackages.find(pkg => pkg.slug === tourSlug)
+      : this.staticPackages.find(pkg => pkg.id === parseInt(tourId || '', 10));
 
     if (!tour) {
       this.toastService.show('Package not found', 'error');
@@ -338,6 +351,7 @@ export class PlanBookingComponent implements OnInit {
 
     this.packageData.set({
       id: tour.id,
+      slug: tour.slug,
       title: tour.title,
       price: tour.price ? `R${tour.price} PER VEHICLE` : 'Contact for pricing',
       description: tour.description,
@@ -346,6 +360,8 @@ export class PlanBookingComponent implements OnInit {
       includes: tour.includes || []
     });
 
+    this.resolveTourIdFromApi(tour.slug);
+
     // Update estimated total whenever passenger count changes
     this.bookingForm.get('numberOfPassengers')?.valueChanges.subscribe(() => {
       this.updateEstimatedTotal();
@@ -353,6 +369,31 @@ export class PlanBookingComponent implements OnInit {
 
     // Initial estimated total calculation
     this.updateEstimatedTotal();
+  }
+
+  private resolveTourIdFromApi(slug: string) {
+    this.http.get<any>(`${environment.apiBaseUrl}/tours`).subscribe({
+      next: (response) => {
+        const tours = Array.isArray(response?.data) ? response.data : [];
+        const matched = tours.find((item: any) => item?.slug === slug);
+        if (!matched?.id) {
+          return;
+        }
+
+        const pkg = this.packageData();
+        if (!pkg) {
+          return;
+        }
+
+        this.packageData.set({
+          ...pkg,
+          resolvedTourId: matched.id,
+        });
+      },
+      error: () => {
+        // Non-blocking: we still fallback to slug for backends that accept it.
+      }
+    });
   }
 
   private initializeForm() {
@@ -395,7 +436,8 @@ export class PlanBookingComponent implements OnInit {
     }
 
     this.isSubmitting.set(true);
-    const tourId = this.packageData()?.id;
+    const selectedPackage = this.packageData();
+    const tourId = selectedPackage?.resolvedTourId || selectedPackage?.slug || selectedPackage?.id;
 
     if (!tourId) {
       this.toastService.show('Package information missing', 'error');
