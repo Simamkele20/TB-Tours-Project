@@ -489,7 +489,7 @@ export class PlanBookingComponent implements OnInit {
             this.toastService.show('Redirecting to payment...', 'success');
             // Redirect to Yoco payment page if URL is provided
             if (checkoutResponse.data?.redirectUrl) {
-              window.location.href = checkoutResponse.data.redirectUrl;
+              window.open(checkoutResponse.data.redirectUrl, '_blank', 'noopener,noreferrer');
             } else {
               setTimeout(() => {
                 this.router.navigate(['/plan']);
