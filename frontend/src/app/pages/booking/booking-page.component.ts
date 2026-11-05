@@ -511,7 +511,7 @@ export class BookingPageComponent implements OnInit {
   todayDate = '';
 
   private yocoRedirectUrl: string | null = null;
-  private bookingId: number | null = null;
+  private bookingId: string | null = null;
   private passengerDetails: any[] = [];
 
   private fb = inject(FormBuilder);
@@ -691,7 +691,7 @@ export class BookingPageComponent implements OnInit {
           console.log('✅ Booking created successfully:', response);
 
           // Get booking data
-          const booking = response.data?.booking;
+          const booking = response?.data?.booking || response?.data?.data?.booking;
           if (!booking || !booking.id) {
             this.isSubmitting = false;
             this.toastService.error('Error: Booking ID not received from server');
@@ -699,7 +699,7 @@ export class BookingPageComponent implements OnInit {
             return;
           }
 
-          this.bookingId = booking.id;
+          this.bookingId = String(booking.id);
           this.toastService.success('Booking created! Redirecting to payment...');
 
           // Get user details from auth service
@@ -709,7 +709,7 @@ export class BookingPageComponent implements OnInit {
 
           // Proceed to Yoco payment
           console.log('🔄 Initiating Yoco payment for booking:', booking.id);
-          this.initiateYocoPayment(booking.id, userEmail, this.estimatedTotal, firstName, lastName);
+          this.initiateYocoPayment(String(booking.id), userEmail, this.estimatedTotal, firstName, lastName);
         },
         error: (error) => {
           this.isSubmitting = false;
@@ -723,7 +723,7 @@ export class BookingPageComponent implements OnInit {
   /**
    * Initiate Yoco payment for the booking
    */
-  initiateYocoPayment(bookingId: number, email: string, amount: number, firstName: string, lastName: string) {
+  initiateYocoPayment(bookingId: string, email: string, amount: number, firstName: string, lastName: string) {
     // Validate required fields
     if (!email || !firstName || !lastName || !amount) {
       this.isSubmitting = false;
@@ -742,7 +742,7 @@ export class BookingPageComponent implements OnInit {
     });
 
     this.yocoService.createCheckout({
-      bookingId: Number(bookingId),
+      bookingId: bookingId,
       email,
       amount: Number(amount),
       firstName,
