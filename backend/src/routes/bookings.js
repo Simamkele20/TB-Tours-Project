@@ -28,23 +28,89 @@ const generateBookingReference = () => {
   return `TBT-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 };
 
-const resolveTourByIdentifier = async (identifier) => {
+const LEGACY_NUMERIC_SLUGS = {
+  service: {
+    1: "airport-transfers",
+    2: "cape-peninsula",
+    3: "cape-town-city",
+    4: "winelands-tours",
+    5: "chauffeur-services",
+    6: "custom-tours",
+  },
+  plan: {
+    1: "2-day-cape-town-getaway",
+    2: "3-day-cape-town-experience",
+    3: "5-day-cape-town-explorer",
+    4: "7-day-cape-town-discovery",
+    5: "couples-cape-town-escape",
+    6: "family-cape-town-package",
+    7: "business-travel-package",
+    8: "group-cape-town-travel",
+  },
+};
+
+const resolveTourByIdentifier = async (identifier, options = {}) => {
   const normalized = String(identifier || "").trim();
   if (!normalized) return null;
 
   // 1) Primary path: Mongo ObjectId via compatibility helper.
-  let tour = await Tour.findByPk(normalized);
+  let tour = null;
+  try {
+    tour = await Tour.findByPk(normalized);
+  } catch (error) {
+    // Ignore cast errors so legacy identifiers can still resolve.
+    if (error?.name !== "CastError") {
+      throw error;
+    }
+  }
   if (tour) return tour;
 
   // 2) Backward-compatible numeric id (legacy payloads still send 1..N).
   const numericId = Number(normalized);
   if (!Number.isNaN(numericId)) {
-    tour = await Tour.findOne({ where: { id: numericId, isActive: true } });
+    const legacyPlanSlug = LEGACY_NUMERIC_SLUGS.plan[numericId];
+    const legacyServiceSlug = LEGACY_NUMERIC_SLUGS.service[numericId];
+
+    const orderedSlugs = options.preferPlanPackage
+      ? [legacyPlanSlug, legacyServiceSlug]
+      : [legacyServiceSlug, legacyPlanSlug];
+
+    for (const slug of orderedSlugs) {
+      if (!slug) continue;
+      tour = await Tour.findOne({ where: { slug, isActive: true } });
+      if (tour) return tour;
+    }
+
+    // Fallback: if caller provided no hint, try both maps in a stable order.
+    if (!options.preferPlanPackage) {
+      const remainingSlug = legacyPlanSlug;
+      if (remainingSlug) {
+        tour = await Tour.findOne({ where: { slug: remainingSlug, isActive: true } });
+      }
+    }
+
     if (tour) return tour;
   }
 
   // 3) Slug fallback for clients that pass a slug in tourId.
   return Tour.findOne({ where: { slug: normalized, isActive: true } });
+};
+
+const resolveAuthenticatedUser = async (req) => {
+  const tokenUserId = String(req.user?.id || "").trim();
+
+  if (tokenUserId) {
+    const byId = await User.findByPk(tokenUserId);
+    if (byId) return byId;
+  }
+
+  const tokenEmail = String(req.user?.email || "").trim().toLowerCase();
+  if (tokenEmail) {
+    const byEmail = await User.findOne({ where: { email: tokenEmail } });
+    if (byEmail) return byEmail;
+  }
+
+  return null;
 };
 
 /**
@@ -453,6 +519,11 @@ bookingRouter.delete("/destinations/:id", authMiddleware(env.jwtSecret), adminMi
 bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) => {
   console.log('[BOOKING] Request received');
   try {
+    const currentUser = await resolveAuthenticatedUser(req);
+    if (!currentUser) {
+      return res.status(401).json({ error: "User not found for current token. Please log in again." });
+    }
+
     const {
       tourId,
       tourDate,
@@ -474,7 +545,8 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
 
     // Get tour
     console.log('[BOOKING] Fetching tour ID:', tourId);
-    const tour = await resolveTourByIdentifier(tourId);
+    const preferPlanPackage = typeof accommodationPreferences === "object" && accommodationPreferences !== null;
+    const tour = await resolveTourByIdentifier(tourId, { preferPlanPackage });
     if (!tour) {
       console.log('[BOOKING] Tour not found for identifier:', tourId);
       return res.status(404).json({ error: "Tour not found" });
@@ -490,7 +562,7 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
     // Create booking with pending payment status
     console.log('[BOOKING] Creating booking record...');
     const booking = await Booking.create({
-      userId: req.user.id,
+      userId: currentUser.id,
       tourId: tour.id,
       bookingReference: generateBookingReference(),
       tourDate: new Date(tourDate),
@@ -507,7 +579,7 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
     console.log('[BOOKING] Booking created:', booking.id);
 
     console.log(
-      `[BOOKING CREATED] Reference: ${booking.bookingReference}, User: ${req.user.email}, Amount: R${totalPrice}`
+      `[BOOKING CREATED] Reference: ${booking.bookingReference}, User: ${currentUser.email}, Amount: R${totalPrice}`
     );
 
     return res.status(201).json({
@@ -522,6 +594,7 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
     });
   } catch (error) {
     console.error("[CREATE BOOKING ERROR]", error.message);
+    console.error("[CREATE BOOKING ERROR STACK]", error.stack);
     return res.status(500).json({ error: "Failed to create booking" });
   }
 });
@@ -533,6 +606,11 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
 bookingRouter.post("/plan-bookings", authMiddleware(env.jwtSecret), async (req, res) => {
   console.log('[PLAN BOOKING] Request received');
   try {
+    const currentUser = await resolveAuthenticatedUser(req);
+    if (!currentUser) {
+      return res.status(401).json({ error: "User not found for current token. Please log in again." });
+    }
+
     const {
       packageName,
       packagePrice,
@@ -565,7 +643,7 @@ bookingRouter.post("/plan-bookings", authMiddleware(env.jwtSecret), async (req, 
     // Create plan booking
     console.log('[PLAN BOOKING] Creating booking record...');
     const booking = await Booking.create({
-      userId: req.user.id,
+      userId: currentUser.id,
       tourId: null, // No specific tour for plan packages
       bookingReference: generateBookingReference(),
       tourDate: new Date(preferredDate),
@@ -581,7 +659,7 @@ bookingRouter.post("/plan-bookings", authMiddleware(env.jwtSecret), async (req, 
     console.log('[PLAN BOOKING] Booking created:', booking.id);
 
     console.log(
-      `[PLAN BOOKING CREATED] Reference: ${booking.bookingReference}, User: ${req.user.email}, Package: ${packageName}, Amount: R${totalPrice}`
+      `[PLAN BOOKING CREATED] Reference: ${booking.bookingReference}, User: ${currentUser.email}, Package: ${packageName}, Amount: R${totalPrice}`
     );
 
     return res.status(201).json({
@@ -596,6 +674,7 @@ bookingRouter.post("/plan-bookings", authMiddleware(env.jwtSecret), async (req, 
     });
   } catch (error) {
     console.error("[CREATE PLAN BOOKING ERROR]", error.message);
+    console.error("[CREATE PLAN BOOKING ERROR STACK]", error.stack);
     return res.status(500).json({ error: "Failed to create plan booking" });
   }
 });
@@ -609,6 +688,11 @@ bookingRouter.post(
   authMiddleware(env.jwtSecret),
   async (req, res) => {
     try {
+      const currentUser = await resolveAuthenticatedUser(req);
+      if (!currentUser) {
+        return res.status(401).json({ error: "User not found for current token. Please log in again." });
+      }
+
       const booking = await Booking.findByPk(req.params.id);
 
       if (!booking) {
@@ -616,7 +700,7 @@ bookingRouter.post(
       }
 
       // Verify user owns booking
-      if (String(booking.userId) !== String(req.user.id)) {
+      if (String(booking.userId) !== String(currentUser.id)) {
         return res.status(403).json({ error: "Unauthorized" });
       }
 
@@ -679,8 +763,13 @@ bookingRouter.post(
  */
 bookingRouter.get("/bookings", authMiddleware(env.jwtSecret), async (req, res) => {
   try {
+    const currentUser = await resolveAuthenticatedUser(req);
+    if (!currentUser) {
+      return res.status(401).json({ error: "User not found for current token. Please log in again." });
+    }
+
     const bookings = await Booking.findAll({
-      where: { userId: req.user.id },
+      where: { userId: currentUser.id },
       include: [
         {
           model: Tour,
@@ -707,6 +796,11 @@ bookingRouter.get("/bookings", authMiddleware(env.jwtSecret), async (req, res) =
  */
 bookingRouter.get("/bookings/:id", authMiddleware(env.jwtSecret), async (req, res) => {
   try {
+    const currentUser = await resolveAuthenticatedUser(req);
+    if (!currentUser) {
+      return res.status(401).json({ error: "User not found for current token. Please log in again." });
+    }
+
     const booking = await Booking.findByPk(req.params.id, {
       include: [
         {
@@ -730,7 +824,7 @@ bookingRouter.get("/bookings/:id", authMiddleware(env.jwtSecret), async (req, re
     }
 
     // Verify user owns booking
-    if (String(booking.userId) !== String(req.user.id)) {
+    if (String(booking.userId) !== String(currentUser.id)) {
       return res.status(403).json({ error: "Unauthorized" });
     }
 
@@ -750,6 +844,11 @@ bookingRouter.get("/bookings/:id", authMiddleware(env.jwtSecret), async (req, re
  */
 bookingRouter.put("/bookings/:id", authMiddleware(env.jwtSecret), async (req, res) => {
   try {
+    const currentUser = await resolveAuthenticatedUser(req);
+    if (!currentUser) {
+      return res.status(401).json({ error: "User not found for current token. Please log in again." });
+    }
+
     const booking = await Booking.findByPk(req.params.id);
 
     if (!booking) {
@@ -757,7 +856,7 @@ bookingRouter.put("/bookings/:id", authMiddleware(env.jwtSecret), async (req, re
     }
 
     // Verify user owns booking
-    if (String(booking.userId) !== String(req.user.id)) {
+    if (String(booking.userId) !== String(currentUser.id)) {
       return res.status(403).json({ error: "Unauthorized" });
     }
 
@@ -779,7 +878,7 @@ bookingRouter.put("/bookings/:id", authMiddleware(env.jwtSecret), async (req, re
     await booking.save();
 
     console.log(
-      `[BOOKING UPDATED] Reference: ${booking.bookingReference}, User: ${req.user.email}`
+      `[BOOKING UPDATED] Reference: ${booking.bookingReference}, User: ${currentUser.email}`
     );
 
     return res.json({
@@ -798,6 +897,11 @@ bookingRouter.put("/bookings/:id", authMiddleware(env.jwtSecret), async (req, re
  */
 bookingRouter.post("/bookings/:id/cancel", authMiddleware(env.jwtSecret), async (req, res) => {
   try {
+    const currentUser = await resolveAuthenticatedUser(req);
+    if (!currentUser) {
+      return res.status(401).json({ error: "User not found for current token. Please log in again." });
+    }
+
     const booking = await Booking.findByPk(req.params.id);
 
     if (!booking) {
@@ -805,7 +909,7 @@ bookingRouter.post("/bookings/:id/cancel", authMiddleware(env.jwtSecret), async 
     }
 
     // Verify user owns booking
-    if (String(booking.userId) !== String(req.user.id)) {
+    if (String(booking.userId) !== String(currentUser.id)) {
       return res.status(403).json({ error: "Unauthorized" });
     }
 
@@ -856,7 +960,7 @@ bookingRouter.post("/bookings/:id/cancel", authMiddleware(env.jwtSecret), async 
     await booking.save();
 
     console.log(
-      `[BOOKING CANCELLED] Reference: ${booking.bookingReference}, User: ${req.user.email}`
+      `[BOOKING CANCELLED] Reference: ${booking.bookingReference}, User: ${currentUser.email}`
     );
 
     return res.json({
