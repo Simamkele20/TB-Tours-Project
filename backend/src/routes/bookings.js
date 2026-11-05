@@ -28,6 +28,25 @@ const generateBookingReference = () => {
   return `TBT-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 };
 
+const resolveTourByIdentifier = async (identifier) => {
+  const normalized = String(identifier || "").trim();
+  if (!normalized) return null;
+
+  // 1) Primary path: Mongo ObjectId via compatibility helper.
+  let tour = await Tour.findByPk(normalized);
+  if (tour) return tour;
+
+  // 2) Backward-compatible numeric id (legacy payloads still send 1..N).
+  const numericId = Number(normalized);
+  if (!Number.isNaN(numericId)) {
+    tour = await Tour.findOne({ where: { id: numericId, isActive: true } });
+    if (tour) return tour;
+  }
+
+  // 3) Slug fallback for clients that pass a slug in tourId.
+  return Tour.findOne({ where: { slug: normalized, isActive: true } });
+};
+
 /**
  * GET /api/tours
  * Get all active tours (includes all fields for plan packages)
@@ -455,9 +474,9 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
 
     // Get tour
     console.log('[BOOKING] Fetching tour ID:', tourId);
-    const tour = await Tour.findByPk(tourId);
+    const tour = await resolveTourByIdentifier(tourId);
     if (!tour) {
-      console.log('[BOOKING] Tour not found');
+      console.log('[BOOKING] Tour not found for identifier:', tourId);
       return res.status(404).json({ error: "Tour not found" });
     }
 
@@ -472,7 +491,7 @@ bookingRouter.post("/bookings", authMiddleware(env.jwtSecret), async (req, res) 
     console.log('[BOOKING] Creating booking record...');
     const booking = await Booking.create({
       userId: req.user.id,
-      tourId,
+      tourId: tour.id,
       bookingReference: generateBookingReference(),
       tourDate: new Date(tourDate),
       numberOfPassengers,

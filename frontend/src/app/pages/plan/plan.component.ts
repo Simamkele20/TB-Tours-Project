@@ -4,6 +4,7 @@ import { RouterModule, Router } from "@angular/router";
 import { PLAN_PAGE_CONTENT } from "../../data/site-content";
 
 interface TourPackage {
+  slug: string;
   title: string;
   price: string;
   description: string;
@@ -130,6 +131,7 @@ export class PlanComponent implements OnInit {
     const staticPackages = [
       {
         id: 1,
+        slug: "2-day-cape-town-getaway",
         title: "2-DAY CAPE TOWN GETAWAY",
         price: "R4,500 PER VEHICLE",
         description: "A quick escape to explore Cape Town's highlights",
@@ -148,6 +150,7 @@ export class PlanComponent implements OnInit {
       },
       {
         id: 2,
+        slug: "3-day-cape-town-experience",
         title: "3-DAY CAPE TOWN EXPERIENCE",
         price: "R6,500 PER VEHICLE",
         description: "Discover Cape Town's best attractions",
@@ -167,6 +170,7 @@ export class PlanComponent implements OnInit {
       },
       {
         id: 3,
+        slug: "5-day-cape-town-explorer",
         title: "5-DAY CAPE TOWN EXPLORER",
         price: "R10,500 PER VEHICLE",
         description: "In-depth exploration of Cape Town and surroundings",
@@ -188,6 +192,7 @@ export class PlanComponent implements OnInit {
       },
       {
         id: 4,
+        slug: "7-day-cape-town-discovery",
         title: "7-DAY CAPE TOWN DISCOVERY",
         price: "R15,500 PER VEHICLE",
         description: "The ultimate Cape Town experience",
@@ -211,6 +216,7 @@ export class PlanComponent implements OnInit {
       },
       {
         id: 5,
+        slug: "couples-cape-town-escape",
         title: "COUPLES CAPE TOWN ESCAPE",
         price: "R4,500 PER VEHICLE",
         description: "Romantic getaway for two",
@@ -229,6 +235,7 @@ export class PlanComponent implements OnInit {
       },
       {
         id: 6,
+        slug: "family-cape-town-package",
         title: "FAMILY CAPE TOWN PACKAGE",
         price: "R6,500 PER VEHICLE",
         description: "Fun activities for the whole family",
@@ -248,6 +255,7 @@ export class PlanComponent implements OnInit {
       },
       {
         id: 7,
+        slug: "business-travel-package",
         title: "BUSINESS TRAVEL PACKAGE",
         price: "R3,000/DAY PER VEHICLE",
         description: "Professional transport for business travelers",
@@ -267,6 +275,7 @@ export class PlanComponent implements OnInit {
       },
       {
         id: 8,
+        slug: "group-cape-town-travel",
         title: "GROUP CAPE TOWN TRAVEL",
         price: "R8,500 PER VEHICLE",
         description: "Perfect for groups and corporate events",
@@ -307,9 +316,10 @@ export class PlanComponent implements OnInit {
   }
 
   onBookPackage(pkg: any) {
-    // Navigate to plan booking page with tourId
+    // Navigate to plan booking page with a stable package slug.
     this.router.navigate(['/plan-booking'], {
       queryParams: {
+        tourSlug: pkg.slug,
         tourId: pkg.id
       }
     });
